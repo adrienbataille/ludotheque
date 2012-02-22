@@ -1,0 +1,624 @@
+html {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", geneva, verdana, arial, sans-serif;
+
+	min-height: 100%;
+
+	/* Fond en dégradé */
+	background: #efefef; /* fond gris pour les vieux navigateurs */
+	background: -moz-linear-gradient(top, #FFFFFF 0%, #EFEFEF 100%); /* Firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#EFEFEF)); /* Webkit */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#EFEFEF',GradientType=0 ); /* IE */
+}
+
+	body {
+		text-align: center;
+		padding-bottom: 10px;
+	}
+	
+		/* ********** */
+		/* Génériques */
+		/* ********** */
+		img {
+			border: none;
+		}
+
+		a:link {color: #3dac00; text-decoration: none;}
+		a:visited {color: #3dac00; text-decoration: none;}
+		a:hover {color: #000000; text-decoration: underline;}
+		a:active {color: #000000; text-decoration: underline;}
+
+		.puceJaune {
+			background-image: url(../images/puceJaune.jpg);
+			background-repeat: no-repeat;
+			background-position: 5px 5px;
+		}
+
+		.puceJauneTitre {
+			background-image: url(../images/puceJauneTitre.jpg);
+			background-repeat: no-repeat;
+			background-position: 5px 0px;
+		}
+
+		.puceVert {
+			background-image: url(../images/puceVert.jpg);
+			background-repeat: no-repeat;
+			background-position: 5px 5px;
+		}
+
+		.puceVertTitre {
+			background-image: url(../images/puceVertTitre.jpg);
+			background-repeat: no-repeat;
+			background-position: 5px 0px;
+		}
+
+		.puceBleu {
+			background-image: url(../images/puceBleu.jpg);
+			background-repeat: no-repeat;
+			background-position: 5px 5px;
+		}
+
+		.puceBleuTitre {
+			background-image: url(../images/puceBleuTitre.jpg);
+			background-repeat: no-repeat;
+			background-position: 5px 0px;
+		}
+
+		.puceGris {
+			background-image: url(../images/puceGris.jpg);
+			background-repeat: no-repeat;
+			background-position: 5px 5px;
+		}
+
+		.puceGrisTitre {
+			background-image: url(../images/puceGrisTitre.jpg);
+			background-repeat: no-repeat;
+			background-position: 5px 0px;
+		}
+
+		h3 {
+			padding-left: 20px;
+			font-weight: bold;
+			font-size: 1.3em;
+			margin-bottom: 10px;
+			color : #333333;
+			background-position: 50px 50px;
+		}
+
+
+
+
+		/* ****************************************************** */
+		/* div#conteneur contient toute la page                   */
+		/* divisé en div#entete, div#contenuPrincipal et div#pied */
+		/* ****************************************************** */
+		div#conteneur {
+			background-color: #ffffff;	
+			width: 900px;
+			text-align: left;
+			margin: 15px auto;
+			padding-top: 10px;
+			position : relative;
+
+			/* Bordures rondes */
+			border: solid 1px #ababab;
+			-moz-border-radius: 15px 15px 15px 15px;
+			-webkit-border-radius: 15px 15px 15px 15px;
+			-khtml-border-radius: 15px 15px 15px 15px;
+			-border-radius: 15px 15px 15px 15px;
+
+			/* Ombre derrière la boîte */
+			-webkit-box-shadow: 5px 5px 5px rgba(64, 64, 64, 0.8);
+			-moz-box-shadow: 5px 5px 5px rgba(64, 64, 64, 0.8);
+			box-shadow: 5px 5px 5px rgba(64, 64, 64, 0.8);
+		}
+
+			/* ********************************************** */
+			/* div#entete divisé en div#logo et div#actualite */
+			/* ********************************************** */
+			header#headerPage {
+				background: url(../images/ligne.jpg) bottom no-repeat; /* ligne de séparation */
+				padding-bottom: 10px;
+			}	
+	
+				/* *************************** */
+				/* div#logo se trouve à droite */
+				/* *************************** */
+				div#logo {
+					width: 405px;
+					margin-left: 470px;
+					height: 132px;
+				}
+
+					/* h1 invisible hors désactivation du style */
+					div#logo h1 {
+						position: absolute;
+						clip: rect(1px 1px 1px 1px);
+						clip: rect(1px, 1px, 1px, 1px);
+					}
+	
+				/* div#actualite se trouve à gauche */
+				div#actualite {
+					position : absolute;
+					top: 10px;
+					left: 15px;
+					width: 420px;
+					height: 120px;
+					color: #555555;
+					font-size: 0.75em;
+
+					border: solid 1px #c3cee3;
+					-moz-border-radius: 5px 5px 5px 5px;
+					-webkit-border-radius: 5px 5px 5px 5px;
+					-khtml-border-radius: 5px 5px 5px 5px;
+					-border-radius: 5px 5px 5px 5px;
+					-webkit-box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+					-moz-box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+					box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+				}
+			
+					div#actualite h2 {
+						color: #555555;
+						font-weight: bolder;
+						text-align: center;
+						line-height: 2em;
+						background-color: #ECF0F8;
+					}
+					
+					div#actualite p {
+						text-align: justify;
+						padding: 0px 10px 10px 10px;
+						font-style: italic;
+					}
+			/* ***************************************************************************** */
+			/* div#contenuPrincipal divisé en div#blocGauche, div#blocDroit et div#blocClear */
+			/* ***************************************************************************** */
+			div#contenuPrincipal {
+				background: #ffffff url(../images/contentBackground.jpg) no-repeat bottom center;
+				padding: 15px;
+
+			}
+
+				/* ********************************************** */
+				/* div#blocGauche contient les textes sauf Adherent */
+				/* cf plus bas pour les différents contenus       */
+				/* ********************************************** */
+				section#blocGauche {
+					float: left;
+					width: 655px;
+					margin-bottom: 15px;
+					padding: 15px;
+					background: url(../images/zonebackground.png);
+					border: solid 1px #c3cee3;
+					-moz-border-radius: 5px 5px 5px 5px;
+					-webkit-border-radius: 5px 5px 5px 5px;
+					-khtml-border-radius: 5px 5px 5px 5px;
+					-border-radius: 5px 5px 5px 5px;
+					-webkit-box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+					-moz-box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+					box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+
+					color: #555555;
+					font-size: 0.8em;
+					line-height: 1.5em;
+					text-indent: 1em;
+					text-align: justify;
+				}
+
+				/* ************************************************************************* */
+				/* div#blocDroit contient le menu et le calendrier (menu adhérent au besoin) */
+				/* ************************************************************************* */
+				section#blocDroit {
+					float: right;
+					margin: 0 0 40px 0;
+					width: 175px;
+				}
+
+					/* ************************************************ */
+					/* Cf plus bas pour le style de l'intérieur du menu */
+					/* ************************************************ */
+					nav#menu {		
+						width: 170px;
+						margin: 0 0 15px 0;
+						text-align: left;
+						border: solid 1px #c3cee3;
+						-moz-border-radius: 5px 5px 5px 5px;
+						-webkit-border-radius: 5px 5px 5px 5px;
+						-khtml-border-radius: 5px 5px 5px 5px;
+						-border-radius: 5px 5px 5px 5px;
+						-webkit-box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+						-moz-box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+						box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+					}
+
+					/* ************************************************** */
+					/* Pour mettre div#contenuPrincipal à la bonne taille */
+					/* ************************************************** */
+					div.blocClear {
+						clear: both;
+					}
+
+			/* ************************************************ */
+			/* footer#footerpage divisé en p#connexion et p#menuPied */
+			/* ************************************************ */
+			footer#footerPage {
+				padding: 5px 0 5px 0;
+				color: #000000;
+				font-size: 0.7em;
+				font-weight: bold;
+			}
+
+				footer#footerPage ul{
+					margin: 0em;
+					padding: 0em;			
+				}
+		
+				footer#footerPage ul li{
+					display: inline;
+					padding: 1em;
+				}
+	
+				/* ******************************** */
+				/* p#connexion se trouve à droite */
+				/* ******************************** */
+				p#connexion {
+					float: right;
+					padding-right: 10px;
+				}
+
+				/* ******************************* */
+				/* p#menuPied se trouve à gauche */
+				/* ******************************* */
+				p#menuPied {
+					width: 500px;
+					padding-left: 10px;
+				}
+				footer#footerPage span {
+						padding-left: 10px;	
+					}
+
+
+/* ****************************** */
+/* ***** MENU DE NAVIGATION ***** */
+/* cf plus haut pour le conteneur */
+/* ****************************** */
+
+nav#menu h2 {
+	/* titre invisible hors désactivation du style */
+	position: absolute;
+	clip: rect(1px 1px 1px 1px);
+	clip: rect(1px, 1px, 1px, 1px);
+}
+
+nav#menu ol {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	font-size: 0.7em;
+	font-weight: bold;
+}
+
+	nav#menu ol li a {
+		height: 18px;
+		display: block;
+		padding: 5px 0px 0px 20px;
+	}
+
+	nav#menu ol li a:hover {
+		color: rgba(0, 0, 0);
+		text-decoration: none;
+		background-color: rgba(230, 239, 253); /* fallback */
+		background-color: rgba(230, 239, 253, 0.8);
+	}
+
+	nav#menu ol li a:active {
+		color: red;
+		border: solid 1px rgba(0, 0, 0);
+		background-color: rgba(0, 0, 0); /* fallback */
+		background-color: rgba(230, 239, 253, 0.8);
+	}
+
+/* ****************************** */
+/* ********* CALENDRIER ********* */
+/* cf plus haut pour le conteneur */
+/* ****************************** */
+
+img#calendarLoading {
+  position: absolute;
+  visibility: visible;
+}
+
+aside#calendrier {
+	width: 170px;
+	text-align: left;
+	font-size: 0.7em;
+	font-weight: bold;
+	border: solid 1px #c3cee3;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	-khtml-border-radius: 5px 5px 5px 5px;
+	-border-radius: 5px 5px 5px 5px;
+	-webkit-box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+	-moz-box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+	box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+}
+
+	aside#calendrier h2 {
+		color: #555555;
+		background-color: #ECF0F8;
+		text-align: center;
+		line-height: 2em;
+	}
+
+	aside#calendrier li a {
+		display: block;
+		padding: 2px;
+		margin-bottom: 5px;
+	}
+
+		aside#calendrier li a:hover {
+			color: rgba(0, 0, 0);
+			text-decoration: none;
+			background-color: rgba(230, 239, 253); /* fallback */
+			background-color: rgba(230, 239, 253, 0.8);
+		}
+
+/* **************** */
+/* FORMULAIRE LOGIN */
+/* **************** */
+form#login {
+	width: 400px;
+}
+
+	form#login legend {
+		font-size: 16px;
+		font-weight: bold;
+		padding-bottom: 10px;
+	}
+
+	form#login ol li {
+		background: #ECF0F8;
+		border: solid 2 px #555555;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+		line-height: 30px;
+		list-style: none;
+		padding: 5px 10px;
+		margin-bottom: 2px;
+	}
+
+	form#login label {
+		float: left;
+		font-size: 13px;
+		font-weight: bold;
+		width: 140px;
+	}
+
+	form#login label[for=autologin]:hover, form#login input#autologin {
+		cursor: pointer;
+	}
+
+	form#login button {
+		background: #ECF0F8;
+		border: solid 1px #333333;
+		-moz-border-radius: 20px;
+		-webkit-border-radius: 20px;
+		-khtml-border-radius: 20px;
+		border-radius: 20px;
+		webkit-box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+		-moz-box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+		box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+		color: #555555;
+		display: block;
+		font: 16px;
+		letter-spacing: 1px;
+		margin: 10px auto;
+		padding: 7px 25px;
+		text-transform: uppercase;
+	}
+	
+			form#login button:hover {
+				background: #fff;
+				cursor: pointer;
+			}
+			
+			form#login button:active {
+				webkit-box-shadow: 0 0;
+				-moz-box-shadow: 0 0;
+				box-shadow: 0;
+			}
+
+
+/* ******* */
+/* MODULES */
+/* ******* */
+
+   /* **** */
+	/* Menu */
+	/* **** */
+   
+	nav#menuModules h2 {
+		/* titre invisible hors désactivation du style */
+		position: absolute;
+		clip: rect(1px 1px 1px 1px);
+		clip: rect(1px, 1px, 1px, 1px);
+	}
+
+	nav#menuModules ol {
+		float: left;
+		margin: 0 0 40px 0;
+		width: 155px;
+		text-align: right;
+		font-size: 0.8em;
+		font-weight: bold;
+	}
+
+		nav#menuModules ol li {
+			background-color: #ECF0F8;
+			-moz-border-radius: 5px 5px 5px 5px;
+			-webkit-border-radius: 5px 5px 5px 5px;
+			-khtml-border-radius: 5px 5px 5px 5px;
+			-border-radius: 5px 5px 5px 5px;
+			margin-bottom: 10px;
+		}
+
+			nav#menuModules ol li a {
+				color: #555555;
+				border: solid 1px #c3cee3;
+				-moz-border-radius: 5px 5px 5px 5px;
+				-webkit-border-radius: 5px 5px 5px 5px;
+				-khtml-border-radius: 5px 5px 5px 5px;
+				-border-radius: 5px 5px 5px 5px;
+				-webkit-box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+				-moz-box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+				box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+				padding-left: 40px;
+				padding-right: 5px;
+				display: block;
+				padding-top: 10px;
+				padding-bottom: 10px;
+			}
+
+			nav#menuModules ol li a:hover {
+				color: #000000;
+				background-color: #ffffff;
+				text-decoration: none;
+
+			}
+
+			nav#menuModules ol li a:active {
+				-webkit-box-shadow: 0 0;
+				-moz-box-shadow: 0 0;
+				box-shadow: 0 0;
+			}
+
+   /* ************************* */
+	/* Section Contenu du module */
+	/* ************************* */
+
+	section#contenuModule {
+		float: right;
+		width: 675px;
+		padding: 15px;
+		background-color: #ECF0F8;
+		/* background: url(../images/zonebackground.png); */
+		border: solid 1px #c3cee3;
+		-moz-border-radius: 5px 5px 5px 5px;
+		-webkit-border-radius: 5px 5px 5px 5px;
+		-khtml-border-radius: 5px 5px 5px 5px;
+		-border-radius: 5px 5px 5px 5px;
+		-webkit-box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+		-moz-box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+		box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+		color: #555555;
+		font-size: 0.8em;
+		line-height: 1.5em;
+		text-indent: 1em;
+		text-align: justify;
+	}
+
+
+		/* ***************** */
+		/* Module MON PROFIL */
+		/* ***************** */
+		
+		form#formProfil {
+			width: 500px;
+			padding-bottom: 10px;
+		}
+
+		form#formProfil fieldset {
+			border: none;
+			margin-bottom: 10px;
+		}		
+				
+		form#formProfil legend {
+			font-size: 16px;
+			font-weight: bold;
+			padding-bottom: 10px;
+		}
+
+		form#formProfil ol li {
+			width: 100%;
+			background: #fff;
+			border: solid 1px #555555;
+			-moz-border-radius: 5px;
+			-webkit-border-radius: 5px;
+			border-radius: 5px;
+			line-height: 30px;
+			list-style: none;
+			padding-top: 2px;
+			padding-bottom: 2px;
+			margin-bottom: 2px;
+			clear:both;
+		}
+
+		form#formProfil label {
+			float: left;
+			font-weight: bold;
+			width: 180px;
+		}
+		
+		form#formProfil input {
+			width: 270px;
+
+		}
+
+		form#formProfil textarea {
+			width: 270px;
+		}
+
+		form#formProfil select {
+			background: #fff;
+			color: #555555;
+		}
+
+		form#formProfil button {
+			background: #00BFFE;
+			border: solid 1px #333333;
+			-moz-border-radius: 20px;
+			-webkit-border-radius: 20px;
+			-khtml-border-radius: 20px;
+			border-radius: 20px;
+			webkit-box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+			-moz-box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+			box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+			color: #fff;
+			display: block;
+			font: 16px;
+			letter-spacing: 1px;
+			margin: auto;
+			padding: 7px 25px;
+			text-transform: uppercase;
+		}
+	
+			form#formProfil button:hover {
+				background: #fff;
+				color: #00BFFE;
+				cursor: pointer;
+			}
+			
+			form#formProfil button:active {
+				webkit-box-shadow: 0 0;
+				-moz-box-shadow: 0 0;
+				box-shadow: 0;
+			}
+
+		/* ***************** */
+		/* Module LUDOTHEQUE */
+		/* ***************** */
+
+		#ludotheque {
+			background-image: url(../images/modules/ludo/ludo.png);
+			background-repeat: no-repeat;
+			background-position: 4px 1px;
+		}
+
+		h3#titreLudotheque {
+			padding-left: 25px;
+			line-height: 2em;
+			background-image: url(../images/modules/ludo/ludo.png);
+			background-repeat: no-repeat;
+			background-position: 0px 0px;
+		}
+
