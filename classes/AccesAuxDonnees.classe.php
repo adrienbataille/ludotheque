@@ -7,10 +7,10 @@
 // Inclusions
 
 //Constantes - paramètre du système
-define("SERVEUR","");
-define("LOGIN","");
-define("MDP","");
-define("BASE","");
+define("SERVEUR","127.0.0.1");
+define("LOGIN","ludotheque");
+define("MDP","ludo");
+define("BASE","mdjtufjjpdoc");
 define("TABLE_PREFIX","MDJT_");
 
 // Constantes - Definition des Tables SQL

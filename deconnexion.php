@@ -11,7 +11,7 @@ require_once("classes/Page.classe.php");
 // Logout phpbb3
 global $phpbb_root_path, $phpEx, $user, $db, $config, $cache, $template;      
 define('IN_PHPBB', true);
-$phpbb_root_path = '../forum/';
+$phpbb_root_path = 'forum/';
 $phpEx = substr(strrchr(__FILE__, '.'), 1);
 include($phpbb_root_path . 'common.' . $phpEx);
 

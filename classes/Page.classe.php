@@ -8,7 +8,7 @@ require_once("classes/AccesAuxDonnees.classe.php");
 require_once("classes/SessionUtilisateur.classe.php");
 
 // Constante de définition des URL
-define("RACINE_SITE", "http://www.mdjt.org/v2/");
+define("RACINE_SITE", ""); // Racine originale du site http://www.mdjt.org/v2/
 define("CSS_MDJT", "css/mdjt.css");
 define("CSS_RESET", "css/reset.css");
 define("PAGE_MODULE", RACINE_SITE . "module.php");
