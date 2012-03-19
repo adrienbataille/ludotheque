@@ -8,7 +8,7 @@ require_once("classes/AccesAuxDonnees.classe.php");
 require_once("classes/SessionUtilisateur.classe.php");
 
 // Constante de définition des URL
-define("RACINE_SITE", ""); // Racine originale du site http://www.mdjt.org/v2/
+define("RACINE_SITE", ""); // Racine originale du site http://www.mdjt.org/v2/ - On perd le CSS si on met http://localhost/ludotheque
 define("CSS_MDJT", "css/mdjt.css");
 define("CSS_RESET", "css/reset.css");
 define("PAGE_MODULE", RACINE_SITE . "module.php");
@@ -23,9 +23,9 @@ define("DECONNEXION", RACINE_SITE . "deconnexion.php");
 // Constantes pour le lien avec PHPBB
 // Constante permettant la redirection depuis PHPBB, pour les login
 // Elle doit être l'emplacement du fichier module.php en relatif depuis l'emplacement du forum
-define ("REDIRECTION_PHPBB", "../v2/module.php");
+define ("REDIRECTION_PHPBB", "../module.php"); // Avant : ./v2/module.php
 // Page de PHPBB interceptant le formulaire de connexion
-define ("PAGE_LOGIN_PHPBB", "forum/ucp.php?mode=login");
+define ("PAGE_LOGIN_PHPBB", "forum/ucp.php?mode=login"); // Avant : http://mdjt.org/forum/ucp.php?mode=login
 // Test à supprimer define ("PAGE_LOGOUT_PHPBB", "http://mdjt.org/forum/ucp.php?mode=logout");
 
 // Constante - nombre d'espace d'indentation
