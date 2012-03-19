@@ -3,10 +3,10 @@
 // Do not change anything in this file!
 $dbms = 'mysqli';
 $dbhost = '127.0.0.1';
-$dbport = '';
+$dbport = '3306';
 $dbname = 'mdjtufjjpforum';
-$dbuser = 'root';
-$dbpasswd = '';
+$dbuser = 'ludotheque';
+$dbpasswd = 'ludo';
 $table_prefix = 'phpbb_';
 $acm_type = 'file';
 $load_extensions = '';

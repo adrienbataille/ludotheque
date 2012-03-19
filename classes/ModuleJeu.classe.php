@@ -19,6 +19,8 @@ class ModuleJeu extends Module
         $this->ouvreBloc("<p>");
         $this->ajouteLigne("Hello World");
         $this->fermeBloc("</p>");
+	
+
     }
 }
 ?>
