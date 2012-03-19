@@ -35,6 +35,9 @@ class ModuleAjoutJeux extends Module
     {
         // On utilise le constructeur de la classe mère
 		parent::__construct();
+
+		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
+		$this->baseDonnees = AccesAuxDonneesDev::recupAccesDonnees();
 		
 		// On affiche le contenu du module
 		// On affiche le formulaire d'ajout des informations propres à un jeux
@@ -47,7 +50,7 @@ class ModuleAjoutJeux extends Module
         
         // First fieldset : Nom du jeu
         $this->ouvreBloc("<fieldset>");
-        $this->ajouteLigne("<legend>Nom du jeux</legend>");
+        $this->ajouteLigne("<legend>Nom du jeu</legend>");
         $this->ouvreBloc("<ol>");
         
         // Nom
@@ -65,9 +68,9 @@ class ModuleAjoutJeux extends Module
         $this->fermeBloc("</ol>");
         $this->fermeBloc("</fieldset>");
         
-        // Second fieldset : Information sur le jeux
+        // Second fieldset : Information sur le jeu
         $this->ouvreBloc("<fieldset>");
-        $this->ajouteLigne("<legend>Information sur le jeux</legend>");
+        $this->ajouteLigne("<legend>Informations sur le jeu</legend>");
         $this->ouvreBloc("<ol>");
         
         // Description
