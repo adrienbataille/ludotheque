@@ -25,7 +25,7 @@ define("DECONNEXION", RACINE_SITE . "deconnexion.php");
 // Elle doit être l'emplacement du fichier module.php en relatif depuis l'emplacement du forum
 define ("REDIRECTION_PHPBB", "../v2/module.php");
 // Page de PHPBB interceptant le formulaire de connexion
-define ("PAGE_LOGIN_PHPBB", "http://mdjt.org/forum/ucp.php?mode=login");
+define ("PAGE_LOGIN_PHPBB", "forum/ucp.php?mode=login");
 // Test à supprimer define ("PAGE_LOGOUT_PHPBB", "http://mdjt.org/forum/ucp.php?mode=logout");
 
 // Constante - nombre d'espace d'indentation
