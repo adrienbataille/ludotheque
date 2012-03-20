@@ -8,6 +8,7 @@
 require_once("classes/Page.classe.php");
 require_once("classes/ModuleProfil.classe.php");
 require_once("classes/ModuleGroupes.classe.php");
+require_once("classes/ModuleRecherche.classe.php");
 
 // Constantes
 
@@ -65,25 +66,29 @@ class PageModule extends Page
 			switch ($_GET["idModule"])
 			{
 				case "Profil" :
-                                    // On créé l'objet chargé de gerer le module profil
-                                    $this->unModule = new ModuleProfil($this->monUtilisateur);
-                                    break;
-                                case "Groupes" :
-                                    // On vérifie si l'utilisateur à accès à ce module
-                                    if ($this->monUtilisateur->accesGroupes())
-                                    {
-                                        // Si oui, on l'affiche
-                                        // On créé l'objet chargé de gerer le module Groupes
-                                        $this->unModule = new ModuleGroupes($this->monUtilisateur);
-                                    }
-                                    else
-                                    {
-                                        // Si non, on redirige sur la page d'accueil du site
-                                        header('Location:' . PAGE_INDEX);
-                                        exit();
-                                    }
-                                    
-                                    break;
+				// On créé l'objet chargé de gerer le module profil
+				$this->unModule = new ModuleProfil($this->monUtilisateur);
+				break;
+				case "Groupes" :
+				// On vérifie si l'utilisateur à accès à ce module
+				if ($this->monUtilisateur->accesGroupes())
+				{
+					// Si oui, on l'affiche
+					// On créé l'objet chargé de gerer le module Groupes
+					$this->unModule = new ModuleGroupes($this->monUtilisateur);
+				}
+				else
+				{
+					// Si non, on redirige sur la page d'accueil du site
+					header('Location:' . PAGE_INDEX);
+					exit();
+				}
+
+				break;
+				case "Recherche" :
+				// On créé l'objet chargé de faire des recherches. Ceci est une page de test.
+				$this->unModule = new ModuleRecherche();
+				break;
 			}
 		}
 		else
@@ -132,7 +137,8 @@ class PageModule extends Page
                     // On lui affiche le lien
                     $this->ajouteLigne("<li><a href=\"" . MODULE_GROUPES . "\">Groupes</a></li>");
                 }
-		$this->ajouteLigne("<li><a href=\"" . RACINE_SITE . "\">Retour Accueil</a></li>");				
+		$this->ajouteLigne("<li><a href=\"" . RACINE_SITE . "\">Retour Accueil</a></li>");	
+		$this->ajouteLigne("<li><a href=\"" . MODULE_RECHERCHE . "\">Recherche</a></li>");
 		$this->fermeBloc("</ol>");
 		$this->fermeBloc("</nav>");
 	}

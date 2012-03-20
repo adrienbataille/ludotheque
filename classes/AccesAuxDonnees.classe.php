@@ -7,7 +7,7 @@
 // Inclusions
 
 //Constantes - paramètre du système
-define("SERVEUR","127.0.0.1");
+define("SERVEUR","localhost");
 define("LOGIN","ludotheque");
 define("MDP","ludo");
 define("BASE","mdjtufjjpdoc");
