@@ -285,7 +285,38 @@ class AccesAuxDonneesDev
 	//
 	// Requêtes accessibles au reste du site
 	//
-	
+	   /**
+	* Fonction de mise à jour des informations d'un utilisateur
+	* Entrée : l'id de cet utilisateur et toutes les informations associées
+	* Sortie : true si la mise à jour s'est bien passée, sinon false
+	*/
+	public function InsertionTableJeux($uneDescription,$unAuteur)
+	{
+		// Protection contre injection SQL
+		if ( strval($uneDescription) )
+		{
+                    // On initie la connexion à la base, si ce n'est déjà fait
+                    $this->connecteBase();
+                    // Création de la requete
+                    $requete = $this->maBase->prepare("INSERT FROM" .
+				TABLE_JEUX .
+				" WHERE " .
+                                DESCRIPTION_JEU .
+                                "=?," .
+                                AUTEUR .
+                                  "=?;");
+                    $requete->bindValue(1, $uneDescriptionNom, PDO::PARAM_STR);
+                    $requete->bindValue(2, $unAuteur, PDO::PARAM_STR);
+                    $resultat = $requete->execute();
+
+                    // On termine l'utilisation de la requete
+                    $requete->closeCursor();
+		}
+		else
+		{
+			return false;
+		}
+	}
 	
         
         

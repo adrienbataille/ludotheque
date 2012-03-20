@@ -13,9 +13,9 @@ define("MODULE_AJOUT_EXEMPLAIRES", RACINE_SITE . "module.php?idModule=AjoutExemp
 
 //Constantes formulaire
 define("DESCRIPTION_E", "description_version");
-define("PRIX_MDJT", "prix_mdjt");
-define("DATE_ACHAT", "date_achat");
-define("DATE_FIN_VIE" , "date_fin_vie");
+define("PRIX_MDJT_E", "prix_mdjt");
+define("DATE_ACHAT_E", "date_achat");
+define("DATE_FIN_VIE_E" , "date_fin_vie");
 
 
 /* REMARQUES :
@@ -63,21 +63,21 @@ class ModuleAjoutExemplaires extends Module
 				
 		 // Prix mdjt
         $this->ouvreBloc("<li>");
-        $this->ajouteLigne("<label for='" . PRIX_MDJT . "'>" . $this->convertiTexte("Prix d'achat") . "</label>");
-        $this->ajouteLigne("<input type='text' name='"  . PRIX_MDJT . "' value='" . VIDE . "' />");
+        $this->ajouteLigne("<label for='" . PRIX_MDJT_E . "'>" . $this->convertiTexte("Prix d'achat") . "</label>");
+        $this->ajouteLigne("<input type='text' name='"  . PRIX_MDJT_E . "' value='" . VIDE . "' />");
         $this->fermeBloc("</li>");
         
         // Data achat
         $this->ouvreBloc("<li>");
-        $this->ajouteLigne("<label for='" . DATE_ACHAT . "'>" . $this->convertiTexte("Date Achat") . "</label>");
-        $this->ajouteLigne("<input type='text' maxlength='10' name='" . DATE_ACHAT . "' value='" . VIDE . "' />");
+        $this->ajouteLigne("<label for='" . DATE_ACHAT_E . "'>" . $this->convertiTexte("Date Achat") . "</label>");
+        $this->ajouteLigne("<input type='text' maxlength='10' name='" . DATE_ACHAT_E . "' value='" . VIDE . "' />");
         $this->fermeBloc("</li>");
         
 				
         // Data fin de vie
         $this->ouvreBloc("<li>");
-        $this->ajouteLigne("<label for='" . DATE_FIN_VIE . "'>" . $this->convertiTexte("Date fin de vie") . "</label>");
-        $this->ajouteLigne("<input type='text' maxlength='10' name='" . DATE_FIN_VIE . "' value='" . VIDE . "' />");
+        $this->ajouteLigne("<label for='" . DATE_FIN_VIE_E . "'>" . $this->convertiTexte("Date fin de vie") . "</label>");
+        $this->ajouteLigne("<input type='text' maxlength='10' name='" . DATE_FIN_VIE_E . "' value='" . VIDE . "' />");
         $this->fermeBloc("</li>");
         
 		
