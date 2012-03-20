@@ -15,7 +15,7 @@ $maPage->ouvreBlocGauche();
 $maPage->fermeBlocGauche();
 
 // Menu et calendrier
-$maPage->ouvreBlocDroit();
+$maPage->ouvreBlocDroit();  
 $maPage->afficheMenu();
 $maPage->afficheMiniCalendrier();
 $maPage->fermeBlocDroit();

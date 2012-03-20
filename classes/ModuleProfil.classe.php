@@ -10,6 +10,7 @@ require_once("classes/Module.classe.php");
 //Constantes
 define("MODULE_PROFIL", RACINE_SITE . "module.php?idModule=Profil");
 
+
 class ModuleProfil extends Module
 {
 

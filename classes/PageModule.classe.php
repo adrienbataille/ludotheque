@@ -9,6 +9,8 @@ require_once("classes/Page.classe.php");
 require_once("classes/ModuleProfil.classe.php");
 require_once("classes/ModuleGroupes.classe.php");
 require_once("classes/ModuleAjoutJeux.classe.php");
+require_once("classes/ModuleAjoutVersions.classe.php");
+require_once("classes/ModuleAjoutExemplaires.classe.php");
 
 // Constantes
 
@@ -88,7 +90,16 @@ class PageModule extends Page
                 	// On appelle l'ajout d'un jeux
                 	$this->unModule = new ModuleAjoutJeux();
                 	break;
-                            
+					
+				case "AjoutVersions" :
+                	// On appelle l'ajout d'un jeux
+                	$this->unModule = new ModuleAjoutVersions();
+                	break;
+					
+				case "AjoutExemplaires" :
+                	// On appelle l'ajout d'un jeux
+                	$this->unModule = new ModuleAjoutExemplaires();
+                	break;
 			}
 		}
 		else
@@ -131,6 +142,9 @@ class PageModule extends Page
 		$this->ouvreBloc("<ol>");
 		$this->ajouteLigne("<li><a href=\"" . MODULE_PROFIL ."\">Mon profil</a></li>");
 		$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_JEUX . "\">Ajouter Jeux</a></li>");
+		$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_VERSIONS . "\">Ajouter Versions</a></li>");
+		$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_EXEMPLAIRES . "\">Ajouter Exemplaires</a></li>");
+
 		$this->ajouteLigne("<li><a href=\"\">Utilisateurs</a></li>");
         // Si l'utilisateur à accès au module Groupes
         if ($this->monUtilisateur->accesGroupes())
@@ -138,7 +152,7 @@ class PageModule extends Page
             // On lui affiche le lien
             $this->ajouteLigne("<li><a href=\"" . MODULE_GROUPES . "\">Groupes</a></li>");
         }
-		$this->ajouteLigne("<li><a href=\"" . RACINE_SITE . "\">Retour Accueil</a></li>");				
+		$this->ajouteLigne("<li><a href=\"" . RACINE_SITE . "\">Retour Accueil</a></li>");
 		$this->fermeBloc("</ol>");
 		$this->fermeBloc("</nav>");
 	}

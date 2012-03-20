@@ -33,6 +33,12 @@ class ModuleAjoutJeux extends Module
     {
         // On utilise le constructeur de la classe mère
 		parent::__construct();
+
+		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
+		$this->baseDonnees = AccesAuxDonneesDev::recupAccesDonnees();
+		
+		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
+		$this->maBase = AccesAuxDonneesDev::recupAccesDonnees();
 		
 		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
 		$this->maBase = AccesAuxDonneesDev::recupAccesDonnees();
@@ -70,7 +76,6 @@ class ModuleAjoutJeux extends Module
     {	
         $this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_JEUX . "' id='formProfil'>");
         
-        
 		// Si on a déjà traité le formulaire
 		if ($this->traitementFormulaire)
 		{
@@ -79,78 +84,77 @@ class ModuleAjoutJeux extends Module
 			$this->fermeBloc("</p>");
 		}
         
-			// First fieldset : Nom du jeu
-			$this->ouvreBloc("<fieldset>");
-			$this->ajouteLigne("<legend>Nom du jeux</legend>");
-			$this->ouvreBloc("<ol>");
-			
-			// Nom
-			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . NOM_JEU . "'>" . $this->convertiTexte("Nom") . "</label>");
-			$this->ajouteLigne("<input type='text' name='" . NOM_JEU . "' value='" . VIDE . "' />");
-			$this->fermeBloc("</li>");
-			
-			// Langue
-			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langue du nom") . "</label>");
-			$this->ajouteLigne("<input type='text' name='" . NOM_LANGUE . "' value='" . VIDE . "' list=\"listeCategorie\" />");
-			// Liste des langues pour l'auto-complete
-			$listeCategorie = $this->maBase->recupLangue();
-			$this->ouvreBloc("<datalist id=\"listeCategorie\">");
-			foreach($listeCategorie as $categorie)
-			{
-				$this->ajouteLigne("<option id=\"" . $categorie['idLangue'] . "\" label=\"" . $categorie['nomLangue'] . "\" value=\"" . $categorie['nomLangue'] . "\">");
-			}
-			$this->fermeBloc("</datalist>");
-			
-			$this->fermeBloc("</li>");
-			
-			$this->fermeBloc("</ol>");
-			$this->fermeBloc("</fieldset>");
-			
-			// Second fieldset : Information sur le jeux
-			$this->ouvreBloc("<fieldset>");
-			$this->ajouteLigne("<legend>Information sur le jeux</legend>");
-			$this->ouvreBloc("<ol>");
-			
-			// Description
-			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . DESCRIPTION_JEU . "'>" . $this->convertiTexte("Description") . "</label>");
-			$this->ajouteLigne("<textarea rows='3' name='" . DESCRIPTION_JEU . "'>" . VIDE . "</textarea>");
-			$this->fermeBloc("</li>");
-			
-			// Auteur
-			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . AUTEUR . "'>" . $this->convertiTexte("Auteur") . "</label>");
-			$this->ajouteLigne("<input type='text' name='" . AUTEUR . "' value='" . VIDE . "' />");
-			$this->fermeBloc("</li>");
-			
-			// Pays
-			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . NOM_PAYS . "'>" . $this->convertiTexte("Pays d'origine") . "</label>");
-			$this->ajouteLigne("<input type='text' name='" . NOM_PAYS . "' value='" . VIDE . "' />");
-			$this->fermeBloc("</li>");
-			
-			// Catégories
-			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . NOM_CATEGORIE . "'>" . $this->convertiTexte("Catégorie") . "</label>");
-			$this->ajouteLigne("<input type='text' name='" . NOM_CATEGORIE . "' value='" . VIDE . "' />");
-			$this->fermeBloc("</li>");
-			
-			$this->fermeBloc("</ol>");
-			$this->fermeBloc("</fieldset>");
-			
-			// Bouton valider
-			$this->ouvreBloc("<fieldset>");
-			
-			$this->ajouteLigne("<input type='hidden' name='ajouter' value='true' />");
-			$this->ajouteLigne("<button type='submit' name='Ajouter'>Je valide et ajouter une versiongit</button>");
-			$this->fermeBloc("</fieldset>");
-			
-			$this->fermeBloc("</form>");
+		// First fieldset : Nom du jeu
+		$this->ouvreBloc("<fieldset>");
+		$this->ajouteLigne("<legend>Nom du jeux</legend>");
+		$this->ouvreBloc("<ol>");
+		
+		// Nom
+		$this->ouvreBloc("<li>");
+		$this->ajouteLigne("<label for='" . NOM_JEU . "'>" . $this->convertiTexte("Nom") . "</label>");
+		$this->ajouteLigne("<input type='text' name='" . NOM_JEU . "' value='" . VIDE . "' />");
+		$this->fermeBloc("</li>");
+		
+		// Langue
+		$this->ouvreBloc("<li>");
+		$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langue du nom") . "</label>");
+		$this->ajouteLigne("<input type='text' name='" . NOM_LANGUE . "' value='" . VIDE . "' list=\"listeCategorie\" />");
+		// Liste des langues pour l'auto-complete
+		$listeCategorie = $this->maBase->recupLangue();
+		$this->ouvreBloc("<datalist id=\"listeCategorie\">");
+		foreach($listeCategorie as $categorie)
+		{
+			$this->ajouteLigne("<option id=\"" . $categorie['idLangue'] . "\" label=\"" . $categorie['nomLangue'] . "\" value=\"" . $categorie['nomLangue'] . "\">");
+		}
+		$this->fermeBloc("</datalist>");
+		
+		$this->fermeBloc("</li>");
+		
+		$this->fermeBloc("</ol>");
+		$this->fermeBloc("</fieldset>");
+		
+		// Second fieldset : Information sur le jeux
+		$this->ouvreBloc("<fieldset>");
+		$this->ajouteLigne("<legend>Information sur le jeux</legend>");
+		$this->ouvreBloc("<ol>");
+		
+		// Description
+		$this->ouvreBloc("<li>");
+		$this->ajouteLigne("<label for='" . DESCRIPTION_JEU . "'>" . $this->convertiTexte("Description") . "</label>");
+		$this->ajouteLigne("<textarea rows='3' name='" . DESCRIPTION_JEU . "'>" . VIDE . "</textarea>");
+		$this->fermeBloc("</li>");
+		
+		// Auteur
+		$this->ouvreBloc("<li>");
+		$this->ajouteLigne("<label for='" . AUTEUR . "'>" . $this->convertiTexte("Auteur") . "</label>");
+		$this->ajouteLigne("<input type='text' name='" . AUTEUR . "' value='" . VIDE . "' />");
+		$this->fermeBloc("</li>");
+		
+		// Pays
+		$this->ouvreBloc("<li>");
+		$this->ajouteLigne("<label for='" . NOM_PAYS . "'>" . $this->convertiTexte("Pays d'origine") . "</label>");
+		$this->ajouteLigne("<input type='text' name='" . NOM_PAYS . "' value='" . VIDE . "' />");
+		$this->fermeBloc("</li>");
+		
+		// Catégories
+		$this->ouvreBloc("<li>");
+		$this->ajouteLigne("<label for='" . NOM_CATEGORIE . "'>" . $this->convertiTexte("Catégorie") . "</label>");
+		$this->ajouteLigne("<input type='text' name='" . NOM_CATEGORIE . "' value='" . VIDE . "' />");
+		$this->fermeBloc("</li>");
+		
+		$this->fermeBloc("</ol>");
+		$this->fermeBloc("</fieldset>");
+		
+		// Bouton valider
+		$this->ouvreBloc("<fieldset>");
+		
+		$this->ajouteLigne("<input type='hidden' name='ajouter' value='true' />");
+		$this->ajouteLigne("<button type='submit' name='Ajouter'>Je valide et ajouter une versiongit</button>");
+		$this->fermeBloc("</fieldset>");
+		
+		$this->fermeBloc("</form>");
 		
     }
-    
     
     
 	
