@@ -1,13 +1,13 @@
 <?php
 /**
-* Classe de gestion de l'accÃ¨s Ã  la base de donnÃ©e
+* Classe de gestion de l'accès à la base de donnée
 *
 */
 
 // Inclusions
 require_once("classes/AccesAuxDonnees.classe.php");
 
-//Constantes - paramÃ¨tre du systÃ¨me
+//Constantes - paramètre du système
 define("BASE_DEV","mdjtufjjpdev");
 
 // Constantes - Definition des Tables SQL
@@ -35,25 +35,25 @@ define("TABLE_RESERVATION", TABLE_PREFIX . "RESERVATION");
 define("TABLE_SUGGESTION", TABLE_PREFIX . "SUGGESTION");
 define("TABLE_VERSION", TABLE_PREFIX . "VERSION");
 
-// DÃ©finition des champs de la table TABLE_CATEGORIE
+// Définition des champs de la table TABLE_CATEGORIE
 define("ID_CATEGORIE", "idCategorie");
 define("NOM_CATEGORIE", "nomCategorie");
 define("DESCRIPTION_CATEGORIE", "descriptionCategorie");
 
-// DÃ©finition des champs de la table TABLE_CATEGORIE_JEU
+// Définition des champs de la table TABLE_CATEGORIE_JEU
 define("ID_CATEGORIE_JEU", "idCategorieJeu");
 
-// DÃ©finition des champs de la table TABLE_EMPRUNT
+// Définition des champs de la table TABLE_EMPRUNT
 define("ID_EMPRUNT", "idEmprunt");
 define("DATE_EMPRUNT", "dateEmprunt");
 define("DATE_RETOUR_SOUHAITE", "dateRetourSouhaite");
 define("DATE_RETOUR_REEL", "dateRetourReel");
 
-// DÃ©finition des champs de la table TABLE_ETAT_EXEMPLAIRE
+// Définition des champs de la table TABLE_ETAT_EXEMPLAIRE
 define("ID_ETAT_EXEMPLAIRE", "idEtatExemplaire");
 define("NOM_ETAT", "nomEtat");
 
-// DÃ©finition des champs de la table TABLE_EXEMPLAIRE
+// Définition des champs de la table TABLE_EXEMPLAIRE
 define("ID_EXEMPLAIRE", "idExemplaire");
 define("DESCRIPTION_EXEMPLAIRE", "descriptionExemplaire");
 define("PRIX_MDJT", "prixMJDT");
@@ -62,79 +62,79 @@ define("DATE_FIN_VIE", "dateFinVie");
 define("ID_LIEU_REEL", "idLieuReel");
 define("ID_LIEU_TEMPO", "idLieuTempo");
 
-// DÃ©finition des champs de la table TABLE_EXTENSION
+// Définition des champs de la table TABLE_EXTENSION
 define("ID_EXTENSION", "idExtension");
 define("NATURE", "nature");
 define("ID_VERSION_BASE", "idVesionBase");
 define("ID_VERSION_EXTENSION", "idVersionExtension");
 
-// DÃ©finition des champs de la table TABLE_FAIRE_PARTIE_KIT
+// Définition des champs de la table TABLE_FAIRE_PARTIE_KIT
 define("ID_FAIRE_PARTIE_KIT", "idFairePartieKit");
 
-// DÃ©finition des champs de la table TABLE_INVENTAIRE
+// Définition des champs de la table TABLE_INVENTAIRE
 define("ID_INVENTAIRE", "idInventaire");
 define("DATE_INVENTAIRE", "dateInventaire");
 define("COMMENTAIRE_INVENTAIRE", "commentaireInventaire");
 
-// DÃ©finition des champs de la table TABLE_JEUX
+// Définition des champs de la table TABLE_JEUX
 define("ID_JEU", "idJeu");
 define("DESCRIPTION_JEU", "descriptionJeu");
 define("AUTEUR", "auteur");
 
-// DÃ©finition des champs de la table TABLE_KIT_JEUX
+// Définition des champs de la table TABLE_KIT_JEUX
 define("ID_KIT_JEU", "idKitJeu");
 define("NOM_KIT_JEU", "nomKit");
 define("DESCRIPTIOIN_KIT", "descriptionKit");
 
-// DÃ©finition des champs de la table TABLE_LANGUE
+// Définition des champs de la table TABLE_LANGUE
 define("ID_LANGUE", "idLangue");
 define("NOM_LANGUE", "nomLangue");
 
-// DÃ©finition des champs de la table TABLE_LANGUE_REGLE
+// Définition des champs de la table TABLE_LANGUE_REGLE
 define("ID_LANGUE_REGLE", "idLangueRegle");
 
-// DÃ©finition des champs de la table TABLE_LIEU
+// Définition des champs de la table TABLE_LIEU
 define("ID_LIEU", "idLieu");
 define("NOM_LIEU", "nomLieu");
 
-// DÃ©finition des champs de la table TABLE_NB_JOUEUR
+// Définition des champs de la table TABLE_NB_JOUEUR
 define("ID_NB_JOUEUR", "idNbJoueur");
 define("NB_JOUEUR", "nbJoueur");
 
-// DÃ©finition des champs de la table TABLE_NB_JOUEUR_VERSION_JEU
+// Définition des champs de la table TABLE_NB_JOUEUR_VERSION_JEU
 define("ID_NB_JOUEUR_VERSION_JEU", "idNbJoueurJeu");
 
-// DÃ©finition des champs de la table TABLE_NOM_JEU
+// Définition des champs de la table TABLE_NOM_JEU
 define("ID_NOM_JEU", "idNomJeu");
 define("NOM_JEU", "nomJeu");
 
-// DÃ©finition des champs de la table TABLE_NOTE_VERSION
+// Définition des champs de la table TABLE_NOTE_VERSION
 define("ID_NOTE_VERSION", "idNoteVersion");
 define("NOTE_VERSION", "noteVersion");
 define("COMMENTAIRE_NOTE_VERSION", "commentaireNoteVersion");
 
-// DÃ©finition des champs de la table TABLE_PAYS
+// Définition des champs de la table TABLE_PAYS
 define("ID_PAYS", "idPays");
 define("NOM_PAYS", "nomPays");
 
-// DÃ©finition des champs de la table TABLE_PHOTO
+// Définition des champs de la table TABLE_PHOTO
 define("ID_PHOTO", "idPhoto");
 define("NOM_PHOTO", "nomPhoto");
 define("TEXTE_ALTERNATIF", "texteAlternatif");
 
-// DÃ©finition des champs de la table TABLE_PHOTO_VERSION
+// Définition des champs de la table TABLE_PHOTO_VERSION
 define("ID_PHOTO_VERSION", "idPhotoVERSION");
 
-// DÃ©finition des champs de la table TABLE_RESERVATION
+// Définition des champs de la table TABLE_RESERVATION
 define("ID_RESERVATION", "idReversation");
 define("DATE_SOUHAITE_EMPRUNT", "dateSouhaiteEmprunt");
 
-// DÃ©finition des champs de la table TABLE_SUGGESTION
+// Définition des champs de la table TABLE_SUGGESTION
 define("ID_SUGGESTION", "idSuggestion");
 define("COMMENTAIRE_SUGGESTION", "commentaireSugeestion");
 define("ETAT_SUGGESTION", "etatSuggestion");
 
-// DÃ©finition des champs de la table TABLE_VERSION
+// Définition des champs de la table TABLE_VERSION
 define("ID_VERSION", "idVersion");
 define("NOM_VERSION", "nomVersion");
 define("DESCRIPTION_VERSION", "descriptionVersion");
@@ -148,83 +148,85 @@ define("DISTRIBUTEUR", "distributeur");
 define("EDITEUR", "editeur");
 
 
+
+
 class AccesAuxDonneesDev
 {
 
 // Attributs
-	// Variable de classe stockant le premier objet crÃ©Ã©
-	// Sert Ã  garantir qu'on ne crÃ©era qu'un seul objet
+	// Variable de classe stockant le premier objet créé
+	// Sert à garantir qu'on ne créera qu'un seul objet
 	private static $connexionBase = NULL;
 	// Objet d'acces a la base
 	private $maBase = NULL;
-	// Est-on dÃ©jÃ  connectÃ© Ã  la base - sert Ã  Ã©viter les connexions multiples
+	// Est-on déjà connecté à la base - sert à éviter les connexions multiples
 	private $estConnecte = NULL;
 
 // Methodes
 
 	/*
-	* Le constructeur d'une connexion Ã  la base
+	* Le constructeur d'une connexion à la base
 	*/
 	public function __construct()
 	{
-		// A la crÃ©ation de l'objet, on est pas connectÃ© Ã  la base
+		// A la création de l'objet, on est pas connecté à la base
 		$this->estConnecte = FALSE;
 	}
 
 	// On interdit le clonage de cet objet	
         public function __clone()
         {
-            trigger_error("Clonage d'accÃ¨s aux donnÃ©es interdit.", E_USER_ERROR);
+            trigger_error("Clonage d'accès aux données interdit.", E_USER_ERROR);
         }
 
-	// On interdit de reveiller un objet AccesAuxDonnees sÃ©rialisÃ©
+	// On interdit de reveiller un objet AccesAuxDonnees sérialisé
         public function __wakeup()
         {
             trigger_error("Unserializing is not allowed.", E_USER_ERROR);
         }
 	
 	//
-	// Outils Ã  usage externe
+	// Outils à usage externe
 	//
 	
 	/**
-	* Fonction statique de crÃ©ation d'un accÃ¨s aux donnÃ©es
-	* Cette fonction vÃ©rifie qu'un accÃ¨s aux donnÃ©es n'existe pas avant
-	* Elle renvoi l'accÃ¨s prÃ©-existant, ou un nouvel accÃ¨s
+	* Fonction statique de création d'un accès aux données
+	* Cette fonction vérifie qu'un accès aux données n'existe pas avant
+	* Elle renvoi l'accès pré-existant, ou un nouvel accès
 	*
-	* C'est cette fonction qui doit Ãªtre utilisÃ©e 
-	* chaque fois qu'on veut avoir accÃ¨s aux donnÃ©es
+	* C'est cette fonction qui doit être utilisée 
+	* chaque fois qu'on veut avoir accès aux données
 	*/
 	public static function recupAccesDonnees()
 	{
-		// Initialisation de l'accÃ¨s Ã  la Base de Donnees
-		// Si on a pas encore d'objet d'accÃ¨s aux donnees
+		// Initialisation de l'accès à la Base de Donnees
+		// Si on a pas encore d'objet d'accès aux donnees
 		if ( self::$connexionBase == NULL )
 		{
-			// On en crÃ©e un et on stocke cette connexion dans la variable de classe
+			// On en crée un et on stocke cette connexion dans la variable de classe
 			self::$connexionBase = new AccesAuxDonnees();
 			return self::$connexionBase;
 		}
 		else
 		{
-			// Sinon, on rÃ©cupÃ¨re celle qui existe dÃ©jÃ 
+			// Sinon, on récupère celle qui existe déjà
 			return self::$connexionBase;
 		}
 	}
   
   //
-  // Outils Ã  usage interne
+  // Outils à usage interne
   //
 
         /**
-        * Fonction de connexion Ã  la base de donnÃ©e
-        * Cette fonction initie la connexion Ã  la base de donnÃ©es
-        * Uniquement si ce n'est pas dÃ©jÃ  fait.
-        * On l'utilise donc au dÃ©but de chaque requÃªte
+        * Fonction de connexion à la base de donnée
+        * Cette fonction initie la connexion à la base de données
+        * Uniquement si ce n'est pas déjà fait.
+        * On l'utilise donc au début de chaque requête
         */
         private function connecteBase()
         {
-            // On initie la connexion uniquement si elle n'est pas dÃ©jÃ  faite
+            // On initie la connexion uniquement si elle n'est pas déjà faite
             if ($this->estConnecte == FALSE)
             {
                 try 
@@ -237,8 +239,8 @@ class AccesAuxDonneesDev
                 } 
                 catch (PDOException $e)
                 {
-                        // AccÃ¨s Ã  la base impossible
-                        print "Connexion a la base de donnee impossible Ã  la base de dÃ©veloppement<br/>";
+                        // Accès à la base impossible
+                        print "Connexion a la base de donnee impossible à la base de développement<br/>";
                         die();
                 }
                 $this->estConnecte = TRUE;
@@ -247,49 +249,49 @@ class AccesAuxDonneesDev
 	
         
 	/**
-	* Fonction gÃ©nÃ©rique de requÃªte type sÃ©lection dans la base
+	* Fonction générique de requête type sélection dans la base
 	*/
 	private function requeteSelect($uneRequeteSQL)
 	{
-		// On initie la connexion Ã  la base, si ce n'est dÃ©jÃ  fait
+		// On initie la connexion à la base, si ce n'est déjà fait
 		$this->connecteBase();	
-		// Si on a bien une connexion Ã  la base
+		// Si on a bien une connexion à la base
 		if ($this->estConnecte)
 		{
-			// On rÃ©cupÃ¨re les rÃ©sultats sous forme d'un objet PDOStatement
+			// On récupère les résultats sous forme d'un objet PDOStatement
 			$resultat = $this->maBase->query($uneRequeteSQL);
 			if ($resultat == false)
 			{
-				// La requete a Ã©chouÃ©
+				// La requete a échoué
 				return false;
 			}
 			else 
 			{
-				// On rÃ©cupÃ¨re le resultat de la requete sous la forme d'un tableau
+				// On récupère le resultat de la requete sous la forme d'un tableau
 				$tableauResultat = $resultat->fetchAll();
 				// On ferme l'objet PDOStatement
 				$resultat->closeCursor();
-				// On renvoie le tableau avec les rÃ©sultats de la requÃªte
+				// On renvoie le tableau avec les résultats de la requête
 				return $tableauResultat;
 			}
 		}
 		else 
-		{ // Sinon, pas de connexion Ã  la base
-			// La requete a Ã©chouÃ©
+		{ // Sinon, pas de connexion à la base
+			// La requete a échoué
 			return false;
 		}
 	}
 	
 	//
-	// RequÃªtes accessibles au reste du site
+	// Requêtes accessibles au reste du site
 	//
 	
 	
         
         
         /**
-         * Fonction permettant de convertir les donnÃ©es stockÃ©es en base vers les donnÃ©es rÃ©elles
-         * notamment en supprimant les caractÃ¨res d'Ã©chappement.
+         * Fonction permettant de convertir les données stockées en base vers les données réelles
+         * notamment en supprimant les caractères d'échappement.
          * @param type $uneVariable 
          */
         public function conversionDepuisBase($uneVariable)

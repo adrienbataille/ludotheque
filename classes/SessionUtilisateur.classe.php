@@ -6,6 +6,7 @@
 
 // Inclusions
 require_once("classes/AccesAuxDonnees.classe.php");
+require_once("classes/AccesAuxDonneesDev.classe.php");
 
 //Constantes
 // Pour les variables de session PHP
