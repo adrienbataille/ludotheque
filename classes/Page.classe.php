@@ -5,6 +5,7 @@
 
 // Inclusion des fichiers utiles
 require_once("classes/AccesAuxDonnees.classe.php");
+require_once("classes/AccesAuxDonneesDev.classe.php");
 require_once("classes/SessionUtilisateur.classe.php");
 
 // Constante de définition des URL
