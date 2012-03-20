@@ -42,6 +42,9 @@ class ModuleAjoutJeux extends Module
 		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
 		$this->maBase = AccesAuxDonneesDev::recupAccesDonnees();
 		
+		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
+		$this->maBase = AccesAuxDonneesDev::recupAccesDonnees();
+		
 		// On affiche le contenu du module
 		// On affiche le formulaire d'ajout des informations propres à un jeux
 		$this->afficheFormulaire();		
@@ -102,6 +105,12 @@ class ModuleAjoutJeux extends Module
         
         $this->fermeBloc("</ol>");
         $this->fermeBloc("</fieldset>");
+        
+        // Bouton valider
+		$this->ouvreBloc("<fieldset>");	
+		$this->ajouteLigne("<input type='hidden' name='modifier' value='true' />");
+		$this->ajouteLigne("<button type='submit' name='Modifier'>Je valide mes modifications</button>");
+		$this->fermeBloc("</fieldset>");
         
         $this->fermeBloc("</form>");
     }
