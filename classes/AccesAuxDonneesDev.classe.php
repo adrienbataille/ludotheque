@@ -204,7 +204,7 @@ class AccesAuxDonneesDev
 		if ( self::$connexionBase == NULL )
 		{
 			// On en crée un et on stocke cette connexion dans la variable de classe
-			self::$connexionBase = new AccesAuxDonnees();
+			self::$connexionBase = new AccesAuxDonneesDev();
 			return self::$connexionBase;
 		}
 		else
@@ -286,7 +286,25 @@ class AccesAuxDonneesDev
 	// Requêtes accessibles au reste du site
 	//
 	
+	/**
+	* Fonction de récupération de la liste des catégories disponibles
+	* Sortie : le tableau contenant les catégories
+	*/
+	public function recupLangue()
+	{
+		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_LANGUE);
+		return $laListe;
+	}
 	
+	/**
+	* Fonction de récupération de la liste des catégories disponibles
+	* Sortie : le tableau contenant les catégories
+	*/
+	public function recupCategorie()
+	{
+		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_CATEGORIE);
+		return $laListe;
+	}
         
         
         /**
