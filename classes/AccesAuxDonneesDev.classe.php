@@ -83,7 +83,7 @@ define("AUTEUR", "auteur");
 
 // Définition des champs de la table TABLE_KIT_JEUX
 define("ID_KIT_JEU", "idKitJeu");
-define("NOM_JEU", "nomKit");
+define("NOM_KIT_JEU", "nomKit");
 define("DESCRIPTIOIN_KIT", "descriptionKit");
 
 // Définition des champs de la table TABLE_LANGUE
@@ -102,7 +102,7 @@ define("ID_NB_JOUEUR", "idNbJoueur");
 define("NB_JOUEUR", "nbJoueur");
 
 // Définition des champs de la table TABLE_NB_JOUEUR_VERSION_JEU
-define("ID_NB_JOUEUR", "idNbJoueurJeu");
+define("ID_NB_JOUEUR_VERSION_JEU", "idNbJoueurJeu");
 
 // Définition des champs de la table TABLE_NOM_JEU
 define("ID_NOM_JEU", "idNomJeu");
@@ -146,10 +146,6 @@ define("ANNEE_SORTIE", "anneeSortie");
 define("ILLUSTRATEUR", "illustrateur");
 define("DISTRIBUTEUR", "distributeur");
 define("EDITEUR", "editeur");
-
-// Définition des tailles des champs
-define("TAILLE_CHAMPS_COURT",50);
-define("TAILLE_CHAMPS_LONG",255);
 
 
 
