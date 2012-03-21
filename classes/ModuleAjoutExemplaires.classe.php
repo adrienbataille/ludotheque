@@ -79,11 +79,16 @@ class ModuleAjoutExemplaires extends Module
         $this->ajouteLigne("<label for='" . DATE_FIN_VIE_E . "'>" . $this->convertiTexte("Date fin de vie") . "</label>");
         $this->ajouteLigne("<input type='text' maxlength='10' name='" . DATE_FIN_VIE_E . "' value='" . VIDE . "' />");
         $this->fermeBloc("</li>");
-        
-		
+        		
         
         $this->fermeBloc("</ol>");
         $this->fermeBloc("</fieldset>");
+		
+		
+		$this->ouvreBloc("<fieldset>");	
+		$this->ajouteLigne("<input type='hidden' name='modifier' value='true' />");
+		$this->ajouteLigne("<button type='submit' name='Modifier'>Valider</button>");
+		$this->fermeBloc("</fieldset>");
         
         $this->fermeBloc("</form>");
     }

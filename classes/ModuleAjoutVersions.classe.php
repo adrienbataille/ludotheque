@@ -141,6 +141,11 @@ class ModuleAjoutVersions extends Module
         
         $this->fermeBloc("</ol>");
         $this->fermeBloc("</fieldset>");
+		
+		$this->ouvreBloc("<fieldset>");	
+		$this->ajouteLigne("<input type='hidden' name='modifier' value='true' />");
+		$this->ajouteLigne("<button type='submit' name='Modifier'>Valider</button>");
+		$this->fermeBloc("</fieldset>");
         
         $this->fermeBloc("</form>");
     }
