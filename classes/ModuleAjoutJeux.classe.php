@@ -23,6 +23,10 @@ class ModuleAjoutJeux extends Module
 	private $traitementFormulaire = false;
 	// On stocke la base de données
 	private $mabase = null;
+	// On stocke les erreurs qui pourront arriver
+	private $erreurLangue = false;
+	private $erreurPays = false;
+	private $erreurJeu = false;
     
 // Methodes
 
@@ -39,8 +43,9 @@ class ModuleAjoutJeux extends Module
 		
 		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
 		$this->maBase = AccesAuxDonneesDev::recupAccesDonnees();
-				
-		// On traite le formulaire, le cas échéant
+<<<<<<< .mine				
+=======		
+>>>>>>> .theirs		// On traite le formulaire, le cas échéant
 		$this->traiteFormulaire();
 		
 		// On affiche le contenu du module
@@ -80,6 +85,24 @@ class ModuleAjoutJeux extends Module
 			$this->ajouteLigne("Formulaire modifié");
 			$this->fermeBloc("</p>");
 		}
+		if ($erreurLangue)
+		{
+			$this->ouvreBloc("<p>");
+			$this->ajouteLigne("Erreur ajout Langue");
+			$this->fermeBloc("</p>");
+		}
+		if ($erreurPays)
+		{
+			$this->ouvreBloc("<p>");
+			$this->ajouteLigne("Erreur ajout Pays");
+			$this->fermeBloc("</p>");
+		}
+		if ($erreurJeu)
+		{
+			$this->ouvreBloc("<p>");
+			$this->ajouteLigne("Erreur ajout Jeu");
+			$this->fermeBloc("</p>");
+		}
         
 		// First fieldset : Nom du jeu
 		$this->ouvreBloc("<fieldset>");
@@ -89,13 +112,13 @@ class ModuleAjoutJeux extends Module
 		// Nom
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . NOM_JEU . "'>" . $this->convertiTexte("Nom") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_JEU . "' name='" . NOM_JEU . "' value='" . VIDE . "' />");
+		$this->ajouteLigne("<input type='text' id='" . NOM_JEU . "' name='" . NOM_JEU . "' value='" . VIDE . "' required='required' />");
 		$this->fermeBloc("</li>");
 		
 		// Langue
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langue du nom") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_LANGUE . "' name='" . NOM_LANGUE . "' value='" . VIDE . "' list='listeLangue' />");
+		$this->ajouteLigne("<input type='text' id='" . NOM_LANGUE . "' name='" . NOM_LANGUE . "' value='" . VIDE . "' list='listeLangue' required='required' />");
 		// Liste des langues pour l'auto-complete
 		$listeLangue = $this->maBase->recupLangue();
 		$this->ouvreBloc("<datalist id='listeLangue'>");
@@ -194,32 +217,44 @@ class ModuleAjoutJeux extends Module
 			// Nettoyage de la Catégorie
 			$categorie = $this->filtreChaine($_POST[NOM_CATEGORIE], TAILLE_CHAMPS_COURT);
 			
+			
+			// Si le champ Langue n'a pas été laissé vide, on récupére l'id de la Langue sélectionnée,
+			// et s'il s'agit d'une nouvelle Langue, on l'insère dans la base de données et on récupére son id
 			$idLangue = 0;
+			if(strcmp($langue, "") != 0)
+			{
+				$listeLangue = $this->maBase->recupLangue();
+				foreach($listeLangue as $uneLangue)
+				{
+					if(strcasecmp($langue, $uneLangue[NOM_LANGUE]) == 0)
+						$idLangue = $uneLangue[ID_LANGUE];
+				}
+				if($idLangue == 0)
+					$idLangue = $this->maBase->InsertionTableLangue($langue);
+			}
+			if(!intval($idLangue))
+				$erreurLangue = true;
+			
+			// Si le champ Pays n'a pas été laissé vide, on récupére l'id du Pays sélectionné,
+			// et s'il s'agit d'un nouveau Pays, on l'insère dans la base de données et on récupére son id
 			$idPays = 0;
-			
-			$listeLangue = $this->maBase->recupLangue();
-			foreach($listeLangue as $uneLangue)
+			if(strcmp($pays, "") != 0)
 			{
-				if(strcasecmp($langue, $uneLangue[NOM_LANGUE]) == 0)
-					$idLangue = $uneLangue[ID_LANGUE];
+				$listePays = $this->maBase->recupPays();
+				foreach($listePays as $unPays)
+				{
+					if(strcasecmp($pays, $unPays[NOM_PAYS]) == 0)
+						$idPays = $unPays[ID_PAYS];
+				}
+				if($idPays == 0)
+					$idPays = $this->maBase->InsertionTablePays($pays);
 			}
+			if(!intval($idPays))
+				$erreurPays = true;
 			
+			$erreurJeu = $this->maBase->InsertionTableJeu($description, $auteur, $idPays);
 			
-			$listePays = $this->maBase->recupPays();
-			foreach($listePays as $unPays)
-			{
-				if(strcasecmp($pays, $unPays[NOM_PAYS]) == 0)
-					$idPays = $unPays[ID_PAYS];
-			}
-			var_dump($idPays);
-			if($idPays == 0)
-				$idPays = $this->maBase->InsertionTablePays($pays);
-			var_dump($idPays);
-			
-			print $idLangue . "<br />";
-			var_dump($description);
-			var_dump($auteur);
-			var_dump($categorie);
+			print "categorie choisie : " . $categorie . "<br />";
 			
 			/*
 			// Vérification de la présence de modifications

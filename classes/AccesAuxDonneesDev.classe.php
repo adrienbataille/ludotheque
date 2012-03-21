@@ -291,33 +291,56 @@ class AccesAuxDonneesDev
     * Entrée : la description, l'auteur et l'id de pays du jeu
     * Sortie : true si l'insertion s'est bien passée, sinon false
     */
-    public function InsertionTableJeux($uneDescription, $unAuteur, $unPays)
+    public function InsertionTableJeu($uneDescription, $unAuteur, $unPays)
     {
         // Protection contre injection SQL
-        if ( strval($uneDescription) && strval($unAuteur) && intval($unPays))
-        {
+        //if (strval($uneDescription) && strval($unAuteur) && intval($unPays))
+        //{
 			// On initie la connexion à la base, si ce n'est déjà fait
 			$this->connecteBase();
 			// Création de la requete
-			$requete = $this->maBase->prepare("INSERT FROM" . TABLE_JEUX . " WHERE " . DESCRIPTION_JEU . "=?," . AUTEUR . "=?, " . ID_PAYS . "=?;");
-			$requete->bindValue(1, $uneDescriptionNom, PDO::PARAM_STR);
-			$requete->bindValue(2, $unAuteur, PDO::PARAM_STR);
-			$requete->bindValue(3, $unPays, PDO::PARAM_INT);
+			$requete = $this->maBase->prepare("INSERT INTO " . TABLE_JEUX . " (" . DESCRIPTION_JEU . ", " . AUTEUR . ", " . ID_PAYS . ") VALUES(?, ?, ?) ;");
+			
+			if(stcmp($uneDescription, "") == 0)
+				$requete->bindValue(1, null, PDO::PARAM_NULL);
+			else
+				$requete->bindValue(1, $uneDescription, PDO::PARAM_STR);
+				
+			if(strcmp($unAuteur, "") == 0)
+				$requete->bindValue(2, null, PDO::PARAM_NULL);
+			else
+				$requete->bindValue(2, $unAuteur, PDO::PARAM_STR);
+				
+			if($unPays != 0)
+				$requete->bindValue(3, $unPays, PDO::PARAM_INT);
+			else
+				$requete->bindValue(3, null, PDO::PARAM_NULL);
+				
 			$resultat = $requete->execute();
 
 			// On termine l'utilisation de la requete
 			$requete->closeCursor();
-        }
-        else
-        {
-            return false;
-        }
+			
+			// Création de la requete pour récupérer l'id du Jeu inséré
+			$requete = "SELECT " . ID_PAYS . " FROM " . TABLE_PAYS . " WHERE " . NOM_PAYS . "='" . $unPays . "' ;";
+			$resultat = $this->requeteSelect($requete);
+			
+			//var_dump($resultat);
+			if(count($resultat) == 0)
+				return false;
+			else
+				return $resultat[0][ID_PAYS];
+        //}
+        //else
+        //{
+        //    return false;
+        //}
     }
     
     /**
     * Fonction d'insertion d'un pays
     * Entrée : nom du pays
-    * Sortie : true si l'insertion s'est bien passée, sinon false
+    * Sortie : l'id du pays si l'insertion s'est bien passée, sinon false
     */
     public function InsertionTablePays($unPays)
     {
@@ -330,16 +353,55 @@ class AccesAuxDonneesDev
 			$requete = $this->maBase->prepare("INSERT INTO " . TABLE_PAYS . " (" . NOM_PAYS . ") VALUES(?) ;");
 			$requete->bindValue(1, $unPays, PDO::PARAM_STR);
 			$resultat = $requete->execute();
-			
-			// Création de la requete pour récupérer l'id du Pays inséré
-			//$requete = $this->maBase->prepare("SELECT " . ID_PAYS . " FROM " . TABLE_PAYS . " WHERE " . NOM_PAYS . "=? ;");
-			//$requete->bindValue(1, $unPays, PDO::PARAM_STR);
-			//$resultat = $requete->execute();
 
 			// On termine l'utilisation de la requete
 			$requete->closeCursor();
 			
-			return $resultat;
+			// Création de la requete pour récupérer l'id du Pays inséré
+			$requete = "SELECT " . ID_PAYS . " FROM " . TABLE_PAYS . " WHERE " . NOM_PAYS . "='" . $unPays . "' ;";
+			$resultat = $this->requeteSelect($requete);
+			
+			//var_dump($resultat);
+			if(count($resultat) == 0)
+				return false;
+			else
+				return $resultat[0][ID_PAYS];
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    /**
+    * Fonction d'insertion d'une langue
+    * Entrée : nom de la langue
+    * Sortie : l'id de la langue si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableLangue($uneLangue)
+    {
+        // Protection contre injection SQL
+        if (strval($uneLangue))
+        {
+			// On initie la connexion à la base, si ce n'est déjà fait
+			$this->connecteBase();
+			// Création de la requete
+			$requete = $this->maBase->prepare("INSERT INTO " . TABLE_LANGUE . " (" . NOM_LANGUE . ") VALUES(?) ;");
+			$requete->bindValue(1, $uneLangue, PDO::PARAM_STR);
+			$resultat = $requete->execute();
+
+			// On termine l'utilisation de la requete
+			$requete->closeCursor();
+			
+			// Création de la requete pour récupérer l'id de la Langue inséré
+			$requete = "SELECT " . ID_LANGUE . " FROM " . TABLE_LANGUE . " WHERE " . NOM_LANGUE . "='" . $uneLangue . "' ;";
+			$resultat = $this->requeteSelect($requete);
+			
+			//var_dump($resultat);
+			if(count($resultat) == 0)
+				return false;
+			else
+				return $resultat[0][ID_LANGUE];
         }
         else
         {
