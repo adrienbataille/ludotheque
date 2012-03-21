@@ -43,11 +43,7 @@ class ModuleAjoutJeux extends Module
 		
 		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
 		$this->maBase = AccesAuxDonneesDev::recupAccesDonnees();
-<<<<<<< HEAD
-		
-=======
-				
->>>>>>> ModuleAjoutExemplaires
+
 		// On traite le formulaire, le cas échéant
 		$this->traiteFormulaire();
 		
