@@ -39,10 +39,7 @@ class ModuleAjoutJeux extends Module
 		
 		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
 		$this->maBase = AccesAuxDonneesDev::recupAccesDonnees();
-		
-		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
-		$this->maBase = AccesAuxDonneesDev::recupAccesDonnees();
-		
+				
 		// On traite le formulaire, le cas échéant
 		$this->traiteFormulaire();
 		
@@ -98,12 +95,12 @@ class ModuleAjoutJeux extends Module
 		// Langue
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langue du nom") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_LANGUE . "' name='" . NOM_LANGUE . "' value='" . VIDE . "' list='listeCategorie' />");
+		$this->ajouteLigne("<input type='text' id='" . NOM_LANGUE . "' name='" . NOM_LANGUE . "' value='" . VIDE . "' list='listeLangue' />");
 		// Liste des langues pour l'auto-complete
-		$listeCategorie = $this->maBase->recupLangue();
-		$this->ouvreBloc("<datalist id='listeCategorie'>");
-		foreach($listeCategorie as $categorie)
-			$this->ajouteLigne("<option id='langue_" . $categorie[ID_LANGUE] . "' label='" . $categorie[NOM_LANGUE] . "' value=\"" . $categorie[NOM_LANGUE] . "\">");
+		$listeLangue = $this->maBase->recupLangue();
+		$this->ouvreBloc("<datalist id='listeLangue'>");
+		foreach($listeLangue as $langue)
+			$this->ajouteLigne("<option id='langue_" . $langue[ID_LANGUE] . "' label='" . $langue[NOM_LANGUE] . "' value=\"" . $langue[NOM_LANGUE] . "\">");
 		$this->fermeBloc("</datalist>");
 		$this->fermeBloc("</li>");
 		
