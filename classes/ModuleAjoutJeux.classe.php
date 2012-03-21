@@ -177,7 +177,6 @@ class ModuleAjoutJeux extends Module
 		$this->fermeBloc("</fieldset>");
 		
 		$this->fermeBloc("</form>");
-		
     }
     
     
