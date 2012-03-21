@@ -438,6 +438,17 @@ class AccesAuxDonneesDev
 		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_PAYS);
 		return $laListe;
 	}
+	
+	/**
+	* Fonction de récupération de la liste des lieux
+	* Sortie : le tableau contenant les lieux
+	*/
+	public function recupLieux()
+	{
+		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_LIEU);
+		return $laListe;
+	}
+
         
         /**
          * Fonction permettant de convertir les données stockées en base vers les données réelles
