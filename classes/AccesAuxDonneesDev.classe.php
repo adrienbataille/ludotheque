@@ -285,26 +285,61 @@ class AccesAuxDonneesDev
 	//
 	// Requêtes accessibles au reste du site
 	//
-	     /**
-    * Fonction de mise à jour des informations d'un utilisateur
-    * Entrée : l'id de cet utilisateur et toutes les informations associées
-    * Sortie : true si la mise à jour s'est bien passée, sinon false
+	
+	/**
+    * Fonction d'insertion d'un jeu
+    * Entrée : la description, l'auteur et l'id de pays du jeu
+    * Sortie : true si l'insertion s'est bien passée, sinon false
     */
-    public function InsertionTableJeux($uneDescription,$unAuteur)
+    public function InsertionTableJeux($uneDescription, $unAuteur, $unPays)
     {
         // Protection contre injection SQL
-        if ( strval($uneDescription) )
+        if ( strval($uneDescription) && strval($unAuteur) && intval($unPays))
         {
 			// On initie la connexion à la base, si ce n'est déjà fait
 			$this->connecteBase();
 			// Création de la requete
-			$requete = $this->maBase->prepare("INSERT FROM" . TABLE_JEUX . " WHERE " . DESCRIPTION_JEU . "=?," . AUTEUR . "=?;");
+			$requete = $this->maBase->prepare("INSERT FROM" . TABLE_JEUX . " WHERE " . DESCRIPTION_JEU . "=?," . AUTEUR . "=?, " . ID_PAYS . "=?;");
 			$requete->bindValue(1, $uneDescriptionNom, PDO::PARAM_STR);
 			$requete->bindValue(2, $unAuteur, PDO::PARAM_STR);
+			$requete->bindValue(3, $unPays, PDO::PARAM_INT);
 			$resultat = $requete->execute();
 
 			// On termine l'utilisation de la requete
 			$requete->closeCursor();
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    /**
+    * Fonction d'insertion d'un pays
+    * Entrée : nom du pays
+    * Sortie : true si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTablePays($unPays)
+    {
+        // Protection contre injection SQL
+        if (strval($unPays))
+        {
+			// On initie la connexion à la base, si ce n'est déjà fait
+			$this->connecteBase();
+			// Création de la requete
+			$requete = $this->maBase->prepare("INSERT INTO " . TABLE_PAYS . " (" . NOM_PAYS . ") VALUES(?) ;");
+			$requete->bindValue(1, $unPays, PDO::PARAM_STR);
+			$resultat = $requete->execute();
+			
+			// Création de la requete pour récupérer l'id du Pays inséré
+			//$requete = $this->maBase->prepare("SELECT " . ID_PAYS . " FROM " . TABLE_PAYS . " WHERE " . NOM_PAYS . "=? ;");
+			//$requete->bindValue(1, $unPays, PDO::PARAM_STR);
+			//$resultat = $requete->execute();
+
+			// On termine l'utilisation de la requete
+			$requete->closeCursor();
+			
+			return $resultat;
         }
         else
         {
@@ -329,6 +364,16 @@ class AccesAuxDonneesDev
 	public function recupCategorie()
 	{
 		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_CATEGORIE);
+		return $laListe;
+	}
+	
+    /**
+	* Fonction de récupération de la liste des catégories disponibles
+	* Sortie : le tableau contenant les catégories
+	*/
+	public function recupPays()
+	{
+		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_PAYS);
 		return $laListe;
 	}
         
