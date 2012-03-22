@@ -35,6 +35,8 @@ class ModuleAjoutJeux extends Module
 	private $auteur = "";
 	private $pays = "";
 	private $categorie = "";
+	// Id à converser
+	private $idJeu = 0;
     
 // Methodes
 
@@ -223,16 +225,16 @@ class ModuleAjoutJeux extends Module
 				// Si le champ Langue n'a pas été laissé vide, on récupére l'id de la Langue sélectionnée,
 				// et s'il s'agit d'une nouvelle Langue, on l'insère dans la base de données et on récupére son id
 				$idLangue = 0;
-				if(strcmp($langue, "") != 0)
+				if(strcmp($this->langue, "") != 0)
 				{
 					$listeLangue = $this->maBase->recupLangue();
 					foreach($listeLangue as $uneLangue)
 					{
-						if(strcasecmp($langue, $uneLangue[NOM_LANGUE]) == 0)
+						if(strcasecmp($this->langue, $uneLangue[NOM_LANGUE]) == 0)
 							$idLangue = $uneLangue[ID_LANGUE];
 					}
 					if($idLangue == 0)
-						$idLangue = $this->maBase->InsertionTableLangue($langue);
+						$idLangue = $this->maBase->InsertionTableLangue($this->langue);
 				}
 				if(!intval($idLangue))
 					$this->erreurLangue = true;
@@ -240,25 +242,26 @@ class ModuleAjoutJeux extends Module
 				// Si le champ Pays n'a pas été laissé vide, on récupére l'id du Pays sélectionné,
 				// et s'il s'agit d'un nouveau Pays, on l'insère dans la base de données et on récupére son id
 				$idPays = 0;
-				if(strcmp($pays, "") != 0)
+				if(strcmp($this->pays, "") != 0)
 				{
 					$listePays = $this->maBase->recupPays();
 					foreach($listePays as $unPays)
 					{
-						if(strcasecmp($pays, $unPays[NOM_PAYS]) == 0)
+						if(strcasecmp($this->pays, $unPays[NOM_PAYS]) == 0)
 							$idPays = $unPays[ID_PAYS];
 					}
 					if($idPays == 0)
-						$idPays = $this->maBase->InsertionTablePays($pays);
+						$idPays = $this->maBase->InsertionTablePays($this->pays);
 				}
 				if(!intval($idPays))
 					$this->erreurPays = true;
 				
-				$this->erreurJeu = $this->maBase->InsertionTableJeu($description, $auteur, $idPays);
+				$this->idJeu = $this->maBase->InsertionTableJeu($this->description, $this->auteur, $idPays);
+				$this->erreurLangue = $this->maBase->InsertionTableNomJeu($this->nom, $idLangue, $this->idJeu);
 				
 				print "categorie choisie : " . $categorie . "<br />";
 			}
-			
+
 			if(strcmp($this->langue, "") == 0)
 				$this->erreurLangue = true;
 				
