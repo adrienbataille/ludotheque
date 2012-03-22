@@ -37,27 +37,31 @@ class ModuleGestionJeux extends Module
 	  */
     public function afficheFormulaire()
     {
-		$this->ouvreBloc("<table>");
-		$this->ouvreBloc("<tr>");
+    	//$this->ouvreBloc("<nav>");
+    	
+		$this->ouvreBloc("<ul id='menu_gestion_jeux'>");
 		
-		$this->ouvreBloc("<td>");
+		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<a href='" . MODULE_AJOUT_JEUX . "' title='" . $this->convertiTexte("Ajouter un jeu") . "'>" . $this->convertiTexte("Ajouter un jeu") . "</a>");
-		$this->fermeBloc("</td>");
+		$this->fermeBloc("</li>");
 		
-		$this->ouvreBloc("<td>");
+		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<a href='" . MODULE_AJOUT_VERSIONS . "' title='" . $this->convertiTexte("Ajouter une version") . "'>" . $this->convertiTexte("Ajouter une version") . "</a>");
-		$this->fermeBloc("</td>");
+		$this->fermeBloc("</li>");
 		
-		$this->ouvreBloc("<td>");
+		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<a href='" . MODULE_AJOUT_EXEMPLAIRES . "' title='" . $this->convertiTexte("Ajouter un exemplaire") . "'>" . $this->convertiTexte("Ajouter un exemplaire") . "</a>");
-		$this->fermeBloc("</td>");
+		$this->fermeBloc("</li>");
 		
-		$this->fermeBloc("</tr>");
-		$this->fermeBloc("</table>");
+		$this->fermeBloc("</ul>");
 		
+		//$this->fermeBloc("</nav>");
+		
+		$this->ouvreBloc("<div id='livre_en_retard'>");
 		$this->ouvreBloc("<p>");
-		$this->ajouteLigne("Ici, afficher liste des jeux en retard");
+		$this->ajouteLigne("Ici, on affichera la liste des jeux en retard");
 		$this->fermeBloc("</p>");
+		$this->fermeBloc("</div>");
     }
 }
 
