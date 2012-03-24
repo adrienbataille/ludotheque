@@ -57,9 +57,8 @@ class ModuleRecherche extends Module
 		$this->ajouteLigne($test["test"]);
 		$this->ajouteLigne($test["hidden"]);
 		$ch="lol";
-		$this->ajouteLigne($ch);
 		$ch.= "sfs";
-		$this->ajouteLigne($ch);
+		print_r($ch);
 		$this->creationSelect($langue,"lang[test]");
 		$this->ajouteLigne($langue[0][0]);
 		//$this->ajouteLigne(var_dump($this->maBase->rechercheParLangue()))

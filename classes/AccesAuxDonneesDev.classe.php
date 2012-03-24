@@ -366,14 +366,14 @@ class AccesAuxDonneesDev
 			//Par nom. On regarde aussi bien le nom du jeu que le nom de la version.
 			if($critere["nom"]!=""){
 				//comme il y a des LIKE, j'ai pas fait de méthode particulière encore
-				$string="AND ( nomVersion LIKE '%" .$critere["nom"]."%' OR nomJeu LIKE '%" .$critere["nom"]. "%'";
+				$critere["nom"]=mysql_real_escape_string($critere["nom"]);
+				$string="AND ( nomVersion LIKE '%" .$critere["nom"]."%' OR nomJeu LIKE '%" .$critere["nom"]. "%')";
 				$query->ajoutWhereLibre($string);
 			}
 				
 			//Par langue. On regarde seulement la langue de la version ( pour le moment )
 			if($critere["langue"]){
-				$query->jointure(TABLE_LANGUE, ID_LANGUE, TABLE_VERSION, ID_LANGUE);
-				$query->ajoutAndEgal(TABLE_LANGUE, NOM_LANGUE, $critere["langue"]);
+				$query->ajoutAndEgal(TABLE_LANGUE, ID_LANGUE, $critere["langue"]);
 			}
 			
 			//ainsi de suite!

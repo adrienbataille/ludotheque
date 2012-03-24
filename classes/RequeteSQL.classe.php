@@ -1,13 +1,12 @@
 <?php
 
 /**
- * Classe permettant de manipuler des requètes SQL.
- * A utiliser pour les très grosses requètes afin de préserver une cohérence.
+ * Classe permettant de manipuler des requètes SQL dyanmiquement en simplifiant leur écriture.
+ * A utiliser pour les très grosses requètes afin de préserver leur cohérence en limitant les erreurs
+ * de développement et utilisateur.
  * @author Romain Laï-King
- * @version 0.1
+ * @version 0.2
  * @package com
- * @todo Passage en SQL 2
- * @todo Nettoyer les entrées utilisateurs contre les injections SQL.
  */
 
 class RequeteSQL
@@ -36,10 +35,10 @@ class RequeteSQL
 	
 	/**
 	 * 4ème partie de la requète.
-	 * @var string $bonus
+	 * @var string $extra
 	 */
 	
-	private $bonus="";
+	private $extra="";
 	
 	/**
 	 * Constructeur. Il fait rien pour le moment
@@ -59,6 +58,15 @@ class RequeteSQL
 	}
 	
 	/**
+	 * Access pour la quatrième partie. 
+	 * @param string $valeur
+	 */
+	
+	public function setExtra($valeur){
+		$this->extra=$valeur;
+	}
+	
+	/**
 	 * Fonction de manipulation de chaine pour créer et ajouter des tables dans une clause FROM
 	 * @param string $table Nom de la table
 	 */
@@ -74,7 +82,7 @@ class RequeteSQL
 	 * Fonction de jointure
 	 * Ajoute automatiquement les tables au JOIN et les clause aux WHERE
 	 * Equivalent de FROM table INNER JOIN table ON champ sauf qu'on utilise FROM et WHERE
-	 * Plus tard éventuellement refaire la logique en INNER JOIN ou NATURAL JOIN
+	 * L'avantage par rapport au SQL 2 est que de multipe jointure s'effecturont correctement même dans le désordre
 	 * @param string $table1 Table 1
 	 * @param string $champ1 Champ de la table 1
 	 * @param string $table2 Table 2
@@ -112,6 +120,7 @@ class RequeteSQL
 				$this->where="WHERE ". $table . $champ . " = " . $valeur;
 			}
 			else{
+				$valeur=mysql_real_escape_string($valeur);
 				$this->where="WHERE ". $table . $champ . " = \' $valeur'";
 			}
 		}
@@ -120,6 +129,7 @@ class RequeteSQL
 				$this->where.="\nAND ". $table . "." . $champ . " = " . $valeur ;
 			}
 			else{
+				$valeur=mysql_real_escape_string($valeur);
 				$this->where.="\nAND ". $table . "." . $champ . " = '$valeur'";
 			}
 		}
@@ -131,7 +141,12 @@ class RequeteSQL
 	 * @param string $clause La clause where qui sera concaténé à $where
 	 */
 	public function ajoutWhereLibre($clause){
-		$this->where.= "\n" . $clause; 
+		if ($this->where==""&&!stristr($clause, "WHERE")){
+			$this->where=="WHERE " . $clause;
+		}
+		else{
+			$this->where.= "\n" . $clause;
+		} 
 	}
 	/**
 	 * Fonction qui compile les différentes parties ensembles pour créer la requète SQL finale.
@@ -140,7 +155,17 @@ class RequeteSQL
 	
 	
 	public function compile(){
-		return $this->requete . "\n". $this->from . "\n" . $this->where . "\n" . $this->bonus;
+		return $this->requete . "\n". $this->from . "\n" . $this->where . "\n" . $this->extra . ";";
 	} 
+	
+	/**
+	 * Fonction de debug. Affiche la requète compilé avec des sauts de ligne <br/>
+	 */
+	
+	public function debug(){
+		$temp=$this->compile();
+		$temp=str_ireplace("\n","<br/>",$temp);
+		print_r($temp);
+	}
 	
 }

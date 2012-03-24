@@ -24,7 +24,7 @@ $critere["langue"]="Anglais";
 //Par nom. On regarde aussi bien le nom du jeu que le nom de la version.
 if($critere["nom"]!=""){
 	//comme il y a des LIKE, j'ai pas fait de méthode particulière encore
-	$string="AND ( nomVersion LIKE '%" .$critere["nom"]."%' OR nomJeu LIKE '%" .$critere["nom"]. "%'";
+	$string="AND ( nomVersion LIKE '%" .$critere["nom"]."%' OR nomJeu LIKE '%" .$critere["nom"]. "%') ";
 	$query->ajoutWhereLibre($string);
 }
 
@@ -34,5 +34,5 @@ if($critere["langue"]){
 	$query->ajoutAndEgal(TABLE_LANGUE, NOM_LANGUE, $critere["langue"]);
 }
 
-echo $query->compile();
+echo $query->debug();
 ?>
