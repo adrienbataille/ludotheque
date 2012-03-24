@@ -25,19 +25,29 @@ class ModuleRecherche extends Module
 	}
 	private function afficheFormulaire()
 	{	
-		$this->ouvreBloc("<p>");
+		$this->ouvreBloc("<form method='post' action='".MODULE_RECHERCHE."'>");
 		$this->ajouteLigne("Hello World");
 		//$this->baseDonnees = AccesAuxDonneesDev::recupAccesDonnees();
 		$langue=$this->maBase->listeLangue();
 		$etat=$this->maBase->listeEtat();
 		$lieu=$this->maBase->listeLieu();
 		var_dump($langue);
-		var_dump($etat);
-		var_dump($lieu);
-		$this->creationSelect($langue,"langue");
+		//var_dump($etat);
+		//var_dump($lieu);
+		$test=$_POST['lang'];
+		var_dump($test);
+		$this->ajouteLigne($test["test"]);
+		$this->ajouteLigne($test["hidden"]);
+		$ch="lol";
+		$this->ajouteLigne($ch);
+		$ch.= "sfs";
+		$this->ajouteLigne($ch);
+		$this->creationSelect($langue,"lang[test]");
 		$this->ajouteLigne($langue[0][0]);
-		//$this->ajouteLigne(var_dump($this->maBase->rechercheParLangue()));
-		$this->fermeBloc("</p>");
+		//$this->ajouteLigne(var_dump($this->maBase->rechercheParLangue()))
+		$this->ajouteLigne("<input type='hidden' value='' name='lang[hidden]' >");
+		$this->ajouteLigne("<input type='submit' value='kikoo' />");
+		$this->fermeBloc("</form>");
 	}
 	
 	/** Fonction qui crée des listes HTML <select>
@@ -47,9 +57,9 @@ class ModuleRecherche extends Module
 
 	private function creationSelect($array,$name){
 		$this->ouvreBloc("<select name=\"".$name."\">");
-		$this->ajouteLigne("<option value\"\">Indifférent</option>");
+		$this->ajouteLigne("<option value=\"\">Indifférent</option>");
 		foreach($array as $row){
-			$this->ajouteLigne("<option value\"".$row[0]."\">".$row[1]."</option>");
+			$this->ajouteLigne("<option value=\"".$row[0]."\">".$row[1]."</option>");
 		}
 		$this->fermeBloc("</select>");
 	}
