@@ -351,6 +351,9 @@ class AccesAuxDonneesDev
 			//Voir les commentaires dans RequeteSQL pour les méthodes
 			
 			//On joint les 6 tables nécessaires pour le SELECT DE BASE
+			
+			//Expression régulière que j'aurai éventuellement besoin
+			// Si je veux changer ma fonction en jointure NATURAL JOIN \$query\-\>jointure\(([A-Z]|(\_)|( ))*,([A-Z]|(\_)|( ))*,([A-Z]|(\_)|( ))*,([A-Z]|(\_)|( ))*\)
 			$query->jointure(TABLE_EXEMPLAIRE, ID_VERSION, TABLE_VERSION, ID_VERSION);
 			$query->jointure(TABLE_JEU, ID_JEU, TABLE_VERSION, ID_JEU);
 			$query->jointure(TABLE_ETAT_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE);
