@@ -6,7 +6,6 @@
  * @author Romain Laï-King
  * @version 0.1
  * @package com
- * @subpackage rlk
  * @todo Passage en SQL 2
  * @todo Nettoyer les entrées utilisateurs contre les injections SQL.
  */

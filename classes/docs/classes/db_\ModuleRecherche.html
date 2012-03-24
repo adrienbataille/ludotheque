@@ -21,6 +21,8 @@
                                     API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
 <li><a>Packages</a></li>
 <li><a href="../packages/db_client.html"><i class="icon-folder-open"></i> client</a></li>
+<li><a href="../packages/db_com.html"><i class="icon-folder-open"></i> com</a></li>
+<li><a href="../packages/db_module.html"><i class="icon-folder-open"></i> module</a></li>
 </ul>
 </li>
 <li class="dropdown" id="charts-menu">
@@ -52,8 +54,7 @@
 <ul class="side-nav nav nav-list">
 <li class="nav-header">
 <i class="icon-custom icon-method"></i> Methods</li>
-<li class="method public "><a href="#__construct" title="__construct :: "><span class="description">__construct()
-        </span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#__construct" title="__construct :: Constructeur. Il ouvre une connexion à la BDD et affiche le formulaire"><span class="description">Constructeur. Il ouvre une connexion à la BDD et affiche le formulaire</span><pre>__construct()</pre></a></li>
 <li class="method public inherited"><a href="#recupContenu" title="recupContenu :: "><span class="description">recupContenu()
         </span><pre>recupContenu()</pre></a></li>
 <li class="nav-header protected">» Protected</li>
@@ -64,8 +65,7 @@ Renvoie le texte au format HTML</span><pre>convertiTexte()</pre></a></li>
 <li class="method protected inherited"><a href="#fermeBloc" title="fermeBloc :: Fonction de fermeture d'un bloc HTML"><span class="description">Fonction de fermeture d'un bloc HTML</span><pre>fermeBloc()</pre></a></li>
 <li class="method protected inherited"><a href="#ouvreBloc" title="ouvreBloc :: Fonction d'ouverture d'un bloc HTML"><span class="description">Fonction d'ouverture d'un bloc HTML</span><pre>ouvreBloc()</pre></a></li>
 <li class="nav-header private">» Private</li>
-<li class="method private "><a href="#afficheFormulaire" title="afficheFormulaire :: "><span class="description">afficheFormulaire()
-        </span><pre>afficheFormulaire()</pre></a></li>
+<li class="method private "><a href="#afficheFormulaire" title="afficheFormulaire :: Affiche le formulaire de recherche"><span class="description">Affiche le formulaire de recherche</span><pre>afficheFormulaire()</pre></a></li>
 <li class="method private "><a href="#creationSelect" title="creationSelect :: Fonction qui crée des listes HTML &lt;select&gt;"><span class="description">Fonction qui crée des listes HTML &lt;select&gt;</span><pre>creationSelect()</pre></a></li>
 <li class="method private inherited"><a href="#indente" title="indente :: Fonction d'indentation du code HTML en fonction du niveau courant
 Renvoie les espaces nécessaires à indenter"><span class="description">Fonction d'indentation du code HTML en fonction du niveau courant
@@ -75,21 +75,33 @@ Renvoie les espaces nécessaires à indenter</span><pre>indente()</pre></a></li>
 <li class="nav-header protected">» Protected</li>
 <li class="property protected inherited"><a href="#%24contenuHTML" title="$contenuHTML :: "><span class="description">$contenuHTML</span><pre>$contenuHTML</pre></a></li>
 <li class="nav-header private">» Private</li>
-<li class="property private "><a href="#%24baseDonnees" title="$baseDonnees :: "><span class="description">$baseDonnees</span><pre>$baseDonnees</pre></a></li>
+<li class="property private "><a href="#%24baseDonnees" title="$baseDonnees :: "><span class="description">Connexion BDD</span><pre>$baseDonnees</pre></a></li>
 <li class="property private inherited"><a href="#%24niveauIndentation" title="$niveauIndentation :: "><span class="description">$niveauIndentation</span><pre>$niveauIndentation</pre></a></li>
 </ul>
 </div>
 <div class="span8">
 <a name="%5CModuleRecherche" id="\ModuleRecherche"></a><div href="../classes/db_%5CModuleRecherche.html" class="element class">
-<p class="short_description">Classe mère des classes modules
-Elle définit les fonctions qu'un module doit avoir pour s'afficher correctement</p>
+<p class="short_description">Module recherche</p>
 <div class="details">
 <p class="long_description"></p>
+<table class="table table-bordered">
+<tr>
+<th>author</th>
+<td><a href="">Romain Laï-King</a></td>
+</tr>
+<tr>
+<th>version</th>
+<td>0.1</td>
+</tr>
+<tr>
+<th>package</th>
+<td><a href="..//packages/db_module.html">module</a></td>
+</tr>
+</table>
 <h3>
 <i class="icon-custom icon-method"></i> Methods</h3>
 <a name="__construct" id="__construct"></a><div class="element clickable method public __construct" data-toggle="collapse" data-target=".__construct .collapse">
-<h2>__construct()
-        </h2>
+<h2>Constructeur. Il ouvre une connexion à la BDD et affiche le formulaire</h2>
 <pre>__construct() </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
@@ -177,26 +189,25 @@ Renvoie le texte au format HTML</h2>
 </div></div>
 </div>
 <a name="afficheFormulaire" id="afficheFormulaire"></a><div class="element clickable method private afficheFormulaire" data-toggle="collapse" data-target=".afficheFormulaire .collapse">
-<h2>afficheFormulaire()
-        </h2>
+<h2>Affiche le formulaire de recherche</h2>
 <pre>afficheFormulaire() </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
 </div>
 <a name="creationSelect" id="creationSelect"></a><div class="element clickable method private creationSelect" data-toggle="collapse" data-target=".creationSelect .collapse">
 <h2>Fonction qui crée des listes HTML &lt;select&gt;</h2>
-<pre>creationSelect(\tableau $array, \nom $name) </pre>
+<pre>creationSelect(array $array, string $name) </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8">
 <p class="long_description"></p>
 <h3>Parameters</h3>
 <div class="subelement argument">
 <h4>$array</h4>
-<code>\tableau</code><p>2 colonnes, la première étant la value, deuxième le nom</p>
+<code>array</code><p>tableau 2 colonnes, la première étant la value, deuxième le nom</p>
 </div>
 <div class="subelement argument">
 <h4>$name</h4>
-<code>\nom</code><p>du paramètre POST</p>
+<code>string</code><p>nom du paramètre</p>
 </div>
 </div></div>
 </div>
@@ -228,8 +239,8 @@ Renvoie les espaces nécessaires à indenter</h2>
 </div></div>
 </div>
 <a name="%24baseDonnees" id="$baseDonnees"> </a><div class="element clickable property private $baseDonnees" data-toggle="collapse" data-target=".$baseDonnees .collapse">
-<h2>$baseDonnees</h2>
-<pre>$baseDonnees </pre>
+<h2>Connexion BDD</h2>
+<pre>$baseDonnees : <a href="../classes/db_%5CAccesAuxDonneesDev.html">\AccesAuxDonneesDev</a></pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
 </div>
@@ -252,7 +263,7 @@ Renvoie les espaces nécessaires à indenter</h2>
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a1</a> and<br>
-            generated on 2012-03-24T15:10:37+01:00.<br></footer></div>
+            generated on 2012-03-24T15:32:10+01:00.<br></footer></div>
 </div>
 </body>
 </html>

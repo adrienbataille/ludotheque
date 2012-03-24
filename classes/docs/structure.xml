@@ -1214,19 +1214,24 @@ un evenement est un tableau de la forme :
       </method>
     </class>
   </file>
-  <file path="Module.classe.php" hash="8295bf1ee02f692f86c7b509f3206a87" package="client">
+  <file path="Module.classe.php" hash="c7366447e4ed8a9983afba49baeb61d1" package="module">
+    <docblock line="2">
+      <description><![CDATA[Classe mère des classes modules
+Elle définit les fonctions qu'un module doit avoir pour s'afficher correctement]]></description>
+      <long-description><![CDATA[]]></long-description>
+      <tag line="2" name="package" description="module"/>
+    </docblock>
     <parse_markers>
-      <error line="16" code="50018">No DocBlock was found for property $contenuHTML</error>
-      <error line="18" code="50018">No DocBlock was found for property $niveauIndentation</error>
-      <error line="25" code="50010">No DocBlock was found for method __construct()</error>
-      <error line="37" code="50010">No DocBlock was found for method recupContenu()</error>
-      <error line="61" code="50015">Argument $HTML is missing from the Docblock of ouvreBloc()</error>
-      <error line="76" code="50015">Argument $html is missing from the Docblock of fermeBloc()</error>
-      <error line="91" code="50015">Argument $html is missing from the Docblock of ajouteLigne()</error>
-      <error line="104" code="50015">Argument $texte is missing from the Docblock of convertiTexte()</error>
-      <error line="1" code="50007">No page-level DocBlock was found in file Module.classe.php</error>
+      <error line="17" code="50018">No DocBlock was found for property $contenuHTML</error>
+      <error line="19" code="50018">No DocBlock was found for property $niveauIndentation</error>
+      <error line="26" code="50010">No DocBlock was found for method __construct()</error>
+      <error line="38" code="50010">No DocBlock was found for method recupContenu()</error>
+      <error line="62" code="50015">Argument $HTML is missing from the Docblock of ouvreBloc()</error>
+      <error line="77" code="50015">Argument $html is missing from the Docblock of fermeBloc()</error>
+      <error line="92" code="50015">Argument $html is missing from the Docblock of ajouteLigne()</error>
+      <error line="105" code="50015">Argument $texte is missing from the Docblock of convertiTexte()</error>
     </parse_markers>
-    <class final="false" abstract="false" namespace="default" line="11" package="client">
+    <class final="false" abstract="false" namespace="default" line="12" package="module">
       <name>Module</name>
       <full_name>\Module</full_name>
       <extends/>
@@ -1234,80 +1239,81 @@ un evenement est un tableau de la forme :
         <description><![CDATA[Classe mère des classes modules
 Elle définit les fonctions qu'un module doit avoir pour s'afficher correctement]]></description>
         <long-description><![CDATA[]]></long-description>
+        <tag line="2" name="package" description="module"/>
       </docblock>
-      <property final="false" static="false" visibility="protected" line="16" package="client">
+      <property final="false" static="false" visibility="protected" line="17" package="client">
         <name>$contenuHTML</name>
         <default><![CDATA[]]></default>
       </property>
-      <property final="false" static="false" visibility="private" line="18" package="client">
+      <property final="false" static="false" visibility="private" line="19" package="client">
         <name>$niveauIndentation</name>
         <default><![CDATA[]]></default>
       </property>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="25" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="26" package="">
         <name>__construct</name>
         <type>function</type>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="37" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="38" package="">
         <name>recupContenu</name>
         <type>function</type>
       </method>
-      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="51" package="">
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="52" package="">
         <name>indente</name>
         <type>function</type>
-        <docblock line="47">
+        <docblock line="48">
           <description><![CDATA[Fonction d'indentation du code HTML en fonction du niveau courant
 Renvoie les espaces nécessaires à indenter]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="64" package="">
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="65" package="">
         <name>ouvreBloc</name>
         <type>function</type>
-        <docblock line="61">
+        <docblock line="62">
           <description><![CDATA[Fonction d'ouverture d'un bloc HTML]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>
-        <argument line="64">
+        <argument line="65">
           <name>$HTML</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="79" package="">
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="80" package="">
         <name>fermeBloc</name>
         <type>function</type>
-        <docblock line="76">
+        <docblock line="77">
           <description><![CDATA[Fonction de fermeture d'un bloc HTML]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>
-        <argument line="79">
+        <argument line="80">
           <name>$html</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="94" package="">
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="95" package="">
         <name>ajouteLigne</name>
         <type>function</type>
-        <docblock line="91">
+        <docblock line="92">
           <description><![CDATA[Fonction d'ajout de balise dans un bloc]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>
-        <argument line="94">
+        <argument line="95">
           <name>$html</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="108" package="">
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="109" package="">
         <name>convertiTexte</name>
         <type>function</type>
-        <docblock line="104">
+        <docblock line="105">
           <description><![CDATA[Fonction de conversion texte -> HTML
 Renvoie le texte au format HTML]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>
-        <argument line="108">
+        <argument line="109">
           <name>$texte</name>
           <default><![CDATA[]]></default>
           <type/>
@@ -1617,56 +1623,84 @@ Prends en paramètre la chaine à filtrer, et la taille max de cette chaine]]></
       </method>
     </class>
   </file>
-  <file path="ModuleRecherche.classe.php" hash="355bc7294e2abb31c8b1a2d342c67139" package="client">
+  <file path="ModuleRecherche.classe.php" hash="3c64fd17f4fe899f74f28ea59cd1f18b" package="module">
+    <docblock line="2">
+      <description><![CDATA[Module recherche]]></description>
+      <long-description><![CDATA[]]></long-description>
+      <tag line="2" name="package" description="module"/>
+    </docblock>
     <parse_markers>
-      <error line="14" code="50018">No DocBlock was found for property $baseDonnees</error>
-      <error line="16" code="50010">No DocBlock was found for method __construct()</error>
-      <error line="26" code="50010">No DocBlock was found for method afficheFormulaire()</error>
-      <error line="11" code="50000">No DocBlock was found for ModuleRecherche</error>
-      <error line="1" code="50007">No page-level DocBlock was found in file ModuleRecherche.classe.php</error>
+      <critical line="23" code="50019">No short description for property $baseDonnees</critical>
     </parse_markers>
-    <include line="5" type="Require Once" package="Default">
+    <include line="7" type="Require Once" package="module">
       <name>classes/Module.classe.php</name>
+      <docblock line="2">
+        <description><![CDATA[Module recherche]]></description>
+        <long-description><![CDATA[]]></long-description>
+        <tag line="2" name="package" description="module"/>
+      </docblock>
     </include>
-    <constant namespace="default" line="9" package="client">
+    <constant namespace="default" line="11" package="client">
       <name>MODULE_RECHERCHE</name>
       <value><![CDATA[RACINE_SITE . "module.php?idModule=Recherche"]]></value>
     </constant>
-    <class final="false" abstract="false" namespace="default" line="11" package="client">
+    <class final="false" abstract="false" namespace="default" line="21" package="module">
       <name>ModuleRecherche</name>
       <full_name>\ModuleRecherche</full_name>
       <extends>\Module</extends>
-      <property final="false" static="false" visibility="private" line="14" package="client">
+      <docblock line="13">
+        <description><![CDATA[Module recherche]]></description>
+        <long-description><![CDATA[]]></long-description>
+        <tag line="13" name="author" description="Romain Laï-King"/>
+        <tag line="13" name="version" description="0.1"/>
+        <tag line="13" name="package" description="module"/>
+      </docblock>
+      <property final="false" static="false" visibility="private" line="26" package="client">
         <name>$baseDonnees</name>
         <default><![CDATA[NULL]]></default>
-      </property>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="16" package="">
-        <name>__construct</name>
-        <type>function</type>
-      </method>
-      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="26" package="">
-        <name>afficheFormulaire</name>
-        <type>function</type>
-      </method>
-      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="58" package="">
-        <name>creationSelect</name>
-        <type>function</type>
-        <docblock line="53">
-          <description><![CDATA[Fonction qui crée des listes HTML <select>]]></description>
+        <docblock line="23">
+          <description><![CDATA[]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="53" name="param" description="2 colonnes, la première étant la value, deuxième le nom" type="\tableau" variable="$array">
-            <type by_reference="false">\tableau</type>
-          </tag>
-          <tag line="53" name="param" description="du paramètre POST" type="\nom" variable="$name">
-            <type by_reference="false">\nom</type>
+          <tag line="23" name="var" description="Connexion BDD" type="\AccesAuxDonneesDev">
+            <type by_reference="false">\AccesAuxDonneesDev</type>
           </tag>
         </docblock>
-        <argument line="58">
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="31" package="">
+        <name>__construct</name>
+        <type>function</type>
+        <docblock line="28">
+          <description><![CDATA[Constructeur. Il ouvre une connexion à la BDD et affiche le formulaire]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="44" package="">
+        <name>afficheFormulaire</name>
+        <type>function</type>
+        <docblock line="41">
+          <description><![CDATA[Affiche le formulaire de recherche]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="76" package="">
+        <name>creationSelect</name>
+        <type>function</type>
+        <docblock line="71">
+          <description><![CDATA[Fonction qui crée des listes HTML <select>]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="71" name="param" description="tableau 2 colonnes, la première étant la value, deuxième le nom" type="array" variable="$array">
+            <type by_reference="false">array</type>
+          </tag>
+          <tag line="71" name="param" description="nom du paramètre" type="string" variable="$name">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="76">
           <name>$array</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="58">
+        <argument line="76">
           <name>$name</name>
           <default><![CDATA[]]></default>
           <type/>
@@ -2161,17 +2195,17 @@ Le destructeur termine la construction de la page et l'affiche]]></description>
       </method>
     </class>
   </file>
-  <file path="RequeteSQL.classe.php" hash="6d66b79bc338f14b32f06e08100fa0a8" package="com\rlk">
+  <file path="RequeteSQL.classe.php" hash="e9a02b6455e51aea834c0b2d0ccf134f" package="com">
     <docblock line="3">
       <description><![CDATA[Classe permettant de manipuler des requètes SQL.]]></description>
       <long-description><![CDATA[<p>A utiliser pour les très grosses requètes afin de préserver une cohérence.</p>]]></long-description>
       <tag line="3" name="author" description="Romain Laï-King"/>
       <tag line="3" name="version" description="0.1"/>
       <tag line="3" name="package" description="com"/>
-      <tag line="3" name="subpackage" description="rlk"/>
       <tag line="3" name="todo" description="Passage en SQL 2"/>
+      <tag line="3" name="todo" description="Nettoyer les entrées utilisateurs contre les injections SQL."/>
     </docblock>
-    <class final="false" abstract="false" namespace="default" line="13" package="com\rlk">
+    <class final="false" abstract="false" namespace="default" line="13" package="com">
       <name>RequeteSQL</name>
       <full_name>\RequeteSQL</full_name>
       <extends/>
@@ -2181,8 +2215,8 @@ Le destructeur termine la construction de la page et l'affiche]]></description>
         <tag line="3" name="author" description="Romain Laï-King"/>
         <tag line="3" name="version" description="0.1"/>
         <tag line="3" name="package" description="com"/>
-        <tag line="3" name="subpackage" description="rlk"/>
         <tag line="3" name="todo" description="Passage en SQL 2"/>
+        <tag line="3" name="todo" description="Nettoyer les entrées utilisateurs contre les injections SQL."/>
       </docblock>
       <property final="false" static="false" visibility="private" line="20" package="client">
         <name>$requete</name>
@@ -2860,9 +2894,8 @@ Cet accès est offert par le groupe administrateur]]></description>
   <package name="" full_name=""/>
   <package name="Default" full_name="Default"/>
   <package name="client" full_name="client"/>
-  <package name="com" full_name="com">
-    <package name="rlk" full_name="com\rlk"/>
-  </package>
+  <package name="com" full_name="com"/>
+  <package name="module" full_name="module"/>
   <namespace name="default" full_name="default"/>
   <marker>todo</marker>
   <marker>fixme</marker>

@@ -1,6 +1,8 @@
 <?php
-//Module Recherche
-
+/** 
+ * Module recherche
+ * @package module
+ */
 // Inclusions
 require_once("classes/Module.classe.php");
 
@@ -8,11 +10,24 @@ require_once("classes/Module.classe.php");
 //Constantes
 define("MODULE_RECHERCHE", RACINE_SITE . "module.php?idModule=Recherche");
 
+/**
+ * Module recherche
+ * @author Romain Laï-King
+ * @version 0.1
+ * @package module
+ */
+
+
 class ModuleRecherche extends Module
 {
-	// accès aux données (Base de donnée)
+	/**
+	 * @var AccesAuxDonneesDev Connexion BDD
+	 */
 	private $baseDonnees = NULL;
 	
+	/**
+	 * Constructeur. Il ouvre une connexion à la BDD et affiche le formulaire
+	 */
 	public function __construct()
 	{
 		// On utilise le constructeur de la classe mère
@@ -23,6 +38,9 @@ class ModuleRecherche extends Module
 
 		
 	}
+	/**
+	 * Affiche le formulaire de recherche
+	 */
 	private function afficheFormulaire()
 	{	
 		$this->ouvreBloc("<form method='post' action='".MODULE_RECHERCHE."'>");
@@ -51,8 +69,8 @@ class ModuleRecherche extends Module
 	}
 	
 	/** Fonction qui crée des listes HTML <select>
-	* @param tableau 2 colonnes, la première étant la value, deuxième le nom
-	* @param nom du paramètre POST
+	* @param array tableau 2 colonnes, la première étant la value, deuxième le nom
+	* @param string nom du paramètre
 	*/
 
 	private function creationSelect($array,$name){
