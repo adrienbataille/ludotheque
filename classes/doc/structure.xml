@@ -1,0 +1,2868 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project version="2.0.0a1" title="">
+  <file path="AccesAuxDonnees.classe.php" hash="28b78c3ceee3ae45ca157cece3d0c3e4" package="Default">
+    <parse_markers>
+      <error line="65" code="50018">No DocBlock was found for property $connexionBase</error>
+      <error line="67" code="50018">No DocBlock was found for property $maBase</error>
+      <error line="69" code="50018">No DocBlock was found for property $estConnecte</error>
+      <error line="76" code="50010">No DocBlock was found for method __construct()</error>
+      <error line="83" code="50010">No DocBlock was found for method __clone()</error>
+      <error line="89" code="50010">No DocBlock was found for method __wakeup()</error>
+      <error line="157" code="50015">Argument $uneRequeteSQL is missing from the Docblock of requeteSelect()</error>
+      <error line="195" code="50015">Argument $uneID is missing from the Docblock of recupInfoUtilisateur()</error>
+      <error line="239" code="50015">Argument $uneID is missing from the Docblock of recupGroupesUtilisateur()</error>
+      <error line="284" code="50015">Argument $uneID is missing from the Docblock of recupGroupesUtilisateurAvecID()</error>
+      <error line="331" code="50015">Argument $uneID is missing from the Docblock of miseAJourInfoUtilisateur()</error>
+      <error line="331" code="50015">Argument $unTitre is missing from the Docblock of miseAJourInfoUtilisateur()</error>
+      <error line="331" code="50015">Argument $unNom is missing from the Docblock of miseAJourInfoUtilisateur()</error>
+      <error line="331" code="50015">Argument $unPrenom is missing from the Docblock of miseAJourInfoUtilisateur()</error>
+      <error line="331" code="50015">Argument $unEmail is missing from the Docblock of miseAJourInfoUtilisateur()</error>
+      <error line="331" code="50015">Argument $actif is missing from the Docblock of miseAJourInfoUtilisateur()</error>
+      <error line="331" code="50015">Argument $uneAdresse is missing from the Docblock of miseAJourInfoUtilisateur()</error>
+      <error line="331" code="50015">Argument $unCodePostal is missing from the Docblock of miseAJourInfoUtilisateur()</error>
+      <error line="331" code="50015">Argument $unTelephone is missing from the Docblock of miseAJourInfoUtilisateur()</error>
+      <error line="331" code="50015">Argument $unPortable is missing from the Docblock of miseAJourInfoUtilisateur()</error>
+      <error line="331" code="50015">Argument $dateDeNaissance is missing from the Docblock of miseAJourInfoUtilisateur()</error>
+      <error line="331" code="50015">Argument $uneProfession is missing from the Docblock of miseAJourInfoUtilisateur()</error>
+      <error line="331" code="50015">Argument $dateAdhesion is missing from the Docblock of miseAJourInfoUtilisateur()</error>
+      <error line="331" code="50015">Argument $dateCotisation is missing from the Docblock of miseAJourInfoUtilisateur()</error>
+      <error line="331" code="50015">Argument $exemptCotisation is missing from the Docblock of miseAJourInfoUtilisateur()</error>
+      <error line="331" code="50015">Argument $commentaires is missing from the Docblock of miseAJourInfoUtilisateur()</error>
+      <error line="455" code="50015">Argument $unGroupe is missing from the Docblock of recupUtilisateursDansUnGroupe()</error>
+      <notice line="508" code="50017">The type for the @param tag in conversionDepuisBase() is "type"; isn't this an IDE default?</notice>
+      <error line="59" code="50000">No DocBlock was found for AccesAuxDonnees</error>
+      <error line="1" code="50007">No page-level DocBlock was found in file AccesAuxDonnees.classe.php</error>
+    </parse_markers>
+    <constant namespace="default" line="10" package="Default">
+      <name>SERVEUR</name>
+      <value><![CDATA["localhost"]]></value>
+      <docblock line="2">
+        <description><![CDATA[Classe de gestion de l'accès à la base de donnée]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </constant>
+    <constant namespace="default" line="11" package="Default">
+      <name>LOGIN</name>
+      <value><![CDATA["ludotheque"]]></value>
+    </constant>
+    <constant namespace="default" line="12" package="Default">
+      <name>MDP</name>
+      <value><![CDATA["ludo"]]></value>
+    </constant>
+    <constant namespace="default" line="13" package="Default">
+      <name>BASE</name>
+      <value><![CDATA["mdjtufjjpdoc"]]></value>
+    </constant>
+    <constant namespace="default" line="14" package="Default">
+      <name>TABLE_PREFIX</name>
+      <value><![CDATA["MDJT_"]]></value>
+    </constant>
+    <constant namespace="default" line="17" package="Default">
+      <name>TABLE_UTILISATEURS</name>
+      <value><![CDATA[TABLE_PREFIX . "UTILISATEURS"]]></value>
+    </constant>
+    <constant namespace="default" line="18" package="Default">
+      <name>TABLE_VILLES</name>
+      <value><![CDATA[TABLE_PREFIX . "VILLES"]]></value>
+    </constant>
+    <constant namespace="default" line="19" package="Default">
+      <name>TABLE_TYPE_ADHERENT</name>
+      <value><![CDATA[TABLE_PREFIX . "TYPE_ADHERENT"]]></value>
+    </constant>
+    <constant namespace="default" line="20" package="Default">
+      <name>TABLE_GROUPES</name>
+      <value><![CDATA[TABLE_PREFIX . "GROUPES"]]></value>
+    </constant>
+    <constant namespace="default" line="21" package="Default">
+      <name>TABLE_LIEN_UTILISATEURS_GROUPES</name>
+      <value><![CDATA[TABLE_PREFIX . "LIEN_UTILISATEURS_GROUPES"]]></value>
+    </constant>
+    <constant namespace="default" line="24" package="Default">
+      <name>ID_UTILISATEUR</name>
+      <value><![CDATA["idUtilisateur"]]></value>
+    </constant>
+    <constant namespace="default" line="25" package="Default">
+      <name>TITRE</name>
+      <value><![CDATA["titre"]]></value>
+    </constant>
+    <constant namespace="default" line="26" package="Default">
+      <name>NOM</name>
+      <value><![CDATA["nom"]]></value>
+    </constant>
+    <constant namespace="default" line="27" package="Default">
+      <name>PRENOM</name>
+      <value><![CDATA["prenom"]]></value>
+    </constant>
+    <constant namespace="default" line="28" package="Default">
+      <name>EMAIL</name>
+      <value><![CDATA["email"]]></value>
+    </constant>
+    <constant namespace="default" line="29" package="Default">
+      <name>ACTIF</name>
+      <value><![CDATA["actif"]]></value>
+    </constant>
+    <constant namespace="default" line="30" package="Default">
+      <name>ADRESSE</name>
+      <value><![CDATA["adresse"]]></value>
+    </constant>
+    <constant namespace="default" line="31" package="Default">
+      <name>TELEPHONE</name>
+      <value><![CDATA["telephone"]]></value>
+    </constant>
+    <constant namespace="default" line="32" package="Default">
+      <name>PORTABLE</name>
+      <value><![CDATA["portable"]]></value>
+    </constant>
+    <constant namespace="default" line="33" package="Default">
+      <name>DATE_NAISSANCE</name>
+      <value><![CDATA["dateNaissance"]]></value>
+    </constant>
+    <constant namespace="default" line="34" package="Default">
+      <name>PROFESSION</name>
+      <value><![CDATA["profession"]]></value>
+    </constant>
+    <constant namespace="default" line="35" package="Default">
+      <name>DATE_ADHESION</name>
+      <value><![CDATA["dateAdhesion"]]></value>
+    </constant>
+    <constant namespace="default" line="36" package="Default">
+      <name>DATE_COTISATION</name>
+      <value><![CDATA["dateCotisation"]]></value>
+    </constant>
+    <constant namespace="default" line="37" package="Default">
+      <name>EXEMPT_COTISATION</name>
+      <value><![CDATA["exemptCotisation"]]></value>
+    </constant>
+    <constant namespace="default" line="38" package="Default">
+      <name>COMMENTAIRES</name>
+      <value><![CDATA["commentaires"]]></value>
+    </constant>
+    <constant namespace="default" line="40" package="Default">
+      <name>TAILLE_CHAMPS_TELEPHONE</name>
+      <value><![CDATA[20]]></value>
+    </constant>
+    <constant namespace="default" line="41" package="Default">
+      <name>TAILLE_CHAMPS_COURT</name>
+      <value><![CDATA[50]]></value>
+    </constant>
+    <constant namespace="default" line="42" package="Default">
+      <name>TAILLE_CHAMPS_LONG</name>
+      <value><![CDATA[255]]></value>
+    </constant>
+    <constant namespace="default" line="45" package="Default">
+      <name>ID_VILLE</name>
+      <value><![CDATA["idVille"]]></value>
+    </constant>
+    <constant namespace="default" line="46" package="Default">
+      <name>VILLE</name>
+      <value><![CDATA["nomVille"]]></value>
+    </constant>
+    <constant namespace="default" line="47" package="Default">
+      <name>CODEPOSTAL</name>
+      <value><![CDATA["codePostal"]]></value>
+    </constant>
+    <constant namespace="default" line="50" package="Default">
+      <name>ID_TYPE_ADHERENT</name>
+      <value><![CDATA["idTypeAdherent"]]></value>
+    </constant>
+    <constant namespace="default" line="51" package="Default">
+      <name>TYPE_ADHERENT</name>
+      <value><![CDATA["typeAdherent"]]></value>
+    </constant>
+    <constant namespace="default" line="54" package="Default">
+      <name>ID_GROUPE</name>
+      <value><![CDATA["idGroupe"]]></value>
+    </constant>
+    <constant namespace="default" line="55" package="Default">
+      <name>NOM_GROUPE</name>
+      <value><![CDATA["nomGroupe"]]></value>
+    </constant>
+    <class final="false" abstract="false" namespace="default" line="59" package="Default">
+      <name>AccesAuxDonnees</name>
+      <full_name>\AccesAuxDonnees</full_name>
+      <extends/>
+      <property final="false" static="true" visibility="private" line="65" package="Default">
+        <name>$connexionBase</name>
+        <default><![CDATA[NULL]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="67" package="Default">
+        <name>$maBase</name>
+        <default><![CDATA[NULL]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="69" package="Default">
+        <name>$estConnecte</name>
+        <default><![CDATA[NULL]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="76" package="">
+        <name>__construct</name>
+        <type>function</type>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="83" package="">
+        <name>__clone</name>
+        <type>function</type>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="89" package="">
+        <name>__wakeup</name>
+        <type>function</type>
+      </method>
+      <method final="false" abstract="false" static="true" visibility="public" namespace="default" line="106" package="">
+        <name>recupAccesDonnees</name>
+        <type>function</type>
+        <docblock line="98">
+          <description><![CDATA[Fonction statique de création d'un accès aux données
+Cette fonction vérifie qu'un accès aux données n'existe pas avant
+Elle renvoi l'accès pré-existant, ou un nouvel accès]]></description>
+          <long-description><![CDATA[<p>C'est cette fonction qui doit être utilisée
+chaque fois qu'on veut avoir accès aux données</p>]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="133" package="">
+        <name>connecteBase</name>
+        <type>function</type>
+        <docblock line="127">
+          <description><![CDATA[Fonction de connexion à la base de donnée
+Cette fonction initie la connexion à la base de données
+Uniquement si ce n'est pas déjà fait.]]></description>
+          <long-description><![CDATA[<p>On l'utilise donc au début de chaque requête</p>]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="160" package="">
+        <name>requeteSelect</name>
+        <type>function</type>
+        <docblock line="157">
+          <description><![CDATA[Fonction générique de requête type sélection dans la base]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="160">
+          <name>$uneRequeteSQL</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="201" package="">
+        <name>recupInfoUtilisateur</name>
+        <type>function</type>
+        <docblock line="195">
+          <description><![CDATA[Fonction de récupération des informations d'un utilisateur
+Entrée : l'id de cet utilisateur
+Sortie : le tableau correspondant à cet utilisateur
+Si l'utilisateur n'existe pas en base, renvoi false]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="201">
+          <name>$uneID</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="245" package="">
+        <name>recupGroupesUtilisateur</name>
+        <type>function</type>
+        <docblock line="239">
+          <description><![CDATA[Fonction de récupération des groupes d'un utilisateur
+Entrée : l'id de cet utilisateur
+Sortie : le tableau des groupes auxquels l'utilisateur appartient
+Si l'utilisateur n'existe pas en base, renvoi false]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="245">
+          <name>$uneID</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="290" package="">
+        <name>recupGroupesUtilisateurAvecID</name>
+        <type>function</type>
+        <docblock line="284">
+          <description><![CDATA[Fonction de récupération des groupes d'un utilisateur Nom et ID
+Entrée : l'id de cet utilisateur
+Sortie : le tableau des groupes auxquels l'utilisateur appartient
+Si l'utilisateur n'existe pas en base, renvoi false]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="290">
+          <name>$uneID</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="336" package="">
+        <name>miseAJourInfoUtilisateur</name>
+        <type>function</type>
+        <docblock line="331">
+          <description><![CDATA[Fonction de mise à jour des informations d'un utilisateur
+Entrée : l'id de cet utilisateur et toutes les informations associées
+Sortie : true si la mise à jour s'est bien passée, sinon false]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="336">
+          <name>$uneID</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="336">
+          <name>$unTitre</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="336">
+          <name>$unNom</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="336">
+          <name>$unPrenom</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="336">
+          <name>$unEmail</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="336">
+          <name>$actif</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="336">
+          <name>$uneAdresse</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="336">
+          <name>$unCodePostal</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="336">
+          <name>$unTelephone</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="336">
+          <name>$unPortable</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="336">
+          <name>$dateDeNaissance</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="336">
+          <name>$uneProfession</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="336">
+          <name>$dateAdhesion</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="336">
+          <name>$dateCotisation</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="336">
+          <name>$exemptCotisation</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="336">
+          <name>$commentaires</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="408" package="">
+        <name>recupTypesAdherent</name>
+        <type>function</type>
+        <docblock line="404">
+          <description><![CDATA[Fonction de récupération de la liste des types d'adhérents disponibles
+Sortie : le tableau contenant cette liste]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="423" package="">
+        <name>recupUtilisateurs</name>
+        <type>function</type>
+        <docblock line="419">
+          <description><![CDATA[Fonction de récupération de la liste des utilisateurs
+Sortie : le tableau contenant cette liste]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="442" package="">
+        <name>recupGroupes</name>
+        <type>function</type>
+        <docblock line="438">
+          <description><![CDATA[Fonction de récupération de la liste des groupes
+Sortie : le tableau contenant cette liste]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="459" package="">
+        <name>recupUtilisateursDansUnGroupe</name>
+        <type>function</type>
+        <docblock line="455">
+          <description><![CDATA[Fonction de récupération de la liste des utilisateurs d'un groupe
+Sortie : le tableau contenant cette liste]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="459">
+          <name>$unGroupe</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="492" package="">
+        <name>recupVillesEtCodePostaux</name>
+        <type>function</type>
+        <docblock line="488">
+          <description><![CDATA[Fonction de récupération de la liste des villes et codes postaux associés
+Sortie : le tableau contenant cette liste]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="513" package="">
+        <name>conversionDepuisBase</name>
+        <type>function</type>
+        <docblock line="508">
+          <description><![CDATA[Fonction permettant de convertir les données stockées en base vers les données réelles
+notamment en supprimant les caractères d'échappement.]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="508" name="param" description="" type="\type" variable="$uneVariable">
+            <type by_reference="false">\type</type>
+          </tag>
+        </docblock>
+        <argument line="513">
+          <name>$uneVariable</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+  </file>
+  <file path="AccesAuxDonneesDev.classe.php" hash="a89ba89220995315fa06f6063d6f6ff8" package="Default">
+    <parse_markers>
+      <error line="159" code="50018">No DocBlock was found for property $connexionBase</error>
+      <error line="161" code="50018">No DocBlock was found for property $maBase</error>
+      <error line="163" code="50018">No DocBlock was found for property $estConnecte</error>
+      <error line="170" code="50010">No DocBlock was found for method __construct()</error>
+      <error line="177" code="50010">No DocBlock was found for method __clone()</error>
+      <error line="183" code="50010">No DocBlock was found for method __wakeup()</error>
+      <error line="251" code="50015">Argument $uneRequeteSQL is missing from the Docblock of requeteSelect()</error>
+      <notice line="292" code="50017">The type for the @param tag in conversionDepuisBase() is "type"; isn't this an IDE default?</notice>
+      <error line="153" code="50000">No DocBlock was found for AccesAuxDonneesDev</error>
+      <error line="1" code="50007">No page-level DocBlock was found in file AccesAuxDonneesDev.classe.php</error>
+    </parse_markers>
+    <include line="8" type="Require Once" package="Default">
+      <name>classes/AccesAuxDonnees.classe.php</name>
+      <docblock line="2">
+        <description><![CDATA[Classe de gestion de l'accès à la base de donnée]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </include>
+    <include line="9" type="Require Once" package="Default">
+      <name>classes/RequeteSQL.classe.php</name>
+    </include>
+    <constant namespace="default" line="11" package="Default">
+      <name>BASE_DEV</name>
+      <value><![CDATA["mdjtufjjpdev"]]></value>
+    </constant>
+    <constant namespace="default" line="14" package="Default">
+      <name>TABLE_CATEGORIE</name>
+      <value><![CDATA[TABLE_PREFIX . "CATEGORIE"]]></value>
+    </constant>
+    <constant namespace="default" line="15" package="Default">
+      <name>TABLE_CATEGORIE_JEUX</name>
+      <value><![CDATA[TABLE_PREFIX . "CATEGORIE_JEUX"]]></value>
+    </constant>
+    <constant namespace="default" line="16" package="Default">
+      <name>TABLE_EMPRUNT</name>
+      <value><![CDATA[TABLE_PREFIX . "EMPRUNT"]]></value>
+    </constant>
+    <constant namespace="default" line="17" package="Default">
+      <name>TABLE_ETAT_EXEMPLAIRE</name>
+      <value><![CDATA[TABLE_PREFIX . "ETAT_EXEMPLAIRE"]]></value>
+    </constant>
+    <constant namespace="default" line="18" package="Default">
+      <name>TABLE_EXEMPLAIRE</name>
+      <value><![CDATA[TABLE_PREFIX . "EXEMPLAIRE"]]></value>
+    </constant>
+    <constant namespace="default" line="19" package="Default">
+      <name>TABLE_EXTENSION</name>
+      <value><![CDATA[TABLE_PREFIX . "EXTENSION"]]></value>
+    </constant>
+    <constant namespace="default" line="20" package="Default">
+      <name>TABLE_FAIRE_PARTIE_KIT</name>
+      <value><![CDATA[TABLE_PREFIX . "FAIRE_PARTIE_KIT"]]></value>
+    </constant>
+    <constant namespace="default" line="21" package="Default">
+      <name>TABLE_INVENTAIRE</name>
+      <value><![CDATA[TABLE_PREFIX . "INVENTAIRE"]]></value>
+    </constant>
+    <constant namespace="default" line="22" package="Default">
+      <name>TABLE_JEUX</name>
+      <value><![CDATA[TABLE_PREFIX . "JEUX"]]></value>
+    </constant>
+    <constant namespace="default" line="23" package="Default">
+      <name>TABLE_KIT_JEUX</name>
+      <value><![CDATA[TABLE_PREFIX . "KIT_JEUX"]]></value>
+    </constant>
+    <constant namespace="default" line="24" package="Default">
+      <name>TABLE_LANGUE</name>
+      <value><![CDATA[TABLE_PREFIX . "LANGUE"]]></value>
+    </constant>
+    <constant namespace="default" line="25" package="Default">
+      <name>TABLE_LANGUE_REGLE</name>
+      <value><![CDATA[TABLE_PREFIX . "LANGUE_REGLE"]]></value>
+    </constant>
+    <constant namespace="default" line="26" package="Default">
+      <name>TABLE_LIEU</name>
+      <value><![CDATA[TABLE_PREFIX . "LIEU"]]></value>
+    </constant>
+    <constant namespace="default" line="27" package="Default">
+      <name>TABLE_NB_JOUEUR</name>
+      <value><![CDATA[TABLE_PREFIX . "NB_JOUEUR"]]></value>
+    </constant>
+    <constant namespace="default" line="28" package="Default">
+      <name>TABLE_NB_JOUEUR_VERSION_JEU</name>
+      <value><![CDATA[TABLE_PREFIX . "NB_JOUEUR_VERSION_JEU"]]></value>
+    </constant>
+    <constant namespace="default" line="29" package="Default">
+      <name>TABLE_NOM_JEU</name>
+      <value><![CDATA[TABLE_PREFIX . "NOM_JEU"]]></value>
+    </constant>
+    <constant namespace="default" line="30" package="Default">
+      <name>TABLE_NOTE_VERSION</name>
+      <value><![CDATA[TABLE_PREFIX . "NOTE_VERSION"]]></value>
+    </constant>
+    <constant namespace="default" line="31" package="Default">
+      <name>TABLE_PAYS</name>
+      <value><![CDATA[TABLE_PREFIX . "PAYS"]]></value>
+    </constant>
+    <constant namespace="default" line="32" package="Default">
+      <name>TABLE_PHOTO</name>
+      <value><![CDATA[TABLE_PREFIX . "PHOTO"]]></value>
+    </constant>
+    <constant namespace="default" line="33" package="Default">
+      <name>TABLE_PHOTO_VERSION</name>
+      <value><![CDATA[TABLE_PREFIX . "PHOTO_VERSION"]]></value>
+    </constant>
+    <constant namespace="default" line="34" package="Default">
+      <name>TABLE_RESERVATION</name>
+      <value><![CDATA[TABLE_PREFIX . "RESERVATION"]]></value>
+    </constant>
+    <constant namespace="default" line="35" package="Default">
+      <name>TABLE_SUGGESTION</name>
+      <value><![CDATA[TABLE_PREFIX . "SUGGESTION"]]></value>
+    </constant>
+    <constant namespace="default" line="36" package="Default">
+      <name>TABLE_VERSION</name>
+      <value><![CDATA[TABLE_PREFIX . "VERSION"]]></value>
+    </constant>
+    <constant namespace="default" line="39" package="Default">
+      <name>ID_CATEGORIE</name>
+      <value><![CDATA["idCategorie"]]></value>
+    </constant>
+    <constant namespace="default" line="40" package="Default">
+      <name>NOM_CATEGORIE</name>
+      <value><![CDATA["nomCategorie"]]></value>
+    </constant>
+    <constant namespace="default" line="41" package="Default">
+      <name>DESCRIPTION_CATEGORIE</name>
+      <value><![CDATA["descriptionCategorie"]]></value>
+    </constant>
+    <constant namespace="default" line="44" package="Default">
+      <name>ID_CATEGORIE_JEU</name>
+      <value><![CDATA["idCategorieJeu"]]></value>
+    </constant>
+    <constant namespace="default" line="47" package="Default">
+      <name>ID_EMPRUNT</name>
+      <value><![CDATA["idEmprunt"]]></value>
+    </constant>
+    <constant namespace="default" line="48" package="Default">
+      <name>DATE_EMPRUNT</name>
+      <value><![CDATA["dateEmprunt"]]></value>
+    </constant>
+    <constant namespace="default" line="49" package="Default">
+      <name>DATE_RETOUR_SOUHAITE</name>
+      <value><![CDATA["dateRetourSouhaite"]]></value>
+    </constant>
+    <constant namespace="default" line="50" package="Default">
+      <name>DATE_RETOUR_REEL</name>
+      <value><![CDATA["dateRetourReel"]]></value>
+    </constant>
+    <constant namespace="default" line="53" package="Default">
+      <name>ID_ETAT_EXEMPLAIRE</name>
+      <value><![CDATA["idEtatExemplaire"]]></value>
+    </constant>
+    <constant namespace="default" line="54" package="Default">
+      <name>NOM_ETAT</name>
+      <value><![CDATA["nomEtat"]]></value>
+    </constant>
+    <constant namespace="default" line="57" package="Default">
+      <name>ID_EXEMPLAIRE</name>
+      <value><![CDATA["idExemplaire"]]></value>
+    </constant>
+    <constant namespace="default" line="58" package="Default">
+      <name>DESCRIPTION_EXEMPLAIRE</name>
+      <value><![CDATA["descriptionExemplaire"]]></value>
+    </constant>
+    <constant namespace="default" line="59" package="Default">
+      <name>PRIX_MDJT</name>
+      <value><![CDATA["prixMJDT"]]></value>
+    </constant>
+    <constant namespace="default" line="60" package="Default">
+      <name>DATE_ACHAT</name>
+      <value><![CDATA["dateAchat"]]></value>
+    </constant>
+    <constant namespace="default" line="61" package="Default">
+      <name>DATE_FIN_VIE</name>
+      <value><![CDATA["dateFinVie"]]></value>
+    </constant>
+    <constant namespace="default" line="62" package="Default">
+      <name>ID_LIEU_REEL</name>
+      <value><![CDATA["idLieuReel"]]></value>
+    </constant>
+    <constant namespace="default" line="63" package="Default">
+      <name>ID_LIEU_TEMPO</name>
+      <value><![CDATA["idLieuTempo"]]></value>
+    </constant>
+    <constant namespace="default" line="66" package="Default">
+      <name>ID_EXTENSION</name>
+      <value><![CDATA["idExtension"]]></value>
+    </constant>
+    <constant namespace="default" line="67" package="Default">
+      <name>NATURE</name>
+      <value><![CDATA["nature"]]></value>
+    </constant>
+    <constant namespace="default" line="68" package="Default">
+      <name>ID_VERSION_BASE</name>
+      <value><![CDATA["idVesionBase"]]></value>
+    </constant>
+    <constant namespace="default" line="69" package="Default">
+      <name>ID_VERSION_EXTENSION</name>
+      <value><![CDATA["idVersionExtension"]]></value>
+    </constant>
+    <constant namespace="default" line="72" package="Default">
+      <name>ID_FAIRE_PARTIE_KIT</name>
+      <value><![CDATA["idFairePartieKit"]]></value>
+    </constant>
+    <constant namespace="default" line="75" package="Default">
+      <name>ID_INVENTAIRE</name>
+      <value><![CDATA["idInventaire"]]></value>
+    </constant>
+    <constant namespace="default" line="76" package="Default">
+      <name>DATE_INVENTAIRE</name>
+      <value><![CDATA["dateInventaire"]]></value>
+    </constant>
+    <constant namespace="default" line="77" package="Default">
+      <name>COMMENTAIRE_INVENTAIRE</name>
+      <value><![CDATA["commentaireInventaire"]]></value>
+    </constant>
+    <constant namespace="default" line="80" package="Default">
+      <name>ID_JEU</name>
+      <value><![CDATA["idJeu"]]></value>
+    </constant>
+    <constant namespace="default" line="81" package="Default">
+      <name>DESCRIPTION_JEU</name>
+      <value><![CDATA["descriptionJeu"]]></value>
+    </constant>
+    <constant namespace="default" line="82" package="Default">
+      <name>AUTEUR</name>
+      <value><![CDATA["auteur"]]></value>
+    </constant>
+    <constant namespace="default" line="85" package="Default">
+      <name>ID_KIT_JEU</name>
+      <value><![CDATA["idKitJeu"]]></value>
+    </constant>
+    <constant namespace="default" line="86" package="Default">
+      <name>NOM_KIT_JEU</name>
+      <value><![CDATA["nomKit"]]></value>
+    </constant>
+    <constant namespace="default" line="87" package="Default">
+      <name>DESCRIPTIOIN_KIT</name>
+      <value><![CDATA["descriptionKit"]]></value>
+    </constant>
+    <constant namespace="default" line="90" package="Default">
+      <name>ID_LANGUE</name>
+      <value><![CDATA["idLangue"]]></value>
+    </constant>
+    <constant namespace="default" line="91" package="Default">
+      <name>NOM_LANGUE</name>
+      <value><![CDATA["nomLangue"]]></value>
+    </constant>
+    <constant namespace="default" line="94" package="Default">
+      <name>ID_LANGUE_REGLE</name>
+      <value><![CDATA["idLangueRegle"]]></value>
+    </constant>
+    <constant namespace="default" line="97" package="Default">
+      <name>ID_LIEU</name>
+      <value><![CDATA["idLieu"]]></value>
+    </constant>
+    <constant namespace="default" line="98" package="Default">
+      <name>NOM_LIEU</name>
+      <value><![CDATA["nomLieu"]]></value>
+    </constant>
+    <constant namespace="default" line="101" package="Default">
+      <name>ID_NB_JOUEUR</name>
+      <value><![CDATA["idNbJoueur"]]></value>
+    </constant>
+    <constant namespace="default" line="102" package="Default">
+      <name>NB_JOUEUR</name>
+      <value><![CDATA["nbJoueur"]]></value>
+    </constant>
+    <constant namespace="default" line="105" package="Default">
+      <name>ID_NB_JOUEUR_VERSION_JEU</name>
+      <value><![CDATA["idNbJoueurJeu"]]></value>
+    </constant>
+    <constant namespace="default" line="108" package="Default">
+      <name>ID_NOM_JEU</name>
+      <value><![CDATA["idNomJeu"]]></value>
+    </constant>
+    <constant namespace="default" line="109" package="Default">
+      <name>NOM_JEU</name>
+      <value><![CDATA["nomJeu"]]></value>
+    </constant>
+    <constant namespace="default" line="112" package="Default">
+      <name>ID_NOTE_VERSION</name>
+      <value><![CDATA["idNoteVersion"]]></value>
+    </constant>
+    <constant namespace="default" line="113" package="Default">
+      <name>NOTE_VERSION</name>
+      <value><![CDATA["noteVersion"]]></value>
+    </constant>
+    <constant namespace="default" line="114" package="Default">
+      <name>COMMENTAIRE_NOTE_VERSION</name>
+      <value><![CDATA["commentaireNoteVersion"]]></value>
+    </constant>
+    <constant namespace="default" line="117" package="Default">
+      <name>ID_PAYS</name>
+      <value><![CDATA["idPays"]]></value>
+    </constant>
+    <constant namespace="default" line="118" package="Default">
+      <name>NOM_PAYS</name>
+      <value><![CDATA["nomPays"]]></value>
+    </constant>
+    <constant namespace="default" line="121" package="Default">
+      <name>ID_PHOTO</name>
+      <value><![CDATA["idPhoto"]]></value>
+    </constant>
+    <constant namespace="default" line="122" package="Default">
+      <name>NOM_PHOTO</name>
+      <value><![CDATA["nomPhoto"]]></value>
+    </constant>
+    <constant namespace="default" line="123" package="Default">
+      <name>TEXTE_ALTERNATIF</name>
+      <value><![CDATA["texteAlternatif"]]></value>
+    </constant>
+    <constant namespace="default" line="126" package="Default">
+      <name>ID_PHOTO_VERSION</name>
+      <value><![CDATA["idPhotoVERSION"]]></value>
+    </constant>
+    <constant namespace="default" line="129" package="Default">
+      <name>ID_RESERVATION</name>
+      <value><![CDATA["idReversation"]]></value>
+    </constant>
+    <constant namespace="default" line="130" package="Default">
+      <name>DATE_SOUHAITE_EMPRUNT</name>
+      <value><![CDATA["dateSouhaiteEmprunt"]]></value>
+    </constant>
+    <constant namespace="default" line="133" package="Default">
+      <name>ID_SUGGESTION</name>
+      <value><![CDATA["idSuggestion"]]></value>
+    </constant>
+    <constant namespace="default" line="134" package="Default">
+      <name>COMMENTAIRE_SUGGESTION</name>
+      <value><![CDATA["commentaireSugeestion"]]></value>
+    </constant>
+    <constant namespace="default" line="135" package="Default">
+      <name>ETAT_SUGGESTION</name>
+      <value><![CDATA["etatSuggestion"]]></value>
+    </constant>
+    <constant namespace="default" line="138" package="Default">
+      <name>ID_VERSION</name>
+      <value><![CDATA["idVersion"]]></value>
+    </constant>
+    <constant namespace="default" line="139" package="Default">
+      <name>NOM_VERSION</name>
+      <value><![CDATA["nomVersion"]]></value>
+    </constant>
+    <constant namespace="default" line="140" package="Default">
+      <name>DESCRIPTION_VERSION</name>
+      <value><![CDATA["descriptionVersion"]]></value>
+    </constant>
+    <constant namespace="default" line="141" package="Default">
+      <name>AGE_MINIMUM</name>
+      <value><![CDATA["ageMinimum"]]></value>
+    </constant>
+    <constant namespace="default" line="142" package="Default">
+      <name>NB_JOUEUR_RECOMMANDE</name>
+      <value><![CDATA["nbJoueurRecommande"]]></value>
+    </constant>
+    <constant namespace="default" line="143" package="Default">
+      <name>DUREE_PARTIE</name>
+      <value><![CDATA["dureePartie"]]></value>
+    </constant>
+    <constant namespace="default" line="144" package="Default">
+      <name>PRIX_ACHAT</name>
+      <value><![CDATA["prixAchat"]]></value>
+    </constant>
+    <constant namespace="default" line="145" package="Default">
+      <name>ANNEE_SORTIE</name>
+      <value><![CDATA["anneeSortie"]]></value>
+    </constant>
+    <constant namespace="default" line="146" package="Default">
+      <name>ILLUSTRATEUR</name>
+      <value><![CDATA["illustrateur"]]></value>
+    </constant>
+    <constant namespace="default" line="147" package="Default">
+      <name>DISTRIBUTEUR</name>
+      <value><![CDATA["distributeur"]]></value>
+    </constant>
+    <constant namespace="default" line="148" package="Default">
+      <name>EDITEUR</name>
+      <value><![CDATA["editeur"]]></value>
+    </constant>
+    <class final="false" abstract="false" namespace="default" line="153" package="Default">
+      <name>AccesAuxDonneesDev</name>
+      <full_name>\AccesAuxDonneesDev</full_name>
+      <extends/>
+      <property final="false" static="true" visibility="private" line="159" package="Default">
+        <name>$connexionBase</name>
+        <default><![CDATA[NULL]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="161" package="Default">
+        <name>$maBase</name>
+        <default><![CDATA[NULL]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="163" package="Default">
+        <name>$estConnecte</name>
+        <default><![CDATA[NULL]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="170" package="">
+        <name>__construct</name>
+        <type>function</type>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="177" package="">
+        <name>__clone</name>
+        <type>function</type>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="183" package="">
+        <name>__wakeup</name>
+        <type>function</type>
+      </method>
+      <method final="false" abstract="false" static="true" visibility="public" namespace="default" line="200" package="">
+        <name>recupAccesDonnees</name>
+        <type>function</type>
+        <docblock line="192">
+          <description><![CDATA[Fonction statique de création d'un accès aux données
+Cette fonction vérifie qu'un accès aux données n'existe pas avant
+Elle renvoi l'accès pré-existant, ou un nouvel accès]]></description>
+          <long-description><![CDATA[<p>C'est cette fonction qui doit être utilisée
+chaque fois qu'on veut avoir accès aux données</p>]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="227" package="">
+        <name>connecteBase</name>
+        <type>function</type>
+        <docblock line="221">
+          <description><![CDATA[Fonction de connexion à la base de donnée
+Cette fonction initie la connexion à la base de données
+Uniquement si ce n'est pas déjà fait.]]></description>
+          <long-description><![CDATA[<p>On l'utilise donc au début de chaque requête</p>]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="254" package="">
+        <name>requeteSelect</name>
+        <type>function</type>
+        <docblock line="251">
+          <description><![CDATA[Fonction générique de requête type sélection dans la base]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="254">
+          <name>$uneRequeteSQL</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="297" package="">
+        <name>conversionDepuisBase</name>
+        <type>function</type>
+        <docblock line="292">
+          <description><![CDATA[Fonction permettant de convertir les données stockées en base vers les données réelles
+notamment en supprimant les caractères d'échappement.]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="292" name="param" description="" type="\type" variable="$uneVariable">
+            <type by_reference="false">\type</type>
+          </tag>
+        </docblock>
+        <argument line="297">
+          <name>$uneVariable</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="308" package="">
+        <name>listeLangue</name>
+        <type>function</type>
+        <docblock line="303">
+          <description><![CDATA[Fonction récupérant toutes les langues]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="303" name="return" description="" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="317" package="">
+        <name>listeEtat</name>
+        <type>function</type>
+        <docblock line="312">
+          <description><![CDATA[Fonction récupérant tous les états]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="312" name="return" description="" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="326" package="">
+        <name>listeLieu</name>
+        <type>function</type>
+        <docblock line="321">
+          <description><![CDATA[Fonction récupérant tous les lieux]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="321" name="return" description="" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="336" package="">
+        <name>rechercheVersion</name>
+        <type>function</type>
+        <docblock line="331">
+          <description><![CDATA[Fonction de recherche]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="331" name="param" description="Tableau contenant les critères de recherche. Les paramètres sont indexés par un nom identique à ceux du formulaire." type="array" variable="$critere">
+            <type by_reference="false">array</type>
+          </tag>
+          <tag line="331" name="return" description="" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+        <argument line="336">
+          <name>$critere</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+  </file>
+  <file path="Calendrier.classe.php" hash="d2d831c98bf14ca8b52a64549db757d3" package="Default">
+    <parse_markers>
+      <error line="20" code="50018">No DocBlock was found for property $chargementReussi</error>
+      <error line="22" code="50018">No DocBlock was found for property $titre</error>
+      <error line="24" code="50018">No DocBlock was found for property $sousTitre</error>
+      <error line="26" code="50018">No DocBlock was found for property $lien</error>
+      <error line="28" code="50018">No DocBlock was found for property $evenementsRecurrents</error>
+      <error line="30" code="50018">No DocBlock was found for property $evenements</error>
+      <error line="33" code="50018">No DocBlock was found for property $filtre</error>
+      <error line="43" code="50010">No DocBlock was found for method __construct()</error>
+      <error line="63" code="50015">Argument $uneDate is missing from the Docblock of extraitDateComparable()</error>
+      <error line="77" code="50015">Argument $uneDate is missing from the Docblock of verifieDate()</error>
+      <error line="96" code="50015">Argument $evenement is missing from the Docblock of estValide()</error>
+      <error line="117" code="50015">Argument $uneDate is missing from the Docblock of formateDate()</error>
+      <error line="131" code="50015">Argument $uneDate is missing from the Docblock of extraitHeure()</error>
+      <error line="226" code="50015">Argument $uneListe is missing from the Docblock of filtreListe()</error>
+      <error line="245" code="50015">Argument $unEvenement is missing from the Docblock of compareEvenement()</error>
+      <error line="245" code="50015">Argument $unAutreEvenement is missing from the Docblock of compareEvenement()</error>
+      <error line="275" code="50015">Argument $uneListe is missing from the Docblock of convertiDatesListe()</error>
+      <error line="329" code="50015">Argument $numero is missing from the Docblock of recupEvenement()</error>
+      <error line="355" code="50015">Argument $unEvenement is missing from the Docblock of recupJour()</error>
+      <error line="14" code="50000">No DocBlock was found for Calendrier</error>
+      <error line="1" code="50007">No page-level DocBlock was found in file Calendrier.classe.php</error>
+    </parse_markers>
+    <constant namespace="default" line="12" package="Default">
+      <name>EMPLACEMENT_CALENDRIER</name>
+      <value><![CDATA["http://www.google.com/calendar/feeds/agenda%40mdjt.org/public/full?futureevents=true&sortorder=ascending"]]></value>
+      <docblock line="2">
+        <description><![CDATA[Classe de gestion du calendrier MDJT]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </constant>
+    <class final="false" abstract="false" namespace="default" line="14" package="Default">
+      <name>Calendrier</name>
+      <full_name>\Calendrier</full_name>
+      <extends/>
+      <property final="false" static="false" visibility="private" line="20" package="Default">
+        <name>$chargementReussi</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="22" package="Default">
+        <name>$titre</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="24" package="Default">
+        <name>$sousTitre</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="26" package="Default">
+        <name>$lien</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="28" package="Default">
+        <name>$evenementsRecurrents</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="30" package="Default">
+        <name>$evenements</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="33" package="Default">
+        <name>$filtre</name>
+        <default><![CDATA[array("permanence")]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="43" package="">
+        <name>__construct</name>
+        <type>function</type>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="68" package="">
+        <name>extraitDateComparable</name>
+        <type>function</type>
+        <docblock line="63">
+          <description><![CDATA[Fonction d'extraction de date dans la chaine xml
+Converti la date au format google en date dans un format triable
+AAAA-MM-JJ -> AAAAMMJJ]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="68">
+          <name>$uneDate</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="82" package="">
+        <name>verifieDate</name>
+        <type>function</type>
+        <docblock line="77">
+          <description><![CDATA[Fonction de validation de date
+retourne true si la date est posterieur à la date actuelle
+Necessite une date comparable (au format AAAAMMJJ)]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="82">
+          <name>$uneDate</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="100" package="">
+        <name>estValide</name>
+        <type>function</type>
+        <docblock line="96">
+          <description><![CDATA[Fonction de filtrage des évènements
+Cette fonction renvoie faux si l'évènement contient la chaine FILTRE]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="100">
+          <name>$evenement</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="122" package="">
+        <name>formateDate</name>
+        <type>function</type>
+        <docblock line="117">
+          <description><![CDATA[Fonction de conversion des dates
+Converti les dates comparables en date affichable
+AAAAMMJJ -> jj/mm/aaaa]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="122">
+          <name>$uneDate</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="134" package="">
+        <name>extraitHeure</name>
+        <type>function</type>
+        <docblock line="131">
+          <description><![CDATA[Fonction de récupération de l'heure dans une date]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="134">
+          <name>$uneDate</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="144" package="">
+        <name>chargeCalendrier</name>
+        <type>function</type>
+        <docblock line="141">
+          <description><![CDATA[Fonction de récupération du calendrier depuis google]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="230" package="">
+        <name>filtreListe</name>
+        <type>function</type>
+        <docblock line="226">
+          <description><![CDATA[Fonction de filtrage des evenements
+Renvoie la liste des événements sans ceux dont le titre correspond au filtre défini]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="230">
+          <name>$uneListe</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="true" visibility="public" namespace="default" line="252" package="">
+        <name>compareEvenement</name>
+        <type>function</type>
+        <docblock line="245">
+          <description><![CDATA[Fonction de comparaison d'évènement
+cette fonction compare les dates de début, puis les heures de début
+renvoie un entier <0 si le premier évènement est plus petit (avant) le second
+=0 si les deux évènements sont simultanées
+>0 si le premier est plus grand (après) le second)]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="252">
+          <name>$unEvenement</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="252">
+          <name>$unAutreEvenement</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="270" package="">
+        <name>trieListe</name>
+        <type>function</type>
+        <docblock line="267">
+          <description><![CDATA[Fonction de tri des événements]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="280" package="">
+        <name>convertiDatesListe</name>
+        <type>function</type>
+        <docblock line="275">
+          <description><![CDATA[Fonction de formatage des dates des evenements
+Renvoie le tableau des evenements ou toutes les dates ont été convertie
+en date affichable]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="280">
+          <name>$uneListe</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="310" package="">
+        <name>recupEvenements</name>
+        <type>function</type>
+        <docblock line="298">
+          <description><![CDATA[Fonction de récupération des évènements
+un evenement est un tableau de la forme :
+["lien"] => (String)
+["titre"] => (String)
+["description"] => (String)
+["lieu"] => (String)
+["dateDebut"] => (String)
+["heureDebut"] => (String)
+["dateFin"] => (String)
+["heureFin" => (String)]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="332" package="">
+        <name>recupEvenement</name>
+        <type>function</type>
+        <docblock line="329">
+          <description><![CDATA[Fonction de récupération d'un évènement par son numéro d'index]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="332">
+          <name>$numero</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="true" visibility="public" namespace="default" line="358" package="">
+        <name>recupJour</name>
+        <type>function</type>
+        <docblock line="355">
+          <description><![CDATA[Fonction de récupération du jour d'un évènement]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="358">
+          <name>$unEvenement</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+  </file>
+  <file path="Module.classe.php" hash="8295bf1ee02f692f86c7b509f3206a87" package="Default">
+    <parse_markers>
+      <error line="16" code="50018">No DocBlock was found for property $contenuHTML</error>
+      <error line="18" code="50018">No DocBlock was found for property $niveauIndentation</error>
+      <error line="25" code="50010">No DocBlock was found for method __construct()</error>
+      <error line="37" code="50010">No DocBlock was found for method recupContenu()</error>
+      <error line="61" code="50015">Argument $HTML is missing from the Docblock of ouvreBloc()</error>
+      <error line="76" code="50015">Argument $html is missing from the Docblock of fermeBloc()</error>
+      <error line="91" code="50015">Argument $html is missing from the Docblock of ajouteLigne()</error>
+      <error line="104" code="50015">Argument $texte is missing from the Docblock of convertiTexte()</error>
+      <error line="1" code="50007">No page-level DocBlock was found in file Module.classe.php</error>
+    </parse_markers>
+    <class final="false" abstract="false" namespace="default" line="11" package="Default">
+      <name>Module</name>
+      <full_name>\Module</full_name>
+      <extends/>
+      <docblock line="2">
+        <description><![CDATA[Classe mère des classes modules
+Elle définit les fonctions qu'un module doit avoir pour s'afficher correctement]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+      <property final="false" static="false" visibility="protected" line="16" package="Default">
+        <name>$contenuHTML</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="18" package="Default">
+        <name>$niveauIndentation</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="25" package="">
+        <name>__construct</name>
+        <type>function</type>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="37" package="">
+        <name>recupContenu</name>
+        <type>function</type>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="51" package="">
+        <name>indente</name>
+        <type>function</type>
+        <docblock line="47">
+          <description><![CDATA[Fonction d'indentation du code HTML en fonction du niveau courant
+Renvoie les espaces nécessaires à indenter]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="64" package="">
+        <name>ouvreBloc</name>
+        <type>function</type>
+        <docblock line="61">
+          <description><![CDATA[Fonction d'ouverture d'un bloc HTML]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="64">
+          <name>$HTML</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="79" package="">
+        <name>fermeBloc</name>
+        <type>function</type>
+        <docblock line="76">
+          <description><![CDATA[Fonction de fermeture d'un bloc HTML]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="79">
+          <name>$html</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="94" package="">
+        <name>ajouteLigne</name>
+        <type>function</type>
+        <docblock line="91">
+          <description><![CDATA[Fonction d'ajout de balise dans un bloc]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="94">
+          <name>$html</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="108" package="">
+        <name>convertiTexte</name>
+        <type>function</type>
+        <docblock line="104">
+          <description><![CDATA[Fonction de conversion texte -> HTML
+Renvoie le texte au format HTML]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="108">
+          <name>$texte</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+  </file>
+  <file path="ModuleAdminUtilisateurs.classe.php" hash="c98cac69cd7088548007b738a4e48c13" package="Default">
+    <parse_markers>
+      <error line="22" code="50010">No DocBlock was found for method __construct()</error>
+      <error line="12" code="50000">No DocBlock was found for ModuleAdminUtilisateurs</error>
+      <error line="1" code="50007">No page-level DocBlock was found in file ModuleAdminUtilisateurs.classe.php</error>
+    </parse_markers>
+    <include line="8" type="Require Once" package="Default">
+      <name>classes/Module.classe.php</name>
+      <docblock line="2">
+        <description><![CDATA[Classe mère des classes modules
+Elle défini les fonctions qu'un module doit avoir pour s'afficher correctement]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </include>
+    <class final="false" abstract="false" namespace="default" line="12" package="Default">
+      <name>ModuleAdminUtilisateurs</name>
+      <full_name>\ModuleAdminUtilisateurs</full_name>
+      <extends>\Module</extends>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="22" package="">
+        <name>__construct</name>
+        <type>function</type>
+      </method>
+    </class>
+  </file>
+  <file path="ModuleGroupes.classe.php" hash="57535a7736fd9c43f4b3a6e3d84fb22d" package="Default">
+    <parse_markers>
+      <error line="23" code="50018">No DocBlock was found for property $monUtilisateur</error>
+      <error line="25" code="50018">No DocBlock was found for property $maBase</error>
+      <error line="27" code="50018">No DocBlock was found for property $typeFormulaire</error>
+      <error line="31" code="50015">Argument $unUtilisateur is missing from the Docblock of __construct()</error>
+      <error line="57" code="50010">No DocBlock was found for method afficheFormulaire()</error>
+      <error line="18" code="50000">No DocBlock was found for ModuleGroupes</error>
+      <error line="1" code="50007">No page-level DocBlock was found in file ModuleGroupes.classe.php</error>
+    </parse_markers>
+    <include line="10" type="Require Once" package="Default">
+      <name>classes/Module.classe.php</name>
+      <docblock line="2">
+        <description><![CDATA[Classe du module "Groupes"
+Le module Groupes permet la gestion des groupes, c'est à dire :
+  - L'affectation des utilisateurs à un groupe
+Les groupes servent à définir les droits des utilisateurs sur le site]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </include>
+    <constant namespace="default" line="13" package="Default">
+      <name>MODULE_GROUPES</name>
+      <value><![CDATA[RACINE_SITE . "module.php?idModule=Groupes"]]></value>
+    </constant>
+    <constant namespace="default" line="14" package="Default">
+      <name>FORMULAIRE_CHOIX</name>
+      <value><![CDATA[0]]></value>
+    </constant>
+    <constant namespace="default" line="15" package="Default">
+      <name>FORMULAIRE_GROUPE</name>
+      <value><![CDATA[1]]></value>
+    </constant>
+    <constant namespace="default" line="16" package="Default">
+      <name>FORMULAIRE_UTILISATEUR</name>
+      <value><![CDATA[2]]></value>
+    </constant>
+    <class final="false" abstract="false" namespace="default" line="18" package="Default">
+      <name>ModuleGroupes</name>
+      <full_name>\ModuleGroupes</full_name>
+      <extends>\Module</extends>
+      <property final="false" static="false" visibility="private" line="23" package="Default">
+        <name>$monUtilisateur</name>
+        <default><![CDATA[NULL]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="25" package="Default">
+        <name>$maBase</name>
+        <default><![CDATA[NULL]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="27" package="Default">
+        <name>$typeFormulaire</name>
+        <default><![CDATA[0]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="34" package="">
+        <name>__construct</name>
+        <type>function</type>
+        <docblock line="31">
+          <description><![CDATA[Le constructeur du module Mon Profil]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="34">
+          <name>$unUtilisateur</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="57" package="">
+        <name>afficheFormulaire</name>
+        <type>function</type>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="78" package="">
+        <name>afficheFormulaireUtilisateur</name>
+        <type>function</type>
+        <docblock line="75">
+          <description><![CDATA[Fonction d'affichage du formulaire de modification des groupes d'un utilisateur]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="133" package="">
+        <name>afficheFormulaireGroupe</name>
+        <type>function</type>
+        <docblock line="130">
+          <description><![CDATA[Fonction d'affichage du formulaire de modification des utilsiateurs d'un groupes]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="188" package="">
+        <name>afficheFormulaireChoix</name>
+        <type>function</type>
+        <docblock line="185">
+          <description><![CDATA[Fonction d'affichage du formulaire de choix entre la modification d'un groupe et celle d'un utilisateur]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="286" package="">
+        <name>traiteFormulaire</name>
+        <type>function</type>
+        <docblock line="283">
+          <description><![CDATA[Fonction de traitement des données du formulaire]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+    </class>
+  </file>
+  <file path="ModuleProfil.classe.php" hash="fe9ce0428adb9727b5bbcdb44bb96303" package="Default">
+    <parse_markers>
+      <error line="18" code="50018">No DocBlock was found for property $monUtilisateur</error>
+      <error line="20" code="50018">No DocBlock was found for property $traitementFormulaire</error>
+      <error line="22" code="50018">No DocBlock was found for property $estModifie</error>
+      <error line="24" code="50018">No DocBlock was found for property $modificationOK</error>
+      <error line="26" code="50018">No DocBlock was found for property $emailOk</error>
+      <error line="30" code="50015">Argument $unUtilisateur is missing from the Docblock of __construct()</error>
+      <error line="59" code="50015">Argument $uneDate is missing from the Docblock of dateBaseToAffichage()</error>
+      <error line="73" code="50015">Argument $uneDate is missing from the Docblock of dateAffichageToBase()</error>
+      <error line="87" code="50015">Argument $uneDate is missing from the Docblock of verifDateAffichee()</error>
+      <error line="103" code="50015">Argument $uneAdresse is missing from the Docblock of verifMail()</error>
+      <error line="111" code="50015">Argument $uneChaine is missing from the Docblock of filtreChaine()</error>
+      <error line="111" code="50015">Argument $uneTaille is missing from the Docblock of filtreChaine()</error>
+      <error line="13" code="50000">No DocBlock was found for ModuleProfil</error>
+      <error line="1" code="50007">No page-level DocBlock was found in file ModuleProfil.classe.php</error>
+    </parse_markers>
+    <include line="8" type="Require Once" package="Default">
+      <name>classes/Module.classe.php</name>
+      <docblock line="2">
+        <description><![CDATA[Classe du module "Mon Profil"
+Permet le module de gestion du profil d'un utilisateur]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </include>
+    <constant namespace="default" line="11" package="Default">
+      <name>MODULE_PROFIL</name>
+      <value><![CDATA[RACINE_SITE . "module.php?idModule=Profil"]]></value>
+    </constant>
+    <class final="false" abstract="false" namespace="default" line="13" package="Default">
+      <name>ModuleProfil</name>
+      <full_name>\ModuleProfil</full_name>
+      <extends>\Module</extends>
+      <property final="false" static="false" visibility="private" line="18" package="Default">
+        <name>$monUtilisateur</name>
+        <default><![CDATA[NULL]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="20" package="Default">
+        <name>$traitementFormulaire</name>
+        <default><![CDATA[false]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="22" package="Default">
+        <name>$estModifie</name>
+        <default><![CDATA[false]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="24" package="Default">
+        <name>$modificationOK</name>
+        <default><![CDATA[true]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="26" package="Default">
+        <name>$emailOk</name>
+        <default><![CDATA[true]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="33" package="">
+        <name>__construct</name>
+        <type>function</type>
+        <docblock line="30">
+          <description><![CDATA[Le constructeur du module Mon Profil]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="33">
+          <name>$unUtilisateur</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="64" package="">
+        <name>dateBaseToAffichage</name>
+        <type>function</type>
+        <docblock line="59">
+          <description><![CDATA[Fonction de conversion des dates
+Converti les dates stockée en date affichable
+AAAA-MM-JJ -> jj/mm/aaaa]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="64">
+          <name>$uneDate</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="78" package="">
+        <name>dateAffichageToBase</name>
+        <type>function</type>
+        <docblock line="73">
+          <description><![CDATA[Fonction de conversion des dates
+Converti les dates affichée en date stockable en base
+jj/mm/aaaa -> AAAA-MM-JJ]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="78">
+          <name>$uneDate</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="90" package="">
+        <name>verifDateAffichee</name>
+        <type>function</type>
+        <docblock line="87">
+          <description><![CDATA[Fonction de vérification d'une date au format d'affichage]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="90">
+          <name>$uneDate</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="106" package="">
+        <name>verifMail</name>
+        <type>function</type>
+        <docblock line="103">
+          <description><![CDATA[Fonction de vérification d'une adresse mail]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="106">
+          <name>$uneAdresse</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="115" package="">
+        <name>filtreChaine</name>
+        <type>function</type>
+        <docblock line="111">
+          <description><![CDATA[Fonction de nettoyage des chaine de caractères
+Prends en paramètre la chaine à filtrer, et la taille max de cette chaine]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="115">
+          <name>$uneChaine</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="115">
+          <name>$uneTaille</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="136" package="">
+        <name>afficheNomUtilisateur</name>
+        <type>function</type>
+        <docblock line="133">
+          <description><![CDATA[Fonction d'affichage du nom complet de l'utilisateur]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="149" package="">
+        <name>afficheInfo</name>
+        <type>function</type>
+        <docblock line="146">
+          <description><![CDATA[Fonction d'affichage des informations non modifiables]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="180" package="">
+        <name>afficheFormulaire</name>
+        <type>function</type>
+        <docblock line="177">
+          <description><![CDATA[Fonction d'affichage du formulaire]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="437" package="">
+        <name>traiteFormulaire</name>
+        <type>function</type>
+        <docblock line="434">
+          <description><![CDATA[Fonction de traitement du formulaire]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+    </class>
+  </file>
+  <file path="ModuleRecherche.classe.php" hash="355bc7294e2abb31c8b1a2d342c67139" package="Default">
+    <parse_markers>
+      <error line="14" code="50018">No DocBlock was found for property $baseDonnees</error>
+      <error line="16" code="50010">No DocBlock was found for method __construct()</error>
+      <error line="26" code="50010">No DocBlock was found for method afficheFormulaire()</error>
+      <error line="11" code="50000">No DocBlock was found for ModuleRecherche</error>
+      <error line="1" code="50007">No page-level DocBlock was found in file ModuleRecherche.classe.php</error>
+    </parse_markers>
+    <include line="5" type="Require Once" package="Default">
+      <name>classes/Module.classe.php</name>
+    </include>
+    <constant namespace="default" line="9" package="Default">
+      <name>MODULE_RECHERCHE</name>
+      <value><![CDATA[RACINE_SITE . "module.php?idModule=Recherche"]]></value>
+    </constant>
+    <class final="false" abstract="false" namespace="default" line="11" package="Default">
+      <name>ModuleRecherche</name>
+      <full_name>\ModuleRecherche</full_name>
+      <extends>\Module</extends>
+      <property final="false" static="false" visibility="private" line="14" package="Default">
+        <name>$baseDonnees</name>
+        <default><![CDATA[NULL]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="16" package="">
+        <name>__construct</name>
+        <type>function</type>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="26" package="">
+        <name>afficheFormulaire</name>
+        <type>function</type>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="58" package="">
+        <name>creationSelect</name>
+        <type>function</type>
+        <docblock line="53">
+          <description><![CDATA[Fonction qui crée des listes HTML <select>]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="53" name="param" description="2 colonnes, la première étant la value, deuxième le nom" type="\tableau" variable="$array">
+            <type by_reference="false">\tableau</type>
+          </tag>
+          <tag line="53" name="param" description="du paramètre POST" type="\nom" variable="$name">
+            <type by_reference="false">\nom</type>
+          </tag>
+        </docblock>
+        <argument line="58">
+          <name>$array</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="58">
+          <name>$name</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+  </file>
+  <file path="Page.classe.php" hash="8c337b14ae28c6db605ee6330df5a9d7" package="Default">
+    <parse_markers>
+      <error line="41" code="50018">No DocBlock was found for property $contenuHTML</error>
+      <error line="43" code="50018">No DocBlock was found for property $niveauIndentation</error>
+      <error line="45" code="50018">No DocBlock was found for property $monUtilisateur</error>
+      <error line="47" code="50018">No DocBlock was found for property $indexStyleMenu</error>
+      <error line="107" code="50015">Argument $HTML is missing from the Docblock of ouvreBloc()</error>
+      <error line="122" code="50015">Argument $html is missing from the Docblock of fermeBloc()</error>
+      <error line="137" code="50015">Argument $html is missing from the Docblock of ajouteLigne()</error>
+      <error line="150" code="50015">Argument $texte is missing from the Docblock of convertiTexte()</error>
+      <error line="159" code="50015">Argument $cible is missing from the Docblock of ajouteElementMenu()</error>
+      <error line="159" code="50015">Argument $texte is missing from the Docblock of ajouteElementMenu()</error>
+      <error line="37" code="50000">No DocBlock was found for Page</error>
+      <error line="1" code="50007">No page-level DocBlock was found in file Page.classe.php</error>
+    </parse_markers>
+    <include line="7" type="Require Once" package="Default">
+      <name>classes/AccesAuxDonnees.classe.php</name>
+      <docblock line="2">
+        <description><![CDATA[Cette classe permet de créer des pages web au format MDJT]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </include>
+    <include line="8" type="Require Once" package="Default">
+      <name>classes/SessionUtilisateur.classe.php</name>
+    </include>
+    <include line="9" type="Require Once" package="Default">
+      <name>classes/AccesAuxDonneesDev.classe.php</name>
+    </include>
+    <constant namespace="default" line="12" package="Default">
+      <name>RACINE_SITE</name>
+      <value><![CDATA[""]]></value>
+    </constant>
+    <constant namespace="default" line="13" package="Default">
+      <name>CSS_MDJT</name>
+      <value><![CDATA["css/mdjt.css"]]></value>
+    </constant>
+    <constant namespace="default" line="14" package="Default">
+      <name>CSS_RESET</name>
+      <value><![CDATA["css/reset.css"]]></value>
+    </constant>
+    <constant namespace="default" line="15" package="Default">
+      <name>PAGE_MODULE</name>
+      <value><![CDATA[RACINE_SITE . "module.php"]]></value>
+    </constant>
+    <constant namespace="default" line="16" package="Default">
+      <name>PAGE_INDEX</name>
+      <value><![CDATA[RACINE_SITE . "index.php"]]></value>
+    </constant>
+    <constant namespace="default" line="17" package="Default">
+      <name>PAGE_MENTIONS</name>
+      <value><![CDATA[RACINE_SITE . "mentions.php"]]></value>
+    </constant>
+    <constant namespace="default" line="18" package="Default">
+      <name>PAGE_CONTACT</name>
+      <value><![CDATA[RACINE_SITE . "contact.php"]]></value>
+    </constant>
+    <constant namespace="default" line="19" package="Default">
+      <name>PAGE_CONNEXION</name>
+      <value><![CDATA[RACINE_SITE . "connexion.php"]]></value>
+    </constant>
+    <constant namespace="default" line="20" package="Default">
+      <name>FORUM</name>
+      <value><![CDATA[RACINE_SITE . "../forum/"]]></value>
+    </constant>
+    <constant namespace="default" line="21" package="Default">
+      <name>IMAGES</name>
+      <value><![CDATA[RACINE_SITE . "images/"]]></value>
+    </constant>
+    <constant namespace="default" line="22" package="Default">
+      <name>DECONNEXION</name>
+      <value><![CDATA[RACINE_SITE . "deconnexion.php"]]></value>
+    </constant>
+    <constant namespace="default" line="27" package="Default">
+      <name>REDIRECTION_PHPBB</name>
+      <value><![CDATA["../module.php"]]></value>
+    </constant>
+    <constant namespace="default" line="29" package="Default">
+      <name>PAGE_LOGIN_PHPBB</name>
+      <value><![CDATA["forum/ucp.php?mode=login"]]></value>
+    </constant>
+    <constant namespace="default" line="33" package="Default">
+      <name>TABULATION</name>
+      <value><![CDATA["  "]]></value>
+    </constant>
+    <class final="false" abstract="true" namespace="default" line="37" package="Default">
+      <name>Page</name>
+      <full_name>\Page</full_name>
+      <extends/>
+      <property final="false" static="false" visibility="protected" line="41" package="Default">
+        <name>$contenuHTML</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="43" package="Default">
+        <name>$niveauIndentation</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="45" package="Default">
+        <name>$monUtilisateur</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="47" package="Default">
+        <name>$indexStyleMenu</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="58" package="">
+        <name>__construct</name>
+        <type>function</type>
+        <docblock line="53">
+          <description><![CDATA[Constructeur
+Le constructeur initialise la construction d'une page, il crée notamment la session utilisateur et l'entête de la page]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="53" name="param" description=": tableau contenant la liste des fichiers css supplémentaires qu'on souhaite inclure" type="\cssAdditionnels" variable="$cssAdditionnels">
+            <type by_reference="false">\cssAdditionnels</type>
+          </tag>
+        </docblock>
+        <argument line="58">
+          <name>$cssAdditionnels</name>
+          <default><![CDATA[NULL]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="78" package="">
+        <name>__destruct</name>
+        <type>function</type>
+        <docblock line="74">
+          <description><![CDATA[Destructeur de la classe
+Le destructeur termine la construction de la page et l'affiche]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="97" package="">
+        <name>indente</name>
+        <type>function</type>
+        <docblock line="93">
+          <description><![CDATA[Fonction d'indentation du code HTML en fonction du niveau courant
+Renvoie les espaces nécessaires à indenter]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="110" package="">
+        <name>ouvreBloc</name>
+        <type>function</type>
+        <docblock line="107">
+          <description><![CDATA[Fonction d'ouverture d'un bloc HTML]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="110">
+          <name>$HTML</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="125" package="">
+        <name>fermeBloc</name>
+        <type>function</type>
+        <docblock line="122">
+          <description><![CDATA[Fonction de fermeture d'un bloc HTML]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="125">
+          <name>$html</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="140" package="">
+        <name>ajouteLigne</name>
+        <type>function</type>
+        <docblock line="137">
+          <description><![CDATA[Fonction d'ajout de balise dans un bloc]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="140">
+          <name>$html</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="154" package="">
+        <name>convertiTexte</name>
+        <type>function</type>
+        <docblock line="150">
+          <description><![CDATA[Fonction de conversion texte -> HTML
+Renvoie le texte au format HTML]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="154">
+          <name>$texte</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="165" package="">
+        <name>ajouteElementMenu</name>
+        <type>function</type>
+        <docblock line="159">
+          <description><![CDATA[Fonction d'ajout d'un élément de menu
+Permet le cyle des couleurs dans les éléments de menus]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="159" name="parameter" description=": $cible : l'URL vers laquelle pointe l'élément de menu"/>
+          <tag line="159" name="parameter" description=": $texte : le texte qu'affiche l'élément"/>
+        </docblock>
+        <argument line="165">
+          <name>$cible</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="165">
+          <name>$texte</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="208" package="">
+        <name>ajouteMenuConnexion</name>
+        <type>function</type>
+        <docblock line="203">
+          <description><![CDATA[Fonction ajoutant le menu connexion (afficher en bas de page)
+propose la connexion à un utilisateur non connecté
+ou d'aller sur la partie privé à un utilisateur connecté]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="true" static="false" visibility="protected" namespace="default" line="278" package="">
+        <name>afficheMiniActu</name>
+        <type>function</type>
+        <docblock line="274">
+          <description><![CDATA[Fonction d'affichage de la zone mini actu
+Cette fonction est à définir dans les classes filles]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="293" package="">
+        <name>ouvrePage</name>
+        <type>function</type>
+        <docblock line="288">
+          <description><![CDATA[Fonction d'initialisation de l'entête de la page
+La page est créée jusqu'à l'ouverture de la balise body]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="288" name="param" description=": tableau contenant la liste des fichiers css qu'on souhaite ajouter" type="\$cssAdditionnels" variable="$cssAdditionnels">
+            <type by_reference="false">\$cssAdditionnels</type>
+          </tag>
+        </docblock>
+        <argument line="293">
+          <name>$cssAdditionnels</name>
+          <default><![CDATA[NULL]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="336" package="">
+        <name>fermePage</name>
+        <type>function</type>
+        <docblock line="332">
+          <description><![CDATA[Fonction de fermeture de la page
+Ferme body et html]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="347" package="">
+        <name>ajouteHautPage</name>
+        <type>function</type>
+        <docblock line="344">
+          <description><![CDATA[Fonction d'ajout du Haut d'une page standard]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="372" package="">
+        <name>ajouteBasPage</name>
+        <type>function</type>
+        <docblock line="369">
+          <description><![CDATA[Fonction d'ajout du Bas d'une page standard]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+    </class>
+  </file>
+  <file path="PageModule.classe.php" hash="187aa1af0a136a7180eb17a7dc4f3e3f" package="Default">
+    <parse_markers>
+      <error line="19" code="50018">No DocBlock was found for property $unModule</error>
+      <error line="15" code="50000">No DocBlock was found for PageModule</error>
+      <error line="1" code="50007">No page-level DocBlock was found in file PageModule.classe.php</error>
+    </parse_markers>
+    <include line="8" type="Require Once" package="Default">
+      <name>classes/Page.classe.php</name>
+      <docblock line="2">
+        <description><![CDATA[Cette classe permet de créer les pages web interne au format MDJT
+Partie privée avec affichage des modules]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </include>
+    <include line="9" type="Require Once" package="Default">
+      <name>classes/ModuleProfil.classe.php</name>
+    </include>
+    <include line="10" type="Require Once" package="Default">
+      <name>classes/ModuleGroupes.classe.php</name>
+    </include>
+    <include line="11" type="Require Once" package="Default">
+      <name>classes/ModuleRecherche.classe.php</name>
+    </include>
+    <class final="false" abstract="false" namespace="default" line="15" package="Default">
+      <name>PageModule</name>
+      <full_name>\PageModule</full_name>
+      <extends>\Page</extends>
+      <property final="false" static="false" visibility="private" line="19" package="Default">
+        <name>$unModule</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="27" package="">
+        <name>__construct</name>
+        <type>function</type>
+        <docblock line="23">
+          <description><![CDATA[Constructeur
+Le constructeur initialise la construction d'une page, il crée notamment la session utilisateur et l'entête de la page]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="48" package="">
+        <name>__destruct</name>
+        <type>function</type>
+        <docblock line="44">
+          <description><![CDATA[Destructeur de la classe
+Le destructeur termine la construction de la page et l'affiche]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="61" package="">
+        <name>initModule</name>
+        <type>function</type>
+        <docblock line="58">
+          <description><![CDATA[Fonction d'initialisation du module que va afficher la page]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="116" package="">
+        <name>afficheMiniActu</name>
+        <type>function</type>
+        <docblock line="112">
+          <description><![CDATA[Fonction d'affichage de la zone mini actu]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="128" package="">
+        <name>afficheMenuModule</name>
+        <type>function</type>
+        <docblock line="124">
+          <description><![CDATA[Fonction d'affichage du menu]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="150" package="">
+        <name>afficheModule</name>
+        <type>function</type>
+        <docblock line="147">
+          <description><![CDATA[Fonction d'affichage du contenu du module]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+    </class>
+  </file>
+  <file path="PageStandard.classe.php" hash="c3e819039e625bbd874214e6ed675f65" package="Default">
+    <parse_markers>
+      <error line="15" code="50018">No DocBlock was found for property $calendrier</error>
+      <error line="97" code="50010">No DocBlock was found for method afficheMiniActu()</error>
+      <error line="12" code="50000">No DocBlock was found for PageStandard</error>
+      <error line="1" code="50007">No page-level DocBlock was found in file PageStandard.classe.php</error>
+    </parse_markers>
+    <include line="7" type="Require Once" package="Default">
+      <name>classes/Page.classe.php</name>
+      <docblock line="2">
+        <description><![CDATA[Cette classe permet de créer des pages web au format MDJT]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </include>
+    <include line="8" type="Require Once" package="Default">
+      <name>classes/Calendrier.classe.php</name>
+    </include>
+    <class final="false" abstract="false" namespace="default" line="12" package="Default">
+      <name>PageStandard</name>
+      <full_name>\PageStandard</full_name>
+      <extends>\Page</extends>
+      <property final="false" static="false" visibility="private" line="15" package="Default">
+        <name>$calendrier</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="22" package="">
+        <name>__construct</name>
+        <type>function</type>
+        <docblock line="19">
+          <description><![CDATA[Constructeur]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="34" package="">
+        <name>__destruct</name>
+        <type>function</type>
+        <docblock line="30">
+          <description><![CDATA[Destructeur de la classe
+Le destructeur termine la construction de la page et l'affiche]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="47" package="">
+        <name>initCalendrier</name>
+        <type>function</type>
+        <docblock line="44">
+          <description><![CDATA[Fonction d'initialisation du calendrier]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="61" package="">
+        <name>ouvreBlocGauche</name>
+        <type>function</type>
+        <docblock line="58">
+          <description><![CDATA[Fonction d'ouverture de la zone de gauche - contenant la partie éditoriale]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="69" package="">
+        <name>fermeBlocGauche</name>
+        <type>function</type>
+        <docblock line="66">
+          <description><![CDATA[Fonction de fermeture de la zone de gauche]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="78" package="">
+        <name>ouvreBlocDroit</name>
+        <type>function</type>
+        <docblock line="75">
+          <description><![CDATA[Fonction d'ouverture de la zone de droite - contenant le menu et le calendrier]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="86" package="">
+        <name>fermeBlocDroit</name>
+        <type>function</type>
+        <docblock line="83">
+          <description><![CDATA[Fonction de fermeture de la zone de Droite]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="97" package="">
+        <name>afficheMiniActu</name>
+        <type>function</type>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="119" package="">
+        <name>afficheMiniCalendrier</name>
+        <type>function</type>
+        <docblock line="116">
+          <description><![CDATA[Fonction d'affichage du mini calendrier]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="152" package="">
+        <name>afficheMenu</name>
+        <type>function</type>
+        <docblock line="149">
+          <description><![CDATA[Fonction d'affichage du menu]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="177" package="">
+        <name>afficheLogin</name>
+        <type>function</type>
+        <docblock line="174">
+          <description><![CDATA[Fonction d'affichage du bloc d'invite de connexion ou de deconnexion]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="227" package="">
+        <name>afficheContact</name>
+        <type>function</type>
+        <docblock line="224">
+          <description><![CDATA[Fonction d'affichage de la page contact]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="237" package="">
+        <name>afficheMentions</name>
+        <type>function</type>
+        <docblock line="234">
+          <description><![CDATA[Fonction d'affichage de la page des mentions légales]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+    </class>
+  </file>
+  <file path="RequeteSQL.classe.php" hash="6d66b79bc338f14b32f06e08100fa0a8" package="com\rlk">
+    <docblock line="3">
+      <description><![CDATA[Classe permettant de manipuler des requètes SQL.]]></description>
+      <long-description><![CDATA[<p>A utiliser pour les très grosses requètes afin de préserver une cohérence.</p>]]></long-description>
+      <tag line="3" name="author" description="Romain Laï-King"/>
+      <tag line="3" name="version" description="0.1"/>
+      <tag line="3" name="package" description="com"/>
+      <tag line="3" name="subpackage" description="rlk"/>
+      <tag line="3" name="todo" description="Passage en SQL 2"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="default" line="13" package="com\rlk">
+      <name>RequeteSQL</name>
+      <full_name>\RequeteSQL</full_name>
+      <extends/>
+      <docblock line="3">
+        <description><![CDATA[Classe permettant de manipuler des requètes SQL.]]></description>
+        <long-description><![CDATA[<p>A utiliser pour les très grosses requètes afin de préserver une cohérence.</p>]]></long-description>
+        <tag line="3" name="author" description="Romain Laï-King"/>
+        <tag line="3" name="version" description="0.1"/>
+        <tag line="3" name="package" description="com"/>
+        <tag line="3" name="subpackage" description="rlk"/>
+        <tag line="3" name="todo" description="Passage en SQL 2"/>
+      </docblock>
+      <property final="false" static="false" visibility="private" line="20" package="Default">
+        <name>$requete</name>
+        <default><![CDATA[""]]></default>
+        <docblock line="15">
+          <description><![CDATA[1ère partie de la requète]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="15" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="27" package="Default">
+        <name>$from</name>
+        <default><![CDATA[""]]></default>
+        <docblock line="22">
+          <description><![CDATA[2ème partie de la requète, FROM]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="22" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="35" package="Default">
+        <name>$where</name>
+        <default><![CDATA[""]]></default>
+        <docblock line="30">
+          <description><![CDATA[3ème partie de la requète, WHERE]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="30" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="42" package="Default">
+        <name>$bonus</name>
+        <default><![CDATA[""]]></default>
+        <docblock line="37">
+          <description><![CDATA[4ème partie de la requète.]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="37" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="48" package="">
+        <name>__construct</name>
+        <type>function</type>
+        <docblock line="44">
+          <description><![CDATA[Constructeur. Il fait rien pour le moment]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="57" package="">
+        <name>setRequete</name>
+        <type>function</type>
+        <docblock line="52">
+          <description><![CDATA[Accesseur pour la première partie. Ne pas inclure clause FROM, WHERE, VALUE, etc]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="52" name="param" description="" type="string" variable="$valeur">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="57">
+          <name>$valeur</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="65" package="">
+        <name>ajoutFrom</name>
+        <type>function</type>
+        <docblock line="61">
+          <description><![CDATA[Fonction de manipulation de chaine pour créer et ajouter des tables dans une clause FROM]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="61" name="param" description="Nom de la table" type="string" variable="$table">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="65">
+          <name>$table</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="83" package="">
+        <name>jointure</name>
+        <type>function</type>
+        <docblock line="73">
+          <description><![CDATA[Fonction de jointure
+Ajoute automatiquement les tables au JOIN et les clause aux WHERE
+Equivalent de FROM table INNER JOIN table ON champ sauf qu'on utilise FROM et WHERE
+Plus tard éventuellement refaire la logique en INNER JOIN ou NATURAL JOIN]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="73" name="param" description="Table 1" type="string" variable="$table1">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="73" name="param" description="Champ de la table 1" type="string" variable="$champ1">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="73" name="param" description="Table 2" type="string" variable="$table2">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="73" name="param" description="Champ de la table 2" type="string" variable="$champ2">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="83">
+          <name>$table1</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="83">
+          <name>$champ1</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="83">
+          <name>$table2</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="83">
+          <name>$champ2</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="109" package="">
+        <name>ajoutAndEgal</name>
+        <type>function</type>
+        <docblock line="102">
+          <description><![CDATA[Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et =
+Principalement pour les recherches de type =]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="102" name="param" description="Nom de la table" type="string" variable="$table">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="102" name="param" description="Le champ de la table concerné par le critère de recherche" type="string" variable="$champ">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="102" name="param" description="La valeur du critère de recherche" type="string" variable="$valeur">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="109">
+          <name>$table</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="109">
+          <name>$champ</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="109">
+          <name>$valeur</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="133" package="">
+        <name>ajoutWhereLibre</name>
+        <type>function</type>
+        <docblock line="128">
+          <description><![CDATA[Fonction de manipulation de chainer pour ajouter librement à la clause WHERE
+A utiliser dans les cas non couvert par la fonction précédente.]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="128" name="param" description="La clause where qui sera concaténé à $where" type="string" variable="$clause">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="133">
+          <name>$clause</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="142" package="">
+        <name>compile</name>
+        <type>function</type>
+        <docblock line="136">
+          <description><![CDATA[Fonction qui compile les différentes parties ensembles pour créer la requète SQL finale.]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="136" name="return" description="Requète SQL" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </method>
+    </class>
+  </file>
+  <file path="SessionUtilisateur.classe.php" hash="03b569166f3a4f3a6db783b30baf8b43" package="Default">
+    <parse_markers>
+      <error line="22" code="50018">No DocBlock was found for property $baseDonnees</error>
+      <error line="24" code="50018">No DocBlock was found for property $idPhpbb3</error>
+      <error line="25" code="50018">No DocBlock was found for property $idSessionPhpbb3</error>
+      <error line="26" code="50018">No DocBlock was found for property $login</error>
+      <error line="27" code="50018">No DocBlock was found for property $estConnecte</error>
+      <error line="252" code="50015">Argument $nouveauTitre is missing from the Docblock of changeTitre()</error>
+      <error line="269" code="50015">Argument $unPrenom is missing from the Docblock of changePrenom()</error>
+      <error line="286" code="50015">Argument $unNom is missing from the Docblock of changeNom()</error>
+      <error line="303" code="50015">Argument $unMail is missing from the Docblock of changeEmail()</error>
+      <error line="329" code="50015">Argument $uneAdresse is missing from the Docblock of changeAdresse()</error>
+      <error line="346" code="50015">Argument $unCode is missing from the Docblock of changeCodePostal()</error>
+      <error line="363" code="50015">Argument $uneVille is missing from the Docblock of changeVille()</error>
+      <error line="380" code="50015">Argument $unNumero is missing from the Docblock of changeTelephoneFixe()</error>
+      <error line="397" code="50015">Argument $unNumero is missing from the Docblock of changeTelephonePortable()</error>
+      <error line="413" code="50015">Argument $uneDate is missing from the Docblock of changeDateNaissance()</error>
+      <error line="430" code="50015">Argument $uneProfession is missing from the Docblock of changeProfession()</error>
+      <error line="17" code="50000">No DocBlock was found for SessionUtilisateur</error>
+      <error line="1" code="50007">No page-level DocBlock was found in file SessionUtilisateur.classe.php</error>
+    </parse_markers>
+    <include line="8" type="Require Once" package="Default">
+      <name>classes/AccesAuxDonnees.classe.php</name>
+      <docblock line="2">
+        <description><![CDATA[Classe de la session PHP et des paramètres d'un utilisateur]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </include>
+    <include line="9" type="Require Once" package="Default">
+      <name>classes/AccesAuxDonneesDev.classe.php</name>
+    </include>
+    <constant namespace="default" line="13" package="Default">
+      <name>MES_GROUPES</name>
+      <value><![CDATA["mesGroupes"]]></value>
+    </constant>
+    <constant namespace="default" line="15" package="Default">
+      <name>GROUPE_ADMINISTRATEUR</name>
+      <value><![CDATA["Administrateurs"]]></value>
+    </constant>
+    <class final="false" abstract="false" namespace="default" line="17" package="Default">
+      <name>SessionUtilisateur</name>
+      <full_name>\SessionUtilisateur</full_name>
+      <extends/>
+      <property final="false" static="false" visibility="private" line="22" package="Default">
+        <name>$baseDonnees</name>
+        <default><![CDATA[NULL]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="24" package="Default">
+        <name>$idPhpbb3</name>
+        <default><![CDATA[NULL]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="25" package="Default">
+        <name>$idSessionPhpbb3</name>
+        <default><![CDATA[NULL]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="26" package="Default">
+        <name>$login</name>
+        <default><![CDATA[NULL]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="27" package="Default">
+        <name>$estConnecte</name>
+        <default><![CDATA[NULL]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="37" package="">
+        <name>__construct</name>
+        <type>function</type>
+        <docblock line="34">
+          <description><![CDATA[Constructeur]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="81" package="">
+        <name>__destruct</name>
+        <type>function</type>
+        <docblock line="78">
+          <description><![CDATA[Le destructeur]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="100" package="">
+        <name>recupInfoPhpbb</name>
+        <type>function</type>
+        <docblock line="90">
+          <description><![CDATA[Cette fonction permet d'aller récupérer les informations de connexion
+depuis phpbb
+Elle renvoie true si l'utilisateur est connecté sur le forum
+false sinon
+Si l'utilisateur est connecté sur le forum : elle initialise les attributs :
+idPhpbb3
+login
+idSessionPhpbb3]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="130" package="">
+        <name>initUtilisateur</name>
+        <type>function</type>
+        <docblock line="123">
+          <description><![CDATA[Fonction d'initialisation d'un utilisateur
+Cette fonction vérifie que l'utilisateur est valide pour le site
+Elle range les paramètres d'un utilisateur dans la session
+Permet la jonction entre les utilisateurs Forum uniquement
+et ceux déclaré sur le site]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="179" package="">
+        <name>detruireSession</name>
+        <type>function</type>
+        <docblock line="175">
+          <description><![CDATA[Fonction de destruction de la session
+Réinitialise la session php]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="196" package="">
+        <name>estConnecte</name>
+        <type>function</type>
+        <docblock line="193">
+          <description><![CDATA[Fonction indiquant si l'utilisateur est connecté]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="205" package="">
+        <name>estForumOnly</name>
+        <type>function</type>
+        <docblock line="201">
+          <description><![CDATA[Fonction indiquant si l'utilisateur est un utilisateur connecté sur le forum
+Et inexistant sur le site]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="220" package="">
+        <name>recupLogin</name>
+        <type>function</type>
+        <docblock line="217">
+          <description><![CDATA[Fonction permettant la récupération du login d'un utilisateur]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="228" package="">
+        <name>recupSessionIdPhpbb3</name>
+        <type>function</type>
+        <docblock line="225">
+          <description><![CDATA[Fonction permettant la récupération d'identificateur de session phpbb3]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="238" package="">
+        <name>recupID</name>
+        <type>function</type>
+        <docblock line="233">
+          <description><![CDATA[Fonction permettant la récupération de l'identifiant de l'utilisateur
+issu de phpBB
+Utilisé comme id dans la base du site]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="247" package="">
+        <name>recupTitre</name>
+        <type>function</type>
+        <docblock line="243">
+          <description><![CDATA[Fonction de récupération du titre de l'utilisateur
+Depuis la session php]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="255" package="">
+        <name>changeTitre</name>
+        <type>function</type>
+        <docblock line="252">
+          <description><![CDATA[Fonction de modification du titre de l'utilisateur]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="255">
+          <name>$nouveauTitre</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="264" package="">
+        <name>recupPrenom</name>
+        <type>function</type>
+        <docblock line="260">
+          <description><![CDATA[Fonction de récupération du prénom
+Depuis la session php]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="272" package="">
+        <name>changePrenom</name>
+        <type>function</type>
+        <docblock line="269">
+          <description><![CDATA[Fonction de changement du prenom]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="272">
+          <name>$unPrenom</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="281" package="">
+        <name>recupNom</name>
+        <type>function</type>
+        <docblock line="277">
+          <description><![CDATA[Fonction de récupération du nom
+Depuis la session php]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="289" package="">
+        <name>changeNom</name>
+        <type>function</type>
+        <docblock line="286">
+          <description><![CDATA[Fonction de changement du nom]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="289">
+          <name>$unNom</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="298" package="">
+        <name>recupEmail</name>
+        <type>function</type>
+        <docblock line="294">
+          <description><![CDATA[Fonction de récupération de l'email
+Depuis la session php]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="306" package="">
+        <name>changeEmail</name>
+        <type>function</type>
+        <docblock line="303">
+          <description><![CDATA[Fonction de changement de l'adresse mail]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="306">
+          <name>$unMail</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="315" package="">
+        <name>recupActif</name>
+        <type>function</type>
+        <docblock line="311">
+          <description><![CDATA[Fonction de récupération du statut actif
+Depuis la session php]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="324" package="">
+        <name>recupAdresse</name>
+        <type>function</type>
+        <docblock line="320">
+          <description><![CDATA[Fonction de récupération de l'adresse
+Depuis la session php]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="332" package="">
+        <name>changeAdresse</name>
+        <type>function</type>
+        <docblock line="329">
+          <description><![CDATA[Fonction de changement de l'adresse]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="332">
+          <name>$uneAdresse</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="341" package="">
+        <name>recupCodePostal</name>
+        <type>function</type>
+        <docblock line="337">
+          <description><![CDATA[Fonction de récupération du code postal
+Depuis la session php]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="349" package="">
+        <name>changeCodePostal</name>
+        <type>function</type>
+        <docblock line="346">
+          <description><![CDATA[Fonction de changement de code postal]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="349">
+          <name>$unCode</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="358" package="">
+        <name>recupVille</name>
+        <type>function</type>
+        <docblock line="354">
+          <description><![CDATA[Fonction de récupération de la ville
+Depuis la session php]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="366" package="">
+        <name>changeVille</name>
+        <type>function</type>
+        <docblock line="363">
+          <description><![CDATA[Fonction de changement de la ville]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="366">
+          <name>$uneVille</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="375" package="">
+        <name>recupTelephoneFixe</name>
+        <type>function</type>
+        <docblock line="371">
+          <description><![CDATA[Fonction de récupération du numéro de téléphone fixe
+Depuis la session php]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="383" package="">
+        <name>changeTelephoneFixe</name>
+        <type>function</type>
+        <docblock line="380">
+          <description><![CDATA[Fonction de changement de telephone fixe]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="383">
+          <name>$unNumero</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="392" package="">
+        <name>recupTelephonePortable</name>
+        <type>function</type>
+        <docblock line="388">
+          <description><![CDATA[Fonction de récupération du numéro de téléphone portable
+Depuis la session php]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="400" package="">
+        <name>changeTelephonePortable</name>
+        <type>function</type>
+        <docblock line="397">
+          <description><![CDATA[Fonction de changement de telephone portable]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="400">
+          <name>$unNumero</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="409" package="">
+        <name>recupDateNaissance</name>
+        <type>function</type>
+        <docblock line="405">
+          <description><![CDATA[Fonction de récupération de la date de naissance
+Depuis la session php]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="416" package="">
+        <name>changeDateNaissance</name>
+        <type>function</type>
+        <docblock line="413">
+          <description><![CDATA[Fonction de changement de la date de naissance]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="416">
+          <name>$uneDate</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="425" package="">
+        <name>recupProfession</name>
+        <type>function</type>
+        <docblock line="421">
+          <description><![CDATA[Fonction de récupération de la profession
+Depuis la session php]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="433" package="">
+        <name>changeProfession</name>
+        <type>function</type>
+        <docblock line="430">
+          <description><![CDATA[Fonction de changement de la profession]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+        <argument line="433">
+          <name>$uneProfession</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="442" package="">
+        <name>recupDateCotisation</name>
+        <type>function</type>
+        <docblock line="438">
+          <description><![CDATA[Fonction de récupération de la date de première cotisation
+Depuis la session php]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="451" package="">
+        <name>recupDateAdhesion</name>
+        <type>function</type>
+        <docblock line="447">
+          <description><![CDATA[Fonction de récupération de la date de première adhésion
+Depuis la session php]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="460" package="">
+        <name>recupExemptCotisation</name>
+        <type>function</type>
+        <docblock line="456">
+          <description><![CDATA[Fonction de récupération du statut exempt de cotisation
+Depuis la session php]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="469" package="">
+        <name>recupTypeAdherent</name>
+        <type>function</type>
+        <docblock line="465">
+          <description><![CDATA[Fonction de récupération du type d'adhérent
+Depuis la session php]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="478" package="">
+        <name>recupCommentaires</name>
+        <type>function</type>
+        <docblock line="474">
+          <description><![CDATA[Fonction de récupération des commentaires
+Depuis la session php]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="487" package="">
+        <name>recupGroupes</name>
+        <type>function</type>
+        <docblock line="483">
+          <description><![CDATA[Fonction de récupération des groupes
+Depuis la session php]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="496" package="">
+        <name>mettreAJour</name>
+        <type>function</type>
+        <docblock line="492">
+          <description><![CDATA[Fonction de mise à jour de l'utilisateur dans la base
+Cette fonction ecrit toutes les données stockées dans l'objet dans la base.]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="528" package="">
+        <name>accesGroupes</name>
+        <type>function</type>
+        <docblock line="524">
+          <description><![CDATA[L'utilisateur a-t-il accès à la page Groupes ?
+Cet accès est offert par le groupe administrateur]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+    </class>
+  </file>
+  <package name="" full_name=""/>
+  <package name="Default" full_name="Default"/>
+  <package name="com" full_name="com">
+    <package name="rlk" full_name="com\rlk"/>
+  </package>
+  <namespace name="default" full_name="default"/>
+  <marker>todo</marker>
+  <marker>fixme</marker>
+</project>

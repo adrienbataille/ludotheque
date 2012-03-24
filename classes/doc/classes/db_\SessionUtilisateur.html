@@ -1,0 +1,580 @@
+<!DOCTYPE html><html xmlns:date="http://exslt.org/dates-and-times" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>phpDocumentor » \SessionUtilisateur</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">phpDocumentor</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Packages</a></li>
+<li><a href="../packages/db_Default.html"><i class="icon-folder-open"></i> Default</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors</a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers (TODO/FIXME)</a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements</a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods</li>
+<li class="method public "><a href="#__construct" title="__construct :: Constructeur"><span class="description">Constructeur</span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#__destruct" title="__destruct :: Le destructeur"><span class="description">Le destructeur</span><pre>__destruct()</pre></a></li>
+<li class="method public "><a href="#accesGroupes" title="accesGroupes :: L'utilisateur a-t-il accès à la page Groupes ?
+Cet accès est offert par le groupe administrateur"><span class="description">L'utilisateur a-t-il accès à la page Groupes ?
+Cet accès est offert par le groupe administrateur</span><pre>accesGroupes()</pre></a></li>
+<li class="method public "><a href="#changeAdresse" title="changeAdresse :: Fonction de changement de l'adresse"><span class="description">Fonction de changement de l'adresse</span><pre>changeAdresse()</pre></a></li>
+<li class="method public "><a href="#changeCodePostal" title="changeCodePostal :: Fonction de changement de code postal"><span class="description">Fonction de changement de code postal</span><pre>changeCodePostal()</pre></a></li>
+<li class="method public "><a href="#changeDateNaissance" title="changeDateNaissance :: Fonction de changement de la date de naissance"><span class="description">Fonction de changement de la date de naissance</span><pre>changeDateNaissance()</pre></a></li>
+<li class="method public "><a href="#changeEmail" title="changeEmail :: Fonction de changement de l'adresse mail"><span class="description">Fonction de changement de l'adresse mail</span><pre>changeEmail()</pre></a></li>
+<li class="method public "><a href="#changeNom" title="changeNom :: Fonction de changement du nom"><span class="description">Fonction de changement du nom</span><pre>changeNom()</pre></a></li>
+<li class="method public "><a href="#changePrenom" title="changePrenom :: Fonction de changement du prenom"><span class="description">Fonction de changement du prenom</span><pre>changePrenom()</pre></a></li>
+<li class="method public "><a href="#changeProfession" title="changeProfession :: Fonction de changement de la profession"><span class="description">Fonction de changement de la profession</span><pre>changeProfession()</pre></a></li>
+<li class="method public "><a href="#changeTelephoneFixe" title="changeTelephoneFixe :: Fonction de changement de telephone fixe"><span class="description">Fonction de changement de telephone fixe</span><pre>changeTelephoneFixe()</pre></a></li>
+<li class="method public "><a href="#changeTelephonePortable" title="changeTelephonePortable :: Fonction de changement de telephone portable"><span class="description">Fonction de changement de telephone portable</span><pre>changeTelephonePortable()</pre></a></li>
+<li class="method public "><a href="#changeTitre" title="changeTitre :: Fonction de modification du titre de l'utilisateur"><span class="description">Fonction de modification du titre de l'utilisateur</span><pre>changeTitre()</pre></a></li>
+<li class="method public "><a href="#changeVille" title="changeVille :: Fonction de changement de la ville"><span class="description">Fonction de changement de la ville</span><pre>changeVille()</pre></a></li>
+<li class="method public "><a href="#estConnecte" title="estConnecte :: Fonction indiquant si l'utilisateur est connecté"><span class="description">Fonction indiquant si l'utilisateur est connecté</span><pre>estConnecte()</pre></a></li>
+<li class="method public "><a href="#estForumOnly" title="estForumOnly :: Fonction indiquant si l'utilisateur est un utilisateur connecté sur le forum
+Et inexistant sur le site"><span class="description">Fonction indiquant si l'utilisateur est un utilisateur connecté sur le forum
+Et inexistant sur le site</span><pre>estForumOnly()</pre></a></li>
+<li class="method public "><a href="#mettreAJour" title="mettreAJour :: Fonction de mise à jour de l'utilisateur dans la base
+Cette fonction ecrit toutes les données stockées dans l'objet dans la base."><span class="description">Fonction de mise à jour de l'utilisateur dans la base
+Cette fonction ecrit toutes les données stockées dans l'objet dans la base.</span><pre>mettreAJour()</pre></a></li>
+<li class="method public "><a href="#recupActif" title="recupActif :: Fonction de récupération du statut actif
+Depuis la session php"><span class="description">Fonction de récupération du statut actif
+Depuis la session php</span><pre>recupActif()</pre></a></li>
+<li class="method public "><a href="#recupAdresse" title="recupAdresse :: Fonction de récupération de l'adresse
+Depuis la session php"><span class="description">Fonction de récupération de l'adresse
+Depuis la session php</span><pre>recupAdresse()</pre></a></li>
+<li class="method public "><a href="#recupCodePostal" title="recupCodePostal :: Fonction de récupération du code postal
+Depuis la session php"><span class="description">Fonction de récupération du code postal
+Depuis la session php</span><pre>recupCodePostal()</pre></a></li>
+<li class="method public "><a href="#recupCommentaires" title="recupCommentaires :: Fonction de récupération des commentaires
+Depuis la session php"><span class="description">Fonction de récupération des commentaires
+Depuis la session php</span><pre>recupCommentaires()</pre></a></li>
+<li class="method public "><a href="#recupDateAdhesion" title="recupDateAdhesion :: Fonction de récupération de la date de première adhésion
+Depuis la session php"><span class="description">Fonction de récupération de la date de première adhésion
+Depuis la session php</span><pre>recupDateAdhesion()</pre></a></li>
+<li class="method public "><a href="#recupDateCotisation" title="recupDateCotisation :: Fonction de récupération de la date de première cotisation
+Depuis la session php"><span class="description">Fonction de récupération de la date de première cotisation
+Depuis la session php</span><pre>recupDateCotisation()</pre></a></li>
+<li class="method public "><a href="#recupDateNaissance" title="recupDateNaissance :: Fonction de récupération de la date de naissance
+Depuis la session php"><span class="description">Fonction de récupération de la date de naissance
+Depuis la session php</span><pre>recupDateNaissance()</pre></a></li>
+<li class="method public "><a href="#recupEmail" title="recupEmail :: Fonction de récupération de l'email
+Depuis la session php"><span class="description">Fonction de récupération de l'email
+Depuis la session php</span><pre>recupEmail()</pre></a></li>
+<li class="method public "><a href="#recupExemptCotisation" title="recupExemptCotisation :: Fonction de récupération du statut exempt de cotisation
+Depuis la session php"><span class="description">Fonction de récupération du statut exempt de cotisation
+Depuis la session php</span><pre>recupExemptCotisation()</pre></a></li>
+<li class="method public "><a href="#recupGroupes" title="recupGroupes :: Fonction de récupération des groupes
+Depuis la session php"><span class="description">Fonction de récupération des groupes
+Depuis la session php</span><pre>recupGroupes()</pre></a></li>
+<li class="method public "><a href="#recupID" title="recupID :: Fonction permettant la récupération de l'identifiant de l'utilisateur
+issu de phpBB
+Utilisé comme id dans la base du site"><span class="description">Fonction permettant la récupération de l'identifiant de l'utilisateur
+issu de phpBB
+Utilisé comme id dans la base du site</span><pre>recupID()</pre></a></li>
+<li class="method public "><a href="#recupLogin" title="recupLogin :: Fonction permettant la récupération du login d'un utilisateur"><span class="description">Fonction permettant la récupération du login d'un utilisateur</span><pre>recupLogin()</pre></a></li>
+<li class="method public "><a href="#recupNom" title="recupNom :: Fonction de récupération du nom
+Depuis la session php"><span class="description">Fonction de récupération du nom
+Depuis la session php</span><pre>recupNom()</pre></a></li>
+<li class="method public "><a href="#recupPrenom" title="recupPrenom :: Fonction de récupération du prénom
+Depuis la session php"><span class="description">Fonction de récupération du prénom
+Depuis la session php</span><pre>recupPrenom()</pre></a></li>
+<li class="method public "><a href="#recupProfession" title="recupProfession :: Fonction de récupération de la profession
+Depuis la session php"><span class="description">Fonction de récupération de la profession
+Depuis la session php</span><pre>recupProfession()</pre></a></li>
+<li class="method public "><a href="#recupSessionIdPhpbb3" title="recupSessionIdPhpbb3 :: Fonction permettant la récupération d'identificateur de session phpbb3"><span class="description">Fonction permettant la récupération d'identificateur de session phpbb3</span><pre>recupSessionIdPhpbb3()</pre></a></li>
+<li class="method public "><a href="#recupTelephoneFixe" title="recupTelephoneFixe :: Fonction de récupération du numéro de téléphone fixe
+Depuis la session php"><span class="description">Fonction de récupération du numéro de téléphone fixe
+Depuis la session php</span><pre>recupTelephoneFixe()</pre></a></li>
+<li class="method public "><a href="#recupTelephonePortable" title="recupTelephonePortable :: Fonction de récupération du numéro de téléphone portable
+Depuis la session php"><span class="description">Fonction de récupération du numéro de téléphone portable
+Depuis la session php</span><pre>recupTelephonePortable()</pre></a></li>
+<li class="method public "><a href="#recupTitre" title="recupTitre :: Fonction de récupération du titre de l'utilisateur
+Depuis la session php"><span class="description">Fonction de récupération du titre de l'utilisateur
+Depuis la session php</span><pre>recupTitre()</pre></a></li>
+<li class="method public "><a href="#recupTypeAdherent" title="recupTypeAdherent :: Fonction de récupération du type d'adhérent
+Depuis la session php"><span class="description">Fonction de récupération du type d'adhérent
+Depuis la session php</span><pre>recupTypeAdherent()</pre></a></li>
+<li class="method public "><a href="#recupVille" title="recupVille :: Fonction de récupération de la ville
+Depuis la session php"><span class="description">Fonction de récupération de la ville
+Depuis la session php</span><pre>recupVille()</pre></a></li>
+<li class="nav-header private">» Private</li>
+<li class="method private "><a href="#detruireSession" title="detruireSession :: Fonction de destruction de la session
+Réinitialise la session php"><span class="description">Fonction de destruction de la session
+Réinitialise la session php</span><pre>detruireSession()</pre></a></li>
+<li class="method private "><a href="#initUtilisateur" title="initUtilisateur :: Fonction d'initialisation d'un utilisateur
+Cette fonction vérifie que l'utilisateur est valide pour le site
+Elle range les paramètres d'un utilisateur dans la session
+Permet la jonction entre les utilisateurs Forum uniquement
+et ceux déclaré sur le site"><span class="description">Fonction d'initialisation d'un utilisateur
+Cette fonction vérifie que l'utilisateur est valide pour le site
+Elle range les paramètres d'un utilisateur dans la session
+Permet la jonction entre les utilisateurs Forum uniquement
+et ceux déclaré sur le site</span><pre>initUtilisateur()</pre></a></li>
+<li class="method private "><a href="#recupInfoPhpbb" title="recupInfoPhpbb :: Cette fonction permet d'aller récupérer les informations de connexion
+depuis phpbb
+Elle renvoie true si l'utilisateur est connecté sur le forum
+false sinon
+Si l'utilisateur est connecté sur le forum : elle initialise les attributs :
+idPhpbb3
+login
+idSessionPhpbb3"><span class="description">Cette fonction permet d'aller récupérer les informations de connexion
+depuis phpbb
+Elle renvoie true si l'utilisateur est connecté sur le forum
+false sinon
+Si l'utilisateur est connecté sur le forum : elle initialise les attributs :
+idPhpbb3
+login
+idSessionPhpbb3</span><pre>recupInfoPhpbb()</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties</li>
+<li class="nav-header private">» Private</li>
+<li class="property private "><a href="#%24baseDonnees" title="$baseDonnees :: "><span class="description">$baseDonnees</span><pre>$baseDonnees</pre></a></li>
+<li class="property private "><a href="#%24estConnecte" title="$estConnecte :: "><span class="description">$estConnecte</span><pre>$estConnecte</pre></a></li>
+<li class="property private "><a href="#%24idPhpbb3" title="$idPhpbb3 :: "><span class="description">$idPhpbb3</span><pre>$idPhpbb3</pre></a></li>
+<li class="property private "><a href="#%24idSessionPhpbb3" title="$idSessionPhpbb3 :: "><span class="description">$idSessionPhpbb3</span><pre>$idSessionPhpbb3</pre></a></li>
+<li class="property private "><a href="#%24login" title="$login :: "><span class="description">$login</span><pre>$login</pre></a></li>
+</ul>
+</div>
+<div class="span8">
+<a name="%5CSessionUtilisateur" id="\SessionUtilisateur"></a><div href="../classes/db_%5CSessionUtilisateur.html" class="element class"><div class="details">
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a name="__construct" id="__construct"></a><div class="element clickable method public __construct" data-toggle="collapse" data-target=".__construct .collapse">
+<h2>Constructeur</h2>
+<pre>__construct() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="__destruct" id="__destruct"></a><div class="element clickable method public __destruct" data-toggle="collapse" data-target=".__destruct .collapse">
+<h2>Le destructeur</h2>
+<pre>__destruct() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="accesGroupes" id="accesGroupes"></a><div class="element clickable method public accesGroupes" data-toggle="collapse" data-target=".accesGroupes .collapse">
+<h2>L'utilisateur a-t-il accès à la page Groupes ?
+Cet accès est offert par le groupe administrateur</h2>
+<pre>accesGroupes() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="changeAdresse" id="changeAdresse"></a><div class="element clickable method public changeAdresse" data-toggle="collapse" data-target=".changeAdresse .collapse">
+<h2>Fonction de changement de l'adresse</h2>
+<pre>changeAdresse($uneAdresse) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$uneAdresse</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="changeCodePostal" id="changeCodePostal"></a><div class="element clickable method public changeCodePostal" data-toggle="collapse" data-target=".changeCodePostal .collapse">
+<h2>Fonction de changement de code postal</h2>
+<pre>changeCodePostal($unCode) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$unCode</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="changeDateNaissance" id="changeDateNaissance"></a><div class="element clickable method public changeDateNaissance" data-toggle="collapse" data-target=".changeDateNaissance .collapse">
+<h2>Fonction de changement de la date de naissance</h2>
+<pre>changeDateNaissance($uneDate) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$uneDate</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="changeEmail" id="changeEmail"></a><div class="element clickable method public changeEmail" data-toggle="collapse" data-target=".changeEmail .collapse">
+<h2>Fonction de changement de l'adresse mail</h2>
+<pre>changeEmail($unMail) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$unMail</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="changeNom" id="changeNom"></a><div class="element clickable method public changeNom" data-toggle="collapse" data-target=".changeNom .collapse">
+<h2>Fonction de changement du nom</h2>
+<pre>changeNom($unNom) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$unNom</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="changePrenom" id="changePrenom"></a><div class="element clickable method public changePrenom" data-toggle="collapse" data-target=".changePrenom .collapse">
+<h2>Fonction de changement du prenom</h2>
+<pre>changePrenom($unPrenom) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$unPrenom</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="changeProfession" id="changeProfession"></a><div class="element clickable method public changeProfession" data-toggle="collapse" data-target=".changeProfession .collapse">
+<h2>Fonction de changement de la profession</h2>
+<pre>changeProfession($uneProfession) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$uneProfession</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="changeTelephoneFixe" id="changeTelephoneFixe"></a><div class="element clickable method public changeTelephoneFixe" data-toggle="collapse" data-target=".changeTelephoneFixe .collapse">
+<h2>Fonction de changement de telephone fixe</h2>
+<pre>changeTelephoneFixe($unNumero) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$unNumero</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="changeTelephonePortable" id="changeTelephonePortable"></a><div class="element clickable method public changeTelephonePortable" data-toggle="collapse" data-target=".changeTelephonePortable .collapse">
+<h2>Fonction de changement de telephone portable</h2>
+<pre>changeTelephonePortable($unNumero) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$unNumero</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="changeTitre" id="changeTitre"></a><div class="element clickable method public changeTitre" data-toggle="collapse" data-target=".changeTitre .collapse">
+<h2>Fonction de modification du titre de l'utilisateur</h2>
+<pre>changeTitre($nouveauTitre) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$nouveauTitre</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="changeVille" id="changeVille"></a><div class="element clickable method public changeVille" data-toggle="collapse" data-target=".changeVille .collapse">
+<h2>Fonction de changement de la ville</h2>
+<pre>changeVille($uneVille) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$uneVille</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="estConnecte" id="estConnecte"></a><div class="element clickable method public estConnecte" data-toggle="collapse" data-target=".estConnecte .collapse">
+<h2>Fonction indiquant si l'utilisateur est connecté</h2>
+<pre>estConnecte() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="estForumOnly" id="estForumOnly"></a><div class="element clickable method public estForumOnly" data-toggle="collapse" data-target=".estForumOnly .collapse">
+<h2>Fonction indiquant si l'utilisateur est un utilisateur connecté sur le forum
+Et inexistant sur le site</h2>
+<pre>estForumOnly() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="mettreAJour" id="mettreAJour"></a><div class="element clickable method public mettreAJour" data-toggle="collapse" data-target=".mettreAJour .collapse">
+<h2>Fonction de mise à jour de l'utilisateur dans la base
+Cette fonction ecrit toutes les données stockées dans l'objet dans la base.</h2>
+<pre>mettreAJour() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupActif" id="recupActif"></a><div class="element clickable method public recupActif" data-toggle="collapse" data-target=".recupActif .collapse">
+<h2>Fonction de récupération du statut actif
+Depuis la session php</h2>
+<pre>recupActif() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupAdresse" id="recupAdresse"></a><div class="element clickable method public recupAdresse" data-toggle="collapse" data-target=".recupAdresse .collapse">
+<h2>Fonction de récupération de l'adresse
+Depuis la session php</h2>
+<pre>recupAdresse() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupCodePostal" id="recupCodePostal"></a><div class="element clickable method public recupCodePostal" data-toggle="collapse" data-target=".recupCodePostal .collapse">
+<h2>Fonction de récupération du code postal
+Depuis la session php</h2>
+<pre>recupCodePostal() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupCommentaires" id="recupCommentaires"></a><div class="element clickable method public recupCommentaires" data-toggle="collapse" data-target=".recupCommentaires .collapse">
+<h2>Fonction de récupération des commentaires
+Depuis la session php</h2>
+<pre>recupCommentaires() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupDateAdhesion" id="recupDateAdhesion"></a><div class="element clickable method public recupDateAdhesion" data-toggle="collapse" data-target=".recupDateAdhesion .collapse">
+<h2>Fonction de récupération de la date de première adhésion
+Depuis la session php</h2>
+<pre>recupDateAdhesion() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupDateCotisation" id="recupDateCotisation"></a><div class="element clickable method public recupDateCotisation" data-toggle="collapse" data-target=".recupDateCotisation .collapse">
+<h2>Fonction de récupération de la date de première cotisation
+Depuis la session php</h2>
+<pre>recupDateCotisation() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupDateNaissance" id="recupDateNaissance"></a><div class="element clickable method public recupDateNaissance" data-toggle="collapse" data-target=".recupDateNaissance .collapse">
+<h2>Fonction de récupération de la date de naissance
+Depuis la session php</h2>
+<pre>recupDateNaissance() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupEmail" id="recupEmail"></a><div class="element clickable method public recupEmail" data-toggle="collapse" data-target=".recupEmail .collapse">
+<h2>Fonction de récupération de l'email
+Depuis la session php</h2>
+<pre>recupEmail() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupExemptCotisation" id="recupExemptCotisation"></a><div class="element clickable method public recupExemptCotisation" data-toggle="collapse" data-target=".recupExemptCotisation .collapse">
+<h2>Fonction de récupération du statut exempt de cotisation
+Depuis la session php</h2>
+<pre>recupExemptCotisation() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupGroupes" id="recupGroupes"></a><div class="element clickable method public recupGroupes" data-toggle="collapse" data-target=".recupGroupes .collapse">
+<h2>Fonction de récupération des groupes
+Depuis la session php</h2>
+<pre>recupGroupes() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupID" id="recupID"></a><div class="element clickable method public recupID" data-toggle="collapse" data-target=".recupID .collapse">
+<h2>Fonction permettant la récupération de l'identifiant de l'utilisateur
+issu de phpBB
+Utilisé comme id dans la base du site</h2>
+<pre>recupID() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupLogin" id="recupLogin"></a><div class="element clickable method public recupLogin" data-toggle="collapse" data-target=".recupLogin .collapse">
+<h2>Fonction permettant la récupération du login d'un utilisateur</h2>
+<pre>recupLogin() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupNom" id="recupNom"></a><div class="element clickable method public recupNom" data-toggle="collapse" data-target=".recupNom .collapse">
+<h2>Fonction de récupération du nom
+Depuis la session php</h2>
+<pre>recupNom() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupPrenom" id="recupPrenom"></a><div class="element clickable method public recupPrenom" data-toggle="collapse" data-target=".recupPrenom .collapse">
+<h2>Fonction de récupération du prénom
+Depuis la session php</h2>
+<pre>recupPrenom() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupProfession" id="recupProfession"></a><div class="element clickable method public recupProfession" data-toggle="collapse" data-target=".recupProfession .collapse">
+<h2>Fonction de récupération de la profession
+Depuis la session php</h2>
+<pre>recupProfession() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupSessionIdPhpbb3" id="recupSessionIdPhpbb3"></a><div class="element clickable method public recupSessionIdPhpbb3" data-toggle="collapse" data-target=".recupSessionIdPhpbb3 .collapse">
+<h2>Fonction permettant la récupération d'identificateur de session phpbb3</h2>
+<pre>recupSessionIdPhpbb3() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupTelephoneFixe" id="recupTelephoneFixe"></a><div class="element clickable method public recupTelephoneFixe" data-toggle="collapse" data-target=".recupTelephoneFixe .collapse">
+<h2>Fonction de récupération du numéro de téléphone fixe
+Depuis la session php</h2>
+<pre>recupTelephoneFixe() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupTelephonePortable" id="recupTelephonePortable"></a><div class="element clickable method public recupTelephonePortable" data-toggle="collapse" data-target=".recupTelephonePortable .collapse">
+<h2>Fonction de récupération du numéro de téléphone portable
+Depuis la session php</h2>
+<pre>recupTelephonePortable() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupTitre" id="recupTitre"></a><div class="element clickable method public recupTitre" data-toggle="collapse" data-target=".recupTitre .collapse">
+<h2>Fonction de récupération du titre de l'utilisateur
+Depuis la session php</h2>
+<pre>recupTitre() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupTypeAdherent" id="recupTypeAdherent"></a><div class="element clickable method public recupTypeAdherent" data-toggle="collapse" data-target=".recupTypeAdherent .collapse">
+<h2>Fonction de récupération du type d'adhérent
+Depuis la session php</h2>
+<pre>recupTypeAdherent() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupVille" id="recupVille"></a><div class="element clickable method public recupVille" data-toggle="collapse" data-target=".recupVille .collapse">
+<h2>Fonction de récupération de la ville
+Depuis la session php</h2>
+<pre>recupVille() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="detruireSession" id="detruireSession"></a><div class="element clickable method private detruireSession" data-toggle="collapse" data-target=".detruireSession .collapse">
+<h2>Fonction de destruction de la session
+Réinitialise la session php</h2>
+<pre>detruireSession() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="initUtilisateur" id="initUtilisateur"></a><div class="element clickable method private initUtilisateur" data-toggle="collapse" data-target=".initUtilisateur .collapse">
+<h2>Fonction d'initialisation d'un utilisateur
+Cette fonction vérifie que l'utilisateur est valide pour le site
+Elle range les paramètres d'un utilisateur dans la session
+Permet la jonction entre les utilisateurs Forum uniquement
+et ceux déclaré sur le site</h2>
+<pre>initUtilisateur() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="recupInfoPhpbb" id="recupInfoPhpbb"></a><div class="element clickable method private recupInfoPhpbb" data-toggle="collapse" data-target=".recupInfoPhpbb .collapse">
+<h2>Cette fonction permet d'aller récupérer les informations de connexion
+depuis phpbb
+Elle renvoie true si l'utilisateur est connecté sur le forum
+false sinon
+Si l'utilisateur est connecté sur le forum : elle initialise les attributs :
+idPhpbb3
+login
+idSessionPhpbb3</h2>
+<pre>recupInfoPhpbb() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a name="%24baseDonnees" id="$baseDonnees"> </a><div class="element clickable property private $baseDonnees" data-toggle="collapse" data-target=".$baseDonnees .collapse">
+<h2>$baseDonnees</h2>
+<pre>$baseDonnees </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="%24estConnecte" id="$estConnecte"> </a><div class="element clickable property private $estConnecte" data-toggle="collapse" data-target=".$estConnecte .collapse">
+<h2>$estConnecte</h2>
+<pre>$estConnecte </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="%24idPhpbb3" id="$idPhpbb3"> </a><div class="element clickable property private $idPhpbb3" data-toggle="collapse" data-target=".$idPhpbb3 .collapse">
+<h2>$idPhpbb3</h2>
+<pre>$idPhpbb3 </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="%24idSessionPhpbb3" id="$idSessionPhpbb3"> </a><div class="element clickable property private $idSessionPhpbb3" data-toggle="collapse" data-target=".$idSessionPhpbb3 .collapse">
+<h2>$idSessionPhpbb3</h2>
+<pre>$idSessionPhpbb3 </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="%24login" id="$login"> </a><div class="element clickable property private $login" data-toggle="collapse" data-target=".$login .collapse">
+<h2>$login</h2>
+<pre>$login </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a1</a> and<br>
+            generated on 2012-03-24T15:11:13+01:00.<br></footer></div>
+</div>
+</body>
+</html>

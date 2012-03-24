@@ -49,7 +49,7 @@ PATH_PROJECT=$PWD
 #  *
 #  * @var               string PATH_PHPDOC
 #  */
-PATH_PHPDOC=../phpdoc/phpdoc
+PATH_PHPDOC=/Applications/MAMP/bin/php/php5.3.6/bin/phpdoc
 
 #/**
 #  * where documentation will be put
@@ -58,37 +58,14 @@ PATH_PHPDOC=../phpdoc/phpdoc
 #  */
 PATH_DOCS=$PWD/docs
 
-#/**
-#  * what outputformat to use (html/pdf)
-#  *
-#  * @var               string OUTPUTFORMAT
-#  */
-OUTPUTFORMAT=HTML
 
-#/** 
-#  * converter to be used
-#  *
-#  * @var               string CONVERTER
-#  */
-CONVERTER=Smarty
 
-#/**
-#  * template to use
-#  *
-#  * @var               string TEMPLATE
-#  */
-TEMPLATE=default
 
-#/**
-#  * parse elements marked as private
-#  *
-#  * @var               bool (on/off)           PRIVATE
-#  */
-PRIVATE=on
 
 # make documentation
-"$PATH_PHPDOC" -d "$PATH_PROJECT" -t "$PATH_DOCS" -ti "$TITLE" -dn $PACKAGES \
--o $OUTPUTFORMAT:$CONVERTER:$TEMPLATE -pp $PRIVATE
+	"$PATH_PHPDOC" -d "$PATH_PROJECT" -t "$PATH_DOCS" --title "$TITLE" --defaultpackagename $PACKAGES -p
+
+
 
 
 # vim: set expandtab :

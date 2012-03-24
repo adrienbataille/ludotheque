@@ -1,0 +1,247 @@
+<!DOCTYPE html><html xmlns:date="http://exslt.org/dates-and-times" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>phpDocumentor » \RequeteSQL</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">phpDocumentor</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Packages</a></li>
+<li><a href="../packages/db_Default.html"><i class="icon-folder-open"></i> Default</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors</a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers (TODO/FIXME)</a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements</a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods</li>
+<li class="method public "><a href="#__construct" title="__construct :: Constructeur. Il fait rien pour le moment"><span class="description">Constructeur. Il fait rien pour le moment</span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#ajoutAndEgal" title="ajoutAndEgal :: Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et =
+Principalement pour les recherches de type ="><span class="description">Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et =
+Principalement pour les recherches de type =</span><pre>ajoutAndEgal()</pre></a></li>
+<li class="method public "><a href="#ajoutFrom" title="ajoutFrom :: Fonction de manipulation de chaine pour créer et ajouter des tables dans une clause FROM"><span class="description">Fonction de manipulation de chaine pour créer et ajouter des tables dans une clause FROM</span><pre>ajoutFrom()</pre></a></li>
+<li class="method public "><a href="#ajoutWhereLibre" title="ajoutWhereLibre :: Fonction de manipulation de chainer pour ajouter librement à la clause WHERE
+A utiliser dans les cas non couvert par la fonction précédente."><span class="description">Fonction de manipulation de chainer pour ajouter librement à la clause WHERE
+A utiliser dans les cas non couvert par la fonction précédente.</span><pre>ajoutWhereLibre()</pre></a></li>
+<li class="method public "><a href="#compile" title="compile :: Fonction qui compile les différentes parties ensembles pour créer la requète SQL finale."><span class="description">Fonction qui compile les différentes parties ensembles pour créer la requète SQL finale.</span><pre>compile()</pre></a></li>
+<li class="method public "><a href="#jointure" title="jointure :: Fonction de jointure
+Ajoute automatiquement les tables au JOIN et les clause aux WHERE
+Equivalent de FROM table INNER JOIN table ON champ sauf qu'on utilise FROM et WHERE
+Plus tard éventuellement refaire la logique en INNER JOIN ou NATURAL JOIN"><span class="description">Fonction de jointure
+Ajoute automatiquement les tables au JOIN et les clause aux WHERE
+Equivalent de FROM table INNER JOIN table ON champ sauf qu'on utilise FROM et WHERE
+Plus tard éventuellement refaire la logique en INNER JOIN ou NATURAL JOIN</span><pre>jointure()</pre></a></li>
+<li class="method public "><a href="#setRequete" title="setRequete :: Accesseur pour la première partie. Ne pas inclure clause FROM, WHERE, VALUE, etc"><span class="description">Accesseur pour la première partie. Ne pas inclure clause FROM, WHERE, VALUE, etc</span><pre>setRequete()</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties</li>
+<li class="nav-header private">» Private</li>
+<li class="property private "><a href="#%24bonus" title="$bonus :: 4ème partie de la requète."><span class="description">4ème partie de la requète.</span><pre>$bonus</pre></a></li>
+<li class="property private "><a href="#%24from" title="$from :: 2ème partie de la requète, FROM"><span class="description">2ème partie de la requète, FROM</span><pre>$from</pre></a></li>
+<li class="property private "><a href="#%24requete" title="$requete :: 1ère partie de la requète"><span class="description">1ère partie de la requète</span><pre>$requete</pre></a></li>
+<li class="property private "><a href="#%24where" title="$where :: 3ème partie de la requète, WHERE"><span class="description">3ème partie de la requète, WHERE</span><pre>$where</pre></a></li>
+</ul>
+</div>
+<div class="span8">
+<a name="%5CRequeteSQL" id="\RequeteSQL"></a><div href="../classes/db_%5CRequeteSQL.html" class="element class">
+<p class="short_description">Classe permettant de manipuler des requètes SQL.</p>
+<div class="details">
+<p class="long_description"><p>A utiliser pour les très grosses requètes afin de préserver une cohérence.</p></p>
+<table class="table table-bordered">
+<tr>
+<th>author</th>
+<td><a href="">Romain Laï-King</a></td>
+</tr>
+<tr>
+<th>version</th>
+<td>0.1</td>
+</tr>
+<tr>
+<th>package</th>
+<td><a href="..//packages/db_com%5Crlk.html">com</a></td>
+</tr>
+<tr>
+<th>subpackage</th>
+<td>rlk</td>
+</tr>
+<tr>
+<th>todo</th>
+<td>Passage en SQL 2</td>
+</tr>
+</table>
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a name="__construct" id="__construct"></a><div class="element clickable method public __construct" data-toggle="collapse" data-target=".__construct .collapse">
+<h2>Constructeur. Il fait rien pour le moment</h2>
+<pre>__construct() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="ajoutAndEgal" id="ajoutAndEgal"></a><div class="element clickable method public ajoutAndEgal" data-toggle="collapse" data-target=".ajoutAndEgal .collapse">
+<h2>Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et =
+Principalement pour les recherches de type =</h2>
+<pre>ajoutAndEgal(string $table, string $champ, string $valeur) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$table</h4>
+<code>string</code><p>Nom de la table</p></div>
+<div class="subelement argument">
+<h4>$champ</h4>
+<code>string</code><p>Le champ de la table concerné par le critère de recherche</p>
+</div>
+<div class="subelement argument">
+<h4>$valeur</h4>
+<code>string</code><p>La valeur du critère de recherche</p>
+</div>
+</div></div>
+</div>
+<a name="ajoutFrom" id="ajoutFrom"></a><div class="element clickable method public ajoutFrom" data-toggle="collapse" data-target=".ajoutFrom .collapse">
+<h2>Fonction de manipulation de chaine pour créer et ajouter des tables dans une clause FROM</h2>
+<pre>ajoutFrom(string $table) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$table</h4>
+<code>string</code><p>Nom de la table</p></div>
+</div></div>
+</div>
+<a name="ajoutWhereLibre" id="ajoutWhereLibre"></a><div class="element clickable method public ajoutWhereLibre" data-toggle="collapse" data-target=".ajoutWhereLibre .collapse">
+<h2>Fonction de manipulation de chainer pour ajouter librement à la clause WHERE
+A utiliser dans les cas non couvert par la fonction précédente.</h2>
+<pre>ajoutWhereLibre(string $clause) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$clause</h4>
+<code>string</code><p>La clause where qui sera concaténé à $where</p>
+</div>
+</div></div>
+</div>
+<a name="compile" id="compile"></a><div class="element clickable method public compile" data-toggle="collapse" data-target=".compile .collapse">
+<h2>Fonction qui compile les différentes parties ensembles pour créer la requète SQL finale.</h2>
+<pre>compile() : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>string</code>Requète SQL</div>
+</div></div>
+</div>
+<a name="jointure" id="jointure"></a><div class="element clickable method public jointure" data-toggle="collapse" data-target=".jointure .collapse">
+<h2>Fonction de jointure
+Ajoute automatiquement les tables au JOIN et les clause aux WHERE
+Equivalent de FROM table INNER JOIN table ON champ sauf qu'on utilise FROM et WHERE
+Plus tard éventuellement refaire la logique en INNER JOIN ou NATURAL JOIN</h2>
+<pre>jointure(string $table1, string $champ1, string $table2, string $champ2) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$table1</h4>
+<code>string</code><p>Table 1</p></div>
+<div class="subelement argument">
+<h4>$champ1</h4>
+<code>string</code><p>Champ de la table 1</p></div>
+<div class="subelement argument">
+<h4>$table2</h4>
+<code>string</code><p>Table 2</p></div>
+<div class="subelement argument">
+<h4>$champ2</h4>
+<code>string</code><p>Champ de la table 2</p></div>
+</div></div>
+</div>
+<a name="setRequete" id="setRequete"></a><div class="element clickable method public setRequete" data-toggle="collapse" data-target=".setRequete .collapse">
+<h2>Accesseur pour la première partie. Ne pas inclure clause FROM, WHERE, VALUE, etc</h2>
+<pre>setRequete(string $valeur) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$valeur</h4>
+<code>string</code>
+</div>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a name="%24bonus" id="$bonus"> </a><div class="element clickable property private $bonus" data-toggle="collapse" data-target=".$bonus .collapse">
+<h2>4ème partie de la requète.</h2>
+<pre>$bonus : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="%24from" id="$from"> </a><div class="element clickable property private $from" data-toggle="collapse" data-target=".$from .collapse">
+<h2>2ème partie de la requète, FROM</h2>
+<pre>$from : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="%24requete" id="$requete"> </a><div class="element clickable property private $requete" data-toggle="collapse" data-target=".$requete .collapse">
+<h2>1ère partie de la requète</h2>
+<pre>$requete : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="%24where" id="$where"> </a><div class="element clickable property private $where" data-toggle="collapse" data-target=".$where .collapse">
+<h2>3ème partie de la requète, WHERE</h2>
+<pre>$where : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a1</a> and<br>
+            generated on 2012-03-24T15:11:13+01:00.<br></footer></div>
+</div>
+</body>
+</html>
