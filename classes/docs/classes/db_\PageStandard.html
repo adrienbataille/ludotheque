@@ -1,0 +1,439 @@
+<!DOCTYPE html><html xmlns:date="http://exslt.org/dates-and-times" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>phpDocumentor » \PageStandard</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">phpDocumentor</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu"></ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors</a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers (TODO/FIXME)</a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements</a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods</li>
+<li class="method public "><a href="#__construct" title="__construct :: Constructeur"><span class="description">Constructeur</span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#__destruct" title="__destruct :: Destructeur de la classe
+Le destructeur termine la construction de la page et l'affiche"><span class="description">Destructeur de la classe
+Le destructeur termine la construction de la page et l'affiche</span><pre>__destruct()</pre></a></li>
+<li class="method public "><a href="#afficheContact" title="afficheContact :: Fonction d'affichage de la page contact"><span class="description">Fonction d'affichage de la page contact</span><pre>afficheContact()</pre></a></li>
+<li class="method public "><a href="#afficheLogin" title="afficheLogin :: Fonction d'affichage du bloc d'invite de connexion ou de deconnexion"><span class="description">Fonction d'affichage du bloc d'invite de connexion ou de deconnexion</span><pre>afficheLogin()</pre></a></li>
+<li class="method public "><a href="#afficheMentions" title="afficheMentions :: Fonction d'affichage de la page des mentions légales"><span class="description">Fonction d'affichage de la page des mentions légales</span><pre>afficheMentions()</pre></a></li>
+<li class="method public "><a href="#afficheMenu" title="afficheMenu :: Fonction d'affichage du menu"><span class="description">Fonction d'affichage du menu</span><pre>afficheMenu()</pre></a></li>
+<li class="method public "><a href="#afficheMiniCalendrier" title="afficheMiniCalendrier :: Fonction d'affichage du mini calendrier"><span class="description">Fonction d'affichage du mini calendrier</span><pre>afficheMiniCalendrier()</pre></a></li>
+<li class="method public "><a href="#fermeBlocDroit" title="fermeBlocDroit :: Fonction de fermeture de la zone de Droite"><span class="description">Fonction de fermeture de la zone de Droite</span><pre>fermeBlocDroit()</pre></a></li>
+<li class="method public "><a href="#fermeBlocGauche" title="fermeBlocGauche :: Fonction de fermeture de la zone de gauche"><span class="description">Fonction de fermeture de la zone de gauche</span><pre>fermeBlocGauche()</pre></a></li>
+<li class="method public "><a href="#ouvreBlocDroit" title="ouvreBlocDroit :: Fonction d'ouverture de la zone de droite - contenant le menu et le calendrier"><span class="description">Fonction d'ouverture de la zone de droite - contenant le menu et le calendrier</span><pre>ouvreBlocDroit()</pre></a></li>
+<li class="method public "><a href="#ouvreBlocGauche" title="ouvreBlocGauche :: Fonction d'ouverture de la zone de gauche - contenant la partie éditoriale"><span class="description">Fonction d'ouverture de la zone de gauche - contenant la partie éditoriale</span><pre>ouvreBlocGauche()</pre></a></li>
+<li class="nav-header protected">» Protected</li>
+<li class="method protected "><a href="#afficheMiniActu" title="afficheMiniActu :: Fonction d'affichage de la zone mini actu
+Cette fonction est à définir dans les classes filles"><span class="description">Fonction d'affichage de la zone mini actu
+Cette fonction est à définir dans les classes filles</span><pre>afficheMiniActu()</pre></a></li>
+<li class="method protected inherited"><a href="#ajouteElementMenu" title="ajouteElementMenu :: Fonction d'ajout d'un élément de menu
+Permet le cyle des couleurs dans les éléments de menus"><span class="description">Fonction d'ajout d'un élément de menu
+Permet le cyle des couleurs dans les éléments de menus</span><pre>ajouteElementMenu()</pre></a></li>
+<li class="method protected inherited"><a href="#ajouteLigne" title="ajouteLigne :: Fonction d'ajout de balise dans un bloc"><span class="description">Fonction d'ajout de balise dans un bloc</span><pre>ajouteLigne()</pre></a></li>
+<li class="method protected inherited"><a href="#ajouteMenuConnexion" title="ajouteMenuConnexion :: Fonction ajoutant le menu connexion (afficher en bas de page)
+propose la connexion à un utilisateur non connecté
+ou d'aller sur la partie privé à un utilisateur connecté"><span class="description">Fonction ajoutant le menu connexion (afficher en bas de page)
+propose la connexion à un utilisateur non connecté
+ou d'aller sur la partie privé à un utilisateur connecté</span><pre>ajouteMenuConnexion()</pre></a></li>
+<li class="method protected inherited"><a href="#convertiTexte" title="convertiTexte :: Fonction de conversion texte -&gt; HTML
+Renvoie le texte au format HTML"><span class="description">Fonction de conversion texte -&gt; HTML
+Renvoie le texte au format HTML</span><pre>convertiTexte()</pre></a></li>
+<li class="method protected inherited"><a href="#fermeBloc" title="fermeBloc :: Fonction de fermeture d'un bloc HTML"><span class="description">Fonction de fermeture d'un bloc HTML</span><pre>fermeBloc()</pre></a></li>
+<li class="method protected inherited"><a href="#ouvreBloc" title="ouvreBloc :: Fonction d'ouverture d'un bloc HTML"><span class="description">Fonction d'ouverture d'un bloc HTML</span><pre>ouvreBloc()</pre></a></li>
+<li class="nav-header private">» Private</li>
+<li class="method private inherited"><a href="#ajouteBasPage" title="ajouteBasPage :: Fonction d'ajout du Bas d'une page standard"><span class="description">Fonction d'ajout du Bas d'une page standard</span><pre>ajouteBasPage()</pre></a></li>
+<li class="method private inherited"><a href="#ajouteHautPage" title="ajouteHautPage :: Fonction d'ajout du Haut d'une page standard"><span class="description">Fonction d'ajout du Haut d'une page standard</span><pre>ajouteHautPage()</pre></a></li>
+<li class="method private inherited"><a href="#fermePage" title="fermePage :: Fonction de fermeture de la page
+Ferme body et html"><span class="description">Fonction de fermeture de la page
+Ferme body et html</span><pre>fermePage()</pre></a></li>
+<li class="method private inherited"><a href="#indente" title="indente :: Fonction d'indentation du code HTML en fonction du niveau courant
+Renvoie les espaces nécessaires à indenter"><span class="description">Fonction d'indentation du code HTML en fonction du niveau courant
+Renvoie les espaces nécessaires à indenter</span><pre>indente()</pre></a></li>
+<li class="method private "><a href="#initCalendrier" title="initCalendrier :: Fonction d'initialisation du calendrier"><span class="description">Fonction d'initialisation du calendrier</span><pre>initCalendrier()</pre></a></li>
+<li class="method private inherited"><a href="#ouvrePage" title="ouvrePage :: Fonction d'initialisation de l'entête de la page
+La page est créée jusqu'à l'ouverture de la balise body"><span class="description">Fonction d'initialisation de l'entête de la page
+La page est créée jusqu'à l'ouverture de la balise body</span><pre>ouvrePage()</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties</li>
+<li class="nav-header protected">» Protected</li>
+<li class="property protected inherited"><a href="#%24contenuHTML" title="$contenuHTML :: "><span class="description">$contenuHTML</span><pre>$contenuHTML</pre></a></li>
+<li class="property protected inherited"><a href="#%24indexStyleMenu" title="$indexStyleMenu :: "><span class="description">$indexStyleMenu</span><pre>$indexStyleMenu</pre></a></li>
+<li class="property protected inherited"><a href="#%24monUtilisateur" title="$monUtilisateur :: "><span class="description">$monUtilisateur</span><pre>$monUtilisateur</pre></a></li>
+<li class="nav-header private">» Private</li>
+<li class="property private "><a href="#%24calendrier" title="$calendrier :: "><span class="description">$calendrier</span><pre>$calendrier</pre></a></li>
+<li class="property private inherited"><a href="#%24niveauIndentation" title="$niveauIndentation :: "><span class="description">$niveauIndentation</span><pre>$niveauIndentation</pre></a></li>
+</ul>
+</div>
+<div class="span8">
+<a name="%5CPageStandard" id="\PageStandard"></a><div href="../classes/db_%5CPageStandard.html" class="element class"><div class="details">
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a name="__construct" id="__construct"></a><div class="element clickable method public __construct" data-toggle="collapse" data-target=".__construct .collapse">
+<h2>Constructeur</h2>
+<pre>__construct() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="__destruct" id="__destruct"></a><div class="element clickable method public __destruct" data-toggle="collapse" data-target=".__destruct .collapse">
+<h2>Destructeur de la classe
+Le destructeur termine la construction de la page et l'affiche</h2>
+<pre>__destruct() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="afficheContact" id="afficheContact"></a><div class="element clickable method public afficheContact" data-toggle="collapse" data-target=".afficheContact .collapse">
+<h2>Fonction d'affichage de la page contact</h2>
+<pre>afficheContact() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="afficheLogin" id="afficheLogin"></a><div class="element clickable method public afficheLogin" data-toggle="collapse" data-target=".afficheLogin .collapse">
+<h2>Fonction d'affichage du bloc d'invite de connexion ou de deconnexion</h2>
+<pre>afficheLogin() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="afficheMentions" id="afficheMentions"></a><div class="element clickable method public afficheMentions" data-toggle="collapse" data-target=".afficheMentions .collapse">
+<h2>Fonction d'affichage de la page des mentions légales</h2>
+<pre>afficheMentions() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="afficheMenu" id="afficheMenu"></a><div class="element clickable method public afficheMenu" data-toggle="collapse" data-target=".afficheMenu .collapse">
+<h2>Fonction d'affichage du menu</h2>
+<pre>afficheMenu() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="afficheMiniCalendrier" id="afficheMiniCalendrier"></a><div class="element clickable method public afficheMiniCalendrier" data-toggle="collapse" data-target=".afficheMiniCalendrier .collapse">
+<h2>Fonction d'affichage du mini calendrier</h2>
+<pre>afficheMiniCalendrier() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="fermeBlocDroit" id="fermeBlocDroit"></a><div class="element clickable method public fermeBlocDroit" data-toggle="collapse" data-target=".fermeBlocDroit .collapse">
+<h2>Fonction de fermeture de la zone de Droite</h2>
+<pre>fermeBlocDroit() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="fermeBlocGauche" id="fermeBlocGauche"></a><div class="element clickable method public fermeBlocGauche" data-toggle="collapse" data-target=".fermeBlocGauche .collapse">
+<h2>Fonction de fermeture de la zone de gauche</h2>
+<pre>fermeBlocGauche() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="ouvreBlocDroit" id="ouvreBlocDroit"></a><div class="element clickable method public ouvreBlocDroit" data-toggle="collapse" data-target=".ouvreBlocDroit .collapse">
+<h2>Fonction d'ouverture de la zone de droite - contenant le menu et le calendrier</h2>
+<pre>ouvreBlocDroit() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="ouvreBlocGauche" id="ouvreBlocGauche"></a><div class="element clickable method public ouvreBlocGauche" data-toggle="collapse" data-target=".ouvreBlocGauche .collapse">
+<h2>Fonction d'ouverture de la zone de gauche - contenant la partie éditoriale</h2>
+<pre>ouvreBlocGauche() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="afficheMiniActu" id="afficheMiniActu"></a><div class="element clickable method protected afficheMiniActu" data-toggle="collapse" data-target=".afficheMiniActu .collapse">
+<h2>Fonction d'affichage de la zone mini actu
+Cette fonction est à définir dans les classes filles</h2>
+<pre>afficheMiniActu() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="ajouteElementMenu" id="ajouteElementMenu"></a><div class="element clickable method protected ajouteElementMenu" data-toggle="collapse" data-target=".ajouteElementMenu .collapse">
+<h2>Fonction d'ajout d'un élément de menu
+Permet le cyle des couleurs dans les éléments de menus</h2>
+<pre>ajouteElementMenu($cible, $texte) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered">
+<tr>
+<th>parameter</th>
+<td>: $cible : l'URL vers laquelle pointe l'élément de menu</td>
+</tr>
+<tr>
+<th>parameter</th>
+<td>: $texte : le texte qu'affiche l'élément</td>
+</tr>
+<tr>
+<th>inherited_from</th>
+<td>\Page::ajouteElementMenu()</td>
+</tr>
+</table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$cible</h4>
+<code></code>
+</div>
+<div class="subelement argument">
+<h4>$texte</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="ajouteLigne" id="ajouteLigne"></a><div class="element clickable method protected ajouteLigne" data-toggle="collapse" data-target=".ajouteLigne .collapse">
+<h2>Fonction d'ajout de balise dans un bloc</h2>
+<pre>ajouteLigne($html) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Page::ajouteLigne()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$html</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="ajouteMenuConnexion" id="ajouteMenuConnexion"></a><div class="element clickable method protected ajouteMenuConnexion" data-toggle="collapse" data-target=".ajouteMenuConnexion .collapse">
+<h2>Fonction ajoutant le menu connexion (afficher en bas de page)
+propose la connexion à un utilisateur non connecté
+ou d'aller sur la partie privé à un utilisateur connecté</h2>
+<pre>ajouteMenuConnexion() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Page::ajouteMenuConnexion()</td>
+</tr></table>
+</div></div>
+</div>
+<a name="convertiTexte" id="convertiTexte"></a><div class="element clickable method protected convertiTexte" data-toggle="collapse" data-target=".convertiTexte .collapse">
+<h2>Fonction de conversion texte -&gt; HTML
+Renvoie le texte au format HTML</h2>
+<pre>convertiTexte($texte) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Page::convertiTexte()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$texte</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="fermeBloc" id="fermeBloc"></a><div class="element clickable method protected fermeBloc" data-toggle="collapse" data-target=".fermeBloc .collapse">
+<h2>Fonction de fermeture d'un bloc HTML</h2>
+<pre>fermeBloc($html) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Page::fermeBloc()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$html</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="ouvreBloc" id="ouvreBloc"></a><div class="element clickable method protected ouvreBloc" data-toggle="collapse" data-target=".ouvreBloc .collapse">
+<h2>Fonction d'ouverture d'un bloc HTML</h2>
+<pre>ouvreBloc($HTML) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Page::ouvreBloc()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$HTML</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="ajouteBasPage" id="ajouteBasPage"></a><div class="element clickable method private ajouteBasPage" data-toggle="collapse" data-target=".ajouteBasPage .collapse">
+<h2>Fonction d'ajout du Bas d'une page standard</h2>
+<pre>ajouteBasPage() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Page::ajouteBasPage()</td>
+</tr></table>
+</div></div>
+</div>
+<a name="ajouteHautPage" id="ajouteHautPage"></a><div class="element clickable method private ajouteHautPage" data-toggle="collapse" data-target=".ajouteHautPage .collapse">
+<h2>Fonction d'ajout du Haut d'une page standard</h2>
+<pre>ajouteHautPage() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Page::ajouteHautPage()</td>
+</tr></table>
+</div></div>
+</div>
+<a name="fermePage" id="fermePage"></a><div class="element clickable method private fermePage" data-toggle="collapse" data-target=".fermePage .collapse">
+<h2>Fonction de fermeture de la page
+Ferme body et html</h2>
+<pre>fermePage() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Page::fermePage()</td>
+</tr></table>
+</div></div>
+</div>
+<a name="indente" id="indente"></a><div class="element clickable method private indente" data-toggle="collapse" data-target=".indente .collapse">
+<h2>Fonction d'indentation du code HTML en fonction du niveau courant
+Renvoie les espaces nécessaires à indenter</h2>
+<pre>indente() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Page::indente()</td>
+</tr></table>
+</div></div>
+</div>
+<a name="initCalendrier" id="initCalendrier"></a><div class="element clickable method private initCalendrier" data-toggle="collapse" data-target=".initCalendrier .collapse">
+<h2>Fonction d'initialisation du calendrier</h2>
+<pre>initCalendrier() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="ouvrePage" id="ouvrePage"></a><div class="element clickable method private ouvrePage" data-toggle="collapse" data-target=".ouvrePage .collapse">
+<h2>Fonction d'initialisation de l'entête de la page
+La page est créée jusqu'à l'ouverture de la balise body</h2>
+<pre>ouvrePage(\$cssAdditionnels $cssAdditionnels) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Page::ouvrePage()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$cssAdditionnels</h4>
+<code>\$cssAdditionnels</code><p>: tableau contenant la liste des fichiers css qu'on souhaite ajouter</p>
+</div>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a name="%24contenuHTML" id="$contenuHTML"> </a><div class="element clickable property protected $contenuHTML" data-toggle="collapse" data-target=".$contenuHTML .collapse">
+<h2>$contenuHTML</h2>
+<pre>$contenuHTML </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Page::$$contenuHTML</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24indexStyleMenu" id="$indexStyleMenu"> </a><div class="element clickable property protected $indexStyleMenu" data-toggle="collapse" data-target=".$indexStyleMenu .collapse">
+<h2>$indexStyleMenu</h2>
+<pre>$indexStyleMenu </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Page::$$indexStyleMenu</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24monUtilisateur" id="$monUtilisateur"> </a><div class="element clickable property protected $monUtilisateur" data-toggle="collapse" data-target=".$monUtilisateur .collapse">
+<h2>$monUtilisateur</h2>
+<pre>$monUtilisateur </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Page::$$monUtilisateur</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24calendrier" id="$calendrier"> </a><div class="element clickable property private $calendrier" data-toggle="collapse" data-target=".$calendrier .collapse">
+<h2>$calendrier</h2>
+<pre>$calendrier </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="%24niveauIndentation" id="$niveauIndentation"> </a><div class="element clickable property private $niveauIndentation" data-toggle="collapse" data-target=".$niveauIndentation .collapse">
+<h2>$niveauIndentation</h2>
+<pre>$niveauIndentation </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Page::$$niveauIndentation</td>
+</tr></table>
+</div></div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a1</a> and<br>
+            generated on 2012-03-24T14:17:11+01:00.<br></footer></div>
+</div>
+</body>
+</html>

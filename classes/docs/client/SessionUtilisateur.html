@@ -34,6 +34,8 @@
 								Files:<br>
 								<a href="../client/_AccesAuxDonnees.classe.php.html">		AccesAuxDonnees.classe.php
 		</a><br>
+			<a href="../client/_AccesAuxDonneesDev.classe.php.html">		AccesAuxDonneesDev.classe.php
+		</a><br>
 			<a href="../client/_Calendrier.classe.php.html">		Calendrier.classe.php
 		</a><br>
 			<a href="../client/_Module.classe.php.html">		Module.classe.php
@@ -42,15 +44,17 @@
 		</a><br>
 			<a href="../client/_ModuleGroupes.classe.php.html">		ModuleGroupes.classe.php
 		</a><br>
-			<a href="../client/_ModuleJeu.classe.php.html">		ModuleJeu.classe.php
-		</a><br>
 			<a href="../client/_ModuleProfil.classe.php.html">		ModuleProfil.classe.php
+		</a><br>
+			<a href="../client/_ModuleRecherche.classe.php.html">		ModuleRecherche.classe.php
 		</a><br>
 			<a href="../client/_Page.classe.php.html">		Page.classe.php
 		</a><br>
 			<a href="../client/_PageModule.classe.php.html">		PageModule.classe.php
 		</a><br>
 			<a href="../client/_PageStandard.classe.php.html">		PageStandard.classe.php
+		</a><br>
+			<a href="../client/_RequeteSQL.classe.php.html">		RequeteSQL.classe.php
 		</a><br>
 			<a href="../client/_SessionUtilisateur.classe.php.html">		SessionUtilisateur.classe.php
 		</a><br>
@@ -61,6 +65,8 @@
 				Classes:<br>
 								<a href="../client/AccesAuxDonnees.html">		AccesAuxDonnees
 		</a><br>
+			<a href="../client/AccesAuxDonneesDev.html">		AccesAuxDonneesDev
+		</a><br>
 			<a href="../client/Calendrier.html">		Calendrier
 		</a><br>
 			<a href="../client/Module.html">		Module
@@ -69,15 +75,17 @@
 		</a><br>
 			<a href="../client/ModuleGroupes.html">		ModuleGroupes
 		</a><br>
-			<a href="../client/ModuleJeu.html">		ModuleJeu
-		</a><br>
 			<a href="../client/ModuleProfil.html">		ModuleProfil
+		</a><br>
+			<a href="../client/ModuleRecherche.html">		ModuleRecherche
 		</a><br>
 			<a href="../client/Page.html">		Page
 		</a><br>
 			<a href="../client/PageModule.html">		PageModule
 		</a><br>
 			<a href="../client/PageStandard.html">		PageStandard
+		</a><br>
+			<a href="../client/RequeteSQL.html">		RequeteSQL
 		</a><br>
 			<a href="../client/SessionUtilisateur.html">		SessionUtilisateur
 		</a><br>
@@ -91,7 +99,7 @@
 	
 
 <div class="leftcol">
-	<h3><a href="#class_details">Class Overview</a> <span class="smalllinenumber">[line 16]</span></h3>
+	<h3><a href="#class_details">Class Overview</a> <span class="smalllinenumber">[line 17]</span></h3>
 	<div id="classTree"><pre></pre>
 </div>
 	<div class="small">
@@ -196,7 +204,7 @@
 	<p></p>
 	<h4>$baseDonnees = <span class="value">&nbsp;NULL</span></h4>
 	<div class="indent">
-		<p class="linenumber">[line 21]</p>
+		<p class="linenumber">[line 22]</p>
 		<h4>Tags:</h4>
 <ul>
 	<li><b>access</b> - private</li>
@@ -209,7 +217,7 @@
 	<p></p>
 	<h4>$estConnecte = <span class="value">&nbsp;NULL</span></h4>
 	<div class="indent">
-		<p class="linenumber">[line 26]</p>
+		<p class="linenumber">[line 27]</p>
 		<h4>Tags:</h4>
 <ul>
 	<li><b>access</b> - private</li>
@@ -222,7 +230,7 @@
 	<p></p>
 	<h4>$idPhpbb3 = <span class="value">&nbsp;NULL</span></h4>
 	<div class="indent">
-		<p class="linenumber">[line 23]</p>
+		<p class="linenumber">[line 24]</p>
 		<h4>Tags:</h4>
 <ul>
 	<li><b>access</b> - private</li>
@@ -235,7 +243,7 @@
 	<p></p>
 	<h4>$idSessionPhpbb3 = <span class="value">&nbsp;NULL</span></h4>
 	<div class="indent">
-		<p class="linenumber">[line 24]</p>
+		<p class="linenumber">[line 25]</p>
 		<h4>Tags:</h4>
 <ul>
 	<li><b>access</b> - private</li>
@@ -248,7 +256,7 @@
 	<p></p>
 	<h4>$login = <span class="value">&nbsp;NULL</span></h4>
 	<div class="indent">
-		<p class="linenumber">[line 25]</p>
+		<p class="linenumber">[line 26]</p>
 		<h4>Tags:</h4>
 <ul>
 	<li><b>access</b> - private</li>
@@ -271,7 +279,7 @@
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 36]</p>
+		<p class="linenumber">[line 37]</p>
 		<p align="center"><strong>Constructeur
 </strong></p>
 <h4>Tags:</h4>
@@ -294,7 +302,7 @@
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 80]</p>
+		<p class="linenumber">[line 81]</p>
 		<p align="center"><strong>Le destructeur
 </strong></p>
 <h4>Tags:</h4>
@@ -317,7 +325,7 @@
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 527]</p>
+		<p class="linenumber">[line 528]</p>
 		<p align="center"><strong>L'utilisateur a-t-il accès à la page Groupes ?
 </strong></p>
 <p>Cet accès est offert par le groupe administrateur</p><h4>Tags:</h4>
@@ -341,7 +349,7 @@
 $uneAdresse)</code>
 		</p>
 	
-		<p class="linenumber">[line 331]</p>
+		<p class="linenumber">[line 332]</p>
 		<p align="center"><strong>Fonction de changement de l'adresse
 </strong></p>
 <h4>Tags:</h4>
@@ -370,7 +378,7 @@ $uneAdresse)</code>
 $unCode)</code>
 		</p>
 	
-		<p class="linenumber">[line 348]</p>
+		<p class="linenumber">[line 349]</p>
 		<p align="center"><strong>Fonction de changement de code postal
 </strong></p>
 <h4>Tags:</h4>
@@ -399,7 +407,7 @@ $unCode)</code>
 $uneDate)</code>
 		</p>
 	
-		<p class="linenumber">[line 415]</p>
+		<p class="linenumber">[line 416]</p>
 		<p align="center"><strong>Fonction de changement de la date de naissance
 </strong></p>
 <h4>Tags:</h4>
@@ -428,7 +436,7 @@ $uneDate)</code>
 $unMail)</code>
 		</p>
 	
-		<p class="linenumber">[line 305]</p>
+		<p class="linenumber">[line 306]</p>
 		<p align="center"><strong>Fonction de changement de l'adresse mail
 </strong></p>
 <h4>Tags:</h4>
@@ -457,7 +465,7 @@ $unMail)</code>
 $unNom)</code>
 		</p>
 	
-		<p class="linenumber">[line 288]</p>
+		<p class="linenumber">[line 289]</p>
 		<p align="center"><strong>Fonction de changement du nom
 </strong></p>
 <h4>Tags:</h4>
@@ -486,7 +494,7 @@ $unNom)</code>
 $unPrenom)</code>
 		</p>
 	
-		<p class="linenumber">[line 271]</p>
+		<p class="linenumber">[line 272]</p>
 		<p align="center"><strong>Fonction de changement du prenom
 </strong></p>
 <h4>Tags:</h4>
@@ -515,7 +523,7 @@ $unPrenom)</code>
 $uneProfession)</code>
 		</p>
 	
-		<p class="linenumber">[line 432]</p>
+		<p class="linenumber">[line 433]</p>
 		<p align="center"><strong>Fonction de changement de la profession
 </strong></p>
 <h4>Tags:</h4>
@@ -544,7 +552,7 @@ $uneProfession)</code>
 $unNumero)</code>
 		</p>
 	
-		<p class="linenumber">[line 382]</p>
+		<p class="linenumber">[line 383]</p>
 		<p align="center"><strong>Fonction de changement de telephone fixe
 </strong></p>
 <h4>Tags:</h4>
@@ -573,7 +581,7 @@ $unNumero)</code>
 $unNumero)</code>
 		</p>
 	
-		<p class="linenumber">[line 399]</p>
+		<p class="linenumber">[line 400]</p>
 		<p align="center"><strong>Fonction de changement de telephone portable
 </strong></p>
 <h4>Tags:</h4>
@@ -602,7 +610,7 @@ $unNumero)</code>
 $nouveauTitre)</code>
 		</p>
 	
-		<p class="linenumber">[line 254]</p>
+		<p class="linenumber">[line 255]</p>
 		<p align="center"><strong>Fonction de modification du titre de l'utilisateur
 </strong></p>
 <h4>Tags:</h4>
@@ -631,7 +639,7 @@ $nouveauTitre)</code>
 $uneVille)</code>
 		</p>
 	
-		<p class="linenumber">[line 365]</p>
+		<p class="linenumber">[line 366]</p>
 		<p align="center"><strong>Fonction de changement de la ville
 </strong></p>
 <h4>Tags:</h4>
@@ -659,7 +667,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 178]</p>
+		<p class="linenumber">[line 179]</p>
 		<p align="center"><strong>Fonction de destruction de la session
 </strong></p>
 <p>Réinitialise la session php</p><h4>Tags:</h4>
@@ -682,7 +690,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 195]</p>
+		<p class="linenumber">[line 196]</p>
 		<p align="center"><strong>Fonction indiquant si l'utilisateur est connecté
 </strong></p>
 <h4>Tags:</h4>
@@ -705,7 +713,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 204]</p>
+		<p class="linenumber">[line 205]</p>
 		<p align="center"><strong>Fonction indiquant si l'utilisateur est un utilisateur connecté sur le forum
 </strong></p>
 <p>Et inexistant sur le site</p><h4>Tags:</h4>
@@ -728,7 +736,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 129]</p>
+		<p class="linenumber">[line 130]</p>
 		<p align="center"><strong>Fonction d'initialisation d'un utilisateur
 </strong></p>
 <p>Cette fonction vérifie que l'utilisateur est valide pour le site  Elle range les paramètres d'un utilisateur dans la session  Permet la jonction entre les utilisateurs Forum uniquement  et ceux déclaré sur le site</p><h4>Tags:</h4>
@@ -751,7 +759,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 495]</p>
+		<p class="linenumber">[line 496]</p>
 		<p align="center"><strong>Fonction de mise à jour de l'utilisateur dans la base  Cette fonction ecrit toutes les données stockées dans l'objet dans la base.
 </strong></p>
 <h4>Tags:</h4>
@@ -774,7 +782,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 314]</p>
+		<p class="linenumber">[line 315]</p>
 		<p align="center"><strong>Fonction de récupération du statut actif
 </strong></p>
 <p>Depuis la session php</p><h4>Tags:</h4>
@@ -797,7 +805,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 323]</p>
+		<p class="linenumber">[line 324]</p>
 		<p align="center"><strong>Fonction de récupération de l'adresse
 </strong></p>
 <p>Depuis la session php</p><h4>Tags:</h4>
@@ -820,7 +828,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 340]</p>
+		<p class="linenumber">[line 341]</p>
 		<p align="center"><strong>Fonction de récupération du code postal
 </strong></p>
 <p>Depuis la session php</p><h4>Tags:</h4>
@@ -843,7 +851,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 477]</p>
+		<p class="linenumber">[line 478]</p>
 		<p align="center"><strong>Fonction de récupération des commentaires
 </strong></p>
 <p>Depuis la session php</p><h4>Tags:</h4>
@@ -866,7 +874,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 450]</p>
+		<p class="linenumber">[line 451]</p>
 		<p align="center"><strong>Fonction de récupération de la date de première adhésion
 </strong></p>
 <p>Depuis la session php</p><h4>Tags:</h4>
@@ -889,7 +897,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 441]</p>
+		<p class="linenumber">[line 442]</p>
 		<p align="center"><strong>Fonction de récupération de la date de première cotisation
 </strong></p>
 <p>Depuis la session php</p><h4>Tags:</h4>
@@ -912,7 +920,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 408]</p>
+		<p class="linenumber">[line 409]</p>
 		<p align="center"><strong>Fonction de récupération de la date de naissance
 </strong></p>
 <p>Depuis la session php</p><h4>Tags:</h4>
@@ -935,7 +943,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 297]</p>
+		<p class="linenumber">[line 298]</p>
 		<p align="center"><strong>Fonction de récupération de l'email
 </strong></p>
 <p>Depuis la session php</p><h4>Tags:</h4>
@@ -958,7 +966,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 459]</p>
+		<p class="linenumber">[line 460]</p>
 		<p align="center"><strong>Fonction de récupération du statut exempt de cotisation
 </strong></p>
 <p>Depuis la session php</p><h4>Tags:</h4>
@@ -981,7 +989,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 486]</p>
+		<p class="linenumber">[line 487]</p>
 		<p align="center"><strong>Fonction de récupération des groupes
 </strong></p>
 <p>Depuis la session php</p><h4>Tags:</h4>
@@ -1004,7 +1012,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 237]</p>
+		<p class="linenumber">[line 238]</p>
 		<p align="center"><strong>Fonction permettant la récupération de l'identifiant de l'utilisateur
 </strong></p>
 <p>issu de phpBB  Utilisé comme id dans la base du site</p><h4>Tags:</h4>
@@ -1027,7 +1035,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 99]</p>
+		<p class="linenumber">[line 100]</p>
 		<p align="center"><strong>Cette fonction permet d'aller récupérer les informations de connexion
 </strong></p>
 <p>depuis phpbb  Elle renvoie true si l'utilisateur est connecté sur le forum  false sinon  Si l'utilisateur est connecté sur le forum : elle initialise les attributs :  idPhpbb3  login  idSessionPhpbb3</p><h4>Tags:</h4>
@@ -1050,7 +1058,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 219]</p>
+		<p class="linenumber">[line 220]</p>
 		<p align="center"><strong>Fonction permettant la récupération du login d'un utilisateur
 </strong></p>
 <h4>Tags:</h4>
@@ -1073,7 +1081,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 280]</p>
+		<p class="linenumber">[line 281]</p>
 		<p align="center"><strong>Fonction de récupération du nom
 </strong></p>
 <p>Depuis la session php</p><h4>Tags:</h4>
@@ -1096,7 +1104,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 263]</p>
+		<p class="linenumber">[line 264]</p>
 		<p align="center"><strong>Fonction de récupération du prénom
 </strong></p>
 <p>Depuis la session php</p><h4>Tags:</h4>
@@ -1119,7 +1127,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 424]</p>
+		<p class="linenumber">[line 425]</p>
 		<p align="center"><strong>Fonction de récupération de la profession
 </strong></p>
 <p>Depuis la session php</p><h4>Tags:</h4>
@@ -1142,7 +1150,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 227]</p>
+		<p class="linenumber">[line 228]</p>
 		<p align="center"><strong>Fonction permettant la récupération d'identificateur de session phpbb3
 </strong></p>
 <h4>Tags:</h4>
@@ -1165,7 +1173,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 374]</p>
+		<p class="linenumber">[line 375]</p>
 		<p align="center"><strong>Fonction de récupération du numéro de téléphone fixe
 </strong></p>
 <p>Depuis la session php</p><h4>Tags:</h4>
@@ -1188,7 +1196,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 391]</p>
+		<p class="linenumber">[line 392]</p>
 		<p align="center"><strong>Fonction de récupération du numéro de téléphone portable
 </strong></p>
 <p>Depuis la session php</p><h4>Tags:</h4>
@@ -1211,7 +1219,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 246]</p>
+		<p class="linenumber">[line 247]</p>
 		<p align="center"><strong>Fonction de récupération du titre de l'utilisateur
 </strong></p>
 <p>Depuis la session php</p><h4>Tags:</h4>
@@ -1234,7 +1242,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 468]</p>
+		<p class="linenumber">[line 469]</p>
 		<p align="center"><strong>Fonction de récupération du type d'adhérent
 </strong></p>
 <p>Depuis la session php</p><h4>Tags:</h4>
@@ -1257,7 +1265,7 @@ $uneVille)</code>
 )</code>
 		</p>
 	
-		<p class="linenumber">[line 357]</p>
+		<p class="linenumber">[line 358]</p>
 		<p align="center"><strong>Fonction de récupération de la ville
 </strong></p>
 <p>Depuis la session php</p><h4>Tags:</h4>
@@ -1278,7 +1286,7 @@ $uneVille)</code>
 	</div>
 	<div id="credit">
 		<hr>
-		Documentation generated on Sun, 11 Mar 2012 17:01:54 +0100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
+		Documentation generated on Sat, 24 Mar 2012 14:15:41 +0100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
 	</div>
 </div>
 </body>
