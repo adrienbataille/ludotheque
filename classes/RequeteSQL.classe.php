@@ -1,11 +1,16 @@
 <?php
-/** Classe permettant de manipuler des requètes SQL.
+
+/**
+ * Classe permettant de manipuler des requètes SQL.
  * A utiliser pour les très grosses requètes afin de préserver une cohérence.
  * @author Romain Laï-King
  * @version 0.1
+ * @package com
+ * @subpackage rlk
  * @todo Passage en SQL 2
  * @todo Nettoyer les entrées utilisateurs contre les injections SQL.
  */
+
 class RequeteSQL
 {
 	/**
