@@ -25,8 +25,18 @@ class ModuleAjoutJeux extends Module
 	private $mabase = null;
 	// On stocke les erreurs qui pourront arriver
 	private $erreurLangue = false;
+	private $erreurNom = false;
 	private $erreurPays = false;
 	private $erreurJeu = false;
+	// Variables du formulaire
+	private $nom = "";
+	private $langue = "";
+	private $description = "";
+	private $auteur = "";
+	private $pays = "";
+	private $categorie = "";
+	// Id à converser
+	private $idJeu = 0;
     
 // Methodes
 
@@ -37,9 +47,6 @@ class ModuleAjoutJeux extends Module
     {
         // On utilise le constructeur de la classe mère
 		parent::__construct();
-
-		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
-		$this->baseDonnees = AccesAuxDonneesDev::recupAccesDonnees();
 		
 		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
 		$this->maBase = AccesAuxDonneesDev::recupAccesDonnees();
@@ -74,7 +81,7 @@ class ModuleAjoutJeux extends Module
 	  *	Fonction d'affichage du formulaire
 	  */
     public function afficheFormulaire()
-    {	
+    {
         $this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_JEUX . "' id='formProfil' autocomplete='off'>");
         
 		// Si on a déjà traité le formulaire
@@ -84,19 +91,13 @@ class ModuleAjoutJeux extends Module
 			$this->ajouteLigne("Formulaire modifié");
 			$this->fermeBloc("</p>");
 		}
-		if ($erreurLangue)
-		{
-			$this->ouvreBloc("<p>");
-			$this->ajouteLigne("Erreur ajout Langue");
-			$this->fermeBloc("</p>");
-		}
-		if ($erreurPays)
+		if ($this->erreurPays)
 		{
 			$this->ouvreBloc("<p>");
 			$this->ajouteLigne("Erreur ajout Pays");
 			$this->fermeBloc("</p>");
 		}
-		if ($erreurJeu)
+		if ($this->erreurJeu)
 		{
 			$this->ouvreBloc("<p>");
 			$this->ajouteLigne("Erreur ajout Jeu");
@@ -105,19 +106,23 @@ class ModuleAjoutJeux extends Module
         
 		// First fieldset : Nom du jeu
 		$this->ouvreBloc("<fieldset>");
-		$this->ajouteLigne("<legend>Nom du jeux</legend>");
+		$this->ajouteLigne("<legend>Nom du jeu</legend>");
 		$this->ouvreBloc("<ol>");
 		
 		// Nom
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . NOM_JEU . "'>" . $this->convertiTexte("Nom") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_JEU . "' name='" . NOM_JEU . "' value='" . VIDE . "' required='required' />");
+		$this->ajouteLigne("<input type='text' id='" . NOM_JEU . "' name='" . NOM_JEU . "' value='" . $nom . "' required='required' />");
+		if($this->erreurNom)
+			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
 		$this->fermeBloc("</li>");
 		
 		// Langue
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langue du nom") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_LANGUE . "' name='" . NOM_LANGUE . "' value='" . VIDE . "' list='listeLangue' required='required' />");
+		$this->ajouteLigne("<input type='text' id='" . NOM_LANGUE . "' name='" . NOM_LANGUE . "' value='" . $langue . "' list='listeLangue' required='required' />");
+		if($this->erreurLangue)
+			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
 		// Liste des langues pour l'auto-complete
 		$listeLangue = $this->maBase->recupLangue();
 		$this->ouvreBloc("<datalist id='listeLangue'>");
@@ -129,7 +134,10 @@ class ModuleAjoutJeux extends Module
 		$this->fermeBloc("</ol>");
 		$this->fermeBloc("</fieldset>");
 		
-        
+		$this->ouvreBloc("<div id='addNomFormAjoutJeu'>");
+		$this->fermeBloc("</div>");
+		$this->ajouteLigne("<a href='ajoutNomJeu.html' onClick='return ajouterNomFormAjoutJeu()' title='Ajouter un nom' target='_blank'>Ajouter un nom de jeu dans une autre langue</a>");// mettre un lien
+		
 		// Second fieldset : Information sur le jeux
 		$this->ouvreBloc("<fieldset>");
 		$this->ajouteLigne("<legend>Information sur le jeux</legend>");
@@ -138,19 +146,19 @@ class ModuleAjoutJeux extends Module
 		// Description
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . DESCRIPTION_JEU . "'>" . $this->convertiTexte("Description") . "</label>");
-		$this->ajouteLigne("<textarea rows='3' id='" . DESCRIPTION_JEU . "' name='" . DESCRIPTION_JEU . "'>" . VIDE . "</textarea>");
+		$this->ajouteLigne("<textarea rows='3' id='" . DESCRIPTION_JEU . "' name='" . DESCRIPTION_JEU . "'>" . $description . "</textarea>");
 		$this->fermeBloc("</li>");
 		
 		// Auteur
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . AUTEUR . "'>" . $this->convertiTexte("Auteur") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . AUTEUR . "' name='" . AUTEUR . "' value='" . VIDE . "' autocomplete='on' />");
+		$this->ajouteLigne("<input type='text' id='" . AUTEUR . "' name='" . AUTEUR . "' value='" . $auteur . "' autocomplete='on' />");
 		$this->fermeBloc("</li>");
 		
 		// Pays
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . NOM_PAYS . "'>" . $this->convertiTexte("Pays d'origine") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_PAYS . "' name='" . NOM_PAYS . "' value='" . VIDE . "' list='listePays' />");
+		$this->ajouteLigne("<input type='text' id='" . NOM_PAYS . "' name='" . NOM_PAYS . "' value='" . $pays . "' list='listePays' />");
 		// Liste des langues pour l'auto-complete
 		$listePays = $this->maBase->recupPays();
 		$this->ouvreBloc("<datalist id='listePays'>");
@@ -164,7 +172,7 @@ class ModuleAjoutJeux extends Module
 		// Catégories
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . NOM_CATEGORIE . "'>" . $this->convertiTexte("Catégorie") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_CATEGORIE . "' name='" . NOM_CATEGORIE . "' value='" . VIDE . "' />");
+		$this->ajouteLigne("<input type='text' id='" . NOM_CATEGORIE . "' name='" . NOM_CATEGORIE . "' value='" . $categorie . "' />");
 		$this->fermeBloc("</li>");
 		
 		$this->fermeBloc("</ol>");
@@ -198,62 +206,71 @@ class ModuleAjoutJeux extends Module
 			// mysql_real_escape_string(); Echappement des caractères spéciaux SQL
 			
 			// Nettoyage du Nom
-			$nom = $this->filtreChaine($_POST[NOM_JEU], TAILLE_CHAMPS_COURT);
+			$this->nom = $this->filtreChaine($_POST[NOM_JEU], TAILLE_CHAMPS_COURT);
 			
 			// Nettoyage de la Langue
-			$langue = $this->filtreChaine($_POST[NOM_LANGUE], TAILLE_CHAMPS_COURT);
+			$this->langue = $this->filtreChaine($_POST[NOM_LANGUE], TAILLE_CHAMPS_COURT);
 			
 			// Nettoyage de la Description
-			$description = $this->filtreChaine($_POST[DESCRIPTION_JEU], TAILLE_CHAMPS_COURT);
+			$this->description = $this->filtreChaine($_POST[DESCRIPTION_JEU], TAILLE_CHAMPS_COURT);
 			
 			// Nettoyage de l'Auteur
-			$auteur = $this->filtreChaine($_POST[AUTEUR], TAILLE_CHAMPS_COURT);
+			$this->auteur = $this->filtreChaine($_POST[AUTEUR], TAILLE_CHAMPS_COURT);
 			
 			// Nettoyage du Pays
-			$pays = $this->filtreChaine($_POST[NOM_PAYS], TAILLE_CHAMPS_COURT);
+			$this->pays = $this->filtreChaine($_POST[NOM_PAYS], TAILLE_CHAMPS_COURT);
 			
 			// Nettoyage de la Catégorie
-			$categorie = $this->filtreChaine($_POST[NOM_CATEGORIE], TAILLE_CHAMPS_COURT);
+			$this->categorie = $this->filtreChaine($_POST[NOM_CATEGORIE], TAILLE_CHAMPS_COURT);
 			
-			
-			// Si le champ Langue n'a pas été laissé vide, on récupére l'id de la Langue sélectionnée,
-			// et s'il s'agit d'une nouvelle Langue, on l'insère dans la base de données et on récupére son id
-			$idLangue = 0;
-			if(strcmp($langue, "") != 0)
+			if( ( strcmp($this->nom, "") != 0 ) && ( strcmp($this->langue, "") != 0) )
 			{
-				$listeLangue = $this->maBase->recupLangue();
-				foreach($listeLangue as $uneLangue)
+				
+				// Si le champ Langue n'a pas été laissé vide, on récupére l'id de la Langue sélectionnée,
+				// et s'il s'agit d'une nouvelle Langue, on l'insère dans la base de données et on récupére son id
+				$idLangue = 0;
+				if(strcmp($this->langue, "") != 0)
 				{
-					if(strcasecmp($langue, $uneLangue[NOM_LANGUE]) == 0)
-						$idLangue = $uneLangue[ID_LANGUE];
+					$listeLangue = $this->maBase->recupLangue();
+					foreach($listeLangue as $uneLangue)
+					{
+						if(strcasecmp($this->langue, $uneLangue[NOM_LANGUE]) == 0)
+							$idLangue = $uneLangue[ID_LANGUE];
+					}
+					if($idLangue == 0)
+						$idLangue = $this->maBase->InsertionTableLangue($this->langue);
 				}
-				if($idLangue == 0)
-					$idLangue = $this->maBase->InsertionTableLangue($langue);
-			}
-			if(!intval($idLangue))
-				$erreurLangue = true;
-			
-			// Si le champ Pays n'a pas été laissé vide, on récupére l'id du Pays sélectionné,
-			// et s'il s'agit d'un nouveau Pays, on l'insère dans la base de données et on récupére son id
-			$idPays = 0;
-			if(strcmp($pays, "") != 0)
-			{
-				$listePays = $this->maBase->recupPays();
-				foreach($listePays as $unPays)
+				if(!intval($idLangue))
+					$this->erreurLangue = true;
+				
+				// Si le champ Pays n'a pas été laissé vide, on récupére l'id du Pays sélectionné,
+				// et s'il s'agit d'un nouveau Pays, on l'insère dans la base de données et on récupére son id
+				$idPays = 0;
+				if(strcmp($this->pays, "") != 0)
 				{
-					if(strcasecmp($pays, $unPays[NOM_PAYS]) == 0)
-						$idPays = $unPays[ID_PAYS];
+					$listePays = $this->maBase->recupPays();
+					foreach($listePays as $unPays)
+					{
+						if(strcasecmp($this->pays, $unPays[NOM_PAYS]) == 0)
+							$idPays = $unPays[ID_PAYS];
+					}
+					if($idPays == 0)
+						$idPays = $this->maBase->InsertionTablePays($this->pays);
 				}
-				if($idPays == 0)
-					$idPays = $this->maBase->InsertionTablePays($pays);
+				if(!intval($idPays))
+					$this->erreurPays = true;
+				
+				$this->idJeu = $this->maBase->InsertionTableJeu($this->description, $this->auteur, $idPays);
+				$this->erreurLangue = $this->maBase->InsertionTableNomJeu($this->nom, $idLangue, $this->idJeu);
+				
+				print "categorie choisie : " . $categorie . "<br />";
 			}
-			if(!intval($idPays))
-				$erreurPays = true;
-			
-			$erreurJeu = $this->maBase->InsertionTableJeu($description, $auteur, $idPays);
-			
-			print "categorie choisie : " . $categorie . "<br />";
-			
+
+			if(strcmp($this->langue, "") == 0)
+				$this->erreurLangue = true;
+				
+			if(strcmp($this->nom, "") == 0)
+				$this->erreurNom = true;
 			/*
 			// Vérification de la présence de modifications
 			// Changement de titre ?

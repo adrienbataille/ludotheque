@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Maison Des Jeux de Touraine</title>
+		<link rel="icon" type="image/gif" href="images/mini.gif" />
+    	<link rel="stylesheet" type="text/css" href="css/mdjt.css" />
+	</head>
+	<body>
+		<form method='post' id='formProfil' autocomplete='off'>
+			<fieldset>
+				<legend>Ajouter une autre langue</legend>
+				<ol>
+					<li>
+						<label for='nomJeu'>Nom</label>
+						<input type='text' id='nomJeu' name='nomJeu' value='' required='required' />
+					</li>
+					<li>
+        				<label for='nomLangue'>Langue du nom</label>
+				        <input type='text' id='nomLangue' name='nomLangue' value='' list='listeCategorie' required='required' />
+					</li>
+				</ol>
+			</fieldset>			
+			<fieldset>
+    			<input type='hidden' name='ajouter' value='true' />
+				<button type='submit' name='Ajouter'>Je valide l'ajout du nom</button>
+		  	</fieldset>
+		</form>
+	</body>
+</html>
