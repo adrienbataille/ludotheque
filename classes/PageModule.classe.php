@@ -8,6 +8,7 @@
 require_once("classes/Page.classe.php");
 require_once("classes/ModuleProfil.classe.php");
 require_once("classes/ModuleGroupes.classe.php");
+require_once("classes/ModuleGestionJeux.classe.php");
 require_once("classes/ModuleAjoutJeux.classe.php");
 require_once("classes/ModuleAjoutVersions.classe.php");
 require_once("classes/ModuleAjoutExemplaires.classe.php");
@@ -86,6 +87,12 @@ class PageModule extends Page
                         exit();
                     }
                     break;
+					
+				case "GestionJeux" :
+                	// On appelle l'ajout d'un jeux
+                	$this->unModule = new ModuleGestionJeux();
+                	break;
+                	
                 case "AjoutJeux" :
                 	// On appelle l'ajout d'un jeux
                 	$this->unModule = new ModuleAjoutJeux();
@@ -141,9 +148,10 @@ class PageModule extends Page
 		$this->ouvreBloc("<nav id=\"menuModules\">");
 		$this->ouvreBloc("<ol>");
 		$this->ajouteLigne("<li><a href=\"" . MODULE_PROFIL ."\">Mon profil</a></li>");
-		$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_JEUX . "\">Ajouter Jeux</a></li>");
-		$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_VERSIONS . "\">Ajouter Versions</a></li>");
-		$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_EXEMPLAIRES . "\">Ajouter Exemplaires</a></li>");
+		$this->ajouteLigne("<li><a href=\"" . MODULE_GESTION_JEUX . "\">Gestion des jeux</a></li>");
+		//$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_JEUX . "\">Ajouter Jeux</a></li>");
+		//$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_VERSIONS . "\">Ajouter Versions</a></li>");
+		//$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_EXEMPLAIRES . "\">Ajouter Exemplaires</a></li>");
 
 		$this->ajouteLigne("<li><a href=\"\">Utilisateurs</a></li>");
         // Si l'utilisateur à accès au module Groupes
