@@ -5,64 +5,159 @@
 */
 
 // Inclusions
+require_once("classes/AccesAuxDonnees.classe.php");
 
 //Constantes - paramètre du système
-define("SERVEUR","127.0.0.1");
-define("LOGIN","ludotheque");
-define("MDP","ludo");
-define("BASE","mdjtufjjpdoc");
-define("TABLE_PREFIX","MDJT_");
+define("BASE_DEV","mdjtufjjpdev");
 
 // Constantes - Definition des Tables SQL
-define("TABLE_UTILISATEURS", TABLE_PREFIX . "UTILISATEURS");
-define("TABLE_VILLES", TABLE_PREFIX . "VILLES");
-define("TABLE_TYPE_ADHERENT", TABLE_PREFIX . "TYPE_ADHERENT");
-define("TABLE_GROUPES", TABLE_PREFIX . "GROUPES");
-define("TABLE_LIEN_UTILISATEURS_GROUPES", TABLE_PREFIX . "LIEN_UTILISATEURS_GROUPES");
+define("TABLE_CATEGORIE", TABLE_PREFIX . "CATEGORIE");
+define("TABLE_CATEGORIE_JEUX", TABLE_PREFIX . "CATEGORIE_JEUX");
+define("TABLE_EMPRUNT", TABLE_PREFIX . "EMPRUNT");
+define("TABLE_ETAT_EXEMPLAIRE", TABLE_PREFIX . "ETAT_EXEMPLAIRE");
+define("TABLE_EXEMPLAIRE", TABLE_PREFIX . "EXEMPLAIRE");
+define("TABLE_EXTENSION", TABLE_PREFIX . "EXTENSION");
+define("TABLE_FAIRE_PARTIE_KIT", TABLE_PREFIX . "FAIRE_PARTIE_KIT");
+define("TABLE_INVENTAIRE", TABLE_PREFIX . "INVENTAIRE");
+define("TABLE_JEUX", TABLE_PREFIX . "JEUX");
+define("TABLE_KIT_JEUX", TABLE_PREFIX . "KIT_JEUX");
+define("TABLE_LANGUE", TABLE_PREFIX . "LANGUE");
+define("TABLE_LANGUE_REGLE", TABLE_PREFIX . "LANGUE_REGLE");
+define("TABLE_LIEU", TABLE_PREFIX . "LIEU");
+define("TABLE_NB_JOUEUR", TABLE_PREFIX . "NB_JOUEUR");
+define("TABLE_NB_JOUEUR_VERSION_JEU", TABLE_PREFIX . "NB_JOUEUR_VERSION_JEU");
+define("TABLE_NOM_JEU", TABLE_PREFIX . "NOM_JEU");
+define("TABLE_NOTE_VERSION", TABLE_PREFIX . "NOTE_VERSION");
+define("TABLE_PAYS", TABLE_PREFIX . "PAYS");
+define("TABLE_PHOTO", TABLE_PREFIX . "PHOTO");
+define("TABLE_PHOTO_VERSION", TABLE_PREFIX . "PHOTO_VERSION");
+define("TABLE_RESERVATION", TABLE_PREFIX . "RESERVATION");
+define("TABLE_SUGGESTION", TABLE_PREFIX . "SUGGESTION");
+define("TABLE_VERSION", TABLE_PREFIX . "VERSION");
 
-// Définition des champs de la table TABLE_UTILISATEURS
-define("ID_UTILISATEUR", "idUtilisateur");
-define("TITRE", "titre");
-define("NOM", "nom");
-define("PRENOM", "prenom");
-define("EMAIL", "email");
-define("ACTIF", "actif");
-define("ADRESSE", "adresse");
-define("TELEPHONE", "telephone");
-define("PORTABLE", "portable");
-define("DATE_NAISSANCE", "dateNaissance");
-define("PROFESSION", "profession");
-define("DATE_ADHESION", "dateAdhesion");
-define("DATE_COTISATION", "dateCotisation");
-define("EXEMPT_COTISATION", "exemptCotisation");
-define("COMMENTAIRES", "commentaires");
-// Définition des tailles des champs
-define("TAILLE_CHAMPS_TELEPHONE",20);
-define("TAILLE_CHAMPS_COURT",50);
-define("TAILLE_CHAMPS_LONG",255);
+// Définition des champs de la table TABLE_CATEGORIE
+define("ID_CATEGORIE", "idCategorie");
+define("NOM_CATEGORIE", "nomCategorie");
+define("DESCRIPTION_CATEGORIE", "descriptionCategorie");
 
-// Définition des champs de la table TABLE_VILLES
-define("ID_VILLE", "idVille");
-define("VILLE", "nomVille");
-define("CODEPOSTAL", "codePostal");
+// Définition des champs de la table TABLE_CATEGORIE_JEU
+define("ID_CATEGORIE_JEU", "idCategorieJeu");
 
-// Définition des champs de la table TABLE_TYPE_ADHERENT
-define("ID_TYPE_ADHERENT", "idTypeAdherent");
-define("TYPE_ADHERENT", "typeAdherent");
+// Définition des champs de la table TABLE_EMPRUNT
+define("ID_EMPRUNT", "idEmprunt");
+define("DATE_EMPRUNT", "dateEmprunt");
+define("DATE_RETOUR_SOUHAITE", "dateRetourSouhaite");
+define("DATE_RETOUR_REEL", "dateRetourReel");
 
-// Définition des champs de la table TABLE_GROUPES
-define("ID_GROUPE", "idGroupe");
-define("NOM_GROUPE", "nomGroupe");
+// Définition des champs de la table TABLE_ETAT_EXEMPLAIRE
+define("ID_ETAT_EXEMPLAIRE", "idEtatExemplaire");
+define("NOM_ETAT", "nomEtat");
+
+// Définition des champs de la table TABLE_EXEMPLAIRE
+define("ID_EXEMPLAIRE", "idExemplaire");
+define("DESCRIPTION_EXEMPLAIRE", "descriptionExemplaire");
+define("PRIX_MDJT", "prixMJDT");
+define("DATE_ACHAT", "dateAchat");
+define("DATE_FIN_VIE", "dateFinVie");
+define("ID_LIEU_REEL", "idLieuReel");
+define("ID_LIEU_TEMPO", "idLieuTempo");
+
+// Définition des champs de la table TABLE_EXTENSION
+define("ID_EXTENSION", "idExtension");
+define("NATURE", "nature");
+define("ID_VERSION_BASE", "idVesionBase");
+define("ID_VERSION_EXTENSION", "idVersionExtension");
+
+// Définition des champs de la table TABLE_FAIRE_PARTIE_KIT
+define("ID_FAIRE_PARTIE_KIT", "idFairePartieKit");
+
+// Définition des champs de la table TABLE_INVENTAIRE
+define("ID_INVENTAIRE", "idInventaire");
+define("DATE_INVENTAIRE", "dateInventaire");
+define("COMMENTAIRE_INVENTAIRE", "commentaireInventaire");
+
+// Définition des champs de la table TABLE_JEUX
+define("ID_JEU", "idJeu");
+define("DESCRIPTION_JEU", "descriptionJeu");
+define("AUTEUR", "auteur");
+
+// Définition des champs de la table TABLE_KIT_JEUX
+define("ID_KIT_JEU", "idKitJeu");
+define("NOM_KIT", "nomKit");
+define("DESCRIPTIOIN_KIT", "descriptionKit");
+
+// Définition des champs de la table TABLE_LANGUE
+define("ID_LANGUE", "idLangue");
+define("NOM_LANGUE", "nomLangue");
+
+// Définition des champs de la table TABLE_LANGUE_REGLE
+define("ID_LANGUE_REGLE", "idLangueRegle");
+
+// Définition des champs de la table TABLE_LIEU
+define("ID_LIEU", "idLieu");
+define("NOM_LIEU", "nomLieu");
+
+// Définition des champs de la table TABLE_NB_JOUEUR
+define("ID_NB_JOUEUR", "idNbJoueur");
+define("NB_JOUEUR", "nbJoueur");
+
+// Définition des champs de la table TABLE_NB_JOUEUR_VERSION_JEU
+define("ID_NB_JOUEUR_JEU", "idNbJoueurJeu");
+
+// Définition des champs de la table TABLE_NOM_JEU
+define("ID_NOM_JEU", "idNomJeu");
+define("NOM_JEU", "nomJeu");
+
+// Définition des champs de la table TABLE_NOTE_VERSION
+define("ID_NOTE_VERSION", "idNoteVersion");
+define("NOTE_VERSION", "noteVersion");
+define("COMMENTAIRE_NOTE_VERSION", "commentaireNoteVersion");
+
+// Définition des champs de la table TABLE_PAYS
+define("ID_PAYS", "idPays");
+define("NOM_PAYS", "nomPays");
+
+// Définition des champs de la table TABLE_PHOTO
+define("ID_PHOTO", "idPhoto");
+define("NOM_PHOTO", "nomPhoto");
+define("TEXTE_ALTERNATIF", "texteAlternatif");
+
+// Définition des champs de la table TABLE_PHOTO_VERSION
+define("ID_PHOTO_VERSION", "idPhotoVERSION");
+
+// Définition des champs de la table TABLE_RESERVATION
+define("ID_RESERVATION", "idReversation");
+define("DATE_SOUHAITE_EMPRUNT", "dateSouhaiteEmprunt");
+
+// Définition des champs de la table TABLE_SUGGESTION
+define("ID_SUGGESTION", "idSuggestion");
+define("COMMENTAIRE_SUGGESTION", "commentaireSugeestion");
+define("ETAT_SUGGESTION", "etatSuggestion");
+
+// Définition des champs de la table TABLE_VERSION
+define("ID_VERSION", "idVersion");
+define("NOM_VERSION", "nomVersion");
+define("DESCRIPTION_VERSION", "descriptionVersion");
+define("AGE_MINIMUM", "ageMinimum");
+define("NB_JOUEUR_RECOMMANDE", "nbJoueurRecommande");
+define("DUREE_PARTIE", "dureePartie");
+define("PRIX_ACHAT", "prixAchat");
+define("ANNEE_SORTIE", "anneeSortie");
+define("ILLUSTRATEUR", "illustrateur");
+define("DISTRIBUTEUR", "distributeur");
+define("EDITEUR", "editeur");
 
 
 
-class AccesAuxDonnees
+
+
+class AccesAuxDonneesDevFicheJeu
 {
 
 // Attributs
 	// Variable de classe stockant le premier objet créé
 	// Sert à garantir qu'on ne créera qu'un seul objet
-	private static $connexionBase = NULL;
+	private static $connexionBaseDev = NULL;
 	// Objet d'acces a la base
 	private $maBase = NULL;
 	// Est-on déjà connecté à la base - sert à éviter les connexions multiples
@@ -95,6 +190,8 @@ class AccesAuxDonnees
 	// Outils à usage externe
 	//
 	
+	/** Les trois fonctions qui suivent gérent la base dev */
+	
 	/**
 	* Fonction statique de création d'un accès aux données
 	* Cette fonction vérifie qu'un accès aux données n'existe pas avant
@@ -103,36 +200,29 @@ class AccesAuxDonnees
 	* C'est cette fonction qui doit être utilisée 
 	* chaque fois qu'on veut avoir accès aux données
 	*/
-	public static function recupAccesDonnees()
+	public static function recupAccesDonneesDev()
 	{
 		// Initialisation de l'accès à la Base de Donnees
 		// Si on a pas encore d'objet d'accès aux donnees
-		if ( self::$connexionBase == NULL )
+		if ( self::$connexionBaseDev == NULL )
 		{
 			// On en crée un et on stocke cette connexion dans la variable de classe
-			self::$connexionBase = new AccesAuxDonnees();
-			return self::$connexionBase;
+			self::$connexionBaseDev = new AccesAuxDonneesDevFicheJeu();
+			return self::$connexionBaseDev;
 		}
 		else
 		{
 			// Sinon, on récupère celle qui existe déjà
-			return self::$connexionBase;
+			return self::$connexionBaseDev;
 		}
 	}
-  
-  
-  
-  //
-  // Outils à usage interne
-  //
-
-        /**
-        * Fonction de connexion à la base de donnée
+	/**
+        * Fonction de connexion à la base de donnée "dev"
         * Cette fonction initie la connexion à la base de données
         * Uniquement si ce n'est pas déjà fait.
-        * On l'utilise donc au début de chaque requête
+        * On l'utilise donc au début de chaque requête dev
         */
-        private function connecteBase()
+        private function connecteBaseDev()
         {
             // On initie la connexion uniquement si elle n'est pas déjà faite
             if ($this->estConnecte == FALSE)
@@ -141,27 +231,28 @@ class AccesAuxDonnees
                 {
                     // Connexion en mode debug
                     $option[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-                    $this->maBase = new PDO("mysql:host=" . SERVEUR . ";dbname=" . BASE, LOGIN, MDP,$option);
+                    $this->maBase = new PDO("mysql:host=" . SERVEUR . ";dbname=" . BASE_DEV, LOGIN, MDP,$option);
                     // Connexion normale
-                    // $this->maBase = new PDO("mysql:host=" . SERVEUR . ";dbname=" . BASE, LOGIN, MDP);
+                    // $this->maBase = new PDO("mysql:host=" . SERVEUR . ";dbname=" . BASE_DEV, LOGIN, MDP);
                 } 
                 catch (PDOException $e)
                 {
                         // Accès à la base impossible
-                        print "Connexion a la base de donnee impossible <br/>";
+                        print "Connexion a la base de donnee dev impossible <br/>";
                         die();
                 }
                 $this->estConnecte = TRUE;
             }
 	}
 	
+        
 	/**
 	* Fonction générique de requête type sélection dans la base
 	*/
-	private function requeteSelect($uneRequeteSQL)
+	private function requeteSelectDev($uneRequeteSQL)
 	{
 		// On initie la connexion à la base, si ce n'est déjà fait
-		$this->connecteBase();	
+		$this->connecteBaseDev();	
 		// Si on a bien une connexion à la base
 		if ($this->estConnecte)
 		{
@@ -189,38 +280,37 @@ class AccesAuxDonnees
 		}
 	}
 	
-	
 	//
 	// Requêtes accessibles au reste du site
 	//
 	
 	/**
-	* Fonction de récupération des informations d'un utilisateur
-	* Entrée : l'id de cet utilisateur
-	* Sortie : le tableau correspondant à cet utilisateur
-	* Si l'utilisateur n'existe pas en base, renvoi false
+	* Fonction de récupération des informations d'un jeu
+	* Entrée : l'id de ce jeu
+	* Sortie : le tableau correspondant à ce jeu
+	* Si le jeu n'existe pas en base, renvoi false
 	*/
-	public function recupInfoUtilisateur($uneID)
+	public function recupInfoJeu($uneID)
 	{
 		// Protection contre injection SQL
 		if ( intval($uneID) )
-		{
-			// construction de la requete SQL
-			$requete = "SELECT * FROM " .
-				TABLE_UTILISATEURS .
-				" NATURAL JOIN " .
-				TABLE_VILLES .
-				" NATURAL JOIN " .
-				TABLE_TYPE_ADHERENT .
-				" WHERE " .
-                                ID_UTILISATEUR .
-                                "= '" .
-				$uneID . "'";
+		{			
+			// construction de la requete SQL permettant de recuperer les info de 
+			// la version et le jeu associés à l'idJeu 
+			$requete = 	"SELECT v.".ID_JEU.",".DESCRIPTION_JEU.",".AUTEUR.",".ID_PAYS.","
+										.NOM_VERSION.",".DESCRIPTION_VERSION.",".AGE_MINIMUM.","
+											.NB_JOUEUR_RECOMMANDE.",".DUREE_PARTIE.",".PRIX_ACHAT.","
+											.ANNEE_SORTIE.",".ILLUSTRATEUR.",".DISTRIBUTEUR.",".EDITEUR."
+								FROM ".TABLE_JEUX." j 
+								INNER JOIN ".TABLE_VERSION." v
+								ON v.".ID_JEU." = j.".ID_JEU."
+								WHERE ".ID_VERSION." = ".$uneID . " ";
+
 			// Execution 
-			$monUtilisateur = $this->requeteSelect($requete);
-				
+			$monJeu = $this->requeteSelectDev($requete);
+			
 			// Si l'utilisateur n'existe pas dans la base
-			if (count($monUtilisateur) == 0)
+			if (count($monJeu) == 0)
 			{
 				return false;
 			}
@@ -229,7 +319,7 @@ class AccesAuxDonnees
 				// On renvoie juste la ligne le concernant
 				// Il ne doit pas exister 2 utilisateurs de même id 
 				// donc le tableau fait toujours 1 ligne
-				return $monUtilisateur[0];
+				return $monJeu[0];
 			}
 		}
 		else
@@ -238,89 +328,37 @@ class AccesAuxDonnees
 		}
 	}
 	
+	
 	/**
-	* Fonction de récupération des groupes d'un utilisateur
-	* Entrée : l'id de cet utilisateur
-	* Sortie : le tableau des groupes auxquels l'utilisateur appartient
-	* Si l'utilisateur n'existe pas en base, renvoi false
+	* Fonction de récupération du nom du jeu
+	* Entrée : l'id du jeu
+	* Sortie : le(s) nom(s) du jeu
+	* Si le jeu n'existe pas en base, renvoi false
 	*/
-	public function recupGroupesUtilisateur($uneID)
+	public function recupJeuLangue($uneID)
 	{
 		// Protection contre injection SQL
 		if ( intval($uneID) )
-		{
-			// construction de la requete SQL
-			$requete = "SELECT " .
-                                NOM_GROUPE .
-                                " FROM " .
-				TABLE_GROUPES .
-				" NATURAL JOIN " .
-				TABLE_LIEN_UTILISATEURS_GROUPES .
-				" NATURAL JOIN " .
-				TABLE_UTILISATEURS .
-				" WHERE " .
-                                ID_UTILISATEUR .
-                                "= '" .
-				$uneID . "'";
-			// Execution 
-			$mesGroupes = $this->requeteSelect($requete);
-				
-			// Si l'utilisateur n'existe pas dans la base
-			if (count($mesGroupes) == 0)
-			{
-				return false;
-			}
-			else // L'utilisateur existe dans la base
-			{
-				// On renvoie le tableau des groupes auxquels il appartient
-				return $mesGroupes;
-			}
-		}
-		else
-		{
-			return false;
-		}
-	}
+		{			
+			// construction de la requete SQL permettant de recuperer les langues associées au jeu
+			$requete = 	"SELECT ".NOM_JEU."
+						FROM ".TABLE_NOM_JEU." j 
+						WHERE ".ID_JEU." = ".$uneID . " ";
 
-        
-	/**
-	* Fonction de récupération des groupes d'un utilisateur Nom et ID
-	* Entrée : l'id de cet utilisateur
-	* Sortie : le tableau des groupes auxquels l'utilisateur appartient
-	* Si l'utilisateur n'existe pas en base, renvoi false
-	*/
-	public function recupGroupesUtilisateurAvecID($uneID)
-	{
-		// Protection contre injection SQL
-		if ( intval($uneID) )
-		{
-			// construction de la requete SQL
-			$requete = "SELECT " .
-                              ID_GROUPE .
-                                ", " .
-                                NOM_GROUPE .
-                                " FROM " .
-				TABLE_GROUPES .
-				" NATURAL JOIN " .
-				TABLE_LIEN_UTILISATEURS_GROUPES .
-				" NATURAL JOIN " .
-				TABLE_UTILISATEURS .
-				" WHERE " .
-                                ID_UTILISATEUR .
-                                "= '" .
-				$uneID . "'";
 			// Execution 
-			$mesGroupes = $this->requeteSelect($requete);
-				
+			$monJeuLangue = $this->requeteSelectDev($requete);
+			
 			// Si l'utilisateur n'existe pas dans la base
-			if (count($mesGroupes) == 0)
+			if (count($monJeuLangue) == 0)
 			{
 				return false;
 			}
 			else // L'utilisateur existe dans la base
 			{
-				// On renvoie le tableau des groupes auxquels il appartient
-				return $mesGroupes;
+				// On renvoie juste la ligne le concernant
+				// Il ne doit pas exister 2 utilisateurs de même id 
+				// donc le tableau fait toujours 1 ligne
+				return $monJeuLangue;
 			}
 		}
 		else
@@ -328,6 +366,8 @@ class AccesAuxDonnees
 			return false;
 		}
 	}
+	
+	
 
         
         /**
@@ -418,93 +458,7 @@ class AccesAuxDonnees
 		return $laListe;
 	}
         
-        /**
-	* Fonction de récupération de la liste des utilisateurs
-	* Sortie : le tableau contenant cette liste
-	*/
-	public function recupUtilisateurs()
-	{
-		$laListe = $this->requeteSelect(
-			"SELECT " .
-			ID_UTILISATEUR .
-                        ", " .
-                        NOM .
-                        ", " .
-                        PRENOM .
-			" FROM " .
-			TABLE_UTILISATEURS
-			);
-		return $laListe;
-	}
-        
-        /**
-	* Fonction de récupération de la liste des groupes
-	* Sortie : le tableau contenant cette liste
-	*/
-	public function recupGroupes()
-	{
-		$laListe = $this->requeteSelect(
-			"SELECT " .
-			ID_GROUPE .
-                        ", " .
-                        NOM_GROUPE .
-			" FROM " .
-			TABLE_GROUPES
-			);
-		return $laListe;
-	}
-        
-        /**
-	* Fonction de récupération de la liste des utilisateurs d'un groupe
-	* Sortie : le tableau contenant cette liste
-	*/
-	public function recupUtilisateursDansUnGroupe($unGroupe)
-	{
-            // Protection contre injection SQL
-            if ( intval($unGroupe) )
-            {
-		$laListe = $this->requeteSelect(
-			"SELECT " .
-			ID_UTILISATEUR .
-                        ", " .
-                        NOM .
-                        ", " .
-                        PRENOM .
-                        " FROM " .
-                        TABLE_LIEN_UTILISATEURS_GROUPES .
-                        " NATURAL JOIN " .
-                        TABLE_UTILISATEURS .
-                        " WHERE " .
-                        ID_GROUPE .
-                        "= '" .
-                        $unGroupe . "'"
-			);
-		return $laListe;
-            }
-            else
-            {
-                return false;
-            }
-	}
-        
-        /**
-	* Fonction de récupération de la liste des villes et codes postaux associés
-	* Sortie : le tableau contenant cette liste
-	*/
-	public function recupVillesEtCodePostaux()
-	{
-		$laListe = $this->requeteSelect(
-			"SELECT " .
-			ID_VILLE .
-                        ", " .
-                        VILLE .
-                        ", " .
-                        CODEPOSTAL .
-			" FROM " .
-			TABLE_VILLES
-			);
-		return $laListe;
-	}
+    
         
         
         /**

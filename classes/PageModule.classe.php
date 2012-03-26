@@ -8,6 +8,7 @@
 require_once("classes/Page.classe.php");
 require_once("classes/ModuleProfil.classe.php");
 require_once("classes/ModuleGroupes.classe.php");
+require_once("classes/ModuleFicheJeu.classe.php");
 
 // Constantes
 
@@ -84,6 +85,10 @@ class PageModule extends Page
                                     }
                                     
                                     break;
+				case "FicheJeu" :
+                                    // On créé l'objet chargé de gerer le module profil
+                                    $this->unModule = new ModuleFicheJeu();
+                                    break;
 			}
 		}
 		else
@@ -133,8 +138,10 @@ class PageModule extends Page
                     $this->ajouteLigne("<li><a href=\"" . MODULE_GROUPES . "\">Groupes</a></li>");
                 }
 		$this->ajouteLigne("<li><a href=\"" . RACINE_SITE . "\">Retour Accueil</a></li>");				
+		$this->ajouteLigne("<li><a href=\"" . MODULE_FICHEJEU . "\">FicheJeu</a></li>");
 		$this->fermeBloc("</ol>");
 		$this->fermeBloc("</nav>");
+		
 	}
 
 
