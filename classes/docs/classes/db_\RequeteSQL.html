@@ -21,7 +21,7 @@
                                     API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
 <li><a>Packages</a></li>
 <li><a href="../packages/db_client.html"><i class="icon-folder-open"></i> client</a></li>
-<li><a href="../packages/db_com.html"><i class="icon-folder-open"></i> com</a></li>
+<li><a href="../packages/db_common.html"><i class="icon-folder-open"></i> common</a></li>
 <li><a href="../packages/db_module.html"><i class="icon-folder-open"></i> module</a></li>
 </ul>
 </li>
@@ -63,18 +63,20 @@ Principalement pour les recherches de type =</span><pre>ajoutAndEgal()</pre></a>
 A utiliser dans les cas non couvert par la fonction précédente."><span class="description">Fonction de manipulation de chainer pour ajouter librement à la clause WHERE
 A utiliser dans les cas non couvert par la fonction précédente.</span><pre>ajoutWhereLibre()</pre></a></li>
 <li class="method public "><a href="#compile" title="compile :: Fonction qui compile les différentes parties ensembles pour créer la requète SQL finale."><span class="description">Fonction qui compile les différentes parties ensembles pour créer la requète SQL finale.</span><pre>compile()</pre></a></li>
+<li class="method public "><a href="#debug" title="debug :: Fonction de debug. Affiche la requète compilé avec des sauts de ligne &lt;br/&gt;"><span class="description">Fonction de debug. Affiche la requète compilé avec des sauts de ligne &lt;br/&gt;</span><pre>debug()</pre></a></li>
 <li class="method public "><a href="#jointure" title="jointure :: Fonction de jointure
 Ajoute automatiquement les tables au JOIN et les clause aux WHERE
 Equivalent de FROM table INNER JOIN table ON champ sauf qu'on utilise FROM et WHERE
-Plus tard éventuellement refaire la logique en INNER JOIN ou NATURAL JOIN"><span class="description">Fonction de jointure
+L'avantage par rapport au SQL 2 est que de multipe jointure s'effecturont correctement même dans le désordre"><span class="description">Fonction de jointure
 Ajoute automatiquement les tables au JOIN et les clause aux WHERE
 Equivalent de FROM table INNER JOIN table ON champ sauf qu'on utilise FROM et WHERE
-Plus tard éventuellement refaire la logique en INNER JOIN ou NATURAL JOIN</span><pre>jointure()</pre></a></li>
+L'avantage par rapport au SQL 2 est que de multipe jointure s'effecturont correctement même dans le désordre</span><pre>jointure()</pre></a></li>
+<li class="method public "><a href="#setExtra" title="setExtra :: Access pour la quatrième partie."><span class="description">Access pour la quatrième partie.</span><pre>setExtra()</pre></a></li>
 <li class="method public "><a href="#setRequete" title="setRequete :: Accesseur pour la première partie. Ne pas inclure clause FROM, WHERE, VALUE, etc"><span class="description">Accesseur pour la première partie. Ne pas inclure clause FROM, WHERE, VALUE, etc</span><pre>setRequete()</pre></a></li>
 <li class="nav-header">
 <i class="icon-custom icon-property"></i> Properties</li>
 <li class="nav-header private">» Private</li>
-<li class="property private "><a href="#%24bonus" title="$bonus :: 4ème partie de la requète."><span class="description">4ème partie de la requète.</span><pre>$bonus</pre></a></li>
+<li class="property private "><a href="#%24extra" title="$extra :: 4ème partie de la requète."><span class="description">4ème partie de la requète.</span><pre>$extra</pre></a></li>
 <li class="property private "><a href="#%24from" title="$from :: 2ème partie de la requète, FROM"><span class="description">2ème partie de la requète, FROM</span><pre>$from</pre></a></li>
 <li class="property private "><a href="#%24requete" title="$requete :: 1ère partie de la requète"><span class="description">1ère partie de la requète</span><pre>$requete</pre></a></li>
 <li class="property private "><a href="#%24where" title="$where :: 3ème partie de la requète, WHERE"><span class="description">3ème partie de la requète, WHERE</span><pre>$where</pre></a></li>
@@ -82,9 +84,10 @@ Plus tard éventuellement refaire la logique en INNER JOIN ou NATURAL JOIN</span
 </div>
 <div class="span8">
 <a name="%5CRequeteSQL" id="\RequeteSQL"></a><div href="../classes/db_%5CRequeteSQL.html" class="element class">
-<p class="short_description">Classe permettant de manipuler des requètes SQL.</p>
+<p class="short_description">Classe permettant de manipuler des requètes SQL dyanmiquement en simplifiant leur écriture.</p>
 <div class="details">
-<p class="long_description"><p>A utiliser pour les très grosses requètes afin de préserver une cohérence.</p></p>
+<p class="long_description"><p>A utiliser pour les très grosses requètes afin de préserver leur cohérence en limitant les erreurs
+de développement et utilisateur.</p></p>
 <table class="table table-bordered">
 <tr>
 <th>author</th>
@@ -92,19 +95,11 @@ Plus tard éventuellement refaire la logique en INNER JOIN ou NATURAL JOIN</span
 </tr>
 <tr>
 <th>version</th>
-<td>0.1</td>
+<td>0.2</td>
 </tr>
 <tr>
 <th>package</th>
-<td><a href="..//packages/db_com.html">com</a></td>
-</tr>
-<tr>
-<th>todo</th>
-<td>Passage en SQL 2</td>
-</tr>
-<tr>
-<th>todo</th>
-<td>Nettoyer les entrées utilisateurs contre les injections SQL.</td>
+<td><a href="..//packages/db_common.html">common</a></td>
 </tr>
 </table>
 <h3>
@@ -173,11 +168,17 @@ A utiliser dans les cas non couvert par la fonction précédente.</h2>
 <code>string</code>Requète SQL</div>
 </div></div>
 </div>
+<a name="debug" id="debug"></a><div class="element clickable method public debug" data-toggle="collapse" data-target=".debug .collapse">
+<h2>Fonction de debug. Affiche la requète compilé avec des sauts de ligne &lt;br/&gt;</h2>
+<pre>debug() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
 <a name="jointure" id="jointure"></a><div class="element clickable method public jointure" data-toggle="collapse" data-target=".jointure .collapse">
 <h2>Fonction de jointure
 Ajoute automatiquement les tables au JOIN et les clause aux WHERE
 Equivalent de FROM table INNER JOIN table ON champ sauf qu'on utilise FROM et WHERE
-Plus tard éventuellement refaire la logique en INNER JOIN ou NATURAL JOIN</h2>
+L'avantage par rapport au SQL 2 est que de multipe jointure s'effecturont correctement même dans le désordre</h2>
 <pre>jointure(string $table1, string $champ1, string $table2, string $champ2) </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8">
@@ -197,6 +198,19 @@ Plus tard éventuellement refaire la logique en INNER JOIN ou NATURAL JOIN</h2>
 <code>string</code><p>Champ de la table 2</p></div>
 </div></div>
 </div>
+<a name="setExtra" id="setExtra"></a><div class="element clickable method public setExtra" data-toggle="collapse" data-target=".setExtra .collapse">
+<h2>Access pour la quatrième partie.</h2>
+<pre>setExtra(string $valeur) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$valeur</h4>
+<code>string</code>
+</div>
+</div></div>
+</div>
 <a name="setRequete" id="setRequete"></a><div class="element clickable method public setRequete" data-toggle="collapse" data-target=".setRequete .collapse">
 <h2>Accesseur pour la première partie. Ne pas inclure clause FROM, WHERE, VALUE, etc</h2>
 <pre>setRequete(string $valeur) </pre>
@@ -212,9 +226,9 @@ Plus tard éventuellement refaire la logique en INNER JOIN ou NATURAL JOIN</h2>
 </div>
 <h3>
 <i class="icon-custom icon-property"></i> Properties</h3>
-<a name="%24bonus" id="$bonus"> </a><div class="element clickable property private $bonus" data-toggle="collapse" data-target=".$bonus .collapse">
+<a name="%24extra" id="$extra"> </a><div class="element clickable property private $extra" data-toggle="collapse" data-target=".$extra .collapse">
 <h2>4ème partie de la requète.</h2>
-<pre>$bonus : string</pre>
+<pre>$extra : string</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
 </div>
@@ -243,7 +257,7 @@ Plus tard éventuellement refaire la logique en INNER JOIN ou NATURAL JOIN</h2>
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a1</a> and<br>
-            generated on 2012-03-24T15:32:10+01:00.<br></footer></div>
+            generated on 2012-03-26T14:12:59+02:00.<br></footer></div>
 </div>
 </body>
 </html>

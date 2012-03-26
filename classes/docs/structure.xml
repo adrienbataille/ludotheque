@@ -446,7 +446,7 @@ notamment en supprimant les caractères d'échappement.]]></description>
       </method>
     </class>
   </file>
-  <file path="AccesAuxDonneesDev.classe.php" hash="a89ba89220995315fa06f6063d6f6ff8" package="client">
+  <file path="AccesAuxDonneesDev.classe.php" hash="e69844b0742498fbbc2222b954905337" package="client">
     <parse_markers>
       <error line="159" code="50018">No DocBlock was found for property $connexionBase</error>
       <error line="161" code="50018">No DocBlock was found for property $maBase</error>
@@ -1623,21 +1623,21 @@ Prends en paramètre la chaine à filtrer, et la taille max de cette chaine]]></
       </method>
     </class>
   </file>
-  <file path="ModuleRecherche.classe.php" hash="3c64fd17f4fe899f74f28ea59cd1f18b" package="module">
+  <file path="ModuleRecherche.classe.php" hash="2022e3802272be672b3ffa74b36c5d05" package="composant">
     <docblock line="2">
       <description><![CDATA[Module recherche]]></description>
       <long-description><![CDATA[]]></long-description>
-      <tag line="2" name="package" description="module"/>
+      <tag line="2" name="package" description="composant"/>
     </docblock>
     <parse_markers>
       <critical line="23" code="50019">No short description for property $baseDonnees</critical>
     </parse_markers>
-    <include line="7" type="Require Once" package="module">
+    <include line="7" type="Require Once" package="composant">
       <name>classes/Module.classe.php</name>
       <docblock line="2">
         <description><![CDATA[Module recherche]]></description>
         <long-description><![CDATA[]]></long-description>
-        <tag line="2" name="package" description="module"/>
+        <tag line="2" name="package" description="composant"/>
       </docblock>
     </include>
     <constant namespace="default" line="11" package="client">
@@ -1682,25 +1682,25 @@ Prends en paramètre la chaine à filtrer, et la taille max de cette chaine]]></
           <long-description><![CDATA[]]></long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="76" package="">
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="75" package="">
         <name>creationSelect</name>
         <type>function</type>
-        <docblock line="71">
+        <docblock line="70">
           <description><![CDATA[Fonction qui crée des listes HTML <select>]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="71" name="param" description="tableau 2 colonnes, la première étant la value, deuxième le nom" type="array" variable="$array">
+          <tag line="70" name="param" description="tableau 2 colonnes, la première étant la value, deuxième le nom" type="array" variable="$array">
             <type by_reference="false">array</type>
           </tag>
-          <tag line="71" name="param" description="nom du paramètre" type="string" variable="$name">
+          <tag line="70" name="param" description="nom du paramètre" type="string" variable="$name">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-        <argument line="76">
+        <argument line="75">
           <name>$array</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="76">
+        <argument line="75">
           <name>$name</name>
           <default><![CDATA[]]></default>
           <type/>
@@ -2195,215 +2195,237 @@ Le destructeur termine la construction de la page et l'affiche]]></description>
       </method>
     </class>
   </file>
-  <file path="RequeteSQL.classe.php" hash="e9a02b6455e51aea834c0b2d0ccf134f" package="com">
+  <file path="RequeteSQL.classe.php" hash="377ed0cc2145c6c7e33b7ef84fc804ec" package="common">
     <docblock line="3">
-      <description><![CDATA[Classe permettant de manipuler des requètes SQL.]]></description>
-      <long-description><![CDATA[<p>A utiliser pour les très grosses requètes afin de préserver une cohérence.</p>]]></long-description>
+      <description><![CDATA[Classe permettant de manipuler des requètes SQL dyanmiquement en simplifiant leur écriture.]]></description>
+      <long-description><![CDATA[<p>A utiliser pour les très grosses requètes afin de préserver leur cohérence en limitant les erreurs
+de développement et utilisateur.</p>]]></long-description>
       <tag line="3" name="author" description="Romain Laï-King"/>
-      <tag line="3" name="version" description="0.1"/>
-      <tag line="3" name="package" description="com"/>
-      <tag line="3" name="todo" description="Passage en SQL 2"/>
-      <tag line="3" name="todo" description="Nettoyer les entrées utilisateurs contre les injections SQL."/>
+      <tag line="3" name="version" description="0.2"/>
+      <tag line="3" name="package" description="common"/>
     </docblock>
-    <class final="false" abstract="false" namespace="default" line="13" package="com">
+    <class final="false" abstract="false" namespace="default" line="12" package="common">
       <name>RequeteSQL</name>
       <full_name>\RequeteSQL</full_name>
       <extends/>
       <docblock line="3">
-        <description><![CDATA[Classe permettant de manipuler des requètes SQL.]]></description>
-        <long-description><![CDATA[<p>A utiliser pour les très grosses requètes afin de préserver une cohérence.</p>]]></long-description>
+        <description><![CDATA[Classe permettant de manipuler des requètes SQL dyanmiquement en simplifiant leur écriture.]]></description>
+        <long-description><![CDATA[<p>A utiliser pour les très grosses requètes afin de préserver leur cohérence en limitant les erreurs
+de développement et utilisateur.</p>]]></long-description>
         <tag line="3" name="author" description="Romain Laï-King"/>
-        <tag line="3" name="version" description="0.1"/>
-        <tag line="3" name="package" description="com"/>
-        <tag line="3" name="todo" description="Passage en SQL 2"/>
-        <tag line="3" name="todo" description="Nettoyer les entrées utilisateurs contre les injections SQL."/>
+        <tag line="3" name="version" description="0.2"/>
+        <tag line="3" name="package" description="common"/>
       </docblock>
-      <property final="false" static="false" visibility="private" line="20" package="client">
+      <property final="false" static="false" visibility="private" line="19" package="client">
         <name>$requete</name>
         <default><![CDATA[""]]></default>
-        <docblock line="15">
+        <docblock line="14">
           <description><![CDATA[1ère partie de la requète]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="15" name="var" description="" type="string">
+          <tag line="14" name="var" description="" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
       </property>
-      <property final="false" static="false" visibility="private" line="27" package="client">
+      <property final="false" static="false" visibility="private" line="26" package="client">
         <name>$from</name>
         <default><![CDATA[""]]></default>
-        <docblock line="22">
+        <docblock line="21">
           <description><![CDATA[2ème partie de la requète, FROM]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="22" name="var" description="" type="string">
+          <tag line="21" name="var" description="" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
       </property>
-      <property final="false" static="false" visibility="private" line="35" package="client">
+      <property final="false" static="false" visibility="private" line="34" package="client">
         <name>$where</name>
         <default><![CDATA[""]]></default>
-        <docblock line="30">
+        <docblock line="29">
           <description><![CDATA[3ème partie de la requète, WHERE]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="30" name="var" description="" type="string">
+          <tag line="29" name="var" description="" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
       </property>
-      <property final="false" static="false" visibility="private" line="42" package="client">
-        <name>$bonus</name>
+      <property final="false" static="false" visibility="private" line="41" package="client">
+        <name>$extra</name>
         <default><![CDATA[""]]></default>
-        <docblock line="37">
+        <docblock line="36">
           <description><![CDATA[4ème partie de la requète.]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="37" name="var" description="" type="string">
+          <tag line="36" name="var" description="" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
       </property>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="48" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="47" package="">
         <name>__construct</name>
         <type>function</type>
-        <docblock line="44">
+        <docblock line="43">
           <description><![CDATA[Constructeur. Il fait rien pour le moment]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="57" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="56" package="">
         <name>setRequete</name>
         <type>function</type>
-        <docblock line="52">
+        <docblock line="51">
           <description><![CDATA[Accesseur pour la première partie. Ne pas inclure clause FROM, WHERE, VALUE, etc]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="52" name="param" description="" type="string" variable="$valeur">
+          <tag line="51" name="param" description="" type="string" variable="$valeur">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-        <argument line="57">
+        <argument line="56">
           <name>$valeur</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
       <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="65" package="">
-        <name>ajoutFrom</name>
+        <name>setExtra</name>
         <type>function</type>
-        <docblock line="61">
-          <description><![CDATA[Fonction de manipulation de chaine pour créer et ajouter des tables dans une clause FROM]]></description>
+        <docblock line="60">
+          <description><![CDATA[Access pour la quatrième partie.]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="61" name="param" description="Nom de la table" type="string" variable="$table">
+          <tag line="60" name="param" description="" type="string" variable="$valeur">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
         <argument line="65">
-          <name>$table</name>
-          <default><![CDATA[]]></default>
-          <type/>
-        </argument>
-      </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="83" package="">
-        <name>jointure</name>
-        <type>function</type>
-        <docblock line="73">
-          <description><![CDATA[Fonction de jointure
-Ajoute automatiquement les tables au JOIN et les clause aux WHERE
-Equivalent de FROM table INNER JOIN table ON champ sauf qu'on utilise FROM et WHERE
-Plus tard éventuellement refaire la logique en INNER JOIN ou NATURAL JOIN]]></description>
-          <long-description><![CDATA[]]></long-description>
-          <tag line="73" name="param" description="Table 1" type="string" variable="$table1">
-            <type by_reference="false">string</type>
-          </tag>
-          <tag line="73" name="param" description="Champ de la table 1" type="string" variable="$champ1">
-            <type by_reference="false">string</type>
-          </tag>
-          <tag line="73" name="param" description="Table 2" type="string" variable="$table2">
-            <type by_reference="false">string</type>
-          </tag>
-          <tag line="73" name="param" description="Champ de la table 2" type="string" variable="$champ2">
-            <type by_reference="false">string</type>
-          </tag>
-        </docblock>
-        <argument line="83">
-          <name>$table1</name>
-          <default><![CDATA[]]></default>
-          <type/>
-        </argument>
-        <argument line="83">
-          <name>$champ1</name>
-          <default><![CDATA[]]></default>
-          <type/>
-        </argument>
-        <argument line="83">
-          <name>$table2</name>
-          <default><![CDATA[]]></default>
-          <type/>
-        </argument>
-        <argument line="83">
-          <name>$champ2</name>
-          <default><![CDATA[]]></default>
-          <type/>
-        </argument>
-      </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="109" package="">
-        <name>ajoutAndEgal</name>
-        <type>function</type>
-        <docblock line="102">
-          <description><![CDATA[Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et =
-Principalement pour les recherches de type =]]></description>
-          <long-description><![CDATA[]]></long-description>
-          <tag line="102" name="param" description="Nom de la table" type="string" variable="$table">
-            <type by_reference="false">string</type>
-          </tag>
-          <tag line="102" name="param" description="Le champ de la table concerné par le critère de recherche" type="string" variable="$champ">
-            <type by_reference="false">string</type>
-          </tag>
-          <tag line="102" name="param" description="La valeur du critère de recherche" type="string" variable="$valeur">
-            <type by_reference="false">string</type>
-          </tag>
-        </docblock>
-        <argument line="109">
-          <name>$table</name>
-          <default><![CDATA[]]></default>
-          <type/>
-        </argument>
-        <argument line="109">
-          <name>$champ</name>
-          <default><![CDATA[]]></default>
-          <type/>
-        </argument>
-        <argument line="109">
           <name>$valeur</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="133" package="">
-        <name>ajoutWhereLibre</name>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="73" package="">
+        <name>ajoutFrom</name>
         <type>function</type>
-        <docblock line="128">
-          <description><![CDATA[Fonction de manipulation de chainer pour ajouter librement à la clause WHERE
-A utiliser dans les cas non couvert par la fonction précédente.]]></description>
+        <docblock line="69">
+          <description><![CDATA[Fonction de manipulation de chaine pour créer et ajouter des tables dans une clause FROM]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="128" name="param" description="La clause where qui sera concaténé à $where" type="string" variable="$clause">
+          <tag line="69" name="param" description="Nom de la table" type="string" variable="$table">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-        <argument line="133">
+        <argument line="73">
+          <name>$table</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="91" package="">
+        <name>jointure</name>
+        <type>function</type>
+        <docblock line="81">
+          <description><![CDATA[Fonction de jointure
+Ajoute automatiquement les tables au JOIN et les clause aux WHERE
+Equivalent de FROM table INNER JOIN table ON champ sauf qu'on utilise FROM et WHERE
+L'avantage par rapport au SQL 2 est que de multipe jointure s'effecturont correctement même dans le désordre]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="81" name="param" description="Table 1" type="string" variable="$table1">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="81" name="param" description="Champ de la table 1" type="string" variable="$champ1">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="81" name="param" description="Table 2" type="string" variable="$table2">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="81" name="param" description="Champ de la table 2" type="string" variable="$champ2">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="91">
+          <name>$table1</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="91">
+          <name>$champ1</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="91">
+          <name>$table2</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="91">
+          <name>$champ2</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="117" package="">
+        <name>ajoutAndEgal</name>
+        <type>function</type>
+        <docblock line="110">
+          <description><![CDATA[Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et =
+Principalement pour les recherches de type =]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="110" name="param" description="Nom de la table" type="string" variable="$table">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="110" name="param" description="Le champ de la table concerné par le critère de recherche" type="string" variable="$champ">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="110" name="param" description="La valeur du critère de recherche" type="string" variable="$valeur">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="117">
+          <name>$table</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="117">
+          <name>$champ</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="117">
+          <name>$valeur</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="143" package="">
+        <name>ajoutWhereLibre</name>
+        <type>function</type>
+        <docblock line="138">
+          <description><![CDATA[Fonction de manipulation de chainer pour ajouter librement à la clause WHERE
+A utiliser dans les cas non couvert par la fonction précédente.]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="138" name="param" description="La clause where qui sera concaténé à $where" type="string" variable="$clause">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="143">
           <name>$clause</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="142" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="157" package="">
         <name>compile</name>
         <type>function</type>
-        <docblock line="136">
+        <docblock line="151">
           <description><![CDATA[Fonction qui compile les différentes parties ensembles pour créer la requète SQL finale.]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="136" name="return" description="Requète SQL" type="string">
+          <tag line="151" name="return" description="Requète SQL" type="string">
             <type by_reference="false">string</type>
           </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="165" package="">
+        <name>debug</name>
+        <type>function</type>
+        <docblock line="161">
+          <description><![CDATA[Fonction de debug. Affiche la requète compilé avec des sauts de ligne <br/>]]></description>
+          <long-description><![CDATA[]]></long-description>
         </docblock>
       </method>
     </class>
@@ -2894,7 +2916,8 @@ Cet accès est offert par le groupe administrateur]]></description>
   <package name="" full_name=""/>
   <package name="Default" full_name="Default"/>
   <package name="client" full_name="client"/>
-  <package name="com" full_name="com"/>
+  <package name="common" full_name="common"/>
+  <package name="composant" full_name="composant"/>
   <package name="module" full_name="module"/>
   <namespace name="default" full_name="default"/>
   <marker>todo</marker>

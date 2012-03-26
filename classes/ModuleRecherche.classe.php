@@ -1,7 +1,7 @@
 <?php
 /** 
  * Module recherche
- * @package module
+ * @package composant
  */
 // Inclusions
 require_once("classes/Module.classe.php");

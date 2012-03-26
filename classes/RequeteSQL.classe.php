@@ -6,7 +6,7 @@
  * de développement et utilisateur.
  * @author Romain Laï-King
  * @version 0.2
- * @package com
+ * @package common
  */
 
 class RequeteSQL
