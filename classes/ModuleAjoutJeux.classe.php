@@ -81,7 +81,7 @@ class ModuleAjoutJeux extends Module
 	  *	Fonction d'affichage du formulaire
 	  */
     public function afficheFormulaire()
-    {	
+    {
         $this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_JEUX . "' id='formProfil' autocomplete='off'>");
         
 		// Si on a déjà traité le formulaire
@@ -106,7 +106,7 @@ class ModuleAjoutJeux extends Module
         
 		// First fieldset : Nom du jeu
 		$this->ouvreBloc("<fieldset>");
-		$this->ajouteLigne("<legend>Nom du jeux</legend>");
+		$this->ajouteLigne("<legend>Nom du jeu</legend>");
 		$this->ouvreBloc("<ol>");
 		
 		// Nom
@@ -120,7 +120,7 @@ class ModuleAjoutJeux extends Module
 		// Langue
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langue du nom") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_LANGUE . "' name='" . NOM_LANGUE . "' value='" . $langue . "' list='listeCategorie' required='required' />");
+		$this->ajouteLigne("<input type='text' id='" . NOM_LANGUE . "' name='" . NOM_LANGUE . "' value='" . $langue . "' list='listeLangue' required='required' />");
 		if($this->erreurLangue)
 			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
 		// Liste des langues pour l'auto-complete
@@ -133,6 +133,10 @@ class ModuleAjoutJeux extends Module
 		
 		$this->fermeBloc("</ol>");
 		$this->fermeBloc("</fieldset>");
+		
+		$this->ouvreBloc("<div id='addNomFormAjoutJeu'>");
+		$this->fermeBloc("</div>");
+		$this->ajouteLigne("<a href='ajoutNomJeu.html' onClick='return ajouterNomFormAjoutJeu()' title='Ajouter un nom' target='_blank'>Ajouter un nom de jeu dans une autre langue</a>");// mettre un lien
 		
 		// Second fieldset : Information sur le jeux
 		$this->ouvreBloc("<fieldset>");

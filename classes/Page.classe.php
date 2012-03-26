@@ -13,6 +13,7 @@ define("RACINE_SITE", ""); // Racine originale du site http://www.mdjt.org/v2/ -
 define("CSS_MDJT", "css/mdjt.css");
 define("CSS_MDJT_DEV", "css/mdjt_dev.css");
 define("CSS_RESET", "css/reset.css");
+define("JS_MDJT_DEV", "js/mdjt_dev.js");
 define("PAGE_MODULE", RACINE_SITE . "module.php");
 define("PAGE_INDEX", RACINE_SITE . "index.php");
 define("PAGE_MENTIONS", RACINE_SITE . "mentions.php");
@@ -325,6 +326,10 @@ abstract class Page
 			RACINE_SITE . $style . "\" />");
                     }
                 }
+        // Javascript
+		$this->ajouteLigne("<script type=\"text/javascript\" src=\"" .
+			RACINE_SITE . JS_MDJT_DEV . "\"></script>");
+			
 		// Fermeture header
 		$this->fermeBloc("</head>");
 		// Ouverture de body
