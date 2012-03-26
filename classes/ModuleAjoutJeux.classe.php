@@ -85,7 +85,7 @@ class ModuleAjoutJeux extends Module
         $this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_JEUX . "' id='formProfil' autocomplete='off'>");
         
 		// Si on a déjà traité le formulaire
-		if ($this->traitementFormulaire)
+		if ($this->traitementFormulaire && !$this->erreurPays && $this->erreurJeu && $this->erreurNom && $this->erreurLangue)
 		{
 			$this->ouvreBloc("<p>");
 			$this->ajouteLigne("Formulaire modifié");
@@ -112,7 +112,7 @@ class ModuleAjoutJeux extends Module
 		// Nom
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . NOM_JEU . "'>" . $this->convertiTexte("Nom") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_JEU . "' name='" . NOM_JEU . "' value='" . $nom . "' required='required' />");
+		$this->ajouteLigne("<input type='text' id='" . NOM_JEU . "' name='" . NOM_JEU . "' value='" . $this->nom . "' required='required' />");
 		if($this->erreurNom)
 			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
 		$this->fermeBloc("</li>");
@@ -120,7 +120,7 @@ class ModuleAjoutJeux extends Module
 		// Langue
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langue du nom") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_LANGUE . "' name='" . NOM_LANGUE . "' value='" . $langue . "' list='listeLangue' required='required' />");
+		$this->ajouteLigne("<input type='text' id='" . NOM_LANGUE . "' name='" . NOM_LANGUE . "' value='" . $this->langue . "' list='listeLangue' required='required' />");
 		if($this->erreurLangue)
 			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
 		// Liste des langues pour l'auto-complete
@@ -146,19 +146,19 @@ class ModuleAjoutJeux extends Module
 		// Description
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . DESCRIPTION_JEU . "'>" . $this->convertiTexte("Description") . "</label>");
-		$this->ajouteLigne("<textarea rows='3' id='" . DESCRIPTION_JEU . "' name='" . DESCRIPTION_JEU . "'>" . $description . "</textarea>");
+		$this->ajouteLigne("<textarea rows='3' id='" . DESCRIPTION_JEU . "' name='" . DESCRIPTION_JEU . "'>" . $this->description . "</textarea>");
 		$this->fermeBloc("</li>");
 		
 		// Auteur
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . AUTEUR . "'>" . $this->convertiTexte("Auteur") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . AUTEUR . "' name='" . AUTEUR . "' value='" . $auteur . "' autocomplete='on' />");
+		$this->ajouteLigne("<input type='text' id='" . AUTEUR . "' name='" . AUTEUR . "' value='" . $this->auteur . "' autocomplete='on' />");
 		$this->fermeBloc("</li>");
 		
 		// Pays
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . NOM_PAYS . "'>" . $this->convertiTexte("Pays d'origine") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_PAYS . "' name='" . NOM_PAYS . "' value='" . $pays . "' list='listePays' />");
+		$this->ajouteLigne("<input type='text' id='" . NOM_PAYS . "' name='" . NOM_PAYS . "' value='" . $this->pays . "' list='listePays' />");
 		// Liste des langues pour l'auto-complete
 		$listePays = $this->maBase->recupPays();
 		$this->ouvreBloc("<datalist id='listePays'>");
@@ -172,7 +172,7 @@ class ModuleAjoutJeux extends Module
 		// Catégories
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . NOM_CATEGORIE . "'>" . $this->convertiTexte("Catégorie") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_CATEGORIE . "' name='" . NOM_CATEGORIE . "' value='" . $categorie . "' />");
+		$this->ajouteLigne("<input type='text' id='" . NOM_CATEGORIE . "' name='" . NOM_CATEGORIE . "' value='" . $this->categorie . "' />");
 		$this->fermeBloc("</li>");
 		
 		$this->fermeBloc("</ol>");
