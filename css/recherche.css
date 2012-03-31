@@ -1,0 +1,8 @@
+.champ_recherche{
+	float:left;
+}
+label:after { content: '\a' ; white-space: pre; }
+label{
+	display:box;
+	clear:both;
+}

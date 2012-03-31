@@ -112,7 +112,7 @@ class RequeteSQL
 	 * Principalement pour les recherches de type =
 	 * @param string $table Nom de la table
 	 * @param string $champ Le champ de la table concerné par le critère de recherche
-	 * @param string $valeur La valeur du critère de recherche
+	 * @param string/numeric $valeur La valeur du critère de recherche
 	 */
 	public function ajoutAndEgal($table,$champ,$valeur){
 		if ($this->where==""){
@@ -121,7 +121,7 @@ class RequeteSQL
 			}
 			else{
 				$valeur=mysql_real_escape_string($valeur);
-				$this->where="WHERE ". $table . $champ . " = \' $valeur'";
+				$this->where="WHERE ". $table . $champ . " = '$valeur'";
 			}
 		}
 		else{
@@ -135,9 +135,31 @@ class RequeteSQL
 		}
 	}
 	
+	
+	/**
+	 * Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et LIKE
+	 * Principalement pour les recherches de type LIKE
+	 * @param string $table Nom de la table
+	 * @param string $champ Le champ de la table concerné par le critère de recherche
+	 * @param string $valeur La valeur du critère de recherche
+	 */
+	public function ajoutAndLike($table,$champ,$valeur){
+		if ($this->where==""){
+			$valeur=mysql_real_escape_string($valeur);
+			$this->where="WHERE ". $table . $champ . " LIKE '%".  $valeur ."%'";
+		}
+		else{
+			$valeur=mysql_real_escape_string($valeur);
+			$this->where.="\nAND ". $table . "." . $champ . " LIKE '%".  $valeur ."%'";
+			}
+		}
+	
+	
+	
 	/**
 	 * Fonction de manipulation de chainer pour ajouter librement à la clause WHERE
 	 * A utiliser dans les cas non couvert par la fonction précédente.
+	 * Attention, la fonction ne gère pas les injections SQL.
 	 * @param string $clause La clause where qui sera concaténé à $where
 	 */
 	public function ajoutWhereLibre($clause){

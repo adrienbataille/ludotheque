@@ -44,26 +44,48 @@ class ModuleRecherche extends Module
 	private function afficheFormulaire()
 	{	
 		$this->ouvreBloc("<form method='post' action='".MODULE_RECHERCHE."'>");
-		$this->ajouteLigne("Hello World");
-		//$this->baseDonnees = AccesAuxDonneesDev::recupAccesDonnees();
 		$langue=$this->maBase->listeLangue();
 		$etat=$this->maBase->listeEtat();
 		$lieu=$this->maBase->listeLieu();
-		var_dump($langue);
-		//var_dump($etat);
-		//var_dump($lieu);
-		$test=$_POST['lang'];
-		var_dump($test);
-		$this->ajouteLigne($test["test"]);
-		$this->ajouteLigne($test["hidden"]);
-		$ch="lol";
-		$ch.= "sfs";
-		print_r($ch);
+		$this->ouvreBloc("<fieldset>");
+		$this->ajouteLigne("<legend>Recherche de jeu</legend>");		
+		// Nom du jeu
+		$this->ouvreBloc("<div class='champ_recherche'>");
+		$this->ajouteLigne("<label for=\"nom\">" . $this->convertiTexte("Nom du jeu") . "</label>");
+		$this->ajouteLigne("<input type=\"text\" id=\"nom\" name=\"nom\" />");
+		$this->fermeBloc("</div>");
+		//Categorie
+		$this->ouvreBloc("<div class='champ_recherche'>");
+		$this->ajouteLigne("<label for=\"categorie\">" . $this->convertiTexte("Catégorie") . "</label>");
+		$this->ajouteLigne("<input type=\"text\" id=\"categorie\" name=\"categorie\" />");
+		$this->fermeBloc("</div>");
+		//Nombre de joueur
+		$this->ouvreBloc("<div class='champ_recherche'>");
+		$this->ajouteLigne("<label for=\"nombreDeJoueur\">" . $this->convertiTexte("Nombre de joueur") . "</label>");
+		$this->ajouteLigne("<input type=\"checkbox\" name=\"2_4\" />");
+		$this->ajouteLigne($this->convertiTexte("2-4"));
+		$this->ajouteLigne("<input type=\"checkbox\" name=\"4_6\" />");
+		$this->ajouteLigne($this->convertiTexte("4-6"));
+		$this->ajouteLigne("<input type=\"checkbox\" name=\"6_8\" />");
+		$this->ajouteLigne($this->convertiTexte("6-8"));
+		$this->ajouteLigne("<input type=\"checkbox\" name=\"plus_8\" />");
+		$this->ajouteLigne($this->convertiTexte("8+"));
+		$this->fermeBloc("</div>");
+		//Durée
+		$this->ouvreBloc("<div class='champ_recherche'>");
+		$this->ajouteLigne("<label for=\"dureeEnMinute\">" . $this->convertiTexte("Durée en minute") . "</label>");
+		$this->ajouteLigne("<input type=\"text\" id=\"dureeEnMinute\" name=\"dureeEnMinute\" />");
+		$this->fermeBloc("</div>");
+		//Langue
+		
+		$this->ouvreBloc("<div class='champ_recherche'>");
+		$this->ajouteLigne("<label for=\"langue\">" . $this->convertiTexte("Langue") . "</label>");
 		$this->creationSelect($langue,"lang[test]");
-		$this->ajouteLigne($langue[0][0]);
-		//$this->ajouteLigne(var_dump($this->maBase->rechercheParLangue()))
-		$this->ajouteLigne("<input type='hidden' value='' name='lang[hidden]' >");
-		$this->ajouteLigne("<input type='submit' value='kikoo' />");
+		$this->fermeBloc("</div>");
+
+
+		$this->ajouteLigne("<input type='submit' />");
+		$this->fermeBloc("</fieldset>");
 		$this->fermeBloc("</form>");
 	}
 	

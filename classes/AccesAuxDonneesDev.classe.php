@@ -372,10 +372,97 @@ class AccesAuxDonneesDev
 			}
 				
 			//Par langue. On regarde seulement la langue de la version ( pour le moment )
-			if(is_numeric($critere["langue"])){
+			if(is_numeric($critere["idLangue"])){
 				$query->ajoutAndEgal(TABLE_LANGUE, ID_LANGUE, $critere["langue"]);
 			}
 			
+			// Par Etat
+			if(is_numeric($critere["idEtatExemplaire"])){
+				$query->ajoutAndEgal(TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, $critere["idEtatExemplaire"]);
+			}
+				
+			// Par Lieux
+			if(is_numeric($critere["idLieu"])){
+				$query->ajoutAndEgal(TABLE_EXEMPLAIRE, ID_LIEU_REEL, $critere["idLieu"]);
+				$string="AND (( " . TABLE_EXEMPLAIRE . "." . ID_LIEU_REEL   . "=" .$critere["idLieu"].
+				" AND " . TABLE_EXEMPLAIRE . "." . ID_LIEU_TEMPO   ."= 0) OR  "
+				. TABLE_EXEMPLAIRE . " . " . ID_LIEU_TEMPO   . "=" .$critere["idLieu"].")";
+				$query->ajoutWhereLibre($string);
+			}
+				
+			// Par Durée
+			if(is_numeric($critere["idDureeJeu"]))
+			{
+				$query->jointure(TABLE_VERSION, ID);
+			}
+				
+			if(is_numeric($critere["idDureeJeu"])&& $critere["DureeSigne"]==SUPERIEUR){
+				$query->ajoutAndEgal(TABLE_VERSION, DUREE_PARTIE, $critere["idDureeJeu"]);
+			}
+			if(is_numeric($critere["idDureeJeu"]) && $critere["DureeSigne"]==INFERIEUR   ){
+				$query->ajoutAndEgal(TABLE_VERSION, DUREE_PARTIE, $critere["idDureeJeu"]);
+			}
+			if(is_numeric($critere["idDureeJeu"]) && $critere["DureeSigne"]==EGAL){
+				$query->ajoutAndEgal(TABLE_VERSION, DUREE_PARTIE, $critere["idDureeJeu"]);
+			}
+				
+			// Par Nombre De Joueur
+				
+			// Par Prix Min et Max
+			 
+			// Min
+			if(is_numeric($critere["prixMin"]))
+			{
+				$string = "AND ( " . TABLE_EXEMPLAIRE . "." . PRIX_MDJT   .">" .$critere["prixMin"]."%')";
+				$query->ajoutWhereLibre($string);
+			}
+				
+			// Max
+				
+			if(is_numeric($critere["prixMax"]))
+			{
+				$string = "AND ( " . TABLE_EXEMPLAIRE . "." . PRIX_MDJT   ."<" .$critere["prixMax"]."%')";
+				$query->ajoutWhereLibre($string);
+			}
+				
+			
+				
+			//Par Auteur
+				
+			if($critere["auteur"]!=""){
+			
+				$critere["auteur"]=mysql_real_escape_string($critere["auteur"]);
+				$string="AND ( " . TABLE_JEU . "." . AUTEUR   ." LIKE '%" .$critere["auteur"]."%')";
+				$query->ajoutWhereLibre($string);
+			}
+			
+			// Par illustrateur
+				
+			if($critere["illustrateur"]!=""){
+			
+				$critere["illustrateur"]=mysql_real_escape_string($critere["illustrateur"]);
+				$string="AND ( " . TABLE_VERSION . "." . ILLUSTRATEUR   ." LIKE '%" .$critere["illustrateur"]."%')";
+				$query->ajoutWhereLibre($string);
+			}
+			
+			// Par ANnée
+				
+			// Par catégorie
+			if(is_numeric($critere["anneeSortie"])){
+				$query->ajoutAndEgal(TABLE_VERSION, ANNEE_SORTIE, $critere["anneeSortie"]);
+			}
+				
+				
+				
+				
+			//Par Catégorie
+			/*if($critere["categorie"]!=""){
+			 $query->ajoutAndEgal(TABLE_CATEGORIE, , $critere["categorie"]);
+			}
+			*/
+				
+				
+				
 			//ainsi de suite!
 			
 			return $this->requeteSelect($query->compile);

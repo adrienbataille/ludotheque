@@ -11,6 +11,7 @@ require_once("classes/AccesAuxDonneesDev.classe.php");
 // Constante de définition des URL
 define("RACINE_SITE", ""); // Racine originale du site http://www.mdjt.org/v2/
 define("CSS_MDJT", "css/mdjt.css");
+define("CSS_RECHERCHE","css/recherche.css");
 define("CSS_RESET", "css/reset.css");
 define("PAGE_MODULE", RACINE_SITE . "module.php");
 define("PAGE_INDEX", RACINE_SITE . "index.php");
@@ -310,6 +311,8 @@ abstract class Page
 		// Style
 		$this->ajouteLigne("<link rel=\"stylesheet\" type=\"text/css\" href=\"" .
 			RACINE_SITE . CSS_MDJT . "\" />");
+		$this->ajouteLigne("<link rel=\"stylesheet\" type=\"text/css\" href=\"" .
+				RACINE_SITE . CSS_RECHERCHE . "\" />");
 		$this->ajouteLigne("<link rel=\"stylesheet\" type=\"text/css\" href=\"" .
 			RACINE_SITE . CSS_RESET . "\" />");
                 // Si il y a des styles additionnels, on les ajoute
