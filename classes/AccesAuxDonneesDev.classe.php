@@ -634,7 +634,7 @@ class AccesAuxDonneesDev
 	* Entrée : nouvelle description du jeu
 	* Entrée : nouvel auter du jeu
 	* Entrée : id du nouveau pays
-	* Sortir : booleen pour donner savoir si la requête à bien était effectuée
+	* Sortir : booleen pour savoir si la requête à bien était effectuée
 	*/
 	public function UpdateTableJeu($unJeu, $uneDescription, $unAuteur, $unPays)
 	{
@@ -649,6 +649,32 @@ class AccesAuxDonneesDev
 			$requete->bindValue(2, $unAuteur, PDO::PARAM_STR);
 			$requete->bindValue(3, $unPays, PDO::PARAM_INT);
 			$requete->bindValue(4, $unJeu, PDO::PARAM_INT);
+			$resultat = $requete->execute();
+	
+			// On termine l'utilisation de la requete
+			$requete->closeCursor();
+			
+			return $resultat;
+		}
+		else
+			return false;
+	}
+	
+	/**
+	* Fonction de suppression des langues d'un jeu
+	* Entrée : id du jeu pour lequel on supprime les nom du jeu
+	* Sortie : booleen pour savoir si la requête à bien était effectuée
+	*/
+	public function DeleteTableNomJeu($unJeu)
+	{
+		if(intval($unJeu))
+		{
+			// On initie la connexion à la base, si ce n'est déjà fait
+			$this->connecteBase();
+			
+			// Création de la requete
+			$requete = $this->maBase->prepare("DELETE FROM " . TABLE_NOM_JEU . " WHERE " . ID_JEU . "=?;");
+			$requete->bindValue(1, $unJeu, PDO::PARAM_INT);
 			$resultat = $requete->execute();
 	
 			// On termine l'utilisation de la requete
