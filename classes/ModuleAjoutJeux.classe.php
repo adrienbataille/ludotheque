@@ -39,6 +39,8 @@ class ModuleAjoutJeux extends Module
 	private $idJeu = 0;
 	// Nombre de nom de jeu
 	private $nbJeu = 1;
+	// Savoir si on fait une requête de type insert ou update
+	private $mode = "insert";
     
 // Methodes
 
@@ -55,6 +57,8 @@ class ModuleAjoutJeux extends Module
 		
 		if($idDuJeu != null)
 		{
+			$mode = "update";
+			
 			$myGame = $this->maBase->recupJeu($idDuJeu);
 			$this->idJeu = $myGame[0][ID_JEU];
 			$this->description = $myGame[0][DESCRIPTION_JEU];
@@ -71,11 +75,11 @@ class ModuleAjoutJeux extends Module
 			$this->langue = array(0 => "");
 			foreach($myNames as $name)
 			{
-				if(!in_array($name[NOM_JEU], $this->nom) && !in_array($name[NOM_LANGUE], $this->langue))
-				{
+				//if(!in_array($name[NOM_JEU], $this->nom) && !in_array($name[NOM_LANGUE], $this->langue))
+				//{
 					$this->nom[$i] = $name[NOM_JEU];
 					$this->langue[$i] = $name[NOM_LANGUE];
-				}
+				//}
 				$i++;
 			}
 			
@@ -238,6 +242,9 @@ class ModuleAjoutJeux extends Module
 		$this->ajouteLigne("<legend>Information sur le jeux</legend>");
 		$this->ouvreBloc("<ol>");
 		
+		// Identifiant du jeu
+		$this->ajouteLigne("<input type='hidden' id='" . ID_JEU . "' name='" . ID_JEU . "' value='" . $this->idJeu . "' />");
+		
 		// Description
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . DESCRIPTION_JEU . "'>" . $this->convertiTexte("Description") . "</label>");
@@ -318,7 +325,7 @@ class ModuleAjoutJeux extends Module
 				
 				if(!intval($idPays))
 					$this->erreurPays = true;
-						
+				
 				$this->idJeu = $this->maBase->InsertionTableJeu($this->description, $this->auteur, $idPays);
 
 				$i = 0;
