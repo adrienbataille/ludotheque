@@ -196,6 +196,15 @@ class ModuleAjoutJeux extends Module
 		$this->fermeBloc("</li>");
 		
 		$this->fermeBloc("</ol>");
+		
+		if($this->nbJeu > 1)
+		{
+			
+			// Bouton Supprimer Nom du Jeu
+			$this->ajouteLigne("<input type='hidden' name='supprimerNomJeu' value='0' />");
+			$this->ajouteLigne("<button type='submit' name='SupprimerNomJeu' value='0'>Supprimer ce nom de jeu</button>");
+		}
+		
 		$this->fermeBloc("</fieldset>");
 		
 		for($i = 1; $i < $this->nbJeu; $i++)
@@ -227,6 +236,11 @@ class ModuleAjoutJeux extends Module
 			$this->fermeBloc("</li>");
 			
 			$this->fermeBloc("</ol>");
+			
+			// Bouton Supprimer Nom du Jeu
+			$this->ajouteLigne("<input type='hidden' name='supprimerNomJeu' value='" . $i . "' />");
+			$this->ajouteLigne("<button type='submit' name='SupprimerNomJeu' value='" . $i . "'>Supprimer ce nom de jeu</button>");
+			
 			$this->fermeBloc("</fieldset>");
 		}
 		
@@ -281,7 +295,6 @@ class ModuleAjoutJeux extends Module
 		
 		// Bouton valider
 		$this->ouvreBloc("<fieldset>");
-		
 		$this->ajouteLigne("<input type='hidden' name='ajouterJeu' value='true' />");
 		$this->ajouteLigne("<button type='submit' name='AjouterJeu' value='true'>Je valide et ajouter une version</button>");
 		$this->fermeBloc("</fieldset>");
@@ -384,6 +397,20 @@ class ModuleAjoutJeux extends Module
 			$this->recuperationInformationsFormulaire();
 
 			$this->nbJeu += sizeof($_POST[NOM_JEU]);
+		} elseif($_POST["SupprimerNomJeu"] != null)
+		{
+			$this->recuperationInformationsFormulaire();
+			
+			$this->nbJeu = sizeof($_POST[NOM_JEU]) - 1;
+			
+			for($i = $_POST["SupprimerNomJeu"]; $i < $this->nbJeu; $i++)
+			{
+				$this->nom[$i] = $this->nom[$i + 1];
+				$this->langue[$i] = $this->langue[$i + 1];
+			}
+			
+			unset($this->nom[$this->nbJeu]);
+			unset($this->langue[$this->nbJeu]);
 		}
 	}	
 }
