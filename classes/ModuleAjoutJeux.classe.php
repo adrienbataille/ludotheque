@@ -28,6 +28,7 @@ class ModuleAjoutJeux extends Module
 	private $erreurNom = false;
 	private $erreurPays = false;
 	private $erreurJeu = false;
+	private $erreurUpdateJeu = false;
 	// Variables du formulaire
 	private $nom;// = array(0 => "");
 	private $langue;// = array(0 => "");
@@ -39,8 +40,6 @@ class ModuleAjoutJeux extends Module
 	private $idJeu = 0;
 	// Nombre de nom de jeu
 	private $nbJeu = 1;
-	// Savoir si on fait une requête de type insert ou update
-	private $mode = "insert";
     
 // Methodes
 
@@ -57,8 +56,6 @@ class ModuleAjoutJeux extends Module
 		
 		if($idDuJeu != null)
 		{
-			$mode = "update";
-			
 			$myGame = $this->maBase->recupJeu($idDuJeu);
 			$this->idJeu = $myGame[0][ID_JEU];
 			$this->description = $myGame[0][DESCRIPTION_JEU];
@@ -120,6 +117,8 @@ class ModuleAjoutJeux extends Module
 	private function recuperationInformationsFormulaire()
 	{
 		// Nettoyage des variables POST récupérée
+		
+		$this->idJeu = $this->filtreChaine($_POST[ID_JEU], TAILLE_CHAMPS_COURT);
 
 		foreach($_POST[NOM_JEU] as $nomJeu)
 			// Nettoyage du Nom
@@ -313,7 +312,7 @@ class ModuleAjoutJeux extends Module
 				// et s'il s'agit d'un nouveau Pays, on l'insère dans la base de données et on récupére son id
 				$idPays = 0;
 				
-				$listePays = $this->maBase->recupPays();
+				$listePays = $this->maBase->recupPays(null);
 				foreach($listePays as $unPays)
 				{
 					if(strcasecmp($this->pays, $unPays[NOM_PAYS]) == 0)
@@ -326,7 +325,11 @@ class ModuleAjoutJeux extends Module
 				if(!intval($idPays))
 					$this->erreurPays = true;
 				
-				$this->idJeu = $this->maBase->InsertionTableJeu($this->description, $this->auteur, $idPays);
+				if($this->idJeu == 0)
+					$this->idJeu = $this->maBase->InsertionTableJeu($this->description, $this->auteur, $idPays);
+				else
+					if(!$this->maBase->UpdateTableJeu($this->idJeu, $this->description, $this->auteur, $idPays))
+						$this->erreurUpdateJeu = true;
 
 				$i = 0;
 				for($i = 0; $i < sizeof($_POST[NOM_JEU]); $i++)

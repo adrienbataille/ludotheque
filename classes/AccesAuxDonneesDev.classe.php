@@ -627,6 +627,38 @@ class AccesAuxDonneesDev
 		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_LIEU);
 		return $laListe;
 	}
+	
+	/**
+	* Fonction qui met à jour les informations d'un jeu
+	* Entrée : id du jeu à mettre à jour
+	* Entrée : nouvelle description du jeu
+	* Entrée : nouvel auter du jeu
+	* Entrée : id du nouveau pays
+	* Sortir : booleen pour donner savoir si la requête à bien était effectuée
+	*/
+	public function UpdateTableJeu($unJeu, $uneDescription, $unAuteur, $unPays)
+	{
+		if(intval($unJeu))
+		{
+			// On initie la connexion à la base, si ce n'est déjà fait
+			$this->connecteBase();
+			
+			// Création de la requete
+			$requete = $this->maBase->prepare("UPDATE " . TABLE_JEUX . " SET " . DESCRIPTION_JEU . "=?, " . AUTEUR . "=?, " . ID_PAYS . "=? WHERE " . ID_JEU . "=?;");
+			$requete->bindValue(1, $uneDescription, PDO::PARAM_STR);
+			$requete->bindValue(2, $unAuteur, PDO::PARAM_STR);
+			$requete->bindValue(3, $unPays, PDO::PARAM_INT);
+			$requete->bindValue(4, $unJeu, PDO::PARAM_INT);
+			$resultat = $requete->execute();
+	
+			// On termine l'utilisation de la requete
+			$requete->closeCursor();
+			
+			return $resultat;
+		}
+		else
+			return false;
+	}
 
         
         /**
