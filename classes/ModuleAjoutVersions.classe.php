@@ -28,6 +28,12 @@ class ModuleAjoutVersions extends Module
 	private $traitementFormulaire = false;
 	// On stocke la base de données
 	private $mabase = null;
+	// On stocke les erreurs qui pourront arriver
+	private $erreurNom = false;
+	private $erreurPrixAchat = false;
+	private $erreurEditeur = false;
+
+	
 // Methodes
 
 	private $nom = "";
@@ -94,7 +100,9 @@ class ModuleAjoutVersions extends Module
         // Nom
          $this->ouvreBloc("<li>");
         $this->ajouteLigne("<label for='" . NOM_VERSION . "'>" . $this->convertiTexte("Nom de la version") . "</label>");
-        $this->ajouteLigne("<input type='text' id='". NOM_VERSION . "' name='" . NOM_VERSION . "' value='" . $this->nom . "' />");
+        $this->ajouteLigne("<input type='text' id='". NOM_VERSION . "' name='" . NOM_VERSION . "' value='" . $this->nom . "' required='required'  />");
+		if($this->erreurNom)
+			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
         $this->fermeBloc("</li>");
  
         
@@ -141,7 +149,9 @@ class ModuleAjoutVersions extends Module
 		 // Prix achat
         $this->ouvreBloc("<li>");
         $this->ajouteLigne("<label for='" . PRIX_ACHAT . "'>" . $this->convertiTexte("Prix d'achat") . "</label>");
-        $this->ajouteLigne("<input type='text' id='" . PRIX_ACHAT . "' name='"  . PRIX_ACHAT . "' value='" . $this->prix_achat . "' />");
+        $this->ajouteLigne("<input type='text' id='" . PRIX_ACHAT . "' name='"  . PRIX_ACHAT . "' value='" . $this->prix_achat . "' required='required'  />");
+		if($this->erreurPrixAchat)
+			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
         $this->fermeBloc("</li>");
 		
 		 //Année de sortie
@@ -166,7 +176,9 @@ class ModuleAjoutVersions extends Module
 		//Editeur
         $this->ouvreBloc("<li>");
         $this->ajouteLigne("<label for='" . EDITEUR . "'>" . $this->convertiTexte("Editeur") . "</label>");
-        $this->ajouteLigne("<input type='text' id='" . EDITEUR . "' name='"  . EDITEUR . "' value='" . $this->editeur . "' autocomplete='on' />");
+        $this->ajouteLigne("<input type='text' id='" . EDITEUR . "' name='"  . EDITEUR . "' value='" . $this->editeur . "' autocomplete='on' required='required'  />");
+				if($this->erreurEditeur)
+			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
         $this->fermeBloc("</li>");
         
         // Catégories
@@ -207,7 +219,7 @@ class ModuleAjoutVersions extends Module
 			$this->nom = $this->filtreChaine($_POST[NOM_VERSION], TAILLE_CHAMPS_COURT);
 			
 			// Nettoyage de la Description
-			$this->description = $this->filtreChaine($_POST[DESCRIPTION_VERSION], TAILLE_CHAMPS_COURT);
+			$this->description = $this->filtreChaine($_POST[DESCRIPTION_VERSION], TAILLE_CHAMPS_LONG);
 			
 			// Nettoyage du Prix MDJT
 			$this->age_min = $this->filtreChaine($_POST[AGE_MINIMUM], TAILLE_CHAMPS_COURT);

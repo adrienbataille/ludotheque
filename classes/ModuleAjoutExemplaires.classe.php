@@ -23,6 +23,10 @@ class ModuleAjoutExemplaires extends Module
 {
 
 // Attributs
+
+// On stocke les erreurs qui pourront arriver
+	private $erreurPrixMdjt = false;
+	private $erreurDateAchat = false;
     
 // Methodes
 
@@ -32,10 +36,7 @@ class ModuleAjoutExemplaires extends Module
     public function __construct()
     {
         // On utilise le constructeur de la classe mère
-		parent::__construct();
-		
-		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
-		$this->baseDonnees = AccesAuxDonneesDev::recupAccesDonnees();
+		parent::__construct();		
 		
 		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
 		$this->maBase = AccesAuxDonneesDev::recupAccesDonnees();
@@ -48,6 +49,7 @@ class ModuleAjoutExemplaires extends Module
 		$this->afficheFormulaire();	
 	
     }
+	
 	
 	 /**
 	 * Fonction de nettoyage des chaine de caractères
@@ -67,6 +69,50 @@ class ModuleAjoutExemplaires extends Module
 		return $resultat;
 	}
     
+	
+		/**
+	* Fonction de conversion des dates
+	* Converti les dates stockée en date affichable
+	* AAAA-MM-JJ -> jj/mm/aaaa
+	*/
+	private function dateBaseToAffichage($uneDate)
+	{
+		$annee = substr($uneDate,0,4);
+		$mois = substr($uneDate,5,2);
+		$jour = substr($uneDate,8,2);
+		$date = $jour . "/" . $mois . "/" . $annee;
+		return $date;
+	}
+	
+	/**
+	* Fonction de conversion des dates
+	* Converti les dates affichée en date stockable en base
+	* jj/mm/aaaa -> AAAA-MM-JJ
+	*/
+	private function dateAffichageToBase($uneDate)
+	{
+		$jour = substr($uneDate,0,2);
+		$mois = substr($uneDate,3,2);
+		$annee = substr($uneDate,6,4);
+		$date = $annee . "-" . $mois . "-" . $jour;
+		return $date;
+	}
+	
+	        /**
+	* Fonction de vérification d'une date au format d'affichage
+	*/
+	private function verifDateAffichee($uneDate)
+	{
+            if (preg_match('#^([0-9]{2})([/-])([0-9]{2})\2([0-9]{4})$#', $uneDate))
+            {
+                return checkdate(substr($uneDate,3,2), substr($uneDate,0,2), substr($uneDate,6,4));
+            }
+            else
+            {
+                return false;
+            }
+	}
+	
     public function afficheFormulaire()
     {	
         $this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_EXEMPLAIRES . "' id='formProfil'>");
@@ -80,20 +126,24 @@ class ModuleAjoutExemplaires extends Module
         // Description
         $this->ouvreBloc("<li>");
         $this->ajouteLigne("<label for='" . DESCRIPTION_EXEMPLAIRE . "'>" . $this->convertiTexte("Description") . "</label>");
-        $this->ajouteLigne("<textarea rows='3' id='" . DESCRIPTION_EXEMPLAIRE . "'name='" . DESCRIPTION_EXEMPLAIRE . "'>" . VIDE . "</textarea>");
+        $this->ajouteLigne("<textarea rows='3' id='" . DESCRIPTION_EXEMPLAIRE . "'name='" . DESCRIPTION_EXEMPLAIRE . "'>" . $this->descriptionExemplaire . "</textarea>");
         $this->fermeBloc("</li>");
 		
 				
 		 // Prix mdjt
         $this->ouvreBloc("<li>");
         $this->ajouteLigne("<label for='" . PRIX_MDJT . "'>" . $this->convertiTexte("Prix d'achat") . "</label>");
-        $this->ajouteLigne("<input type='text' id='" . PRIX_MDJT ."' name='"  . PRIX_MDJT . "' value='" . VIDE . "' />");
+        $this->ajouteLigne("<input type='text' id='" . PRIX_MDJT ."' name='"  . PRIX_MDJT . "' value='" . $this->prixMDJT . "' required='required' />");
+		if($this->erreurPrixMdjt)
+			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
         $this->fermeBloc("</li>");
         
         // Data achat
         $this->ouvreBloc("<li>");
         $this->ajouteLigne("<label for='" . DATE_ACHAT . "'>" . $this->convertiTexte("Date Achat") . "</label>");
-        $this->ajouteLigne("<input type='text' id='" . DATE_ACHAT ."' maxlength='10' name='" . DATE_ACHAT . "' value='" . VIDE . "' />");
+        $this->ajouteLigne("<input type='text' id='" . DATE_ACHAT ."' maxlength='10' name='" . DATE_ACHAT . "' value='" . $this->dateBaseToAffichage($this->dateAchat) . "'  required='required' />");
+		if($this->erreurDateAchat)
+			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
         $this->fermeBloc("</li>");
         
 				
@@ -134,39 +184,39 @@ class ModuleAjoutExemplaires extends Module
 		
 			
 			// Nettoyage de la Description
-			$description = $this->filtreChaine($_POST[DESCRIPTION_EXEMPLAIRE], TAILLE_CHAMPS_COURT);
+			$this->descriptionExemplaire = $this->filtreChaine($_POST[DESCRIPTION_EXEMPLAIRE], TAILLE_CHAMPS_LONG);
 			
 			// Nettoyage du Prix MDJT
-			$prix_mdjt = $this->filtreChaine($_POST[PRIX_MDJT], TAILLE_CHAMPS_COURT);
+			$this->prixMDJT = $this->filtreChaine($_POST[PRIX_MDJT], TAILLE_CHAMPS_COURT);
 			
 			// Nettoyage de Date achat
-			$date_achat = $this->filtreChaine($_POST[DATE_ACHAT], TAILLE_CHAMPS_COURT);
+			//$this->dateAchat = $this->filtreChaine($_POST[DATE_ACHAT], TAILLE_CHAMPS_COURT);
+			
+			// Vérification de la date achat
+			if ( $this->verifDateAffichee($_POST[DATE_ACHAT]) )			
+			{
+				$this->dateAchat = $this->dateAffichageToBase($_POST[DATE_ACHAT]);
+			}
+	
 			
 			// Nettoyage de date fin vie
 			//$categorie = $this->filtreChaine($_POST[DATE_FIN_VIE], TAILLE_CHAMPS_COURT);
+				
+			$this->maBase->InsertionTableExemplaire($this->descriptionExemplaire,$this->prixMDJT,$this->dateAchat);
 			
-		
-			var_dump($description);
-			var_dump($prix_mdjt);
-			var_dump($date_achat);
+			if(strcmp($this->prixMDJT, "") == 0)
+				$this->erreurPrixMdjt = true;
+				
+			if(strcmp($this->dateAchat, "") == 0)
+				$this->erreurDateAchat = true;
 			
-			/*
-			// Vérification de la présence de modifications
-			// Changement de titre ?
-			if (strcmp($titre,$this->monUtilisateur->recupTitre() != 0) )
-			{
-				$this->estModifie = true;
-				$this->monUtilisateur->changeTitre($titre);
-			}
-			... au niveau des champs
+				
+				
+			var_dump($this->descriptionExemplaire);
+			var_dump($this->prixMDJT);
+			var_dump($this->dateAchat);
+			
 
-			// Si il y a au moins une modification
-				// On demande la mise à jour des informations dans la base
-			if ($this->estModifie)
-			{
-				$this->modificationOK = $this->monUtilisateur->mettreAJour();
-			} 
-			*/
 		}
 	}	
     

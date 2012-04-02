@@ -338,12 +338,7 @@ class AccesAuxDonneesDev
 		else
 			return $resultat[0][ID_JEU];
     }
-	
-	//////////////////////////////////////////
-	//////////////////////////////////////////
-	///////////////////////////////////////////
-	//////////////////////////////////////////
-	////////////////////////////////////
+
 	/**
     * Fonction d'insertion d'une version
     * Entrée : nom, description, age_min, nb_joueur, nb_joueur recommandés, prix achat, année sortie, illustrateur, distributeur, éditeur
@@ -361,10 +356,7 @@ class AccesAuxDonneesDev
 
 	
 		//nom
-		if(strcmp($nom, "") == 0)
-			$requete->bindValue(1, null, PDO::PARAM_NULL);
-		else
-			$requete->bindValue(1, $nom, PDO::PARAM_STR);
+		$requete->bindValue(1, $nom, PDO::PARAM_STR);
 			
 		//description	
 		if(strcmp($description, "") == 0)
@@ -397,10 +389,7 @@ class AccesAuxDonneesDev
 			$requete->bindValue(5, $duree_partie, PDO::PARAM_INT);	
 
 		//prix achat
-		if(strcmp($prix_achat, "") == 0)
-			$requete->bindValue(6, null, PDO::PARAM_NULL);
-		else
-			$requete->bindValue(6, $prix_achat, PDO::PARAM_INT);	
+		$requete->bindValue(6, $prix_achat, PDO::PARAM_INT);	
 
 		//année de sortie
 		if(strcmp($annee_sortie, "") == 0)
@@ -422,27 +411,46 @@ class AccesAuxDonneesDev
 			$requete->bindValue(9, $distributeur, PDO::PARAM_STR);
 
 		//éditeur
-		if(strcmp($editeur, "") == 0)
-			$requete->bindValue(10, null, PDO::PARAM_NULL);
-		else
-			$requete->bindValue(10, $editeur, PDO::PARAM_STR);
-
-				
-
+		$requete->bindValue(10, $editeur, PDO::PARAM_STR);
+		
 			
 		$resultat = $requete->execute();
 
 		// On termine l'utilisation de la requete
 		$requete->closeCursor();
-
-		
-		//var_dump($resultat);
-		//if(count($resultat) == 0)
-			//return false;
 		
     }
 	
 	
+
+	/**
+    * Fonction d'insertion d'un exemplaire
+    * Entrée : la description, prix achat, date achat
+    * Sortie : true si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableExemplaire($descriptionExemplaire, $prixMJDT, $dateAchat)
+    {
+
+		// On initie la connexion à la base, si ce n'est déjà fait
+		$this->connecteBase();
+		// Création de la requete
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_EXEMPLAIRE . " (" . DESCRIPTION_EXEMPLAIRE . ", " . PRIX_MDJT . ", " . DATE_ACHAT . ") VALUES(?, ?, ?) ;");
+		
+		if(strcmp($descriptionExemplaire, "") == 0)
+			$requete->bindValue(1, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(1, $descriptionExemplaire, PDO::PARAM_STR);
+		
+		$requete->bindValue(2, $prixMJDT, PDO::PARAM_INT);			
+		$requete->bindValue(3, $dateAchat, PDO::PARAM_STR);
+					
+		$resultat = $requete->execute();
+
+		// On termine l'utilisation de la requete
+		$requete->closeCursor();
+		
+
+    }
 	
 	
 	/**
