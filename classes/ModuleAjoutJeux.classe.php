@@ -296,7 +296,7 @@ class ModuleAjoutJeux extends Module
 		// Bouton valider
 		$this->ouvreBloc("<fieldset>");
 		$this->ajouteLigne("<input type='hidden' name='ajouterJeu' value='true' />");
-		$this->ajouteLigne("<button type='submit' name='AjouterJeu' value='true'>Je valide et ajouter une version</button>");
+		$this->ajouteLigne("<button type='submit' name='AjouterJeu' value='true'>Valider et ajouter une version</button>");
 		$this->fermeBloc("</fieldset>");
 		
 		$this->fermeBloc("</form>");
@@ -375,28 +375,19 @@ class ModuleAjoutJeux extends Module
 				
 			if(in_array("", $this->nom))
 				$this->erreurNom = true;
-			/*
-			// Vérification de la présence de modifications
-			// Changement de titre ?
-			if (strcmp($titre,$this->monUtilisateur->recupTitre() != 0) )
+				
+			if(!$this->erreurLangue && !$this->erreurNom && !$this->erreurPays && !$this->erreurJeu && !$this->erreurUpdateJeu)
 			{
-				$this->estModifie = true;
-				$this->monUtilisateur->changeTitre($titre);
+				header("Location: http://localhost/ludotheque/module.php?idModule=AjoutVersions&idJeu=" . $this->idJeu);
+				exit;
 			}
-			... au niveau des champs
-
-			// Si il y a au moins une modification
-				// On demande la mise à jour des informations dans la base
-			if ($this->estModifie)
-			{
-				$this->modificationOK = $this->monUtilisateur->mettreAJour();
-			} 
-			*/
+			
 		} elseif($_POST["AjouterNom"])
 		{
 			$this->recuperationInformationsFormulaire();
 
 			$this->nbJeu += sizeof($_POST[NOM_JEU]);
+			
 		} elseif($_POST["SupprimerNomJeu"] != null)
 		{
 			$this->recuperationInformationsFormulaire();
