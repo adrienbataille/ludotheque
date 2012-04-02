@@ -319,14 +319,24 @@ class AccesAuxDonneesDev
 		$requete->closeCursor();
 		
 		// Création de la requete pour récupérer l'id du Jeu inséré
-		$requete = "SELECT " . ID_PAYS . " FROM " . TABLE_PAYS . " WHERE " . NOM_PAYS . "='" . $unPays . "' ;";
+		$requete = $this->maBase->prepare("SELECT ? FROM ? WHERE ?='?' AND ?='?' AND ?='?'");
+		$requete->bindValue(1, ID_JEU, PDO::PARAM_INT);
+		$requete->bindValue(2, TABLE_JEUX, PDO::PARAM_STR);
+		$requete->bindValue(3, ID_PAYS, PDO::PARAM_STR);
+		$requete->bindValue(4, $unPays, PDO::PARAM_STR);
+		$requete->bindValue(5, AUTEUR, PDO::PARAM_STR);
+		$requete->bindValue(6, $unAuteur, PDO::PARAM_STR);
+		$requete->bindValue(5, DESCRIPTION_JEU, PDO::PARAM_STR);
+		$requete->bindValue(6, $uneDescription, PDO::PARAM_STR);
+		
+		$requete = "SELECT " . ID_JEU . " FROM " . TABLE_JEUX . " WHERE " . ID_PAYS . "='" . $unPays . "' AND " . AUTEUR . " = '". $unAuteur . "';";
+		
 		$resultat = $this->requeteSelect($requete);
 		
-		//var_dump($resultat);
 		if(count($resultat) == 0)
 			return false;
 		else
-			return $resultat[0][ID_PAYS];
+			return $resultat[0][ID_JEU];
     }
 	
 	/**
@@ -434,6 +444,20 @@ class AccesAuxDonneesDev
     }
 	
     /**
+	* Fonction de récupération de la liste des jeux ou un jeu en particulier si on lui passe en paramètre l'id d'un jeu
+	* Entrée : id d'un jeu pour lequel on veut récupérer des informations (paramètre optionnel)
+	* Sortie : le tableau contenant les catégories
+	*/
+	public function recupJeu($idJeu)
+	{
+		$requete = "SELECT * FROM " . TABLE_JEUX;
+		if($idJeu != null)
+			$requete .= " WHERE " . ID_JEU . " = '" . $idJeu . "';";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
+    /**
 	* Fonction de récupération de la liste des catégories disponibles
 	* Sortie : le tableau contenant les catégories
 	*/
@@ -454,12 +478,29 @@ class AccesAuxDonneesDev
 	}
 	
     /**
-	* Fonction de récupération de la liste des catégories disponibles
+	* Fonction de récupération de la liste des nom d'un jeu dans toutes les langues pour un jeu
+	* Entrée : id du jeu pour lequel on souhaite récupérer les langues
 	* Sortie : le tableau contenant les catégories
 	*/
-	public function recupPays()
+	public function recupNameJeu($idJeu)
 	{
-		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_PAYS);
+		$requete = "SELECT * FROM " . TABLE_LANGUE . " l JOIN " . TABLE_NOM_JEU . " n";
+		$requete .= " ON (l." . ID_LANGUE . "=n." . ID_LANGUE . ") WHERE " . ID_JEU . "='" . $idJeu . "';";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
+    /**
+	* Fonction de récupération de la liste des pays ou un pays en particulier si on lui passe en paramètre l'id d'un pays
+	* Entrée : id d'un pays pour lequel on veut récupérer des informations (paramètre optionnel)
+	* Sortie : le tableau contenant les catégories
+	*/
+	public function recupPays($idPays)
+	{
+		$requete = "SELECT * FROM " . TABLE_PAYS;
+		if($idPays != null)
+			$requete .= " WHERE " . ID_PAYS . " = '" . $idPays . "';";
+		$laListe = $this->requeteSelect($requete);
 		return $laListe;
 	}
 	
