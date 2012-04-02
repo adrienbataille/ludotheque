@@ -339,6 +339,112 @@ class AccesAuxDonneesDev
 			return $resultat[0][ID_JEU];
     }
 	
+	//////////////////////////////////////////
+	//////////////////////////////////////////
+	///////////////////////////////////////////
+	//////////////////////////////////////////
+	////////////////////////////////////
+	/**
+    * Fonction d'insertion d'une version
+    * Entrée : nom, description, age_min, nb_joueur, nb_joueur recommandés, prix achat, année sortie, illustrateur, distributeur, éditeur
+    * Sortie : true si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableVersion($nom,$description,$age_min,$nb_joueur_reco,$duree_partie,$prix_achat,$annee_sortie,
+											$illustrateur,$distributeur,$editeur)
+    {
+		// On initie la connexion à la base, si ce n'est déjà fait
+		$this->connecteBase();
+		// Création de la requete
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_VERSION . " (" . NOM_VERSION . ", " . DESCRIPTION_VERSION . ", " . AGE_MINIMUM . 
+										", " . NB_JOUEUR_RECOMMANDE ."," . DUREE_PARTIE ."," . PRIX_ACHAT . ",". ANNEE_SORTIE ."," . ILLUSTRATEUR .
+										"," . DISTRIBUTEUR . "," .EDITEUR . " ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ;");	
+
+	
+		//nom
+		if(strcmp($nom, "") == 0)
+			$requete->bindValue(1, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(1, $nom, PDO::PARAM_STR);
+			
+		//description	
+		if(strcmp($description, "") == 0)
+			$requete->bindValue(2, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(2, $description, PDO::PARAM_STR);
+		//age min
+		if(strcmp($age_min, "") == 0)
+			$requete->bindValue(3, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(3, $age_min, PDO::PARAM_INT);
+			
+		//nombre de joueurs
+		/*if(strcmp($nb_joueur, "") == 0)
+			$requete->bindValue(4, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(4, $nb_joueur, PDO::PARAM_INT);*/
+			
+		
+		//nombre de joueurs recommandés
+		if(strcmp($nb_joueur_reco, "") == 0)
+			$requete->bindValue(4, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(4, $nb_joueur_reco, PDO::PARAM_INT);
+
+		//durée partie
+		if(strcmp($duree_partie, "") == 0)
+			$requete->bindValue(5, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(5, $duree_partie, PDO::PARAM_INT);	
+
+		//prix achat
+		if(strcmp($prix_achat, "") == 0)
+			$requete->bindValue(6, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(6, $prix_achat, PDO::PARAM_INT);	
+
+		//année de sortie
+		if(strcmp($annee_sortie, "") == 0)
+			$requete->bindValue(7, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(7, $annee_sortie, PDO::PARAM_INT);	
+
+		//illustrateur
+		if(strcmp($illustrateur, "") == 0)
+			$requete->bindValue(8, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(8, $illustrateur, PDO::PARAM_STR);	
+
+
+		//distributeur
+		if(strcmp($distributeur, "") == 0)
+			$requete->bindValue(9, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(9, $distributeur, PDO::PARAM_STR);
+
+		//éditeur
+		if(strcmp($editeur, "") == 0)
+			$requete->bindValue(10, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(10, $editeur, PDO::PARAM_STR);
+
+				
+
+			
+		$resultat = $requete->execute();
+
+		// On termine l'utilisation de la requete
+		$requete->closeCursor();
+
+		
+		//var_dump($resultat);
+		//if(count($resultat) == 0)
+			//return false;
+		
+    }
+	
+	
+	
+	
 	/**
     * Fonction d'insertion du nom d'un jeu
     * Entrée : la description, l'auteur et l'id de pays du jeu
