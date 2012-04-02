@@ -1,8 +1,8 @@
 .champ_recherche{
+	min-height:80px;
 	float:left;
 }
-label:after { content: '\a' ; white-space: pre; }
-label{
-	display:box;
-	clear:both;
+.champ_recherche label:after { 
+	content: '\a' ; 
+	white-space: pre; 
 }

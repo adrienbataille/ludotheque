@@ -153,7 +153,7 @@ define("EDITEUR", "editeur");
 class AccesAuxDonneesDev
 {
 
-// Attributs
+	// Attributs
 	// Variable de classe stockant le premier objet créé
 	// Sert à garantir qu'on ne créera qu'un seul objet
 	private static $connexionBase = NULL;
@@ -162,314 +162,415 @@ class AccesAuxDonneesDev
 	// Est-on déjà connecté à la base - sert à éviter les connexions multiples
 	private $estConnecte = NULL;
 
-// Methodes
+	// Methodes
 
 	/*
 	* Le constructeur d'une connexion à la base
 	*/
-	public function __construct()
-	{
-		// A la création de l'objet, on est pas connecté à la base
-		$this->estConnecte = FALSE;
-	}
+public function __construct()
+{
+	// A la création de l'objet, on est pas connecté à la base
+	$this->estConnecte = FALSE;
+}
 
-	// On interdit le clonage de cet objet	
-        public function __clone()
-        {
-            trigger_error("Clonage d'accès aux données interdit.", E_USER_ERROR);
-        }
+// On interdit le clonage de cet objet	
+public function __clone()
+{
+	trigger_error("Clonage d'accès aux données interdit.", E_USER_ERROR);
+}
 
-	// On interdit de reveiller un objet AccesAuxDonnees sérialisé
-        public function __wakeup()
-        {
-            trigger_error("Unserializing is not allowed.", E_USER_ERROR);
-        }
-	
-	//
-	// Outils à usage externe
-	//
-	
-	/**
-	* Fonction statique de création d'un accès aux données
-	* Cette fonction vérifie qu'un accès aux données n'existe pas avant
-	* Elle renvoi l'accès pré-existant, ou un nouvel accès
-	*
-	* C'est cette fonction qui doit être utilisée 
-	* chaque fois qu'on veut avoir accès aux données
-	*/
-	public static function recupAccesDonnees()
-	{
-		// Initialisation de l'accès à la Base de Donnees
-		// Si on a pas encore d'objet d'accès aux donnees
-		if ( self::$connexionBase == NULL )
-		{
-			// On en crée un et on stocke cette connexion dans la variable de classe
-			self::$connexionBase = new AccesAuxDonneesDev();
-			return self::$connexionBase;
-		}
-		else
-		{
-			// Sinon, on récupère celle qui existe déjà
-			return self::$connexionBase;
-		}
-	}
-  
-  //
-  // Outils à usage interne
-  //
+// On interdit de reveiller un objet AccesAuxDonnees sérialisé
+public function __wakeup()
+{
+	trigger_error("Unserializing is not allowed.", E_USER_ERROR);
+}
 
-        /**
-        * Fonction de connexion à la base de donnée
-        * Cette fonction initie la connexion à la base de données
-        * Uniquement si ce n'est pas déjà fait.
-        * On l'utilise donc au début de chaque requête
-        */
-        private function connecteBase()
-        {
-            // On initie la connexion uniquement si elle n'est pas déjà faite
-            if ($this->estConnecte == FALSE)
-            {
-                try 
-                {
-                    // Connexion en mode debug
-                    $option[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-                    $this->maBase = new PDO("mysql:host=" . SERVEUR . ";dbname=" . BASE_DEV, LOGIN, MDP,$option);
-                    // Connexion normale
-                    // $this->maBase = new PDO("mysql:host=" . SERVEUR . ";dbname=" . BASE, LOGIN, MDP);
-                } 
-                catch (PDOException $e)
-                {
-                        // Accès à la base impossible
-                        print "Connexion a la base de donnee impossible à la base de développement<br/>";
-                        die();
-                }
-                $this->estConnecte = TRUE;
-            }
-	}
-	
-        
-	/**
-	* Fonction générique de requête type sélection dans la base
-	*/
-	private function requeteSelect($uneRequeteSQL)
+//
+// Outils à usage externe
+//
+
+/**
+* Fonction statique de création d'un accès aux données
+* Cette fonction vérifie qu'un accès aux données n'existe pas avant
+* Elle renvoi l'accès pré-existant, ou un nouvel accès
+*
+* C'est cette fonction qui doit être utilisée 
+* chaque fois qu'on veut avoir accès aux données
+*/
+public static function recupAccesDonnees()
+{
+	// Initialisation de l'accès à la Base de Donnees
+	// Si on a pas encore d'objet d'accès aux donnees
+	if ( self::$connexionBase == NULL )
 	{
-		// On initie la connexion à la base, si ce n'est déjà fait
-		$this->connecteBase();	
-		// Si on a bien une connexion à la base
-		if ($this->estConnecte)
+		// On en crée un et on stocke cette connexion dans la variable de classe
+		self::$connexionBase = new AccesAuxDonneesDev();
+		return self::$connexionBase;
+	}
+	else
+	{
+		// Sinon, on récupère celle qui existe déjà
+		return self::$connexionBase;
+	}
+}
+
+//
+// Outils à usage interne
+//
+
+/**
+* Fonction de connexion à la base de donnée
+* Cette fonction initie la connexion à la base de données
+* Uniquement si ce n'est pas déjà fait.
+* On l'utilise donc au début de chaque requête
+*/
+private function connecteBase()
+{
+	// On initie la connexion uniquement si elle n'est pas déjà faite
+	if ($this->estConnecte == FALSE)
+	{
+		try 
 		{
-			// On récupère les résultats sous forme d'un objet PDOStatement
-			$resultat = $this->maBase->query($uneRequeteSQL);
-			if ($resultat == false)
-			{
-				// La requete a échoué
-				return false;
-			}
-			else 
-			{
-				// On récupère le resultat de la requete sous la forme d'un tableau
-				$tableauResultat = $resultat->fetchAll();
-				// On ferme l'objet PDOStatement
-				$resultat->closeCursor();
-				// On renvoie le tableau avec les résultats de la requête
-				return $tableauResultat;
-			}
+			// Connexion en mode debug
+			$option[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+			$this->maBase = new PDO("mysql:host=" . SERVEUR . ";dbname=" . BASE_DEV, LOGIN, MDP,$option);
+			// Connexion normale
+			// $this->maBase = new PDO("mysql:host=" . SERVEUR . ";dbname=" . BASE, LOGIN, MDP);
+		} 
+		catch (PDOException $e)
+		{
+			// Accès à la base impossible
+			print "Connexion a la base de donnee impossible à la base de développement<br/>";
+			die();
 		}
-		else 
-		{ // Sinon, pas de connexion à la base
+		$this->estConnecte = TRUE;
+	}
+}
+
+
+/**
+* Fonction générique de requête type sélection dans la base
+*/
+private function requeteSelect($uneRequeteSQL)
+{
+	// On initie la connexion à la base, si ce n'est déjà fait
+	$this->connecteBase();	
+	// Si on a bien une connexion à la base
+	if ($this->estConnecte)
+	{
+		// On récupère les résultats sous forme d'un objet PDOStatement
+		$resultat = $this->maBase->query($uneRequeteSQL);
+		if ($resultat == false)
+		{
 			// La requete a échoué
 			return false;
 		}
+		else 
+		{
+			// On récupère le resultat de la requete sous la forme d'un tableau
+			$tableauResultat = $resultat->fetchAll();
+			// On ferme l'objet PDOStatement
+			$resultat->closeCursor();
+			// On renvoie le tableau avec les résultats de la requête
+			return $tableauResultat;
+		}
 	}
-	
-	//
-	// Requêtes accessibles au reste du site
-	//
-	
-	
-        
-        
-        /**
-         * Fonction permettant de convertir les données stockées en base vers les données réelles
-         * notamment en supprimant les caractères d'échappement.
-         * @param type $uneVariable 
-         */
-        public function conversionDepuisBase($uneVariable)
-        {
-            return stripslashes($uneVariable);
-        }
+	else 
+	{ // Sinon, pas de connexion à la base
+		// La requete a échoué
+		return false;
+	}
+}
+
+//
+// Requêtes accessibles au reste du site
+//
 
 
-		/**
-		* Fonction récupérant toutes les langues
-		* @return array 
-		*/
-		
-		public function listeLangue(){
-			return $this->requeteSelect("SELECT * FROM MDJT_LANGUE");
-		}
-		
-		/**
-		* Fonction récupérant tous les états
-		* @return array 
-		*/
-		
-		public function listeEtat(){
-			return $this->requeteSelect("SELECT * FROM MDJT_ETAT_EXEMPLAIRE");
-		}
-		
-		/**
-		* Fonction récupérant tous les lieux
-		* @return array 
-		*/
-		
-		public function listeLieu(){
-			return $this->requeteSelect("SELECT * FROM MDJT_LIEU");
-		}
-		
 
-		/**
-		 * Fonction de recherche
-		 * @param array $critere Tableau contenant les critères de recherche. Les paramètres sont indexés par un nom identique à ceux du formulaire.
-		 * @return array
-		 */
-		public function rechercheVersion($critere){
-			/*
-			Afin de simplifier la construction de la requète,
-			nous utiliserons la classe RequeteSQL car c'est assez complexe
-					
-			Voir les commentaires dans RequeteSQL pour les méthodes!
-			Voir en haut de ce fichier pour les defines. 
-			Je recommande fortement un IDE.
-			*/ 
-			
-			$query=new RequeteSQL();
-			
-			$query->setRequete("SELECT nomPhoto, idVersion, nomJeu, nomVersion, idEtatExemplaire, COUNT(idExemplaire) AS nbExemplaire");
-			
-			//pour le moment je garde les X de Jeu tant qu'on a pas la nouvelle BDD corrigé
-			//Voir les commentaires dans RequeteSQL pour les méthodes
-			
-			//On joint les 6 tables nécessaires pour le SELECT DE BASE
-			
-			//Expression régulière que j'aurai éventuellement besoin
-			// Si je veux changer ma fonction en jointure NATURAL JOIN \$query\-\>jointure\(([A-Z]|(\_)|( ))*,([A-Z]|(\_)|( ))*,([A-Z]|(\_)|( ))*,([A-Z]|(\_)|( ))*\)
-			$query->jointure(TABLE_EXEMPLAIRE, ID_VERSION, TABLE_VERSION, ID_VERSION);
-			$query->jointure(TABLE_JEU, ID_JEU, TABLE_VERSION, ID_JEU);
-			$query->jointure(TABLE_ETAT_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE);
-			$query->jointure(TABLE_PHOTO, ID_PHOTO, TABLE_PHOTO_VERSION,ID_PHOTO);
-			$query->jointure(TABLE_PHOTO_VERSION, ID_VERSION, TABLE_VERSION, ID_VERSION);
-			$query->jointure(TABLE_NOM_JEU,ID_JEU,TABLE_JEUX,ID_JEU);
-			
-			// Création dynamique de la requète maintenant
-			
-			//Par nom. On regarde aussi bien le nom du jeu que le nom de la version.
-			if($critere["nom"]!=""){
-				//comme il y a des LIKE, j'ai pas fait de méthode particulière encore
-				$critere["nom"]=mysql_real_escape_string($critere["nom"]);
-				$string="AND ( " . TABLE_NOM_JEU . "." . NOM_JEU . " LIKE '%" .$critere["nom"]."%' OR " . TABLE_VERSION . "." . NOM_VERSION . " LIKE '%" .$critere["nom"]. "%')";
-				$query->ajoutWhereLibre($string);
-			}
-				
-			//Par langue. On regarde seulement la langue de la version ( pour le moment )
-			if(is_numeric($critere["idLangue"])){
-				$query->ajoutAndEgal(TABLE_LANGUE, ID_LANGUE, $critere["langue"]);
-			}
-			
-			// Par Etat
-			if(is_numeric($critere["idEtatExemplaire"])){
-				$query->ajoutAndEgal(TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, $critere["idEtatExemplaire"]);
-			}
-				
-			// Par Lieux
-			if(is_numeric($critere["idLieu"])){
-				$query->ajoutAndEgal(TABLE_EXEMPLAIRE, ID_LIEU_REEL, $critere["idLieu"]);
-				$string="AND (( " . TABLE_EXEMPLAIRE . "." . ID_LIEU_REEL   . "=" .$critere["idLieu"].
-				" AND " . TABLE_EXEMPLAIRE . "." . ID_LIEU_TEMPO   ."= 0) OR  "
-				. TABLE_EXEMPLAIRE . " . " . ID_LIEU_TEMPO   . "=" .$critere["idLieu"].")";
-				$query->ajoutWhereLibre($string);
-			}
-				
-			// Par Durée
-			if(is_numeric($critere["idDureeJeu"]))
-			{
-				$query->jointure(TABLE_VERSION, ID);
-			}
-				
-			if(is_numeric($critere["idDureeJeu"])&& $critere["DureeSigne"]==SUPERIEUR){
-				$query->ajoutAndEgal(TABLE_VERSION, DUREE_PARTIE, $critere["idDureeJeu"]);
-			}
-			if(is_numeric($critere["idDureeJeu"]) && $critere["DureeSigne"]==INFERIEUR   ){
-				$query->ajoutAndEgal(TABLE_VERSION, DUREE_PARTIE, $critere["idDureeJeu"]);
-			}
-			if(is_numeric($critere["idDureeJeu"]) && $critere["DureeSigne"]==EGAL){
-				$query->ajoutAndEgal(TABLE_VERSION, DUREE_PARTIE, $critere["idDureeJeu"]);
-			}
-				
-			// Par Nombre De Joueur
-				
-			// Par Prix Min et Max
-			 
-			// Min
-			if(is_numeric($critere["prixMin"]))
-			{
-				$string = "AND ( " . TABLE_EXEMPLAIRE . "." . PRIX_MDJT   .">" .$critere["prixMin"]."%')";
-				$query->ajoutWhereLibre($string);
-			}
-				
-			// Max
-				
-			if(is_numeric($critere["prixMax"]))
-			{
-				$string = "AND ( " . TABLE_EXEMPLAIRE . "." . PRIX_MDJT   ."<" .$critere["prixMax"]."%')";
-				$query->ajoutWhereLibre($string);
-			}
-				
-			
-				
-			//Par Auteur
-				
-			if($critere["auteur"]!=""){
-			
-				$critere["auteur"]=mysql_real_escape_string($critere["auteur"]);
-				$string="AND ( " . TABLE_JEU . "." . AUTEUR   ." LIKE '%" .$critere["auteur"]."%')";
-				$query->ajoutWhereLibre($string);
-			}
-			
-			// Par illustrateur
-				
-			if($critere["illustrateur"]!=""){
-			
-				$critere["illustrateur"]=mysql_real_escape_string($critere["illustrateur"]);
-				$string="AND ( " . TABLE_VERSION . "." . ILLUSTRATEUR   ." LIKE '%" .$critere["illustrateur"]."%')";
-				$query->ajoutWhereLibre($string);
-			}
-			
-			// Par ANnée
-				
-			// Par catégorie
-			if(is_numeric($critere["anneeSortie"])){
-				$query->ajoutAndEgal(TABLE_VERSION, ANNEE_SORTIE, $critere["anneeSortie"]);
-			}
-				
-				
-				
-				
-			//Par Catégorie
-			/*if($critere["categorie"]!=""){
-			 $query->ajoutAndEgal(TABLE_CATEGORIE, , $critere["categorie"]);
-			}
-			*/
-				
-				
-				
-			//ainsi de suite!
-			
-			return $this->requeteSelect($query->compile);
+
+/**
+* Fonction permettant de convertir les données stockées en base vers les données réelles
+* notamment en supprimant les caractères d'échappement.
+* @param type $uneVariable 
+*/
+public function conversionDepuisBase($uneVariable)
+{
+	return stripslashes($uneVariable);
+}
+
+
+/**
+* Fonction récupérant toutes les langues
+* @return array 
+*/
+
+public function listeLangue(){
+	return $this->requeteSelect("SELECT * FROM MDJT_LANGUE");
+}
+
+/**
+* Fonction récupérant tous les états
+* @return array 
+*/
+
+public function listeEtat(){
+	return $this->requeteSelect("SELECT * FROM MDJT_ETAT_EXEMPLAIRE");
+}
+
+/**
+* Fonction récupérant tous les lieux
+* @return array 
+*/
+
+public function listeLieu(){
+	return $this->requeteSelect("SELECT * FROM MDJT_LIEU");
+}
+
+
+/**
+* Fonction de recherche
+* @param array $critere Tableau contenant les critères de recherche. Les paramètres sont indexés par un nom identique à ceux du formulaire.
+* @return array
+*/
+public function rechercheVersion($critere){
+	/*
+	Afin de simplifier la construction de la requète,
+	nous utiliserons la classe RequeteSQL car c'est assez complexe
+
+Voir les commentaires dans RequeteSQL pour les méthodes!
+Voir en haut de ce fichier pour les defines. 
+Je recommande fortement un IDE.
+*/ 
+
+$query=new RequeteSQL();
+
+$query->setRequete("SELECT nomPhoto, idVersion, nomJeu, nomVersion, idEtatExemplaire, COUNT(idExemplaire) AS nbExemplaire");
+
+//pour le moment je garde les X de Jeu tant qu'on a pas la nouvelle BDD corrigé
+//Voir les commentaires dans RequeteSQL pour les méthodes
+
+//On joint les 6 tables nécessaires pour le SELECT DE BASE
+
+//Expression régulière que j'aurai éventuellement besoin
+// Si je veux changer ma fonction en jointure NATURAL JOIN \$query\-\>jointure\(([A-Z]|(\_)|( ))*,([A-Z]|(\_)|( ))*,([A-Z]|(\_)|( ))*,([A-Z]|(\_)|( ))*\)
+$query->jointure(TABLE_EXEMPLAIRE, ID_VERSION, TABLE_VERSION, ID_VERSION);
+$query->jointure(TABLE_JEU, ID_JEU, TABLE_VERSION, ID_JEU);
+$query->jointure(TABLE_ETAT_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE);
+$query->jointure(TABLE_PHOTO, ID_PHOTO, TABLE_PHOTO_VERSION,ID_PHOTO);
+$query->jointure(TABLE_PHOTO_VERSION, ID_VERSION, TABLE_VERSION, ID_VERSION);
+$query->jointure(TABLE_NOM_JEU,ID_JEU,TABLE_JEUX,ID_JEU);
+
+// Création dynamique de la requète maintenant
+
+//Par nom. On regarde aussi bien le nom du jeu que le nom de la version.
+if($critere["nom"]!=""){
+	//comme il y a des LIKE, j'ai pas fait de méthode particulière encore
+	$critere["nom"]=mysql_real_escape_string($critere["nom"]);
+	$string="AND ( " . TABLE_NOM_JEU . "." . NOM_JEU . " LIKE '%" .$critere["nom"]."%' OR " . TABLE_VERSION . "." . NOM_VERSION . " LIKE '%" .$critere["nom"]. "%')";
+	$query->ajoutWhereLibre($string);
+}
+
+//Par langue. On regarde seulement la langue de la version ( pour le moment )
+if(is_numeric($critere["idLangue"])){
+	$query->ajoutAndEgal(TABLE_LANGUE, ID_LANGUE, $critere["langue"]);
+}
+
+// Par Etat
+if(is_numeric($critere["idEtatExemplaire"])){
+	$query->ajoutAndEgal(TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, $critere["idEtatExemplaire"]);
+}
+
+// Par Lieux
+if(is_numeric($critere["idLieu"])){
+	$query->ajoutAndEgal(TABLE_EXEMPLAIRE, ID_LIEU_REEL, $critere["idLieu"]);
+	$string="AND (( " . TABLE_EXEMPLAIRE . "." . ID_LIEU_REEL   . "=" .$critere["idLieu"].
+		" AND " . TABLE_EXEMPLAIRE . "." . ID_LIEU_TEMPO   ."= 0) OR  "
+		. TABLE_EXEMPLAIRE . " . " . ID_LIEU_TEMPO   . "=" .$critere["idLieu"].")";
+	$query->ajoutWhereLibre($string);
+}
+
+// Par Durée
+if(is_numeric($critere["DureeJeu"]))
+{
+	$query->jointure(TABLE_VERSION, ID);
+}
+
+if(is_numeric($critere["idDureeJeu"])&& $critere["DureeSigne"]==SUPERIEUR){
+	$query->ajoutAndEgal(TABLE_VERSION, DUREE_PARTIE, $critere["idDureeJeu"]);
+}
+if(is_numeric($critere["idDureeJeu"]) && $critere["DureeSigne"]==INFERIEUR   ){
+	$query->ajoutAndEgal(TABLE_VERSION, DUREE_PARTIE, $critere["idDureeJeu"]);
+}
+if(is_numeric($critere["idDureeJeu"]) && $critere["DureeSigne"]==EGAL){
+	$query->ajoutAndEgal(TABLE_VERSION, DUREE_PARTIE, $critere["idDureeJeu"]);
+}
+
+
+// Par Nombre De Joueur
+
+
+if($critere[j1]== "on"){
+
+	$string = " AND ( " . NB_JOUEUR . "LIKE '%1%' " ; }
+
+	if($critere[j2]=="on"){
+		if($string!=""||$string!=NULL){
+			$string.=" OR " . NB_JOUEUR . " LIKE '%2%' ";
 		}
-		
-		
-		
+		else {
+			$string=" AND ( " . NB_JOUEUR . " LIKE '%2%' ";
+		}
+	}
+
+	if($critere[j3]=="on"){
+		if($string!=""||$string!=NULL){
+			$string.=" OR " . NB_JOUEUR . " LIKE '%3%' ";
+		}
+		else {
+			$string=" AND ( " . NB_JOUEUR . " LIKE '%3%' ";
+		}
+	}          
+
+	if($critere[j4]=="on"){
+		if($string!=""||$string!=NULL){
+			$string.=" OR " . NB_JOUEUR . " LIKE '%4%' ";
+		}
+		else {
+			$string=" AND ( " . NB_JOUEUR . " LIKE '%4%' ";
+		}
+	}		
+
+	if($critere[j5]=="on"){
+		if($string!=""||$string!=NULL){
+			$string.=" OR " . NB_JOUEUR . " LIKE '%5%' ";
+		}
+		else {
+			$string=" AND ( " . NB_JOUEUR . " LIKE '%5%' ";
+		}
+	}			
+
+
+	if($critere[j6]=="on"){
+		if($string!=""||$string!=NULL){
+			$string.=" OR " . NB_JOUEUR . " LIKE '%6%' ";
+		}
+		else {
+			$string=" AND ( " . NB_JOUEUR . " LIKE '%6%' ";
+		}
+	}
+
+	if($critere[j7]=="on"){
+		if($string!=""||$string!=NULL){
+			$string.=" OR " . NB_JOUEUR . " LIKE '%7%' ";
+		}
+		else {
+			$string=" AND ( " . NB_JOUEUR . " LIKE '%7%' ";
+		}
+	}	
+
+	if($critere[j8]=="on"){
+		if($string!=""||$string!=NULL){
+			$string.=" OR " . NB_JOUEUR . " LIKE '%8%' ";
+		}
+		else {
+			$string=" AND ( " . NB_JOUEUR . " LIKE '%8%' ";
+		}
+	}
+
+	if($critere[j9]=="on"){
+		if($string!=""||$string!=NULL){
+			$string.=" OR " . NB_JOUEUR . " LIKE '%+%' ";
+		}
+		else {
+			$string=" AND ( " . NB_JOUEUR . " LIKE '%+%' ";
+		}
+	}						
+
+	if($string!=NULL){
+		$string.=" ) ";
+		$query->ajoutWhereLibre($string);
+	}
+
+
+
+	// Par Prix Min et Max
+
+	// Min
+	if(is_numeric($critere["prixMin"]))
+	{
+		$string = "AND ( " . TABLE_EXEMPLAIRE . "." . PRIX_MDJT   .">" .$critere["prixMin"]."%')";
+		$query->ajoutWhereLibre($string);
+	}
+
+	// Max
+
+	if(is_numeric($critere["prixMax"]))
+	{
+		$string = "AND ( " . TABLE_EXEMPLAIRE . "." . PRIX_MDJT   ."<" .$critere["prixMax"]."%')";
+		$query->ajoutWhereLibre($string);
+	}
+
+
+
+	//Par Auteur
+
+	if($critere["auteur"]!=""){
+
+		$critere["auteur"]=mysql_real_escape_string($critere["auteur"]);
+		$string="AND ( " . TABLE_JEU . "." . AUTEUR   ." LIKE '%" .$critere["auteur"]."%')";
+		$query->ajoutWhereLibre($string);
+	}
+
+	// Par illustrateur
+
+	if($critere["illustrateur"]!=""){
+
+		$critere["illustrateur"]=mysql_real_escape_string($critere["illustrateur"]);
+		$string="AND ( " . TABLE_VERSION . "." . ILLUSTRATEUR   ." LIKE '%" .$critere["illustrateur"]."%')";
+		$query->ajoutWhereLibre($string);
+	}
+
+	// Par ANnée
+
+	// Par catégorie
+	if(is_numeric($critere["anneeSortie"])){
+		$query->ajoutAndEgal(TABLE_VERSION, ANNEE_SORTIE, $critere["anneeSortie"]);
+	}
+
+	$string= " AND ( " . NB_JOUEUR . " LIKE '%1%' ";
+
+
+	if($critere[j2]=="on"){
+		if($string!=""||$string!=NULL){
+			$string.=" OR " . NB_JOUEUR . " LIKE '%2%' ";
+		}
+		else {
+			$string=" AND ( " . NB_JOUEUR . " LIKE '%2%' ";
+		}
+	}
+
+	if($string!=NULL){
+		$string.=" ) ";
+		$query->ajoutWhereLibre($string);
+	}
+
+
+	//Par Catégorie
+	/*if($critere["categorie"]!=""){
+	$query->ajoutAndEgal(TABLE_CATEGORIE, , $critere["categorie"]);
+	}
+	*/
+
+
+
+	//ainsi de suite!
+
+	return $this->requeteSelect($query->compile);
+}
+
+
+
 }
 
 ?>
