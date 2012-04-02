@@ -591,6 +591,16 @@ class AccesAuxDonneesDev
 		return $laListe;
 	}
 	
+	/**
+	* Fonction de récupération de la liste des lieux disponibles
+	* Sortie : le tableau contenant les lieux
+	*/
+	public function recupLieu()
+	{
+		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_LIEU);
+		return $laListe;
+	}
+	
     /**
 	* Fonction de récupération de la liste des nom d'un jeu dans toutes les langues pour un jeu
 	* Entrée : id du jeu pour lequel on souhaite récupérer les langues
