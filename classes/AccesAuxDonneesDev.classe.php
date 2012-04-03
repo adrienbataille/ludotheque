@@ -638,6 +638,16 @@ class AccesAuxDonneesDev
 		return $laListe;
 	}
 	
+    /**
+	* Fonction de récupération de la liste des catégories disponibles
+	* Sortie : le tableau contenant les catégories
+	*/
+	public function recupEtatExemplaire()
+	{
+		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_ETAT_EXEMPLAIRE);
+		return $laListe;
+	}
+	
 	/**
 	* Fonction qui met à jour les informations d'un jeu
 	* Entrée : id du jeu à mettre à jour

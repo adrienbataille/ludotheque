@@ -156,6 +156,24 @@ class ModuleAjoutExemplaires extends Module
         $this->fermeBloc("</ol>");
         $this->fermeBloc("</fieldset>");
 		
+		
+		$this->ouvreBloc("<fieldset>");	
+        $this->ajouteLigne("<legend>État de l'exemplaire</legend>");
+        $this->ouvreBloc("<ol>");
+        
+        // Lieu normal de stockage
+        $etatExemplaire = $this->maBase->recupEtatExemplaire();
+        $this->ouvreBloc("<li>");
+        $this->ajouteLigne("<label for='" . NOM_LIEU . "'>" . $this->convertiTexte("État") . "</label>");
+        $this->ouvreBloc("<select id='" . NOM_LIEU . "'>");
+        foreach($etatExemplaire as $etat)
+	        $this->ajouteLigne("<option value='" . $etat[ID_ETAT_EXEMPLAIRE] . "'>" . $etat[NOM_ETAT] . "</option>");
+        $this->fermeBloc("</select>");
+        $this->fermeBloc("</li>");
+        
+        $this->fermeBloc("</ol>");
+		$this->fermeBloc("</fieldset>");
+		
 		$this->ouvreBloc("<fieldset>");	
         $this->ajouteLigne("<legend>Emplacement de l'exemplaire</legend>");
         $this->ouvreBloc("<ol>");
@@ -175,9 +193,26 @@ class ModuleAjoutExemplaires extends Module
         $this->ouvreBloc("<li>");
         $this->ajouteLigne("<label for='" . NOM_LIEU . "'>" . $this->convertiTexte("Lieu de stockage temporaire") . "</label>");
         $this->ouvreBloc("<select id='" . NOM_LIEU . "'>");
-        $this->ajouteLigne("<option value'null'></option>");
+        $this->ajouteLigne("<option value='null'></option>");
         foreach($lieuExemplaire as $lieu)
 	        $this->ajouteLigne("<option value='" . $lieu[ID_LIEU] . "'>" . $lieu[NOM_LIEU] . "</option>");
+        $this->fermeBloc("</select>");
+        $this->fermeBloc("</li>");
+        
+        $this->fermeBloc("</ol>");
+		$this->fermeBloc("</fieldset>");
+		
+		$this->ouvreBloc("<fieldset>");	
+        $this->ajouteLigne("<legend>Régles du jeu</legend>");
+        $this->ouvreBloc("<ol>");
+        
+        // Langues des régles du jeu
+        $langueRegle = $this->maBase->recupLangue();
+        $this->ouvreBloc("<li>");
+        $this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langues des régles du jeu") . "</label>");
+        $this->ouvreBloc("<select id='" . NOM_LANGUE . "' size='5' multiple='multiple'>");
+        foreach($langueRegle as $langue)
+	        $this->ajouteLigne("<option name='" . NOM_LANGUE . "' value='" . $langue[ID_LANGUE] . "'>" . $langue[NOM_LANGUE] . "</option>");
         $this->fermeBloc("</select>");
         $this->fermeBloc("</li>");
         

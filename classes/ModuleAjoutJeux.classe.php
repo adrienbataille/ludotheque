@@ -343,8 +343,8 @@ class ModuleAjoutJeux extends Module
 				else
 					if(!$this->maBase->UpdateTableJeu($this->idJeu, $this->description, $this->auteur, $idPays))
 						$this->erreurUpdateJeu = true;
-
-				$this->maBase->DeleteTableNomJeu($this->idJeu);
+					else
+						$this->maBase->DeleteTableNomJeu($this->idJeu);
 				
 				$i = 0;
 				for($i = 0; $i < sizeof($_POST[NOM_JEU]); $i++)
