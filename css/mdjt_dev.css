@@ -68,10 +68,11 @@
 /* ***** GESTION D'UNE LITE D'ITEM ***** */
 /* ************************************* */
 
-.listeItem {
+#listeItem {
 	border: none;
 }
 
-li#item {
-	border: 5px outset red !important;
+li.item {
+	border: none !important;
+	line-height: 15px !important;
 }
