@@ -436,7 +436,7 @@ class AccesAuxDonneesDev
 		// Création de la requete
 		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_EXEMPLAIRE . " (" . DESCRIPTION_EXEMPLAIRE . ", " . PRIX_MDJT . ", " . DATE_ACHAT . ", " . DATE_FIN_VIE . ", " . ID_VERSION . ", " . ID_ETAT_EXEMPLAIRE . ", " . ID_LIEU_REEL . ", " . ID_LIEU_TEMPO . ") VALUES(?, ?, ?, ?, ?, ?, ?, ?) ;");
 		
-		if(strcmp($descriptionExemplaire, "") == 0)
+		if(strcmp($uneDescription, "") == 0)
 			$requete->bindValue(1, null, PDO::PARAM_NULL);
 		else
 			$requete->bindValue(1, $uneDescription, PDO::PARAM_STR);
@@ -460,7 +460,15 @@ class AccesAuxDonneesDev
 		// On termine l'utilisation de la requete
 		$requete->closeCursor();
 		
-
+		// Création de la requete pour récupérer l'id du Jeu inséré
+		$requete = "SELECT MAX(" . ID_EXEMPLAIRE . ") FROM " . TABLE_EXEMPLAIRE . " ;";
+		
+		$resultat = $this->requeteSelect($requete);
+		
+		if(count($resultat) == 0)
+			return false;
+		else
+			return $resultat[0][0];
     }
 	
 	
@@ -561,6 +569,44 @@ class AccesAuxDonneesDev
 				return false;
 			else
 				return $resultat[0][ID_LANGUE];
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    /**
+    * Fonction d'insertion d'une langue
+    * Entrée : id de l'exemplaire
+    * Entrée : id de la langue
+    * Sortie : l'id de la régle dans la langue voulue si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableLangueRegle($unExemplaire, $uneLangue)
+    {
+        // Protection contre injection SQL
+        if (strval($uneLangue))
+        {
+			// On initie la connexion à la base, si ce n'est déjà fait
+			$this->connecteBase();
+			// Création de la requete
+			$requete = $this->maBase->prepare("INSERT INTO " . TABLE_LANGUE_REGLE . " (" . ID_EXEMPLAIRE . ", ". ID_LANGUE . ") VALUES(?, ?) ;");
+			$requete->bindValue(1, $unExemplaire, PDO::PARAM_INT);
+			$requete->bindValue(2, $uneLangue, PDO::PARAM_INT);
+			$resultat = $requete->execute();
+
+			// On termine l'utilisation de la requete
+			$requete->closeCursor();
+			
+			// Création de la requete pour récupérer l'id de la régle pour l'exemplaire et la Langue
+			$requete = "SELECT " . ID_LANGUE_REGLE . " FROM " . TABLE_LANGUE_REGLE . " WHERE " . ID_EXEMPLAIRE . "='" . $unExemplaire . "' AND " . ID_LANGUE . "='" . $uneLangue . "' ;";
+			$resultat = $this->requeteSelect($requete);
+			
+			//var_dump($resultat);
+			if(count($resultat) == 0)
+				return false;
+			else
+				return $resultat[0][ID_LANGUE_REGLE];
         }
         else
         {

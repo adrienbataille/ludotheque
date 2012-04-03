@@ -25,6 +25,7 @@ class ModuleAjoutExemplaires extends Module
 // Attributs
 	private $idJeu = 0;
 	private $idVersion = 0;
+	private $idExemplaire = 0;
 	private $descriptionExemplaire = "";
 	private $prixMDJT = 0;
 	private $dateAchat;
@@ -32,6 +33,7 @@ class ModuleAjoutExemplaires extends Module
 	private $etatExemplaire = 0;
 	private $lieuReel;
 	private $lieuTempo = null;
+	private $listeLangueRegle;
 // On stocke les erreurs qui pourront arriver
 	private $erreurPrixMdjt = false;
 	private $erreurDateAchat = false;
@@ -160,10 +162,15 @@ class ModuleAjoutExemplaires extends Module
 		$this->etatExemplaire = $this->filtreChaine($_POST[ID_ETAT_EXEMPLAIRE], TAILLE_CHAMPS_LONG);
 		
 		// Nettoyage du lieu de stockage réel
-		$this->lieuReel = $this->filtreChaine($_POST[ID_LIEU . "_Reel"], TAILLE_CHAMPS_LONG);
+		$this->lieuReel = $this->filtreChaine($_POST[ID_LIEU_REEL], TAILLE_CHAMPS_COURT);
 		
 		// Nettoyage du lieu de stockage temporaire
-		$this->lieuTempo = $this->filtreChaine($_POST[ID_LIEU . "_Tempo"], TAILLE_CHAMPS_LONG);
+		$this->lieuTempo = $this->filtreChaine($_POST[ID_LIEU_TEMPO], TAILLE_CHAMPS_LONG);
+		
+		// Nettoyage de la liste des langues choisies pour les régles du jeu de l'exemplaire
+		if($_POST[NOM_LANGUE] != null)
+			foreach($_POST[NOM_LANGUE] as $langueRegle)
+				$this->listeLangueRegle[] = $this->filtreChaine($langueRegle, TAILLE_CHAMPS_COURT);
 	}
 	
     public function afficheFormulaire()
@@ -331,7 +338,7 @@ class ModuleAjoutExemplaires extends Module
 			$lieuExemplaire = $this->maBase->recupLieu();
 			$this->ouvreBloc("<li>");
 			$this->ajouteLigne("<label for='" . ID_LIEU_REEL . "'>" . $this->convertiTexte("Lieu normal de stockage") . "</label>");
-			$this->ouvreBloc("<select id='" . ID_LIEU_REEL . "' name='" . ID_LIEU . "_Reel' required='required'>");
+			$this->ouvreBloc("<select id='" . ID_LIEU_REEL . "' name='" . ID_LIEU_REEL . "' required='required'>");
 			foreach($lieuExemplaire as $lieu)
 				$this->ajouteLigne("<option name='" . ID_LIEU_REEL . "' value='" . $lieu[ID_LIEU] . "'>" . $lieu[NOM_LIEU] . "</option>");
 			$this->fermeBloc("</select>");
@@ -343,7 +350,7 @@ class ModuleAjoutExemplaires extends Module
 			$lieuExemplaire = $this->maBase->recupLieu();
 			$this->ouvreBloc("<li>");
 			$this->ajouteLigne("<label for='" . ID_LIEU_TEMPO . "'>" . $this->convertiTexte("Lieu de stockage temporaire") . "</label>");
-			$this->ouvreBloc("<select id='" . ID_LIEU_TEMPO . "' name='" . ID_LIEU . "_Tempo' required='required'>");
+			$this->ouvreBloc("<select id='" . ID_LIEU_TEMPO . "' name='" . ID_LIEU_TEMPO . "' required='required'>");
 			$this->ajouteLigne("<option value='null'></option>");
 			foreach($lieuExemplaire as $lieu)
 				$this->ajouteLigne("<option name='" . ID_LIEU_TEMPO . "' value='" . $lieu[ID_LIEU] . "'>" . $lieu[NOM_LIEU] . "</option>");
@@ -398,6 +405,7 @@ class ModuleAjoutExemplaires extends Module
 	private function traiteFormulaire()
 	{
 		print_r($_POST);
+		var_dump($this->listeLangueRegle);
 		
 		// Y a-t-il effectivement un formulaire à traiter ?
 		if ($_POST["Ajouter"])
@@ -420,9 +428,13 @@ class ModuleAjoutExemplaires extends Module
 				$this->erreurLieuReel = true;
 			
 			if(!$this->erreurPrixMdjt && !$this->erreurDateAchat && !$this->erreurEtat && !$this->erreurLieuReel)
-				$this->maBase->InsertionTableExemplaire($this->descriptionExemplaire, $this->prixMDJT, $this->dateAchat, $this->dateFinVie, $this->idVersion, $this->etatExemplaire, $this->lieuReel, $this->lieuTempo);
-			
-			// ++ Langue régle du jeu
+			{
+				$this->idExemplaire = $this->maBase->InsertionTableExemplaire($this->descriptionExemplaire, $this->prixMDJT, $this->dateAchat, $this->dateFinVie, $this->idVersion, $this->etatExemplaire, $this->lieuReel, $this->lieuTempo);
+			print "idEx : " . $this->idExemplaire . " :<br />";
+				if($this->idExemplaire != null)
+					foreach($this->listeLangueRegle as $langueRegle)
+						$this->maBase->InsertionTableLangueRegle($this->idExemplaire, $langueRegle);
+			}
 
 		} elseif ($_POST["ValiderNomJeu"])
 		{
