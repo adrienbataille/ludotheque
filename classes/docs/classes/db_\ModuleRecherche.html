@@ -22,6 +22,7 @@
 <li><a>Packages</a></li>
 <li><a href="../packages/db_client.html"><i class="icon-folder-open"></i> client</a></li>
 <li><a href="../packages/db_common.html"><i class="icon-folder-open"></i> common</a></li>
+<li><a href="../packages/db_composant.html"><i class="icon-folder-open"></i> composant</a></li>
 <li><a href="../packages/db_module.html"><i class="icon-folder-open"></i> module</a></li>
 </ul>
 </li>
@@ -66,16 +67,20 @@ Renvoie le texte au format HTML</span><pre>convertiTexte()</pre></a></li>
 <li class="method protected inherited"><a href="#ouvreBloc" title="ouvreBloc :: Fonction d'ouverture d'un bloc HTML"><span class="description">Fonction d'ouverture d'un bloc HTML</span><pre>ouvreBloc()</pre></a></li>
 <li class="nav-header private">» Private</li>
 <li class="method private "><a href="#afficheFormulaire" title="afficheFormulaire :: Affiche le formulaire de recherche"><span class="description">Affiche le formulaire de recherche</span><pre>afficheFormulaire()</pre></a></li>
+<li class="method private "><a href="#creationCheckBox" title="creationCheckBox :: Fonction qui crée des input type checkbox et le prérempli si le paramètre post existe"><span class="description">Fonction qui crée des input type checkbox et le prérempli si le paramètre post existe</span><pre>creationCheckBox()</pre></a></li>
+<li class="method private "><a href="#creationInputText" title="creationInputText :: Fonction qui crée des input type text et le prérempli si le paramètre post existe"><span class="description">Fonction qui crée des input type text et le prérempli si le paramètre post existe</span><pre>creationInputText()</pre></a></li>
+<li class="method private "><a href="#creationRadioBox" title="creationRadioBox :: Fonction qui crée des input type radiobox et le prérempli si le paramètre post existe"><span class="description">Fonction qui crée des input type radiobox et le prérempli si le paramètre post existe</span><pre>creationRadioBox()</pre></a></li>
 <li class="method private "><a href="#creationSelect" title="creationSelect :: Fonction qui crée des listes HTML &lt;select&gt;"><span class="description">Fonction qui crée des listes HTML &lt;select&gt;</span><pre>creationSelect()</pre></a></li>
 <li class="method private inherited"><a href="#indente" title="indente :: Fonction d'indentation du code HTML en fonction du niveau courant
 Renvoie les espaces nécessaires à indenter"><span class="description">Fonction d'indentation du code HTML en fonction du niveau courant
 Renvoie les espaces nécessaires à indenter</span><pre>indente()</pre></a></li>
+<li class="method private "><a href="#traitementFormulaire" title="traitementFormulaire :: Traitement du formulaire pour la recherche. Cette fonction s'occupe d'afficher les résultats de la recherche"><span class="description">Traitement du formulaire pour la recherche. Cette fonction s'occupe d'afficher les résultats de la recherche</span><pre>traitementFormulaire()</pre></a></li>
 <li class="nav-header">
 <i class="icon-custom icon-property"></i> Properties</li>
 <li class="nav-header protected">» Protected</li>
 <li class="property protected inherited"><a href="#%24contenuHTML" title="$contenuHTML :: "><span class="description">$contenuHTML</span><pre>$contenuHTML</pre></a></li>
 <li class="nav-header private">» Private</li>
-<li class="property private "><a href="#%24baseDonnees" title="$baseDonnees :: "><span class="description">Connexion BDD</span><pre>$baseDonnees</pre></a></li>
+<li class="property private "><a href="#%24maBase" title="$maBase :: "><span class="description">Connexion BDD</span><pre>$maBase</pre></a></li>
 <li class="property private inherited"><a href="#%24niveauIndentation" title="$niveauIndentation :: "><span class="description">$niveauIndentation</span><pre>$niveauIndentation</pre></a></li>
 </ul>
 </div>
@@ -87,15 +92,15 @@ Renvoie les espaces nécessaires à indenter</span><pre>indente()</pre></a></li>
 <table class="table table-bordered">
 <tr>
 <th>author</th>
-<td><a href="">Romain Laï-King</a></td>
+<td><a href="">Romain Laï-King, Rania Daoudi, Ziyang Ke</a></td>
+</tr>
+<tr>
+<th>package</th>
+<td><a href="..//packages/db_composant.html">composant</a></td>
 </tr>
 <tr>
 <th>version</th>
 <td>0.1</td>
-</tr>
-<tr>
-<th>package</th>
-<td><a href="..//packages/db_module.html">module</a></td>
 </tr>
 </table>
 <h3>
@@ -194,9 +199,61 @@ Renvoie le texte au format HTML</h2>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
 </div>
+<a name="creationCheckBox" id="creationCheckBox"></a><div class="element clickable method private creationCheckBox" data-toggle="collapse" data-target=".creationCheckBox .collapse">
+<h2>Fonction qui crée des input type checkbox et le prérempli si le paramètre post existe</h2>
+<pre>creationCheckBox(string $param, string $name) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$param</h4>
+<code>string</code><p>nom du tableau POST</p></div>
+<div class="subelement argument">
+<h4>$name</h4>
+<code>string</code><p>nom de la ligne du tableau</p></div>
+</div></div>
+</div>
+<a name="creationInputText" id="creationInputText"></a><div class="element clickable method private creationInputText" data-toggle="collapse" data-target=".creationInputText .collapse">
+<h2>Fonction qui crée des input type text et le prérempli si le paramètre post existe</h2>
+<pre>creationInputText(string $param, string $name) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$param</h4>
+<code>string</code><p>nom du tableau POST</p></div>
+<div class="subelement argument">
+<h4>$name</h4>
+<code>string</code><p>nom de la ligne du tableau</p></div>
+</div></div>
+</div>
+<a name="creationRadioBox" id="creationRadioBox"></a><div class="element clickable method private creationRadioBox" data-toggle="collapse" data-target=".creationRadioBox .collapse">
+<h2>Fonction qui crée des input type radiobox et le prérempli si le paramètre post existe</h2>
+<pre>creationRadioBox(string $param, string $name, string $value, boolean $checked) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$param</h4>
+<code>string</code><p>nom du tableau POST</p></div>
+<div class="subelement argument">
+<h4>$name</h4>
+<code>string</code><p>nom de la ligne du tableau</p></div>
+<div class="subelement argument">
+<h4>$value</h4>
+<code>string</code><p>value de la radiobox</p></div>
+<div class="subelement argument">
+<h4>$checked</h4>
+<code>boolean</code><p>checked par défaut ou non</p>
+</div>
+</div></div>
+</div>
 <a name="creationSelect" id="creationSelect"></a><div class="element clickable method private creationSelect" data-toggle="collapse" data-target=".creationSelect .collapse">
 <h2>Fonction qui crée des listes HTML &lt;select&gt;</h2>
-<pre>creationSelect(array $array, string $name) </pre>
+<pre>creationSelect(array $array, string $param, string $name) </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8">
 <p class="long_description"></p>
@@ -206,9 +263,11 @@ Renvoie le texte au format HTML</h2>
 <code>array</code><p>tableau 2 colonnes, la première étant la value, deuxième le nom</p>
 </div>
 <div class="subelement argument">
+<h4>$param</h4>
+<code>string</code><p>nom du tableau POST</p></div>
+<div class="subelement argument">
 <h4>$name</h4>
-<code>string</code><p>nom du paramètre</p>
-</div>
+<code>string</code><p>nom de la ligne du tableau</p></div>
 </div></div>
 </div>
 <a name="indente" id="indente"></a><div class="element clickable method private indente" data-toggle="collapse" data-target=".indente .collapse">
@@ -224,6 +283,12 @@ Renvoie les espaces nécessaires à indenter</h2>
 </tr></table>
 </div></div>
 </div>
+<a name="traitementFormulaire" id="traitementFormulaire"></a><div class="element clickable method private traitementFormulaire" data-toggle="collapse" data-target=".traitementFormulaire .collapse">
+<h2>Traitement du formulaire pour la recherche. Cette fonction s'occupe d'afficher les résultats de la recherche</h2>
+<pre>traitementFormulaire() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
 <h3>
 <i class="icon-custom icon-property"></i> Properties</h3>
 <a name="%24contenuHTML" id="$contenuHTML"> </a><div class="element clickable property protected $contenuHTML" data-toggle="collapse" data-target=".$contenuHTML .collapse">
@@ -238,9 +303,9 @@ Renvoie les espaces nécessaires à indenter</h2>
 </tr></table>
 </div></div>
 </div>
-<a name="%24baseDonnees" id="$baseDonnees"> </a><div class="element clickable property private $baseDonnees" data-toggle="collapse" data-target=".$baseDonnees .collapse">
+<a name="%24maBase" id="$maBase"> </a><div class="element clickable property private $maBase" data-toggle="collapse" data-target=".$maBase .collapse">
 <h2>Connexion BDD</h2>
-<pre>$baseDonnees : <a href="../classes/db_%5CAccesAuxDonneesDev.html">\AccesAuxDonneesDev</a></pre>
+<pre>$maBase : <a href="../classes/db_%5CAccesAuxDonneesDev.html">\AccesAuxDonneesDev</a></pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
 </div>
@@ -263,7 +328,7 @@ Renvoie les espaces nécessaires à indenter</h2>
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a1</a> and<br>
-            generated on 2012-03-26T14:12:59+02:00.<br></footer></div>
+            generated on 2012-04-03T17:30:27+02:00.<br></footer></div>
 </div>
 </body>
 </html>

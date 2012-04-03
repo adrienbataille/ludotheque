@@ -22,6 +22,7 @@
 <li><a>Packages</a></li>
 <li><a href="../packages/db_client.html"><i class="icon-folder-open"></i> client</a></li>
 <li><a href="../packages/db_common.html"><i class="icon-folder-open"></i> common</a></li>
+<li><a href="../packages/db_composant.html"><i class="icon-folder-open"></i> composant</a></li>
 <li><a href="../packages/db_module.html"><i class="icon-folder-open"></i> module</a></li>
 </ul>
 </li>
@@ -58,6 +59,9 @@
 <li class="method public "><a href="#ajoutAndEgal" title="ajoutAndEgal :: Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et =
 Principalement pour les recherches de type ="><span class="description">Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et =
 Principalement pour les recherches de type =</span><pre>ajoutAndEgal()</pre></a></li>
+<li class="method public "><a href="#ajoutAndLike" title="ajoutAndLike :: Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et LIKE
+Principalement pour les recherches de type LIKE"><span class="description">Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et LIKE
+Principalement pour les recherches de type LIKE</span><pre>ajoutAndLike()</pre></a></li>
 <li class="method public "><a href="#ajoutFrom" title="ajoutFrom :: Fonction de manipulation de chaine pour créer et ajouter des tables dans une clause FROM"><span class="description">Fonction de manipulation de chaine pour créer et ajouter des tables dans une clause FROM</span><pre>ajoutFrom()</pre></a></li>
 <li class="method public "><a href="#ajoutWhereLibre" title="ajoutWhereLibre :: Fonction de manipulation de chainer pour ajouter librement à la clause WHERE
 A utiliser dans les cas non couvert par la fonction précédente."><span class="description">Fonction de manipulation de chainer pour ajouter librement à la clause WHERE
@@ -71,15 +75,19 @@ L'avantage par rapport au SQL 2 est que de multipe jointure s'effecturont correc
 Ajoute automatiquement les tables au JOIN et les clause aux WHERE
 Equivalent de FROM table INNER JOIN table ON champ sauf qu'on utilise FROM et WHERE
 L'avantage par rapport au SQL 2 est que de multipe jointure s'effecturont correctement même dans le désordre</span><pre>jointure()</pre></a></li>
+<li class="method public "><a href="#jointureLeft" title="jointureLeft :: Fonction de jointure LEFT JOIN
+Attention, l'ordre d'appel des fonctions et des paramètres est important."><span class="description">Fonction de jointure LEFT JOIN
+Attention, l'ordre d'appel des fonctions et des paramètres est important.</span><pre>jointureLeft()</pre></a></li>
 <li class="method public "><a href="#setExtra" title="setExtra :: Access pour la quatrième partie."><span class="description">Access pour la quatrième partie.</span><pre>setExtra()</pre></a></li>
 <li class="method public "><a href="#setRequete" title="setRequete :: Accesseur pour la première partie. Ne pas inclure clause FROM, WHERE, VALUE, etc"><span class="description">Accesseur pour la première partie. Ne pas inclure clause FROM, WHERE, VALUE, etc</span><pre>setRequete()</pre></a></li>
 <li class="nav-header">
 <i class="icon-custom icon-property"></i> Properties</li>
 <li class="nav-header private">» Private</li>
-<li class="property private "><a href="#%24extra" title="$extra :: 4ème partie de la requète."><span class="description">4ème partie de la requète.</span><pre>$extra</pre></a></li>
-<li class="property private "><a href="#%24from" title="$from :: 2ème partie de la requète, FROM"><span class="description">2ème partie de la requète, FROM</span><pre>$from</pre></a></li>
-<li class="property private "><a href="#%24requete" title="$requete :: 1ère partie de la requète"><span class="description">1ère partie de la requète</span><pre>$requete</pre></a></li>
-<li class="property private "><a href="#%24where" title="$where :: 3ème partie de la requète, WHERE"><span class="description">3ème partie de la requète, WHERE</span><pre>$where</pre></a></li>
+<li class="property private "><a href="#%24extra" title="$extra :: partie extra de la requète."><span class="description">partie extra de la requète.</span><pre>$extra</pre></a></li>
+<li class="property private "><a href="#%24from" title="$from :: partie de la requète, FROM"><span class="description">partie de la requète, FROM</span><pre>$from</pre></a></li>
+<li class="property private "><a href="#%24jointure" title="$jointure :: jointure spécial"><span class="description">jointure spécial</span><pre>$jointure</pre></a></li>
+<li class="property private "><a href="#%24requete" title="$requete :: partie de la requète"><span class="description">partie de la requète</span><pre>$requete</pre></a></li>
+<li class="property private "><a href="#%24where" title="$where :: partie de la requète, WHERE"><span class="description">partie de la requète, WHERE</span><pre>$where</pre></a></li>
 </ul>
 </div>
 <div class="span8">
@@ -95,7 +103,7 @@ de développement et utilisateur.</p></p>
 </tr>
 <tr>
 <th>version</th>
-<td>0.2</td>
+<td>0.3</td>
 </tr>
 <tr>
 <th>package</th>
@@ -113,7 +121,28 @@ de développement et utilisateur.</p></p>
 <a name="ajoutAndEgal" id="ajoutAndEgal"></a><div class="element clickable method public ajoutAndEgal" data-toggle="collapse" data-target=".ajoutAndEgal .collapse">
 <h2>Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et =
 Principalement pour les recherches de type =</h2>
-<pre>ajoutAndEgal(string $table, string $champ, string $valeur) </pre>
+<pre>ajoutAndEgal(string $table, string $champ, \string/numeric $valeur) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$table</h4>
+<code>string</code><p>Nom de la table</p></div>
+<div class="subelement argument">
+<h4>$champ</h4>
+<code>string</code><p>Le champ de la table concerné par le critère de recherche</p>
+</div>
+<div class="subelement argument">
+<h4>$valeur</h4>
+<code>\string/numeric</code><p>La valeur du critère de recherche</p>
+</div>
+</div></div>
+</div>
+<a name="ajoutAndLike" id="ajoutAndLike"></a><div class="element clickable method public ajoutAndLike" data-toggle="collapse" data-target=".ajoutAndLike .collapse">
+<h2>Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et LIKE
+Principalement pour les recherches de type LIKE</h2>
+<pre>ajoutAndLike(string $table, string $champ, string $valeur) </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8">
 <p class="long_description"></p>
@@ -149,7 +178,7 @@ A utiliser dans les cas non couvert par la fonction précédente.</h2>
 <pre>ajoutWhereLibre(string $clause) </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8">
-<p class="long_description"></p>
+<p class="long_description"><p>Attention, la fonction ne gère pas les injections SQL.</p></p>
 <h3>Parameters</h3>
 <div class="subelement argument">
 <h4>$clause</h4>
@@ -198,6 +227,29 @@ L'avantage par rapport au SQL 2 est que de multipe jointure s'effecturont correc
 <code>string</code><p>Champ de la table 2</p></div>
 </div></div>
 </div>
+<a name="jointureLeft" id="jointureLeft"></a><div class="element clickable method public jointureLeft" data-toggle="collapse" data-target=".jointureLeft .collapse">
+<h2>Fonction de jointure LEFT JOIN
+Attention, l'ordre d'appel des fonctions et des paramètres est important.</h2>
+<pre>jointureLeft(string $table1, string $champ1, string $table2, string $champ2) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"><p>Chaque appel concatène les tables et jointure à la clause précédente.
+Deplus, SQL émet une erreur en cas de table dupliqué.</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$table1</h4>
+<code>string</code><p>Table 1</p></div>
+<div class="subelement argument">
+<h4>$champ1</h4>
+<code>string</code><p>Champ de la table 1</p></div>
+<div class="subelement argument">
+<h4>$table2</h4>
+<code>string</code><p>Table 2</p></div>
+<div class="subelement argument">
+<h4>$champ2</h4>
+<code>string</code><p>Champ de la table 2</p></div>
+</div></div>
+</div>
 <a name="setExtra" id="setExtra"></a><div class="element clickable method public setExtra" data-toggle="collapse" data-target=".setExtra .collapse">
 <h2>Access pour la quatrième partie.</h2>
 <pre>setExtra(string $valeur) </pre>
@@ -227,25 +279,31 @@ L'avantage par rapport au SQL 2 est que de multipe jointure s'effecturont correc
 <h3>
 <i class="icon-custom icon-property"></i> Properties</h3>
 <a name="%24extra" id="$extra"> </a><div class="element clickable property private $extra" data-toggle="collapse" data-target=".$extra .collapse">
-<h2>4ème partie de la requète.</h2>
+<h2>partie extra de la requète.</h2>
 <pre>$extra : string</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
 </div>
 <a name="%24from" id="$from"> </a><div class="element clickable property private $from" data-toggle="collapse" data-target=".$from .collapse">
-<h2>2ème partie de la requète, FROM</h2>
+<h2>partie de la requète, FROM</h2>
 <pre>$from : string</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
 </div>
+<a name="%24jointure" id="$jointure"> </a><div class="element clickable property private $jointure" data-toggle="collapse" data-target=".$jointure .collapse">
+<h2>jointure spécial</h2>
+<pre>$jointure </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
 <a name="%24requete" id="$requete"> </a><div class="element clickable property private $requete" data-toggle="collapse" data-target=".$requete .collapse">
-<h2>1ère partie de la requète</h2>
+<h2>partie de la requète</h2>
 <pre>$requete : string</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
 </div>
 <a name="%24where" id="$where"> </a><div class="element clickable property private $where" data-toggle="collapse" data-target=".$where .collapse">
-<h2>3ème partie de la requète, WHERE</h2>
+<h2>partie de la requète, WHERE</h2>
 <pre>$where : string</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
@@ -257,7 +315,7 @@ L'avantage par rapport au SQL 2 est que de multipe jointure s'effecturont correc
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a1</a> and<br>
-            generated on 2012-03-26T14:12:59+02:00.<br></footer></div>
+            generated on 2012-04-03T17:30:27+02:00.<br></footer></div>
 </div>
 </body>
 </html>

@@ -5,36 +5,41 @@
  * A utiliser pour les très grosses requètes afin de préserver leur cohérence en limitant les erreurs
  * de développement et utilisateur.
  * @author Romain Laï-King
- * @version 0.2
+ * @version 0.3
  * @package common
  */
 
 class RequeteSQL
 {
 	/**
-	 * 1ère partie de la requète
+	 * partie de la requète
 	 * @var string $requete
 	 */
 	
 	private $requete="";
 	
 	/**
-	 * 2ème partie de la requète, FROM
+	 * partie de la requète, FROM
 	 * @var string $from
 	 */
 	
 	private $from="";
 	
+	/**
+	 * jointure spécial
+	 */
+	
+	private $jointure="";
 	
 	/**
-	 * 3ème partie de la requète, WHERE
+	 * partie de la requète, WHERE
 	 * @var string $where
 	 */
 	
 	private $where="";
 	
 	/**
-	 * 4ème partie de la requète.
+	 * partie extra de la requète.
 	 * @var string $extra
 	 */
 	
@@ -90,13 +95,22 @@ class RequeteSQL
 	 */
 	public function jointure($table1,$champ1,$table2,$champ2){
 		if ($this->from==""){
-			$this->from="FROM ". $table1 . "\n, " . $table2;
+
+			if(stristr($this->jointure,$table1)){
+				$this->from="FROM " . $table2;
+			}
+			elseif(stristr($this->jointure,$table2)){
+				$this->from="FROM " . $table1;
+			}
+			else{
+				$this->from="FROM ". $table1 . "\n, " . $table2;
+			}
 		}
 		else{
-			if(!stristr($this->from,$table1)){
+			if(!stristr($this->from,$table1)&&!stristr($this->jointure,$table1)){
 				$this->from.="\n, ".$table1;
 			}
-			if(!stristr($this->from,$table2)){
+			if(!stristr($this->from,$table2)&&!stristr($this->jointure,$table2)){
 				$this->from.="\n, ".$table2;
 			}
 		}
@@ -105,6 +119,34 @@ class RequeteSQL
 		}
 		else{
 			$this->where.= "\nAND ". $table1 . "." . $champ1 . " = " . $table2 . "." . $champ2;
+		}
+	}
+	
+	/**
+	 * Fonction de jointure LEFT JOIN
+	 * Attention, l'ordre d'appel des fonctions et des paramètres est important.
+	 * Chaque appel concatène les tables et jointure à la clause précédente.
+	 * Deplus, SQL émet une erreur en cas de table dupliqué.
+	 * @param string $table1 Table 1
+	 * @param string $champ1 Champ de la table 1
+	 * @param string $table2 Table 2
+	 * @param string $champ2 Champ de la table 2
+	 */
+	public function jointureLeft($table1,$champ1,$table2,$champ2){
+		if ($this->jointure==""){
+			$this->jointure= $table1 . "\nLEFT JOIN " . $table2 . " ON " . $table1 . ".". $champ1 . "=" .  $table2 . ".". $champ2 ;
+		}
+		else{
+			if(stristr($this->jointure,$table1)){
+				$this->jointure.="\nLEFT JOIN " . $table2 . " ON " . $table1 . ".". $champ1 . "=" .  $table2 . ".". $champ2 ;
+			}
+			elseif(stristr($this->jointure,$table2)){
+				$this->jointure.="\nLEFT JOIN " . $table1 . " ON " . $table1 . ".". $champ1 . "=" .  $table2 . ".". $champ2 ;
+				
+			}
+			else{ 
+				$this->jointure.="\n,". $table1 . " LEFT JOIN " . $table2 . " ON " . $table1 . ".". $champ1 . "=" .  $table2 . ".". $champ2 ;
+			}
 		}
 	}
 	/**
@@ -177,7 +219,12 @@ class RequeteSQL
 	
 	
 	public function compile(){
-		return $this->requete . "\n". $this->from . "\n" . $this->where . "\n" . $this->extra . ";";
+		if($this->from==""&&$this->jointure!=""){
+			return $this->requete . "\nFROM" . $this->jointure .  "\n" . $this->where . "\n" . $this->extra . ";";
+		}
+		elseif($this->from!=""&&$this->jointure!=""){
+			return $this->requete . "\n" . $this->from . ",\n" . $this->jointure .  "\n" . $this->where . "\n" . $this->extra . ";";
+		}
 	} 
 	
 	/**
