@@ -153,7 +153,9 @@ class ModuleAjoutExemplaires extends Module
         $this->ajouteLigne("<input type='text' id='" . DATE_FIN_VIE . "' maxlength='10' name='" . DATE_FIN_VIE . "' value='" . VIDE . "' />");
         $this->fermeBloc("</li>");*/
         		
-        
+	
+		 
+		 
         $this->fermeBloc("</ol>");
         $this->fermeBloc("</fieldset>");
 		

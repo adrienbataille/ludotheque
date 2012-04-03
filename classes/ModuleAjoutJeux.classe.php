@@ -65,7 +65,7 @@ class ModuleAjoutJeux extends Module
 			$myCountry = $this->maBase->recupPays($idDuPays);
 			$this->pays = $myCountry[0][NOM_PAYS];
 			
-			$myNames = $this->maBase->recupNameJeu($this->idJeu);
+			$myNames = $this->maBase->recupNomJeu($this->idJeu);
 			
 			$i = 0;
 			$this->nom = array(0 => "");

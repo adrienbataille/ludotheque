@@ -571,6 +571,7 @@ class AccesAuxDonneesDev
 		return $laListe;
 	}
 	
+
     /**
 	* Fonction de récupération de la liste des catégories disponibles
 	* Sortie : le tableau contenant les catégories
@@ -596,10 +597,13 @@ class AccesAuxDonneesDev
 	* Entrée : id du jeu pour lequel on souhaite récupérer les langues
 	* Sortie : le tableau contenant les catégories
 	*/
-	public function recupNameJeu($idJeu)
+	public function recupNomJeu($idJeu)
 	{
 		$requete = "SELECT * FROM " . TABLE_LANGUE . " l JOIN " . TABLE_NOM_JEU . " n";
-		$requete .= " ON (l." . ID_LANGUE . "=n." . ID_LANGUE . ") WHERE " . ID_JEU . "='" . $idJeu . "';";
+		$requete .= " ON (l." . ID_LANGUE . "=n." . ID_LANGUE . ")";
+		if($idJeu != null)
+			$requete .= " WHERE " . ID_JEU . "='" . $idJeu . "'";
+		$requete .= ";";
 		$laListe = $this->requeteSelect($requete);
 		return $laListe;
 	}

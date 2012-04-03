@@ -186,7 +186,23 @@ class ModuleAjoutVersions extends Module
         $this->ajouteLigne("<label for='" . CATEGORIE_J . "'>" . $this->convertiTexte("Catégorie") . "</label>");
         $this->ajouteLigne("<input type='text' name='" . CATEGORIE_J . "' value='" . VIDE . "' />");
         $this->fermeBloc("</li>");*/
-        
+		
+		$this->ouvreBloc("<li>");	
+		$this->ajouteLigne("<label for='" . ID_JEU . "'>" . $this->convertiTexte("Jeu associé") . "</label>");
+		$this->ajouteLigne("<input type='text' id='" . ID_JEU . "' name='" . ID_JEU . " value='" . $this->idJeu . "' list='listeJeu' required='required' />");
+		/*	if($this->erreurLangue && !strcmp($this->langue[$i], ""))
+				$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");*/
+		$listeJeu = $this->maBase->recupNomJeu(null);		
+		$this->ouvreBloc("<datalist id='listeJeu'>");
+		foreach($listeJeu as $jeu)
+				$this->ajouteLigne("<option id='jeu_" . $jeu[ID_JEU] . "' label='" . $jeu[NOM_JEU] . "' value=\"" . $jeu[NOM_JEU] . "\">");
+		$this->fermeBloc("</datalist>");
+		print_r($mesJeux);
+		$this->fermeBloc("</li>");
+      			
+			
+			
+			
         $this->fermeBloc("</ol>");
         $this->fermeBloc("</fieldset>");
 		
