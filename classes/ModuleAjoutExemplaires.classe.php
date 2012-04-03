@@ -130,7 +130,7 @@ class ModuleAjoutExemplaires extends Module
         $this->ajouteLigne("<label for='" . ID_JEU . "'>" . $this->convertiTexte("Jeu") . "</label>");
         $this->ouvreBloc("<select>");
         foreach($listeJeu as $jeu)
-	        $this->ajouteLigne("<option name='" . ID_JEU . "' value='" . $jeu[ID_LANGUE] . "'>" . $jeu[NOM_LANGUE] . "</option></li>");
+	        $this->ajouteLigne("<option name='" . ID_JEU . "' value='" . $jeu[ID_JEU] . "'>" . $jeu[NOM_JEU] . "</option></li>");
         $this->fermeBloc("</select>");
         $this->fermeBloc("</li>");
         
