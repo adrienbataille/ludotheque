@@ -174,7 +174,6 @@ class ComposantRecherche extends Module
 		$recherche=$_POST["recherche"];
 		if ($recherche!=NULL){
 			foreach($recherche as $row){
-				var_dump($row);
 				if ($row!=""){
 					$param=true;
 				}
@@ -183,7 +182,6 @@ class ComposantRecherche extends Module
 		if($param){
 				
 			$resultat=$this->maBase->rechercheVersion($recherche);
-			var_dump($resultat);
 			if(count($resultat)==0){
 				$this->ajouteLigne("Aucun Résultat");
 			}

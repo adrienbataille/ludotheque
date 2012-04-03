@@ -348,7 +348,6 @@ class AccesAuxDonneesDev
 		*/
 
 		$query=new RequeteSQL();
-		var_dump($critere);
 
 		$query->setRequete("SELECT " .
 				NOM_PHOTO .", ".
@@ -561,7 +560,6 @@ class AccesAuxDonneesDev
 		}
 
 		//ainsi de suite!
-		print_r($query->debug());
 		return $this->requeteSelect($query->compile());
 	}
 
