@@ -422,30 +422,39 @@ class AccesAuxDonneesDev
 		$requete->closeCursor();
 		
     }
-	
-	
 
 	/**
     * Fonction d'insertion d'un exemplaire
     * Entrée : la description, prix achat, date achat
     * Sortie : true si l'insertion s'est bien passée, sinon false
     */
-    public function InsertionTableExemplaire($descriptionExemplaire, $prixMJDT, $dateAchat)
+    public function InsertionTableExemplaire($uneDescription, $unPrix, $uneDateAchat, $uneDateFinVie, $uneVersion, $unEtatExemplaire, $unLieuReel, $unLieuTempo)
     {
 
 		// On initie la connexion à la base, si ce n'est déjà fait
 		$this->connecteBase();
 		// Création de la requete
-		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_EXEMPLAIRE . " (" . DESCRIPTION_EXEMPLAIRE . ", " . PRIX_MDJT . ", " . DATE_ACHAT . ") VALUES(?, ?, ?) ;");
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_EXEMPLAIRE . " (" . DESCRIPTION_EXEMPLAIRE . ", " . PRIX_MDJT . ", " . DATE_ACHAT . ", " . DATE_FIN_VIE . ", " . ID_VERSION . ", " . ID_ETAT_EXEMPLAIRE . ", " . ID_LIEU_REEL . ", " . ID_LIEU_TEMPO . ") VALUES(?, ?, ?) ;");
 		
 		if(strcmp($descriptionExemplaire, "") == 0)
 			$requete->bindValue(1, null, PDO::PARAM_NULL);
 		else
-			$requete->bindValue(1, $descriptionExemplaire, PDO::PARAM_STR);
+			$requete->bindValue(1, $uneDescription, PDO::PARAM_STR);
 		
-		$requete->bindValue(2, $prixMJDT, PDO::PARAM_INT);			
-		$requete->bindValue(3, $dateAchat, PDO::PARAM_STR);
-					
+		$requete->bindValue(2, $unPrix, PDO::PARAM_STR);
+		$requete->bindValue(3, $uneDateAchat, PDO::PARAM_STR);
+		
+		if(strcmp($uneDateFinVie, "") == 0)
+			$requete->bindValue(4, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(4, $uneDateFinVie, PDO::PARAM_STR);
+		
+		$requete->bindValue(5, $uneVersion, PDO::PARAM_INT);
+		$requete->bindValue(6, $unEtatExemplaire, PDO::PARAM_STR);
+		$requete->bindValue(7, $unLieuReel, PDO::PARAM_INT);
+		$requete->bindValue(8, $unLieuTempo, PDO::PARAM_INT);
+			
+			
 		$resultat = $requete->execute();
 
 		// On termine l'utilisation de la requete
@@ -615,7 +624,22 @@ class AccesAuxDonneesDev
 		$requete .= " ON (l." . ID_LANGUE . "=n." . ID_LANGUE . ")";
 		if($idJeu != null)
 			$requete .= " WHERE " . ID_JEU . "='" . $idJeu . "'";
-		$requete .= ";";
+		$requete .= "ORDER BY " . NOM_JEU . ";";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
+    /**
+	* Fonction de récupération du nom d'une version d'un jeu
+	* Entrée : id du jeu pour lequel on souhaite récupérer le nom de la version
+	* Sortie : le tableau contenant le nom
+	*/
+	public function recupNomVersion($idJeu)
+	{
+		$requete = "SELECT * FROM " . TABLE_VERSION;
+		if($idJeu != null)
+			$requete .= " WHERE " . ID_JEU . "='" . $idJeu . "'";
+		$requete .= "ORDER BY " . NOM_VERSION . ";";
 		$laListe = $this->requeteSelect($requete);
 		return $laListe;
 	}
