@@ -434,7 +434,7 @@ class AccesAuxDonneesDev
 		// On initie la connexion à la base, si ce n'est déjà fait
 		$this->connecteBase();
 		// Création de la requete
-		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_EXEMPLAIRE . " (" . DESCRIPTION_EXEMPLAIRE . ", " . PRIX_MDJT . ", " . DATE_ACHAT . ", " . DATE_FIN_VIE . ", " . ID_VERSION . ", " . ID_ETAT_EXEMPLAIRE . ", " . ID_LIEU_REEL . ", " . ID_LIEU_TEMPO . ") VALUES(?, ?, ?) ;");
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_EXEMPLAIRE . " (" . DESCRIPTION_EXEMPLAIRE . ", " . PRIX_MDJT . ", " . DATE_ACHAT . ", " . DATE_FIN_VIE . ", " . ID_VERSION . ", " . ID_ETAT_EXEMPLAIRE . ", " . ID_LIEU_REEL . ", " . ID_LIEU_TEMPO . ") VALUES(?, ?, ?, ?, ?, ?, ?, ?) ;");
 		
 		if(strcmp($descriptionExemplaire, "") == 0)
 			$requete->bindValue(1, null, PDO::PARAM_NULL);
@@ -450,7 +450,7 @@ class AccesAuxDonneesDev
 			$requete->bindValue(4, $uneDateFinVie, PDO::PARAM_STR);
 		
 		$requete->bindValue(5, $uneVersion, PDO::PARAM_INT);
-		$requete->bindValue(6, $unEtatExemplaire, PDO::PARAM_STR);
+		$requete->bindValue(6, $unEtatExemplaire, PDO::PARAM_INT);
 		$requete->bindValue(7, $unLieuReel, PDO::PARAM_INT);
 		$requete->bindValue(8, $unLieuTempo, PDO::PARAM_INT);
 			
