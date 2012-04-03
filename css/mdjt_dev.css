@@ -62,5 +62,16 @@
 
 .erreurForm {
 	color: #D00;
-	text-decoration: bold;
+}
+
+/* ************************************* */
+/* ***** GESTION D'UNE LITE D'ITEM ***** */
+/* ************************************* */
+
+.listeItem {
+	border: none;
+}
+
+li#item {
+	border: 5px outset red !important;
 }

@@ -256,7 +256,9 @@ class ModuleAjoutJeux extends Module
 		$this->ouvreBloc("<ol>");
 		
 		// Identifiant du jeu
+		$this->ouvreBloc("<li style='display:none;'>");
 		$this->ajouteLigne("<input type='hidden' id='" . ID_JEU . "' name='" . ID_JEU . "' value='" . $this->idJeu . "' />");
+		$this->fermeBloc("</li>");
 		
 		// Description
 		$this->ouvreBloc("<li>");

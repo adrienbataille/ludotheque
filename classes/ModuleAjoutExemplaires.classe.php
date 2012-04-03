@@ -216,6 +216,14 @@ class ModuleAjoutExemplaires extends Module
         $this->fermeBloc("</select>");
         $this->fermeBloc("</li>");
         
+        $this->ouvreBloc("<li>");
+        $this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langues des régles du jeu") . "</label>");
+        $this->ouvreBloc("<ol id='listeItem'>");
+        foreach($langueRegle as $langue)
+	        $this->ajouteLigne("<li class='item'><input type='checkbox' name='" . NOM_LANGUE . "' value='" . $langue[ID_LANGUE] . "'>" . $langue[NOM_LANGUE] . "</option></li>");
+        $this->fermeBloc("</ol>");
+        $this->fermeBloc("</li>");
+        
         $this->fermeBloc("</ol>");
 		$this->fermeBloc("</fieldset>");
 		
