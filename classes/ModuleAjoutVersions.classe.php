@@ -186,7 +186,20 @@ class ModuleAjoutVersions extends Module
         $this->ajouteLigne("<label for='" . CATEGORIE_J . "'>" . $this->convertiTexte("Catégorie") . "</label>");
         $this->ajouteLigne("<input type='text' name='" . CATEGORIE_J . "' value='" . VIDE . "' />");
         $this->fermeBloc("</li>");*/
-        
+		
+		$listeJeu = $this->maBase->recupNomJeu(null);	
+		$this->ouvreBloc("<li>");	
+		$this->ajouteLigne("<label for='" . ID_JEU . "'>" . $this->convertiTexte("Jeu associé") . "</label>");
+		$this->ouvreBloc("<select name='" . ID_JEU . "'>");
+		foreach($listeJeu as $jeu)
+				$this->ajouteLigne("<option value='" . $jeu[ID_JEU] . "'>" . $jeu[NOM_JEU] . "</option>");
+		$this->fermeBloc("</select>");
+		print_r($listeJeu);
+		$this->fermeBloc("</li>");
+      			
+			
+			
+			
         $this->fermeBloc("</ol>");
         $this->fermeBloc("</fieldset>");
 		
@@ -207,6 +220,7 @@ class ModuleAjoutVersions extends Module
 		// Y a-t-il effectivement un formulaire à traiter ?
 		if ($_POST["ajouter"])
 		{
+		var_dump($_POST);
 			// Traitement du formulaire
 			$this->traitementFormulaire = true;		
 			
@@ -248,9 +262,13 @@ class ModuleAjoutVersions extends Module
 			//Nettoyage de date fin vie
 			$this->editeur = $this->filtreChaine($_POST[EDITEUR], TAILLE_CHAMPS_COURT);
 			
+			//id jeu associé
+			$this->idJeu = $this->filtreChaine($_POST[ID_JEU], TAILLE_CHAMPS_COURT);
+			//$this->idJeu = $jeu[ID_JEU];
+			
 			$this->maBase->InsertionTableVersion($this->nom,$this->description,$this->age_min,$this->nb_joueur_reco,
 											$this->duree_partie,$this->prix_achat,$this->annee_sortie,
-											$this->illustrateur,$this->distributeur,$this->editeur);										
+											$this->illustrateur,$this->distributeur,$this->editeur, $this->idJeu);										
 							
 											
 			//$idVersion = $this->maBase->InsertionTableJeu($this->description, $this->auteur, $idPays);
@@ -265,6 +283,7 @@ class ModuleAjoutVersions extends Module
 			var_dump($this->illustrateur);
 			var_dump($this->distributeur);
 			var_dump($this->editeur);
+			var_dump($this->idJeu);
 			
 			
 			/*

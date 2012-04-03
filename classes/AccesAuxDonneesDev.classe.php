@@ -345,14 +345,14 @@ class AccesAuxDonneesDev
     * Sortie : true si l'insertion s'est bien passée, sinon false
     */
     public function InsertionTableVersion($nom,$description,$age_min,$nb_joueur_reco,$duree_partie,$prix_achat,$annee_sortie,
-											$illustrateur,$distributeur,$editeur)
+											$illustrateur,$distributeur,$editeur,$idJeu)
     {
 		// On initie la connexion à la base, si ce n'est déjà fait
 		$this->connecteBase();
 		// Création de la requete
 		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_VERSION . " (" . NOM_VERSION . ", " . DESCRIPTION_VERSION . ", " . AGE_MINIMUM . 
 										", " . NB_JOUEUR_RECOMMANDE ."," . DUREE_PARTIE ."," . PRIX_ACHAT . ",". ANNEE_SORTIE ."," . ILLUSTRATEUR .
-										"," . DISTRIBUTEUR . "," .EDITEUR . " ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ;");	
+										"," . DISTRIBUTEUR . "," .EDITEUR . "," . ID_JEU .") VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ;");	
 
 	
 		//nom
@@ -413,6 +413,8 @@ class AccesAuxDonneesDev
 		//éditeur
 		$requete->bindValue(10, $editeur, PDO::PARAM_STR);
 		
+		//id jeu associé
+		$requete->bindValue(11, $idJeu, PDO::PARAM_INT);
 			
 		$resultat = $requete->execute();
 
@@ -571,6 +573,7 @@ class AccesAuxDonneesDev
 		return $laListe;
 	}
 	
+
     /**
 	* Fonction de récupération de la liste des catégories disponibles
 	* Sortie : le tableau contenant les catégories
@@ -606,10 +609,13 @@ class AccesAuxDonneesDev
 	* Entrée : id du jeu pour lequel on souhaite récupérer les langues
 	* Sortie : le tableau contenant les catégories
 	*/
-	public function recupNameJeu($idJeu)
+	public function recupNomJeu($idJeu)
 	{
 		$requete = "SELECT * FROM " . TABLE_LANGUE . " l JOIN " . TABLE_NOM_JEU . " n";
-		$requete .= " ON (l." . ID_LANGUE . "=n." . ID_LANGUE . ") WHERE " . ID_JEU . "='" . $idJeu . "';";
+		$requete .= " ON (l." . ID_LANGUE . "=n." . ID_LANGUE . ")";
+		if($idJeu != null)
+			$requete .= " WHERE " . ID_JEU . "='" . $idJeu . "'";
+		$requete .= ";";
 		$laListe = $this->requeteSelect($requete);
 		return $laListe;
 	}
