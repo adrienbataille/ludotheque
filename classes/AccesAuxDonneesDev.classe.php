@@ -7,6 +7,7 @@
 // Inclusions
 require_once("classes/AccesAuxDonnees.classe.php");
 require_once("classes/RequeteSQL.classe.php");
+
 //Constantes - paramètre du système
 define("BASE_DEV","mdjtufjjpdev");
 
@@ -344,8 +345,14 @@ Je recommande fortement un IDE.
 */ 
 
 $query=new RequeteSQL();
+var_dump($critere);
 
-$query->setRequete("SELECT nomPhoto, idVersion, nomJeu, nomVersion, idEtatExemplaire, COUNT(idExemplaire) AS nbExemplaire");
+$query->setRequete("SELECT " .
+		NOM_PHOTO .", ".
+		TABLE_VERSION . "." . ID_VERSION .", ".
+		TABLE_NOM_JEU . "." . NOM_JEU . ", " .
+		TABLE_EXEMPLAIRE . "." .  ID_EXEMPLAIRE . 
+		" , COUNT(" . TABLE_EXEMPLAIRE . "." . ID_EXEMPLAIRE . ") AS nbExemplaire");
 
 //pour le moment je garde les X de Jeu tant qu'on a pas la nouvelle BDD corrigé
 //Voir les commentaires dans RequeteSQL pour les méthodes
@@ -355,7 +362,7 @@ $query->setRequete("SELECT nomPhoto, idVersion, nomJeu, nomVersion, idEtatExempl
 //Expression régulière que j'aurai éventuellement besoin
 // Si je veux changer ma fonction en jointure NATURAL JOIN \$query\-\>jointure\(([A-Z]|(\_)|( ))*,([A-Z]|(\_)|( ))*,([A-Z]|(\_)|( ))*,([A-Z]|(\_)|( ))*\)
 $query->jointure(TABLE_EXEMPLAIRE, ID_VERSION, TABLE_VERSION, ID_VERSION);
-$query->jointure(TABLE_JEU, ID_JEU, TABLE_VERSION, ID_JEU);
+$query->jointure(TABLE_JEUX, ID_JEU, TABLE_VERSION, ID_JEU);
 $query->jointure(TABLE_ETAT_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE);
 $query->jointure(TABLE_PHOTO, ID_PHOTO, TABLE_PHOTO_VERSION,ID_PHOTO);
 $query->jointure(TABLE_PHOTO_VERSION, ID_VERSION, TABLE_VERSION, ID_VERSION);
@@ -410,86 +417,87 @@ if(is_numeric($critere["idDureeJeu"]) && $critere["DureeSigne"]==EGAL){
 // Par Nombre De Joueur
 
 
-if($critere[j1]== "on"){
-
-	$string = " AND ( " . NB_JOUEUR . "LIKE '%1%' " ; }
+	if($critere[j1]=="on"){
+		print_r("pas normal");
+		//$nbjoueur = " AND ( " . NB_JOUEUR . "LIKE '%1%' " ; 
+	}	
 
 	if($critere[j2]=="on"){
-		if($string!=""||$string!=NULL){
-			$string.=" OR " . NB_JOUEUR . " LIKE '%2%' ";
+		if($nbjoueur!=""||$nbjoueur!=NULL){
+			$nbjoueur.=" OR " . NB_JOUEUR . " LIKE '%2%' ";
 		}
 		else {
-			$string=" AND ( " . NB_JOUEUR . " LIKE '%2%' ";
+			$nbjoueur=" AND ( " . NB_JOUEUR . " LIKE '%2%' ";
 		}
 	}
 
 	if($critere[j3]=="on"){
-		if($string!=""||$string!=NULL){
-			$string.=" OR " . NB_JOUEUR . " LIKE '%3%' ";
+		if($nbjoueur!=""||$nbjoueur!=NULL){
+			$nbjoueur.=" OR " . NB_JOUEUR . " LIKE '%3%' ";
 		}
 		else {
-			$string=" AND ( " . NB_JOUEUR . " LIKE '%3%' ";
+			$nbjoueur=" AND ( " . NB_JOUEUR . " LIKE '%3%' ";
 		}
 	}          
 
 	if($critere[j4]=="on"){
-		if($string!=""||$string!=NULL){
-			$string.=" OR " . NB_JOUEUR . " LIKE '%4%' ";
+		if($nbjoueur!=""||$nbjoueur!=NULL){
+			$nbjoueur.=" OR " . NB_JOUEUR . " LIKE '%4%' ";
 		}
 		else {
-			$string=" AND ( " . NB_JOUEUR . " LIKE '%4%' ";
+			$nbjoueur=" AND ( " . NB_JOUEUR . " LIKE '%4%' ";
 		}
 	}		
 
 	if($critere[j5]=="on"){
-		if($string!=""||$string!=NULL){
-			$string.=" OR " . NB_JOUEUR . " LIKE '%5%' ";
+		if($nbjoueur!=""||$nbjoueur!=NULL){
+			$nbjoueur.=" OR " . NB_JOUEUR . " LIKE '%5%' ";
 		}
 		else {
-			$string=" AND ( " . NB_JOUEUR . " LIKE '%5%' ";
+			$nbjoueur=" AND ( " . NB_JOUEUR . " LIKE '%5%' ";
 		}
 	}			
 
 
 	if($critere[j6]=="on"){
-		if($string!=""||$string!=NULL){
-			$string.=" OR " . NB_JOUEUR . " LIKE '%6%' ";
+		if($nbjoueur!=""||$nbjoueur!=NULL){
+			$nbjoueur.=" OR " . NB_JOUEUR . " LIKE '%6%' ";
 		}
 		else {
-			$string=" AND ( " . NB_JOUEUR . " LIKE '%6%' ";
+			$nbjoueur=" AND ( " . NB_JOUEUR . " LIKE '%6%' ";
 		}
 	}
 
 	if($critere[j7]=="on"){
-		if($string!=""||$string!=NULL){
-			$string.=" OR " . NB_JOUEUR . " LIKE '%7%' ";
+		if($nbjoueur!=""||$nbjoueur!=NULL){
+			$nbjoueur.=" OR " . NB_JOUEUR . " LIKE '%7%' ";
 		}
 		else {
-			$string=" AND ( " . NB_JOUEUR . " LIKE '%7%' ";
+			$nbjoueur=" AND ( " . NB_JOUEUR . " LIKE '%7%' ";
 		}
 	}	
 
 	if($critere[j8]=="on"){
-		if($string!=""||$string!=NULL){
-			$string.=" OR " . NB_JOUEUR . " LIKE '%8%' ";
+		if($nbjoueur!=""||$nbjoueur!=NULL){
+			$nbjoueur.=" OR " . NB_JOUEUR . " LIKE '%8%' ";
 		}
 		else {
-			$string=" AND ( " . NB_JOUEUR . " LIKE '%8%' ";
+			$nbjoueur=" AND ( " . NB_JOUEUR . " LIKE '%8%' ";
 		}
 	}
 
 	if($critere[j9]=="on"){
-		if($string!=""||$string!=NULL){
-			$string.=" OR " . NB_JOUEUR . " LIKE '%+%' ";
+		if($nbjoueur!=""||$nbjoueur!=NULL){
+			$nbjoueur.=" OR " . NB_JOUEUR . " LIKE '%+%' ";
 		}
 		else {
-			$string=" AND ( " . NB_JOUEUR . " LIKE '%+%' ";
+			$nbjoueur=" AND ( " . NB_JOUEUR . " LIKE '%+%' ";
 		}
 	}						
 
-	if($string!=NULL){
-		$string.=" ) ";
-		$query->ajoutWhereLibre($string);
+	if($nbjoueur!=NULL){
+		$nbjoueur.=" ) ";
+		//$query->ajoutWhereLibre($nbjoueur);
 	}
 
 
@@ -527,46 +535,36 @@ if($critere[j1]== "on"){
 	if($critere["illustrateur"]!=""){
 
 		$critere["illustrateur"]=mysql_real_escape_string($critere["illustrateur"]);
-		$string="AND ( " . TABLE_VERSION . "." . ILLUSTRATEUR   ." LIKE '%" .$critere["illustrateur"]."%')";
+		$string="AND ( " . TABLE_VERSION . "." . ILLUSTRATEUR   ." LIKE '%" . $critere["illustrateur"] . "%')";
 		$query->ajoutWhereLibre($string);
 	}
 
-	// Par ANnée
+	// Par Année
 
 	// Par catégorie
 	if(is_numeric($critere["anneeSortie"])){
 		$query->ajoutAndEgal(TABLE_VERSION, ANNEE_SORTIE, $critere["anneeSortie"]);
 	}
 
-	$string= " AND ( " . NB_JOUEUR . " LIKE '%1%' ";
 
-
-	if($critere[j2]=="on"){
-		if($string!=""||$string!=NULL){
-			$string.=" OR " . NB_JOUEUR . " LIKE '%2%' ";
-		}
-		else {
-			$string=" AND ( " . NB_JOUEUR . " LIKE '%2%' ";
-		}
-	}
-
-	if($string!=NULL){
-		$string.=" ) ";
-		$query->ajoutWhereLibre($string);
-	}
-
-
+	
 	//Par Catégorie
-	/*if($critere["categorie"]!=""){
-	$query->ajoutAndEgal(TABLE_CATEGORIE, , $critere["categorie"]);
+		
+	if($critere["categorie"]!=""){
+			
+		$string = explode("," , $critere["categorie"]);
+			
+		foreach($string as $value )
+		{
+			$query->ajoutAndLike(TABLE_CATEGORIE,NOM_CATEGORIE,$value);
+		}
+			
 	}
-	*/
-
-
+		
 
 	//ainsi de suite!
-
-	return $this->requeteSelect($query->compile);
+	print_r($query->debug());
+	return $this->requeteSelect($query->compile());
 }
 
 

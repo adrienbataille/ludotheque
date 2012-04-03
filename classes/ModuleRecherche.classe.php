@@ -4,7 +4,7 @@
  * @package composant
  */
 // Inclusions
-require_once("classes/Module.classe.php");
+	require_once("classes/Module.classe.php");
 
 
 //Constantes
@@ -23,7 +23,7 @@ class ModuleRecherche extends Module
 	/**
 	 * @var AccesAuxDonneesDev Connexion BDD
 	 */
-	private $baseDonnees = NULL;
+	private $maBase = NULL;
 	
 	/**
 	 * Constructeur. Il ouvre une connexion à la BDD et affiche le formulaire
@@ -35,6 +35,7 @@ class ModuleRecherche extends Module
 		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
 		$this->maBase = AccesAuxDonneesDev::recupAccesDonnees();
 		$this->afficheFormulaire();
+		$this->traitementFormulaire();
 
 		
 	}
@@ -104,6 +105,47 @@ class ModuleRecherche extends Module
 		$this->ajouteLigne("<label for=\"lieu\">" . $this->convertiTexte("Lieu") . "</label>");
 		$this->creationSelect($etat,"recherche[idLieu]");
 		$this->fermeBloc("</div>");
+		
+		
+		//Prix
+		$this->ouvreBloc("<div class='champ_recherche'>");
+		$this->ajouteLigne("<label for=\"prix\">" . $this->convertiTexte("Prix:") . "</label>");
+		//$this->ajouteLigne("<input type=\"text\" id=\"prix\" name=\"recherche[prix]\" />");
+		$this->ajouteLigne("<label for=\"prixMin\">" . $this->convertiTexte("Min") . "</label>");
+		$this->ajouteLigne("<input type=\"text\" id=\"prixMin\" name=\"recherche[prixMin]\" />");
+		$this->ajouteLigne("<label for=\"prixMax\">" . $this->convertiTexte("Max") . "</label>");
+		$this->ajouteLigne("<input type=\"text\" id=\"prixMax\" name=\"recherche[prixMax]\" />");
+		$this->fermeBloc("</div>");
+		$this->fermeBloc("</fieldset>");
+		
+		//Recherche avancée
+		$this->ouvreBloc("<fieldset>");
+		$this->ajouteLigne("<legend>Recherche avancée</legend>");
+		
+		//Auteur
+		$this->ouvreBloc("<div class='champ_recherche'>");
+		$this->ajouteLigne("<label for=\"auteur\">" . $this->convertiTexte("Auteur") . "</label>");
+		$this->ajouteLigne("<input type=\"text\" id=\"auteur\" name=\"recherche[auteur]\" />");
+		$this->fermeBloc("</div>");
+		
+		//Illustrateur
+		$this->ouvreBloc("<div class='champ_recherche'>");
+		$this->ajouteLigne("<label for=\"illustrateur\">" . $this->convertiTexte("Illustrateur") . "</label>");
+		$this->ajouteLigne("<input type=\"text\" id=\"illustrateur\" name=\"recherche[illustrateur]\" />");
+		$this->fermeBloc("</div>");
+		
+		//Année
+		$this->ouvreBloc("<div class='champ_recherche'>");
+		$this->ajouteLigne("<label for=\"annee\">" . $this->convertiTexte("Année") . "</label>");
+		$this->ajouteLigne("<input type=\"text\" id=\"annee\" name=\"recherche[annee]\" />");
+		$this->fermeBloc("</div>");
+		
+		//Distributeur
+		$this->ouvreBloc("<div class='champ_recherche'>");
+		$this->ajouteLigne("<label for=\"distributeur\">" . $this->convertiTexte("Distributeur") . "</label>");
+		$this->ajouteLigne("<input type=\"text\" id=\"distributeur\" name=\"recherche[distributeur]\" />");
+		$this->fermeBloc("</div>");
+		
 
 		$this->ajouteLigne("<input type='submit' />");
 		var_dump($_POST['recherche']);
@@ -111,6 +153,27 @@ class ModuleRecherche extends Module
 		$this->fermeBloc("</form>");
 	}
 	
+	/**
+	 * Traitement du formulaire pour la recherche. Cette fonction s'occupe d'afficher les résultats de la recherche
+	 */
+	
+	private function traitementFormulaire(){
+		$param=false;
+		$recherche=$_POST["recherche"];
+		if ($recherche!=NULL){
+			var_dump($recherche);
+			foreach($recherche as $row){
+				if ($row!=""){
+					$param=true;
+				}
+			}
+		}
+		if($param){
+			
+			$resultat=$this->maBase->rechercheVersion($recherche);
+		}
+	}
+
 	/** Fonction qui crée des listes HTML <select>
 	* @param array tableau 2 colonnes, la première étant la value, deuxième le nom
 	* @param string nom du paramètre
