@@ -573,6 +573,20 @@ class AccesAuxDonneesDev
 		return $laListe;
 	}
 	
+	/**
+	* Fonction de récupération de la liste des versions ou une version en particulier si on lui passe en paramètre l'id d'une version
+	* Entrée : id d'une versions pour laquelle on veut récupérer des informations (paramètre optionnel)
+	* Sortie : le tableau contenant les catégories
+	*/
+	public function recupVersion($idVersion)
+	{
+		$requete = "SELECT * FROM " . TABLE_VERSION;
+		if($idVersion != null)
+			$requete .= " WHERE " . ID_VERSION . " = '" . $idVersion . "';";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
 
     /**
 	* Fonction de récupération de la liste des catégories disponibles
@@ -669,6 +683,7 @@ class AccesAuxDonneesDev
 			// On initie la connexion à la base, si ce n'est déjà fait
 			$this->connecteBase();
 			
+
 			// Création de la requete
 			$requete = $this->maBase->prepare("UPDATE " . TABLE_JEUX . " SET " . DESCRIPTION_JEU . "=?, " . AUTEUR . "=?, " . ID_PAYS . "=? WHERE " . ID_JEU . "=?;");
 			$requete->bindValue(1, $uneDescription, PDO::PARAM_STR);
@@ -676,6 +691,52 @@ class AccesAuxDonneesDev
 			$requete->bindValue(3, $unPays, PDO::PARAM_INT);
 			$requete->bindValue(4, $unJeu, PDO::PARAM_INT);
 			$resultat = $requete->execute();
+	
+			// On termine l'utilisation de la requete
+			$requete->closeCursor();
+			
+			return $resultat;
+		}
+		else
+			return false;
+	}
+	
+	
+	/**
+	* Fonction qui met à jour les informations d'une version
+	* Entrée : nouveau attributs à modifier
+	* Sortir : booleen pour savoir si la requête à bien était effectuée
+	*/
+	public function UpdateTableVersion($idVersion,$nom,$description,$age_min,$nb_joueur_reco,$duree_partie,$prix_achat,$annee_sortie,
+											$illustrateur,$distributeur,$editeur,$idJeu)
+	{
+		if(intval($idVersion))
+		{
+			// On initie la connexion à la base, si ce n'est déjà fait
+			$this->connecteBase();			
+						
+			
+			// Création de la requete
+			$requete = $this->maBase->prepare("UPDATE " . TABLE_VERSION . " SET " . NOM_VERSION . "=?, " . DESCRIPTION_VERSION . "=?, " . AGE_MINIMUM . "=?,
+			" . NB_JOUEUR_RECOMMANDE . "=?, " . DUREE_PARTIE . "=?, " . PRIX_ACHAT . "=?, " . ANNEE_SORTIE . "=?, " . ILLUSTRATEUR . "=?	
+			, " . DISTRIBUTEUR . "=?	, " . EDITEUR . "=?	, " . ID_JEU . "=?	WHERE " . ID_VERSION . "=?;");
+			
+			
+			$requete->bindValue(1, $nom, PDO::PARAM_STR);
+			$requete->bindValue(2, $description, PDO::PARAM_STR);
+			$requete->bindValue(3, $age_min, PDO::PARAM_INT);
+			$requete->bindValue(4, $nb_joueur_reco, PDO::PARAM_INT);
+			$requete->bindValue(5, $duree_partie, PDO::PARAM_INT);
+			$requete->bindValue(6, $prix_achat, PDO::PARAM_INT);
+			$requete->bindValue(7, $annee_sortie, PDO::PARAM_INT);
+			$requete->bindValue(8, $illustrateur, PDO::PARAM_INT);
+			$requete->bindValue(9, $distributeur, PDO::PARAM_INT);
+			$requete->bindValue(10, $editeur, PDO::PARAM_INT);
+			$requete->bindValue(11, $idJeu, PDO::PARAM_INT);
+			$requete->bindValue(12, $idVersion, PDO::PARAM_INT);
+			$resultat = $requete->execute();
+			
+			var_dump($age_min);
 	
 			// On termine l'utilisation de la requete
 			$requete->closeCursor();
