@@ -722,16 +722,60 @@ class AccesAuxDonneesDev
 			, " . DISTRIBUTEUR . "=?	, " . EDITEUR . "=?	, " . ID_JEU . "=?	WHERE " . ID_VERSION . "=?;");
 			
 			
+		
+
 			$requete->bindValue(1, $nom, PDO::PARAM_STR);
-			$requete->bindValue(2, $description, PDO::PARAM_STR);
+			
+			//description	
+			if(strcmp($description, "") == 0)
+				$requete->bindValue(2, null, PDO::PARAM_NULL);
+			else
+				$requete->bindValue(2, $description, PDO::PARAM_STR);
+
+			//age min
+			if(strcmp($age_min, "") == 0)
+				$requete->bindValue(3, null, PDO::PARAM_NULL);
+			else
 			$requete->bindValue(3, $age_min, PDO::PARAM_INT);
-			$requete->bindValue(4, $nb_joueur_reco, PDO::PARAM_INT);
-			$requete->bindValue(5, $duree_partie, PDO::PARAM_INT);
-			$requete->bindValue(6, $prix_achat, PDO::PARAM_INT);
-			$requete->bindValue(7, $annee_sortie, PDO::PARAM_INT);
-			$requete->bindValue(8, $illustrateur, PDO::PARAM_INT);
-			$requete->bindValue(9, $distributeur, PDO::PARAM_INT);
-			$requete->bindValue(10, $editeur, PDO::PARAM_INT);
+			
+			//nombre de joueurs recommandés
+			if(strcmp($nb_joueur_reco, "") == 0)
+				$requete->bindValue(4, null, PDO::PARAM_NULL);
+			else
+				$requete->bindValue(4, $nb_joueur_reco, PDO::PARAM_INT);
+				
+			//durée partie
+			if(strcmp($duree_partie, "") == 0)
+				$requete->bindValue(5, null, PDO::PARAM_NULL);
+			else
+				$requete->bindValue(5, $duree_partie, PDO::PARAM_INT);	
+
+			//prix achat
+			$requete->bindValue(6, $prix_achat, PDO::PARAM_INT);	
+
+			//année de sortie
+			if(strcmp($annee_sortie, "") == 0)
+				$requete->bindValue(7, null, PDO::PARAM_NULL);
+			else
+				$requete->bindValue(7, $annee_sortie, PDO::PARAM_INT);	
+
+			//illustrateur
+			if(strcmp($illustrateur, "") == 0)
+				$requete->bindValue(8, null, PDO::PARAM_NULL);
+			else
+				$requete->bindValue(8, $illustrateur, PDO::PARAM_STR);	
+
+
+			//distributeur
+			if(strcmp($distributeur, "") == 0)
+				$requete->bindValue(9, null, PDO::PARAM_NULL);
+			else
+				$requete->bindValue(9, $distributeur, PDO::PARAM_STR);
+
+			//éditeur
+			$requete->bindValue(10, $editeur, PDO::PARAM_STR);
+		
+
 			$requete->bindValue(11, $idJeu, PDO::PARAM_INT);
 			$requete->bindValue(12, $idVersion, PDO::PARAM_INT);
 			$resultat = $requete->execute();

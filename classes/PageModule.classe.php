@@ -100,7 +100,7 @@ class PageModule extends Page
 					
 				case "AjoutVersions" :
                 	// On appelle l'ajout d'un jeux
-                	$this->unModule = new ModuleAjoutVersions($_GET["idVersion"]);//$_GET["idVersion"]); //$_GET["idJeu"],
+                	$this->unModule = new ModuleAjoutVersions($_GET["idJeu"],$_GET["idVersion"]);
                 	break;
 					
 				case "AjoutExemplaires" :

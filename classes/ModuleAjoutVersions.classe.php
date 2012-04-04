@@ -55,8 +55,8 @@ class ModuleAjoutVersions extends Module
     /**
     * Le constructeur du module Mon Profil
     */
-    public function __construct($idDeVersion)
-    {
+    public function __construct($idDeJeu , $idDeVersion)
+    {var_dump($idDeJeu);var_dump($idDeVersion);
         // On utilise le constructeur de la classe mère
 		parent::__construct();
 					
@@ -64,8 +64,8 @@ class ModuleAjoutVersions extends Module
 		$this->maBase = AccesAuxDonneesDev::recupAccesDonnees();
 		
 		if($idDeVersion != 0)
-		{
-			$myVersion = $this->maBase->recupVersion($idDeVersion);
+		{print "on a une version<br />";
+			$myVersion = $this->maBase->recupVersion($idDeVersion);var_dump($myVersion);
 			$this->idVersion = $myVersion[0][ID_VERSION];
 			$this->nomVersion = $myVersion[0][NOM_VERSION];
 			$this->description = $myVersion[0][DESCRIPTION_VERSION];
@@ -168,11 +168,45 @@ class ModuleAjoutVersions extends Module
 			$this->ajouteLigne("<input type='hidden' name='idVersion' value='" . $this->idVersion . "' />");
 			
 
+		// First fieldset : Nom de la versions
+        $this->ouvreBloc("<fieldset>");
+        $this->ajouteLigne("<legend>Jeu associé à la version</legend>");				
+        $this->ouvreBloc("<ol>");
+		$this->ouvreBloc("<li>");	
+		
+		$this->ajouteLigne("<label for='" . ID_JEU . "'>" . $this->convertiTexte("Jeu associé") . "</label>");
+		$this->ouvreBloc("<select name='" . ID_JEU . "'>");
+
+		
+		if($this->idJeu == null)
+		{
+			$this->ajouteLigne("<option value='null'></option>");	
+			$listeJeu = $this->maBase->recupNomJeu(null);			
+		}
+		else
+		{
+			$listeJeu = $this->maBase->recupNomJeu($this->idJeu);
+			
+		}
+			//$listeJeu = $this->maBase->recupNomJeu($this->idJeu);
+		
+		
+		
+		foreach($listeJeu as $jeu)
+				$this->ajouteLigne("<option value='" . $jeu[ID_JEU] . "'>" . $jeu[NOM_JEU] . "</option>");
+		$this->fermeBloc("</select>");
+		//print_r($listeJeu);
+		$this->fermeBloc("</li>");
+		
+		$this->fermeBloc("</ol>");
+        $this->fermeBloc("</fieldset>");
         
-        // First fieldset : Nom de la versions
+        // deuxième fieldset : Nom de la versions
         $this->ouvreBloc("<fieldset>");
         $this->ajouteLigne("<legend>Nom de la version</legend>");				
         $this->ouvreBloc("<ol>");
+		
+	
         
         // Nom
          $this->ouvreBloc("<li>");
@@ -181,7 +215,9 @@ class ModuleAjoutVersions extends Module
 		if($this->erreurNom)
 			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
         $this->fermeBloc("</li>");
- 
+		
+				
+	 
         
         $this->fermeBloc("</ol>");
         $this->fermeBloc("</fieldset>");
@@ -264,21 +300,7 @@ class ModuleAjoutVersions extends Module
         $this->ajouteLigne("<input type='text' name='" . CATEGORIE_J . "' value='" . VIDE . "' />");
         $this->fermeBloc("</li>");*/
 		
-		if($this->idJeu == null)
-			$listeJeu = $this->maBase->recupNomJeu(null);	
-		else
-			$listeJeu = $this->maBase->recupNomJeu($this->idJeu);
-			
-		$this->ouvreBloc("<li>");	
-		$this->ajouteLigne("<label for='" . ID_JEU . "'>" . $this->convertiTexte("Jeu associé") . "</label>");
-		$this->ouvreBloc("<select name='" . ID_JEU . "'>");
-		foreach($listeJeu as $jeu)
-				$this->ajouteLigne("<option value='" . $jeu[ID_JEU] . "'>" . $jeu[NOM_JEU] . "</option>");
-		$this->fermeBloc("</select>");
-		print_r($listeJeu);
-		$this->fermeBloc("</li>");
 		
-			
 			
 			
         $this->fermeBloc("</ol>");
