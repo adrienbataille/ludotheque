@@ -41,13 +41,14 @@ class ModuleAjoutExemplaires extends Module
 	private $erreurEtat = false;
 	private $erreurLieuReel = false;
 	private $erreurExemplaire = false;
+	private $erreurLoadExemplaire = false;
     
 // Methodes
 
     /**
     * Le constructeur du module Mon Profil
     */
-    public function __construct()
+    public function __construct($jeu, $version, $exemplaire)
     {
         // On utilise le constructeur de la classe mère
 		parent::__construct();		
@@ -57,6 +58,27 @@ class ModuleAjoutExemplaires extends Module
 				
 		// On traite le formulaire, le cas échéant
 		$this->traiteFormulaire();
+		
+//		$jeu, $version, 
+		if(intval($exemplaire))
+		{
+			$monExemplaire = $this->maBase->recupExemplaire($exemplaire);
+				
+			if($monExemplaire == null || $monExemplaire == false)
+				$this->erreurLoadExemplaire = true;
+			else
+			{
+				print_r($monExemplaire);
+				
+				$this->idExemplaire = $monExemplaire[ID_EXEMPLAIRE];
+				
+				$maVersion = $this->maBase->recupVersion($monExemplaire[ID_VERSION]);
+				$this->idVersion = $maVersion[ID_EXEMPLAIRE];
+				
+				$monJeu = $this->maBase->recupJeu($maVersion[ID_JEU]);
+				$this->idJeu = $monJeu[ID_JEU];
+			}
+		}
 		
 		// On affiche le contenu du module
 		// On affiche le formulaire d'ajout des informations propres à un jeux
@@ -176,252 +198,256 @@ class ModuleAjoutExemplaires extends Module
 	}
 	
     public function afficheFormulaire()
-    {	
-    
-    	if($this->erreurExemplaire)
-			$this->ajouteLigne("<p class='erreurForm'>Une erreur est survenue lors de l'ajout de votre exemplaire, veuillez réessayer ou contacter l'administrateur</p>");
-    		
-        $this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_EXEMPLAIRES . "' id='formProfil'>");
-        
-        
-		// Premier fieldset : Version de l'exemplaire
-		$this->ouvreBloc("<fieldset>");	
-        $this->ajouteLigne("<legend>Informations du jeu</legend>");
-        $this->ouvreBloc("<ol>");
-        
-        // Jeu de l'exemplaire
-        $listeJeu = $this->maBase->recupNomJeu(null);
-        
-        $this->ouvreBloc("<li>");
-        $this->ajouteLigne("<label for='" . ID_JEU . "'>" . $this->convertiTexte("Jeu") . "</label>");
-        
-        if($this->idJeu != 0)
-    		$this->ouvreBloc("<select id='" . ID_JEU . "' name='" . ID_JEU . "' disabled='disabled'>");
+    {
+    	if($this->erreurLoadExemplaire)
+    		$this->ajouteLigne("<p class='erreurForm'>Attention, tentative de piratage !!</p>");
     	else
-        	$this->ouvreBloc("<select id='" . ID_JEU . "' name='" . ID_JEU . "'>");
-        	
-        foreach($listeJeu as $jeu)
-        	if($jeu[ID_JEU] == $this->idJeu)
-        		$this->ajouteLigne("<option value='" . $jeu[ID_JEU] . "' selected='selected'>" . $jeu[NOM_JEU] . "</option><");
-	        else
-	        	$this->ajouteLigne("<option value='" . $jeu[ID_JEU] . "'>" . $jeu[NOM_JEU] . "</option>");
-        
-        $this->fermeBloc("</select>");
-        
-        if($this->idJeu != 0)
-        	$this->ajouteLigne("<input type='hidden' name='" . ID_JEU . "' value='" . $this->idJeu . "'");
-        
-        $this->fermeBloc("</li>");
-        
-        
-        // Si on choisit un jeu auparavant
-        if($this->idJeu != 0)
-        {
-			// Version de l'exemplaire du jeu
-			$listeVersion = $this->maBase->recupNomVersion($this->idJeu);
+    	{
+			if($this->erreurExemplaire)
+				$this->ajouteLigne("<p class='erreurForm'>Une erreur est survenue lors de l'ajout de votre exemplaire, veuillez réessayer ou contacter l'administrateur</p>");
+				
+			$this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_EXEMPLAIRES . "' id='formProfil'>");
+			
+			
+			// Premier fieldset : Version de l'exemplaire
+			$this->ouvreBloc("<fieldset>");	
+			$this->ajouteLigne("<legend>Informations du jeu</legend>");
+			$this->ouvreBloc("<ol>");
+			
+			// Jeu de l'exemplaire
+			$listeJeu = $this->maBase->recupNomJeu(null);
 			
 			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . ID_VERSION . "'>" . $this->convertiTexte("Version du jeu") . "</label>");
+			$this->ajouteLigne("<label for='" . ID_JEU . "'>" . $this->convertiTexte("Jeu") . "</label>");
 			
-			if($this->idVersion != 0)
-				$this->ouvreBloc("<select id='" . ID_VERSION . "' name='" . ID_VERSION . "' disabled='disabled'>");
+			if($this->idJeu != 0)
+				$this->ouvreBloc("<select id='" . ID_JEU . "' name='" . ID_JEU . "' disabled='disabled'>");
 			else
-				$this->ouvreBloc("<select id='" . ID_VERSION . "' name='" . ID_VERSION . "'>");
+				$this->ouvreBloc("<select id='" . ID_JEU . "' name='" . ID_JEU . "'>");
 				
-			foreach($listeVersion as $version)
-				if($version[ID_VERSION] == $this->idVersion)
-					$this->ajouteLigne("<option value='" . $version[ID_VERSION] . "' selected='selected'>" . $version[NOM_VERSION] . "</option>");
+			foreach($listeJeu as $jeu)
+				if($jeu[ID_JEU] == $this->idJeu)
+					$this->ajouteLigne("<option value='" . $jeu[ID_JEU] . "' selected='selected'>" . $jeu[NOM_JEU] . "</option><");
 				else
-					$this->ajouteLigne("<option value='" . $version[ID_VERSION] . "'>" . $version[NOM_VERSION] . "</option>");
-				
-			$this->fermeBloc("</select>");
-        
-			if($this->idVersion != 0)
-				$this->ajouteLigne("<input type='hidden' name='" . ID_VERSION . "' value='" . $this->idVersion . "'");
-
-			$this->fermeBloc("</li>");
-        }
-        
-        $this->fermeBloc("</ol>");
-        
-		$this->fermeBloc("</fieldset>");
-		
-		// On teste si on a choisit un jeu et un exemplaire ou non
-		// Si on n'a pas encore choisit un jeu, on affiche le bouton pour valider le choix du nom d'un jeu
-		if($this->idJeu == 0)
-		{
-			// Bouton pour valider le choix du jeu
-			$this->ouvreBloc("<fieldset>");	
-			$this->ajouteLigne("<input type='hidden' name='validerNomJeu' value='true' />");
-			$this->ajouteLigne("<button type='submit' name='ValiderNomJeu' value='true'>Valider le nom du jeu</button>");
-			$this->fermeBloc("</fieldset>");
+					$this->ajouteLigne("<option value='" . $jeu[ID_JEU] . "'>" . $jeu[NOM_JEU] . "</option>");
 			
-		}
-		// Si on n'a pas encore choisit une version d'un jeu, on affiche le bouton pour valider le choix du nom d'une version
-		elseif($this->idVersion == 0)
-		{
-			// Si le jeu n'a aucune version, on propose à l'utilisateur d'en ajouter une
-			if($listeVersion == null)
+			$this->fermeBloc("</select>");
+			
+			if($this->idJeu != 0)
+				$this->ajouteLigne("<input type='hidden' name='" . ID_JEU . "' value='" . $this->idJeu . "'");
+			
+			$this->fermeBloc("</li>");
+			
+			
+			// Si on choisit un jeu auparavant
+			if($this->idJeu != 0)
 			{
-				$this->ouvreBloc("<ul id='menu_gestion_jeux'>");
-		
-				$this->ouvreBloc("<li>");
-				$this->ajouteLigne("<a href='" . MODULE_AJOUT_VERSIONS . "&idJeu=" . $this->idJeu . "' title='" . $this->convertiTexte("Ajouter une version à ce jeu") . "'>" . $this->convertiTexte("Ajouter une version à ce jeu") . "</a>");
-				$this->fermeBloc("</li>");
+				// Version de l'exemplaire du jeu
+				$listeVersion = $this->maBase->recupNomVersion($this->idJeu);
 				
-				$this->fermeBloc("</ul>");
+				$this->ouvreBloc("<li>");
+				$this->ajouteLigne("<label for='" . ID_VERSION . "'>" . $this->convertiTexte("Version du jeu") . "</label>");
+				
+				if($this->idVersion != 0)
+					$this->ouvreBloc("<select id='" . ID_VERSION . "' name='" . ID_VERSION . "' disabled='disabled'>");
+				else
+					$this->ouvreBloc("<select id='" . ID_VERSION . "' name='" . ID_VERSION . "'>");
+					
+				foreach($listeVersion as $version)
+					if($version[ID_VERSION] == $this->idVersion)
+						$this->ajouteLigne("<option value='" . $version[ID_VERSION] . "' selected='selected'>" . $version[NOM_VERSION] . "</option>");
+					else
+						$this->ajouteLigne("<option value='" . $version[ID_VERSION] . "'>" . $version[NOM_VERSION] . "</option>");
+					
+				$this->fermeBloc("</select>");
+			
+				if($this->idVersion != 0)
+					$this->ajouteLigne("<input type='hidden' name='" . ID_VERSION . "' value='" . $this->idVersion . "'");
+	
+				$this->fermeBloc("</li>");
 			}
 			
-			// Bouton pour valide le choix de la version
-			$this->ouvreBloc("<fieldset>");	
-			$this->ajouteLigne("<input type='hidden' name='validerNomVersion' value='true' />");
-			$this->ajouteLigne("<button type='submit' name='ValiderNomVersion' value='true'>Valider le nom de la version</button>");
-			$this->fermeBloc("</fieldset>");
-		}
-		// Si on a choisit un nom de jeu et de version, on affiche un bouton pour modifier ce choix et le reste du formulaire
-		else
-		{
-			// Bouton pour remettre à zéro le nom de jeu et de la version choisie
-			$this->ouvreBloc("<fieldset>");	
-			$this->ajouteLigne("<input type='hidden' name='modifierNom' value='true' />");
-			$this->ajouteLigne("<button type='submit' name='ModifierNom' value='true'>Modifier le nom du jeu</button>");
+			$this->fermeBloc("</ol>");
+			
 			$this->fermeBloc("</fieldset>");
 			
-			// Troisième fieldset : Informations sur l'exemplaire
-			$this->ouvreBloc("<fieldset>");
-			$this->ajouteLigne("<legend>Informations sur l'exemplaire</legend>");
-			$this->ouvreBloc("<ol>");
+			// On teste si on a choisit un jeu et un exemplaire ou non
+			// Si on n'a pas encore choisit un jeu, on affiche le bouton pour valider le choix du nom d'un jeu
+			if($this->idJeu == 0)
+			{
+				// Bouton pour valider le choix du jeu
+				$this->ouvreBloc("<fieldset>");	
+				$this->ajouteLigne("<input type='hidden' name='validerNomJeu' value='true' />");
+				$this->ajouteLigne("<button type='submit' name='ValiderNomJeu' value='true'>Valider le nom du jeu</button>");
+				$this->fermeBloc("</fieldset>");
+				
+			}
+			// Si on n'a pas encore choisit une version d'un jeu, on affiche le bouton pour valider le choix du nom d'une version
+			elseif($this->idVersion == 0)
+			{
+				// Si le jeu n'a aucune version, on propose à l'utilisateur d'en ajouter une
+				if($listeVersion == null)
+				{
+					$this->ouvreBloc("<ul id='menu_gestion_jeux'>");
 			
-			// Description
-			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . DESCRIPTION_EXEMPLAIRE . "'>" . $this->convertiTexte("Description") . "</label>");
-			$this->ajouteLigne("<textarea rows='3' id='" . DESCRIPTION_EXEMPLAIRE . "'name='" . DESCRIPTION_EXEMPLAIRE . "'>" . $this->descriptionExemplaire . "</textarea>");
-			$this->fermeBloc("</li>");
-			
+					$this->ouvreBloc("<li>");
+					$this->ajouteLigne("<a href='" . MODULE_AJOUT_VERSIONS . "&idJeu=" . $this->idJeu . "' title='" . $this->convertiTexte("Ajouter une version à ce jeu") . "'>" . $this->convertiTexte("Ajouter une version à ce jeu") . "</a>");
+					$this->fermeBloc("</li>");
 					
-			 // Prix mdjt
-			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . PRIX_MDJT . "'>" . $this->convertiTexte("Prix actuel") . "</label>");
-			$this->ajouteLigne("<input type='text' id='" . PRIX_MDJT ."' name='"  . PRIX_MDJT . "' value='" . $this->prixMDJT . "' required='required' />");
-			if($this->erreurPrixMdjt)
-				$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
-			$this->fermeBloc("</li>");
+					$this->fermeBloc("</ul>");
+				}
+				
+				// Bouton pour valide le choix de la version
+				$this->ouvreBloc("<fieldset>");	
+				$this->ajouteLigne("<input type='hidden' name='validerNomVersion' value='true' />");
+				$this->ajouteLigne("<button type='submit' name='ValiderNomVersion' value='true'>Valider le nom de la version</button>");
+				$this->fermeBloc("</fieldset>");
+			}
+			// Si on a choisit un nom de jeu et de version, on affiche un bouton pour modifier ce choix et le reste du formulaire
+			else
+			{
+				// Bouton pour remettre à zéro le nom de jeu et de la version choisie
+				$this->ouvreBloc("<fieldset>");	
+				$this->ajouteLigne("<input type='hidden' name='modifierNom' value='true' />");
+				$this->ajouteLigne("<button type='submit' name='ModifierNom' value='true'>Modifier le nom du jeu</button>");
+				$this->fermeBloc("</fieldset>");
+				
+				// Troisième fieldset : Informations sur l'exemplaire
+				$this->ouvreBloc("<fieldset>");
+				$this->ajouteLigne("<legend>Informations sur l'exemplaire</legend>");
+				$this->ouvreBloc("<ol>");
+				
+				// Description
+				$this->ouvreBloc("<li>");
+				$this->ajouteLigne("<label for='" . DESCRIPTION_EXEMPLAIRE . "'>" . $this->convertiTexte("Description") . "</label>");
+				$this->ajouteLigne("<textarea rows='3' id='" . DESCRIPTION_EXEMPLAIRE . "'name='" . DESCRIPTION_EXEMPLAIRE . "'>" . $this->descriptionExemplaire . "</textarea>");
+				$this->fermeBloc("</li>");
+				
+						
+				 // Prix mdjt
+				$this->ouvreBloc("<li>");
+				$this->ajouteLigne("<label for='" . PRIX_MDJT . "'>" . $this->convertiTexte("Prix actuel") . "</label>");
+				$this->ajouteLigne("<input type='text' id='" . PRIX_MDJT ."' name='"  . PRIX_MDJT . "' value='" . $this->prixMDJT . "' required='required' />");
+				if($this->erreurPrixMdjt)
+					$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
+				$this->fermeBloc("</li>");
+				
+				// Data achat
+				$this->ouvreBloc("<li>");
+				$this->ajouteLigne("<label for='" . DATE_ACHAT . "'>" . $this->convertiTexte("Date Achat") . "</label>");
+				$this->ajouteLigne("<input type='text' id='" . DATE_ACHAT ."' maxlength='10' name='" . DATE_ACHAT . "' value='" . $this->dateBaseToAffichage($this->dateAchat) . "'  required='required' />");
+				if($this->erreurDateAchat)
+					$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
+				$this->fermeBloc("</li>");
+				
+						
+				// Data fin de vie
+				$this->ouvreBloc("<li>");
+				$this->ajouteLigne("<label for='" . DATE_FIN_VIE . "'>" . $this->convertiTexte("Date fin de vie") . "</label>");
+				$this->ajouteLigne("<input type='text' id='" . DATE_FIN_VIE . "' maxlength='10' name='" . DATE_FIN_VIE . "' value='" . VIDE . "' />");
+				$this->fermeBloc("</li>");
+				
+				$this->fermeBloc("</ol>");
+				$this->fermeBloc("</fieldset>");
+				
+				
+				// Troisième fieldset : État de l'exemplaire
+				$this->ouvreBloc("<fieldset>");	
+				$this->ajouteLigne("<legend>État de l'exemplaire</legend>");
+				$this->ouvreBloc("<ol>");
+				
+				// État de l'exemplaire
+				$etatExemplaire = $this->maBase->recupEtatExemplaire();
+				$this->ouvreBloc("<li>");
+				$this->ajouteLigne("<label for='" . ID_ETAT_EXEMPLAIRE . "'>" . $this->convertiTexte("État") . "</label>");
+				$this->ouvreBloc("<select id='" . ID_ETAT_EXEMPLAIRE . "' name='" . ID_ETAT_EXEMPLAIRE . "' required='required'>");
+				foreach($etatExemplaire as $etat)
+					$this->ajouteLigne("<option name='" . ID_ETAT_EXEMPLAIRE . "' value='" . $etat[ID_ETAT_EXEMPLAIRE] . "'>" . $etat[NOM_ETAT] . "</option>");
+				$this->fermeBloc("</select>");
+				if($this->erreurEtat)
+					$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
+				$this->fermeBloc("</li>");
+				
+				$this->fermeBloc("</ol>");
+				$this->fermeBloc("</fieldset>");
+				
+				
+				// Quatrième fieldset : Emplacement du stockage
+				$this->ouvreBloc("<fieldset>");	
+				$this->ajouteLigne("<legend>Emplacement de l'exemplaire</legend>");
+				$this->ouvreBloc("<ol>");
+				
+				// Lieu normal de stockage
+				$lieuExemplaire = $this->maBase->recupLieu();
+				$this->ouvreBloc("<li>");
+				$this->ajouteLigne("<label for='" . ID_LIEU_REEL . "'>" . $this->convertiTexte("Lieu normal de stockage") . "</label>");
+				$this->ouvreBloc("<select id='" . ID_LIEU_REEL . "' name='" . ID_LIEU_REEL . "' required='required'>");
+				foreach($lieuExemplaire as $lieu)
+					$this->ajouteLigne("<option name='" . ID_LIEU_REEL . "' value='" . $lieu[ID_LIEU] . "'>" . $lieu[NOM_LIEU] . "</option>");
+				$this->fermeBloc("</select>");
+				if($this->erreurLieuReel)
+					$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
+				$this->fermeBloc("</li>");
+				
+				// Lieu de stockage temporaire
+				$lieuExemplaire = $this->maBase->recupLieu();
+				$this->ouvreBloc("<li>");
+				$this->ajouteLigne("<label for='" . ID_LIEU_TEMPO . "'>" . $this->convertiTexte("Lieu de stockage temporaire") . "</label>");
+				$this->ouvreBloc("<select id='" . ID_LIEU_TEMPO . "' name='" . ID_LIEU_TEMPO . "' required='required'>");
+				$this->ajouteLigne("<option value='null'></option>");
+				foreach($lieuExemplaire as $lieu)
+					$this->ajouteLigne("<option name='" . ID_LIEU_TEMPO . "' value='" . $lieu[ID_LIEU] . "'>" . $lieu[NOM_LIEU] . "</option>");
+				$this->fermeBloc("</select>");
+				$this->fermeBloc("</li>");
+				
+				$this->fermeBloc("</ol>");
+				$this->fermeBloc("</fieldset>");
+				
+				
+				// Cinquième fieldset : Langues régles du jeu
+				$this->ouvreBloc("<fieldset>");	
+				$this->ajouteLigne("<legend>Régles du jeu</legend>");
+				$this->ouvreBloc("<ol>");
+				
+				// Langues des régles du jeu
+				$langueRegle = $this->maBase->recupLangue();
+				/*
+				$this->ouvreBloc("<li>");
+				$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langues des régles du jeu") . "</label>");
+				$this->ouvreBloc("<select id='" . NOM_LANGUE . "' size='5' multiple='multiple'>");
+				foreach($langueRegle as $langue)
+					$this->ajouteLigne("<option name='" . NOM_LANGUE . "' value='" . $langue[ID_LANGUE] . "'>" . $langue[NOM_LANGUE] . "</option>");
+				$this->fermeBloc("</select>");
+				$this->fermeBloc("</li>");
+				*/
+				
+				$this->ouvreBloc("<li>");
+				$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langues des régles du jeu") . "</label>");
+				$this->ouvreBloc("<ol id='listeItem'>");
+				foreach($langueRegle as $langue)
+					if(in_array($langue[ID_LANGUE], $this->listeLangueRegle))
+						$this->ajouteLigne("<li class='item'><input type='checkbox' name='" . NOM_LANGUE . "[]' value='" . $langue[ID_LANGUE] . "' checked='checked'>" . $langue[NOM_LANGUE] . "</option></li>");
+					else
+						$this->ajouteLigne("<li class='item'><input type='checkbox' name='" . NOM_LANGUE . "[]' value='" . $langue[ID_LANGUE] . "'>" . $langue[NOM_LANGUE] . "</option></li>");
+				$this->fermeBloc("</ol>");
+				$this->fermeBloc("</li>");
+				
+				$this->fermeBloc("</ol>");
+				$this->fermeBloc("</fieldset>");
+				
+				$this->ouvreBloc("<fieldset>");	
+				$this->ajouteLigne("<input type='hidden' name='ajouterExemplaire' value='true' />");
+				$this->ajouteLigne("<button type='submit' name='AjouterExemplaire' value='true'>Valider l'ajout de l'exemple</button>");
+				$this->fermeBloc("</fieldset>");
+				
+				$this->ouvreBloc("<fieldset>");	
+				$this->ajouteLigne("<input type='hidden' name='ajouterAutreExemplaire' value='true' />");
+				$this->ajouteLigne("<button type='submit' name='AjouterAutreExemplaire' value='true'>Valider et ajouter un autre exemplaire</button>");
+				$this->fermeBloc("</fieldset>");
+			}
 			
-			// Data achat
-			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . DATE_ACHAT . "'>" . $this->convertiTexte("Date Achat") . "</label>");
-			$this->ajouteLigne("<input type='text' id='" . DATE_ACHAT ."' maxlength='10' name='" . DATE_ACHAT . "' value='" . $this->dateBaseToAffichage($this->dateAchat) . "'  required='required' />");
-			if($this->erreurDateAchat)
-				$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
-			$this->fermeBloc("</li>");
-			
-					
-			// Data fin de vie
-			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . DATE_FIN_VIE . "'>" . $this->convertiTexte("Date fin de vie") . "</label>");
-			$this->ajouteLigne("<input type='text' id='" . DATE_FIN_VIE . "' maxlength='10' name='" . DATE_FIN_VIE . "' value='" . VIDE . "' />");
-			$this->fermeBloc("</li>");
-			
-			$this->fermeBloc("</ol>");
-			$this->fermeBloc("</fieldset>");
-			
-			
-			// Troisième fieldset : État de l'exemplaire
-			$this->ouvreBloc("<fieldset>");	
-			$this->ajouteLigne("<legend>État de l'exemplaire</legend>");
-			$this->ouvreBloc("<ol>");
-			
-			// État de l'exemplaire
-			$etatExemplaire = $this->maBase->recupEtatExemplaire();
-			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . ID_ETAT_EXEMPLAIRE . "'>" . $this->convertiTexte("État") . "</label>");
-			$this->ouvreBloc("<select id='" . ID_ETAT_EXEMPLAIRE . "' name='" . ID_ETAT_EXEMPLAIRE . "' required='required'>");
-			foreach($etatExemplaire as $etat)
-				$this->ajouteLigne("<option name='" . ID_ETAT_EXEMPLAIRE . "' value='" . $etat[ID_ETAT_EXEMPLAIRE] . "'>" . $etat[NOM_ETAT] . "</option>");
-			$this->fermeBloc("</select>");
-			if($this->erreurEtat)
-				$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
-			$this->fermeBloc("</li>");
-			
-			$this->fermeBloc("</ol>");
-			$this->fermeBloc("</fieldset>");
-			
-			
-			// Quatrième fieldset : Emplacement du stockage
-			$this->ouvreBloc("<fieldset>");	
-			$this->ajouteLigne("<legend>Emplacement de l'exemplaire</legend>");
-			$this->ouvreBloc("<ol>");
-			
-			// Lieu normal de stockage
-			$lieuExemplaire = $this->maBase->recupLieu();
-			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . ID_LIEU_REEL . "'>" . $this->convertiTexte("Lieu normal de stockage") . "</label>");
-			$this->ouvreBloc("<select id='" . ID_LIEU_REEL . "' name='" . ID_LIEU_REEL . "' required='required'>");
-			foreach($lieuExemplaire as $lieu)
-				$this->ajouteLigne("<option name='" . ID_LIEU_REEL . "' value='" . $lieu[ID_LIEU] . "'>" . $lieu[NOM_LIEU] . "</option>");
-			$this->fermeBloc("</select>");
-			if($this->erreurLieuReel)
-				$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
-			$this->fermeBloc("</li>");
-			
-			// Lieu de stockage temporaire
-			$lieuExemplaire = $this->maBase->recupLieu();
-			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . ID_LIEU_TEMPO . "'>" . $this->convertiTexte("Lieu de stockage temporaire") . "</label>");
-			$this->ouvreBloc("<select id='" . ID_LIEU_TEMPO . "' name='" . ID_LIEU_TEMPO . "' required='required'>");
-			$this->ajouteLigne("<option value='null'></option>");
-			foreach($lieuExemplaire as $lieu)
-				$this->ajouteLigne("<option name='" . ID_LIEU_TEMPO . "' value='" . $lieu[ID_LIEU] . "'>" . $lieu[NOM_LIEU] . "</option>");
-			$this->fermeBloc("</select>");
-			$this->fermeBloc("</li>");
-			
-			$this->fermeBloc("</ol>");
-			$this->fermeBloc("</fieldset>");
-			
-			
-			// Cinquième fieldset : Langues régles du jeu
-			$this->ouvreBloc("<fieldset>");	
-			$this->ajouteLigne("<legend>Régles du jeu</legend>");
-			$this->ouvreBloc("<ol>");
-			
-			// Langues des régles du jeu
-			$langueRegle = $this->maBase->recupLangue();
-			/*
-			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langues des régles du jeu") . "</label>");
-			$this->ouvreBloc("<select id='" . NOM_LANGUE . "' size='5' multiple='multiple'>");
-			foreach($langueRegle as $langue)
-				$this->ajouteLigne("<option name='" . NOM_LANGUE . "' value='" . $langue[ID_LANGUE] . "'>" . $langue[NOM_LANGUE] . "</option>");
-			$this->fermeBloc("</select>");
-			$this->fermeBloc("</li>");
-			*/
-			
-			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langues des régles du jeu") . "</label>");
-			$this->ouvreBloc("<ol id='listeItem'>");
-			foreach($langueRegle as $langue)
-				if(in_array($langue[ID_LANGUE], $this->listeLangueRegle))
-					$this->ajouteLigne("<li class='item'><input type='checkbox' name='" . NOM_LANGUE . "[]' value='" . $langue[ID_LANGUE] . "' checked='checked'>" . $langue[NOM_LANGUE] . "</option></li>");
-				else
-					$this->ajouteLigne("<li class='item'><input type='checkbox' name='" . NOM_LANGUE . "[]' value='" . $langue[ID_LANGUE] . "'>" . $langue[NOM_LANGUE] . "</option></li>");
-			$this->fermeBloc("</ol>");
-			$this->fermeBloc("</li>");
-			
-			$this->fermeBloc("</ol>");
-			$this->fermeBloc("</fieldset>");
-			
-			$this->ouvreBloc("<fieldset>");	
-			$this->ajouteLigne("<input type='hidden' name='ajouterExemplaire' value='true' />");
-			$this->ajouteLigne("<button type='submit' name='AjouterExemplaire' value='true'>Valider l'ajout de l'exemple</button>");
-			$this->fermeBloc("</fieldset>");
-			
-			$this->ouvreBloc("<fieldset>");	
-			$this->ajouteLigne("<input type='hidden' name='ajouterAutreExemplaire' value='true' />");
-			$this->ajouteLigne("<button type='submit' name='AjouterAutreExemplaire' value='true'>Valider et ajouter un autre exemplaire</button>");
-			$this->fermeBloc("</fieldset>");
+			$this->fermeBloc("</form>");
 		}
-		
-        $this->fermeBloc("</form>");
     }
 	
 	/*

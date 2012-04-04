@@ -704,6 +704,20 @@ class AccesAuxDonneesDev
 		return $laListe;
 	}
 	
+    /**
+	* Fonction de récupération de la liste des exemplaire ou d'un exemplaire en particulier si on lui passe en paramètre l'id d'un pays
+	* Entrée : id de l'exemplaire pour lequel on veut récupérer des informations (paramètre optionnel)
+	* Sortie : le tableau contenant les exemplaires
+	*/
+	public function recupExemplaire($idExemplaire)
+	{
+		$requete = "SELECT * FROM " . TABLE_EXEMPLAIRE;
+		if($idExemplaire != null)
+			$requete .= " WHERE " . ID_EXEMPLAIRE . " = '" . $idExemplaire . "';";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
 	/**
 	* Fonction de récupération de la liste des lieux
 	* Sortie : le tableau contenant les lieux
