@@ -421,6 +421,15 @@ class AccesAuxDonneesDev
 		// On termine l'utilisation de la requete
 		$requete->closeCursor();
 		
+		// Création de la requete pour récupérer l'id du Jeu inséré
+		$requete = "SELECT MAX(" . ID_VERSION . ") FROM " . TABLE_VERSION . " ;";
+		
+		$resultat = $this->requeteSelect($requete);
+		
+		if(count($resultat) == 0)
+			return false;
+		else
+			return $resultat[0][0];
     }
 
 	/**

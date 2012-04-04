@@ -59,8 +59,20 @@ class ModuleAjoutExemplaires extends Module
 		// On traite le formulaire, le cas échéant
 		$this->traiteFormulaire();
 		
-		// $jeu, $version
-		
+		// $jeu
+		if(intval($version))
+		{
+			$maVersion = $this->maBase->recupVersion($version);
+			if($maVersion == null || $maVersion[0] == null || $maVersion == false)
+				$this->erreurLoadExemplaire = true;
+			else
+			{
+				$this->idVersion = $maVersion[0][ID_VERSION];
+				$this->idJeu = $maVersion[0][ID_JEU];
+			}
+		}
+			
+			
 		if(intval($exemplaire))
 		{
 			$monExemplaire = $this->maBase->recupExemplaire($exemplaire);
@@ -513,8 +525,8 @@ class ModuleAjoutExemplaires extends Module
 						
 					if($_POST["AjouterExemplaire"])
 					{
-						//header("Location: " . MODULE_GESTION_JEUX . "&ajoutExemplaire=true");
-						//exit;
+						header("Location: " . MODULE_GESTION_JEUX . "&ajoutExemplaire=true");
+						exit;
 					}
 					else
 					{
