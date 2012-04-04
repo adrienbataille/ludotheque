@@ -369,7 +369,7 @@ class ModuleAjoutJeux extends Module
 					
 					$this->erreurLangue = $this->maBase->InsertionTableNomJeu($this->nom[$i], $idLangue, $this->idJeu);
 				}				
-				print "categorie choisie : " . $categorie . "<br />";
+				//print "categorie choisie : " . $categorie . "<br />";
 			}
 
 			if(in_array("", $this->langue))
