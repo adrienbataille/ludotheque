@@ -422,36 +422,53 @@ class AccesAuxDonneesDev
 		$requete->closeCursor();
 		
     }
-	
-	
 
 	/**
     * Fonction d'insertion d'un exemplaire
     * Entrée : la description, prix achat, date achat
     * Sortie : true si l'insertion s'est bien passée, sinon false
     */
-    public function InsertionTableExemplaire($descriptionExemplaire, $prixMJDT, $dateAchat)
+    public function InsertionTableExemplaire($uneDescription, $unPrix, $uneDateAchat, $uneDateFinVie, $uneVersion, $unEtatExemplaire, $unLieuReel, $unLieuTempo)
     {
 
 		// On initie la connexion à la base, si ce n'est déjà fait
 		$this->connecteBase();
 		// Création de la requete
-		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_EXEMPLAIRE . " (" . DESCRIPTION_EXEMPLAIRE . ", " . PRIX_MDJT . ", " . DATE_ACHAT . ") VALUES(?, ?, ?) ;");
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_EXEMPLAIRE . " (" . DESCRIPTION_EXEMPLAIRE . ", " . PRIX_MDJT . ", " . DATE_ACHAT . ", " . DATE_FIN_VIE . ", " . ID_VERSION . ", " . ID_ETAT_EXEMPLAIRE . ", " . ID_LIEU_REEL . ", " . ID_LIEU_TEMPO . ") VALUES(?, ?, ?, ?, ?, ?, ?, ?) ;");
 		
-		if(strcmp($descriptionExemplaire, "") == 0)
+		if(strcmp($uneDescription, "") == 0)
 			$requete->bindValue(1, null, PDO::PARAM_NULL);
 		else
-			$requete->bindValue(1, $descriptionExemplaire, PDO::PARAM_STR);
+			$requete->bindValue(1, $uneDescription, PDO::PARAM_STR);
 		
-		$requete->bindValue(2, $prixMJDT, PDO::PARAM_INT);			
-		$requete->bindValue(3, $dateAchat, PDO::PARAM_STR);
-					
+		$requete->bindValue(2, $unPrix, PDO::PARAM_STR);
+		$requete->bindValue(3, $uneDateAchat, PDO::PARAM_STR);
+		
+		if(strcmp($uneDateFinVie, "") == 0)
+			$requete->bindValue(4, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(4, $uneDateFinVie, PDO::PARAM_STR);
+		
+		$requete->bindValue(5, $uneVersion, PDO::PARAM_INT);
+		$requete->bindValue(6, $unEtatExemplaire, PDO::PARAM_INT);
+		$requete->bindValue(7, $unLieuReel, PDO::PARAM_INT);
+		$requete->bindValue(8, $unLieuTempo, PDO::PARAM_INT);
+			
+			
 		$resultat = $requete->execute();
 
 		// On termine l'utilisation de la requete
 		$requete->closeCursor();
 		
-
+		// Création de la requete pour récupérer l'id du Jeu inséré
+		$requete = "SELECT MAX(" . ID_EXEMPLAIRE . ") FROM " . TABLE_EXEMPLAIRE . " ;";
+		
+		$resultat = $this->requeteSelect($requete);
+		
+		if(count($resultat) == 0)
+			return false;
+		else
+			return $resultat[0][0];
     }
 	
 	
@@ -558,6 +575,44 @@ class AccesAuxDonneesDev
             return false;
         }
     }
+    
+    /**
+    * Fonction d'insertion d'une langue
+    * Entrée : id de l'exemplaire
+    * Entrée : id de la langue
+    * Sortie : l'id de la régle dans la langue voulue si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableLangueRegle($unExemplaire, $uneLangue)
+    {
+        // Protection contre injection SQL
+        if (strval($uneLangue))
+        {
+			// On initie la connexion à la base, si ce n'est déjà fait
+			$this->connecteBase();
+			// Création de la requete
+			$requete = $this->maBase->prepare("INSERT INTO " . TABLE_LANGUE_REGLE . " (" . ID_EXEMPLAIRE . ", ". ID_LANGUE . ") VALUES(?, ?) ;");
+			$requete->bindValue(1, $unExemplaire, PDO::PARAM_INT);
+			$requete->bindValue(2, $uneLangue, PDO::PARAM_INT);
+			$resultat = $requete->execute();
+
+			// On termine l'utilisation de la requete
+			$requete->closeCursor();
+			
+			// Création de la requete pour récupérer l'id de la régle pour l'exemplaire et la Langue
+			$requete = "SELECT " . ID_LANGUE_REGLE . " FROM " . TABLE_LANGUE_REGLE . " WHERE " . ID_EXEMPLAIRE . "='" . $unExemplaire . "' AND " . ID_LANGUE . "='" . $uneLangue . "' ;";
+			$resultat = $this->requeteSelect($requete);
+			
+			//var_dump($resultat);
+			if(count($resultat) == 0)
+				return false;
+			else
+				return $resultat[0][ID_LANGUE_REGLE];
+        }
+        else
+        {
+            return false;
+        }
+    }
 	
     /**
 	* Fonction de récupération de la liste des jeux ou un jeu en particulier si on lui passe en paramètre l'id d'un jeu
@@ -594,7 +649,7 @@ class AccesAuxDonneesDev
 	*/
 	public function recupLangue()
 	{
-		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_LANGUE);
+		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_LANGUE . " ORDER BY " . NOM_LANGUE);
 		return $laListe;
 	}
 	
@@ -629,7 +684,22 @@ class AccesAuxDonneesDev
 		$requete .= " ON (l." . ID_LANGUE . "=n." . ID_LANGUE . ")";
 		if($idJeu != null)
 			$requete .= " WHERE " . ID_JEU . "='" . $idJeu . "'";
-		$requete .= ";";
+		$requete .= "ORDER BY " . NOM_JEU . ";";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
+    /**
+	* Fonction de récupération du nom d'une version d'un jeu
+	* Entrée : id du jeu pour lequel on souhaite récupérer le nom de la version
+	* Sortie : le tableau contenant le nom
+	*/
+	public function recupNomVersion($idJeu)
+	{
+		$requete = "SELECT * FROM " . TABLE_VERSION;
+		if($idJeu != null)
+			$requete .= " WHERE " . ID_JEU . "='" . $idJeu . "'";
+		$requete .= "ORDER BY " . NOM_VERSION . ";";
 		$laListe = $this->requeteSelect($requete);
 		return $laListe;
 	}
@@ -644,6 +714,20 @@ class AccesAuxDonneesDev
 		$requete = "SELECT * FROM " . TABLE_PAYS;
 		if($idPays != null)
 			$requete .= " WHERE " . ID_PAYS . " = '" . $idPays . "';";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
+    /**
+	* Fonction de récupération de la liste des exemplaire ou d'un exemplaire en particulier si on lui passe en paramètre l'id d'un pays
+	* Entrée : id de l'exemplaire pour lequel on veut récupérer des informations (paramètre optionnel)
+	* Sortie : le tableau contenant les exemplaires
+	*/
+	public function recupExemplaire($idExemplaire)
+	{
+		$requete = "SELECT * FROM " . TABLE_EXEMPLAIRE;
+		if($idExemplaire != null)
+			$requete .= " WHERE " . ID_EXEMPLAIRE . " = '" . $idExemplaire . "';";
 		$laListe = $this->requeteSelect($requete);
 		return $laListe;
 	}

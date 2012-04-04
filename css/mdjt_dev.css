@@ -76,3 +76,8 @@ li.item {
 	border: none !important;
 	line-height: 15px !important;
 }
+
+.ajoutOk {
+	color: #0D0;
+	margin-bottom: 20px;
+}
