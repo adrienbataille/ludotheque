@@ -328,7 +328,7 @@ class AccesAuxDonnees
 	}
 
         
-        /**
+    /**
 	* Fonction de mise à jour des informations d'un utilisateur
 	* Entrée : l'id de cet utilisateur et toutes les informations associées
 	* Sortie : true si la mise à jour s'est bien passée, sinon false
