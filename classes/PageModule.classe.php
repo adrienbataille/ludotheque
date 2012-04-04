@@ -90,7 +90,7 @@ class PageModule extends Page
 					
 				case "GestionJeux" :
                 	// On appelle l'ajout d'un jeux
-                	$this->unModule = new ModuleGestionJeux();
+                	$this->unModule = new ModuleGestionJeux($_GET["ajoutJeu"], $_GET["ajoutVersion"], $_GET["ajoutExemplaire"]);
                 	break;
                 	
                 case "AjoutJeux" :

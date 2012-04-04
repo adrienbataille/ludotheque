@@ -635,7 +635,7 @@ class AccesAuxDonneesDev
 	*/
 	public function recupLangue()
 	{
-		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_LANGUE);
+		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_LANGUE . " ORDER BY " . NOM_LANGUE);
 		return $laListe;
 	}
 	

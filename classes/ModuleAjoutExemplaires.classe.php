@@ -33,12 +33,14 @@ class ModuleAjoutExemplaires extends Module
 	private $etatExemplaire = 0;
 	private $lieuReel;
 	private $lieuTempo = null;
-	private $listeLangueRegle;
+	private $listeLangueRegle = Array();
 // On stocke les erreurs qui pourront arriver
+	private $traitementFormulaire = false;
 	private $erreurPrixMdjt = false;
 	private $erreurDateAchat = false;
 	private $erreurEtat = false;
 	private $erreurLieuReel = false;
+	private $erreurExemplaire = false;
     
 // Methodes
 
@@ -175,6 +177,10 @@ class ModuleAjoutExemplaires extends Module
 	
     public function afficheFormulaire()
     {	
+    
+    	if($this->erreurExemplaire)
+			$this->ajouteLigne("<p class='erreurForm'>Une erreur est survenue lors de l'ajout de votre exemplaire, veuillez réessayer ou contacter l'administrateur</p>");
+    		
         $this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_EXEMPLAIRES . "' id='formProfil'>");
         
         
@@ -254,6 +260,18 @@ class ModuleAjoutExemplaires extends Module
 		// Si on n'a pas encore choisit une version d'un jeu, on affiche le bouton pour valider le choix du nom d'une version
 		elseif($this->idVersion == 0)
 		{
+			// Si le jeu n'a aucune version, on propose à l'utilisateur d'en ajouter une
+			if($listeVersion == null)
+			{
+				$this->ouvreBloc("<ul id='menu_gestion_jeux'>");
+		
+				$this->ouvreBloc("<li>");
+				$this->ajouteLigne("<a href='" . MODULE_AJOUT_VERSIONS . "&idJeu=" . $this->idJeu . "' title='" . $this->convertiTexte("Ajouter une version à ce jeu") . "'>" . $this->convertiTexte("Ajouter une version à ce jeu") . "</a>");
+				$this->fermeBloc("</li>");
+				
+				$this->fermeBloc("</ul>");
+			}
+			
 			// Bouton pour valide le choix de la version
 			$this->ouvreBloc("<fieldset>");	
 			$this->ajouteLigne("<input type='hidden' name='validerNomVersion' value='true' />");
@@ -382,7 +400,10 @@ class ModuleAjoutExemplaires extends Module
 			$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langues des régles du jeu") . "</label>");
 			$this->ouvreBloc("<ol id='listeItem'>");
 			foreach($langueRegle as $langue)
-				$this->ajouteLigne("<li class='item'><input type='checkbox' name='" . NOM_LANGUE . "[]' value='" . $langue[ID_LANGUE] . "'>" . $langue[NOM_LANGUE] . "</option></li>");
+				if(in_array($langue[ID_LANGUE], $this->listeLangueRegle))
+					$this->ajouteLigne("<li class='item'><input type='checkbox' name='" . NOM_LANGUE . "[]' value='" . $langue[ID_LANGUE] . "' checked='checked'>" . $langue[NOM_LANGUE] . "</option></li>");
+				else
+					$this->ajouteLigne("<li class='item'><input type='checkbox' name='" . NOM_LANGUE . "[]' value='" . $langue[ID_LANGUE] . "'>" . $langue[NOM_LANGUE] . "</option></li>");
 			$this->fermeBloc("</ol>");
 			$this->fermeBloc("</li>");
 			
@@ -390,8 +411,13 @@ class ModuleAjoutExemplaires extends Module
 			$this->fermeBloc("</fieldset>");
 			
 			$this->ouvreBloc("<fieldset>");	
-			$this->ajouteLigne("<input type='hidden' name='ajouter' value='true' />");
-			$this->ajouteLigne("<button type='submit' name='Ajouter' value='true'>Valider</button>");
+			$this->ajouteLigne("<input type='hidden' name='ajouterExemplaire' value='true' />");
+			$this->ajouteLigne("<button type='submit' name='AjouterExemplaire' value='true'>Valider l'ajout de l'exemple</button>");
+			$this->fermeBloc("</fieldset>");
+			
+			$this->ouvreBloc("<fieldset>");	
+			$this->ajouteLigne("<input type='hidden' name='ajouterAutreExemplaire' value='true' />");
+			$this->ajouteLigne("<button type='submit' name='AjouterAutreExemplaire' value='true'>Valider et ajouter un autre exemplaire</button>");
 			$this->fermeBloc("</fieldset>");
 		}
 		
@@ -408,7 +434,7 @@ class ModuleAjoutExemplaires extends Module
 		var_dump($this->listeLangueRegle);
 		
 		// Y a-t-il effectivement un formulaire à traiter ?
-		if ($_POST["Ajouter"])
+		if ($_POST["AjouterExemplaire"] || $_POST["AjouterAutreExemplaire"])
 		{
 			// Traitement du formulaire
 			$this->traitementFormulaire = true;
@@ -430,10 +456,21 @@ class ModuleAjoutExemplaires extends Module
 			if(!$this->erreurPrixMdjt && !$this->erreurDateAchat && !$this->erreurEtat && !$this->erreurLieuReel)
 			{
 				$this->idExemplaire = $this->maBase->InsertionTableExemplaire($this->descriptionExemplaire, $this->prixMDJT, $this->dateAchat, $this->dateFinVie, $this->idVersion, $this->etatExemplaire, $this->lieuReel, $this->lieuTempo);
-			print "idEx : " . $this->idExemplaire . " :<br />";
+
 				if($this->idExemplaire != null)
+				{
 					foreach($this->listeLangueRegle as $langueRegle)
 						$this->maBase->InsertionTableLangueRegle($this->idExemplaire, $langueRegle);
+						
+					if($_POST["AjouterExemplaire"])
+						header("Location: " . MODULE_GESTION_JEUX . "&ajoutExemplaire=true");
+					else
+					{
+						$this->idJeu = 0;
+						$this->idVersion = 0;
+					}
+				} else
+					$this->erreurExemplaire = true;
 			}
 
 		} elseif ($_POST["ValiderNomJeu"])
