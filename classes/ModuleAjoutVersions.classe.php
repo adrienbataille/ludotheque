@@ -175,13 +175,13 @@ class ModuleAjoutVersions extends Module
         $this->ouvreBloc("<ol>");
         
         // Nom
-         $this->ouvreBloc("<li>");
+        $this->ouvreBloc("<li>");
         $this->ajouteLigne("<label for='" . NOM_VERSION . "'>" . $this->convertiTexte("Nom de la version") . "</label>");
         $this->ajouteLigne("<input type='text' id='". NOM_VERSION . "' name='" . NOM_VERSION . "' value='" . $this->nomVersion . "' required='required'  />");
 		if($this->erreurNom)
 			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
         $this->fermeBloc("</li>");
- 
+
         
         $this->fermeBloc("</ol>");
         $this->fermeBloc("</fieldset>");
@@ -278,8 +278,7 @@ class ModuleAjoutVersions extends Module
 		print_r($listeJeu);
 		$this->fermeBloc("</li>");
 		
-			
-			
+				
 			
         $this->fermeBloc("</ol>");
         $this->fermeBloc("</fieldset>");
@@ -317,24 +316,8 @@ class ModuleAjoutVersions extends Module
 				$this->maBase->UpdateTableVersion($this->idVersion,$this->nomVersion,$this->description,$this->ageMinimum,$this->nb_joueur_reco,
 											$this->duree_partie,$this->prix_achat,$this->annee_sortie,
 											$this->illustrateur,$this->distributeur,$this->editeur, $this->idJeu);		
-			
-					
-											
-											
-		
-			/*var_dump($this->nomVersion);
-			var_dump($this->description);
-			var_dump($this->ageMinimum);*/
-			//var_dump($this->nb_joueur);
-			/*var_dump($this->nb_joueur_reco);
-			var_dump($this->duree_partie);
-			var_dump($this->prix_achat);
-			var_dump($this->annee_sortie);
-			var_dump($this->illustrateur);
-			var_dump($this->distributeur);
-			var_dump($this->editeur);
-			var_dump($this->idJeu);*/
-		
+						
+													
 			
 		}
 	}	
