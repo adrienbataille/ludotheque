@@ -722,7 +722,8 @@ class AccesAuxDonneesDev
 	{
 		$requete = "SELECT * FROM " . TABLE_PAYS;
 		if($idPays != null)
-			$requete .= " WHERE " . ID_PAYS . " = '" . $idPays . "';";
+			$requete .= " WHERE " . ID_PAYS . " = '" . $idPays . "'";
+		$requete .= " ORDER BY " . NOM_PAYS . ";";
 		$laListe = $this->requeteSelect($requete);
 		return $laListe;
 	}
