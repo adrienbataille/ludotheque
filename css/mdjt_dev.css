@@ -1,0 +1,78 @@
+/* *********************************** */
+/* ***** NAVIGATION GESTION JEUX ***** */
+/* *********************************** */
+
+
+#menu_gestion_jeux {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	text-align: center;
+}
+
+
+#menu_gestion_jeux li {
+	display: inline;
+	margin: 3px;
+	color: #fff;
+	background: #0c0;
+    /*width: 210px !important;*/
+    padding: 2px 0;
+    
+	/* Bordures rondes */
+	border: solid 1px #ababab;
+	-moz-border-radius: 15px 15px 15px 15px;
+	-webkit-border-radius: 15px 15px 15px 15px;
+	-khtml-border-radius: 15px 15px 15px 15px;
+	-border-radius: 15px 15px 15px 15px;
+
+	/* Ombre derrière la boîte */
+	-webkit-box-shadow: 5px 5px 5px rgba(64, 64, 64, 0.8);
+	-moz-box-shadow: 5px 5px 5px rgba(64, 64, 64, 0.8);
+	box-shadow: 5px 5px 5px rgba(64, 64, 64, 0.8);
+}
+
+#menu_gestion_jeux li a {
+    /*display: block;*/
+    /*background: #0c0;*/
+    color: #fff;
+    font: 1em "Trebuchet MS",Arial,sans-serif;
+    line-height: 1em;
+	padding: 0 20px;
+    text-align: center;
+    text-decoration: none;
+}
+
+#menu_gestion_jeux li:hover, #menu_gestion_jeux li:focus, #menu_gestion_jeux li:active {
+    background: #090;
+    text-decoration: underline;
+}
+
+/* ********************************************************** */
+/* ***** AFFICHAGE DES RETARDS DANS LA GESTION DES JEUX ***** */
+/* ********************************************************** */
+
+#livre_en_retard {
+    margin-top: 15px;
+}
+
+/* ******************************************* */
+/* ***** GESTION DES ERREURS FORMULAIRES ***** */
+/* ******************************************* */
+
+.erreurForm {
+	color: #D00;
+}
+
+/* ************************************* */
+/* ***** GESTION D'UNE LITE D'ITEM ***** */
+/* ************************************* */
+
+#listeItem {
+	border: none;
+}
+
+li.item {
+	border: none !important;
+	line-height: 15px !important;
+}

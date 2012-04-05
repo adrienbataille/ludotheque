@@ -85,7 +85,7 @@ class ModuleProfil extends Module
 		return $date;
 	}
         
-        /**
+    /**
 	* Fonction de vérification d'une date au format d'affichage
 	*/
 	private function verifDateAffichee($uneDate)
@@ -470,15 +470,18 @@ class ModuleProfil extends Module
 				$emailOK = false;
 				$email = $this->monUtilisateur->recupEmail();
 			}
-                        // Nettoyage de l'adresse
-                        $adresse = $this->filtreChaine($_POST[ADRESSE], TAILLE_CHAMPS_LONG);
+            // Nettoyage de l'adresse
+            $adresse = $this->filtreChaine($_POST[ADRESSE], TAILLE_CHAMPS_LONG);
+			
 			// Nettoyage du code postal
-                        $codePostal = intval($_POST[CODEPOSTAL]);
-                        // Nettoyage de la ville
+            $codePostal = intval($_POST[CODEPOSTAL]);
+            // Nettoyage de la ville
 			$ville = $this->filtreChaine($_POST[VILLE], TAILLE_CHAMPS_COURT);
-                        // Nettoyage des numéros de telephone
-                        $telephone = $this->filtreChaine($_POST[TELEPHONE], TAILLE_CHAMPS_TELEPHONE);
+			
+            // Nettoyage des numéros de telephone
+            $telephone = $this->filtreChaine($_POST[TELEPHONE], TAILLE_CHAMPS_TELEPHONE);
 			$portable = $this->filtreChaine($_POST[PORTABLE], TAILLE_CHAMPS_TELEPHONE);
+			
 			// Vérification de la date de naissance
 			if ( $this->verifDateAffichee($_POST[DATE_NAISSANCE]) )			
 			{
@@ -489,11 +492,11 @@ class ModuleProfil extends Module
 				$dateOK = false;
 				$dateNaissance = $this->monUtilisateur->recupDateNaissance();
 			}
-                        // Nettoyage du champ profession                        
-                        $profession = $this->filtreChaine($_POST[PROFESSION], TAILLE_CHAMPS_COURT);
+            
+			// Nettoyage du champ profession                        
+            $profession = $this->filtreChaine($_POST[PROFESSION], TAILLE_CHAMPS_COURT);
 
 						
-			
 			// Vérification de la présence de modifications
 			// Changement de titre ?
 			if (strcmp($titre,$this->monUtilisateur->recupTitre() != 0) )
