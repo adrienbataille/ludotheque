@@ -558,7 +558,7 @@ class AccesAuxDonneesDev
 				$query->ajoutAndLike(TABLE_CATEGORIE,NOM_CATEGORIE,$value);
 			}
 		}
-
+		print_r($query->debug());
 		//ainsi de suite!
 		return $this->requeteSelect($query->compile());
 	}

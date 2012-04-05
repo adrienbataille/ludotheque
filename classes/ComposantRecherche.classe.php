@@ -172,6 +172,7 @@ class ComposantRecherche extends Module
 	private function traitementFormulaire(){
 		$param=false;
 		$recherche=$_POST["recherche"];
+		var_dump($recherche);
 		if ($recherche!=NULL){
 			foreach($recherche as $row){
 				if ($row!=""){
@@ -224,6 +225,7 @@ class ComposantRecherche extends Module
 	 *Fonction qui crée des input type text et le prérempli si le paramètre post existe
 	 * @param string nom du tableau POST
 	 * @param string nom de la ligne du tableau
+	 * @todo ajout d'attribut list avec comme valeur $name
 	 */
 
 	private function creationInputText($param,$name){
@@ -235,6 +237,16 @@ class ComposantRecherche extends Module
 		else {
 			$this->ajouteLigne("<input type=\"text\" id=\"".$name."\" name=\"".$param ."[".$name."]\" value=\"". $value ."\" />");
 		}
+	}
+	
+	/**
+	 * Fonction qui crée des datalist HTML5 pour l'autocomplétion
+	 * @param array tableau de valeur
+	 * @param string le nom qui permet d'assosier au champ
+	 */
+	
+	private function creationDatalist($array,$name){
+		
 	}
 
 	/**
