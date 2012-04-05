@@ -367,10 +367,47 @@ class AccesAuxDonneesDevFicheJeu
 		}
 	}
 	
-	
+	/**
+	* Fonction de récupération de la photo de la version
+	* Entrée : l'id de la version
+	* Sortie : le chemin de l'image (type "image.xxx")
+	*/
+	public function recupPhotoVersion($uneID)
+	{
+		// Protection contre injection SQL
+		if ( intval($uneID) )
+		{			
+			// construction de la requete SQL permettant de recuperer la photo associée a la version du jeu
+			$requete = 	"SELECT ".NOM_PHOTO."
+						FROM ".TABLE_PHOTO." p ,".TABLE_PHOTO_VERSION." pv, ".TABLE_VERSION." v 
+						WHERE v.".ID_VERSION." = ".$uneID."
+						AND	v.".ID_VERSION."=pv.".ID_VERSION."
+						AND	pv.".ID_PHOTO."=p.".ID_PHOTO."" ;
+
+			// Execution 
+			$maPhotoVersion = $this->requeteSelectDev($requete);
+			
+			// Si l'utilisateur n'existe pas dans la base
+			if (count($maPhotoVersion) == 0)
+			{
+				return false;
+			}
+			else // L'utilisateur existe dans la base
+			{
+				// On renvoie juste la ligne le concernant
+				// Il ne doit pas exister 2 utilisateurs de même id 
+				// donc le tableau fait toujours 1 ligne
+				return $maPhotoVersion;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
 
         
-        /**
+    /**
 	* Fonction de mise à jour des informations d'un utilisateur
 	* Entrée : l'id de cet utilisateur et toutes les informations associées
 	* Sortie : true si la mise à jour s'est bien passée, sinon false

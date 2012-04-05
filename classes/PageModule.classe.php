@@ -87,7 +87,7 @@ class PageModule extends Page
                                     break;
 				case "FicheJeu" :
                                     // On créé l'objet chargé de gerer le module profil
-                                    $this->unModule = new ModuleFicheJeu();
+                                    $this->unModule = new ModuleFicheJeu($this->monUtilisateur);
                                     break;
 			}
 		}
