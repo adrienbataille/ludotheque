@@ -46,7 +46,6 @@ class ModuleGestionJeux extends Module
 	  */
     public function afficheFormulaire()
     {
-    	//$this->ouvreBloc("<nav>");
     	
 		if($this->infoJeu)
 			$this->ajouteLigne("<p class='ajoutOk'>Votre jeu a bien été ajouté</p>");
@@ -55,6 +54,41 @@ class ModuleGestionJeux extends Module
 		if($this->infoExemplaire)
 			$this->ajouteLigne("<p class='ajoutOk'>Votre exemplaire de jeu a bien été ajouté</p>");
     	
+    	
+		$this->ouvreBloc("<div id='menu_gestion_jeux'>");
+		
+    	
+        $this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_JEUX . "' id='formProfil'>");
+        
+		$this->ouvreBloc("<fieldset>");
+		$this->ajouteLigne("<input type='hidden' name='ajouterJeu' value='true' />");
+		$this->ajouteLigne("<button type='submit' name='AjouterJeu' value='true'>" . $this->convertiTexte("Ajouter un jeu") . "</button>");
+		$this->fermeBloc("</fieldset>");
+		
+		$this->fermeBloc("</form>");
+    	
+        $this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_VERSIONS . "' id='formProfil'>");
+        
+		$this->ouvreBloc("<fieldset>");
+		$this->ajouteLigne("<input type='hidden' name='ajouterJeu' value='true' />");
+		$this->ajouteLigne("<button type='submit' name='AjouterJeu' value='true'>" . $this->convertiTexte("Ajouter une version") . "</button>");
+		$this->fermeBloc("</fieldset>");
+		
+		$this->fermeBloc("</form>");
+    	
+        $this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_EXEMPLAIRES . "' id='formProfil'>");
+        
+		$this->ouvreBloc("<fieldset>");
+		$this->ajouteLigne("<input type='hidden' name='ajouterJeu' value='true' />");
+		$this->ajouteLigne("<button type='submit' name='AjouterJeu' value='true'>" . $this->convertiTexte("Ajouter un exemplaire") . "</button>");
+		$this->fermeBloc("</fieldset>");
+		
+		$this->fermeBloc("</form>");
+		
+		
+		$this->fermeBloc("</div>");
+        
+        /*
 		$this->ouvreBloc("<ul id='menu_gestion_jeux'>");
 		
 		$this->ouvreBloc("<li>");
@@ -70,8 +104,7 @@ class ModuleGestionJeux extends Module
 		$this->fermeBloc("</li>");
 		
 		$this->fermeBloc("</ul>");
-		
-		//$this->fermeBloc("</nav>");
+		*/
 		
 		$this->ouvreBloc("<div id='livre_en_retard'>");
 		$this->ouvreBloc("<p>");
