@@ -181,6 +181,13 @@ class ModuleAjoutVersions extends Module
 		if($this->erreurNom)
 			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
         $this->fermeBloc("</li>");
+			
+		$this->ouvreBloc("<li>");
+		$this->ajouteLigne("<label for='" . PHOTO_VERSION . "'>" . $this->convertiTexte("Photo") . "</label>");
+		$this->ajouteLigne("<input type='file' name='". NOM_VERSION . "' />");
+		//<input type="file" name="nom" />
+		$this->fermeBloc("</li>");
+		
 
         
         $this->fermeBloc("</ol>");

@@ -7,6 +7,7 @@ $dbport = '3306';
 $dbname = 'mdjtufjjpforum';
 $dbuser = 'ludotheque';
 $dbpasswd = 'ludo';
+$table_prefix = 'phpbb_';
 $acm_type = 'file';
 $load_extensions = '';
 
