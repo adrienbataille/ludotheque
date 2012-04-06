@@ -15,17 +15,26 @@ class ModuleGestionJeux extends Module
 {
 
 // Attributs
-
+	private $infoJeu = false;
+	private $infoVersion = false;
+	private $infoExemplaire = false;
     
 // Methodes
 
     /**
     * Le constructeur du module Mon Profil
     */
-    public function __construct()
+    public function __construct($jeu, $version, $exemplaire)
     {
         // On utilise le constructeur de la classe mère
 		parent::__construct();
+		
+		if($jeu)
+			$this->infoJeu = true;
+		if($version)
+			$this->infoVersion = true;
+		if($exemplaire)
+			$this->infoExemplaire = true;
 		
 		// On affiche le contenu du module
 		// On affiche le formulaire d'ajout des informations propres à un jeux
@@ -37,8 +46,49 @@ class ModuleGestionJeux extends Module
 	  */
     public function afficheFormulaire()
     {
-    	//$this->ouvreBloc("<nav>");
     	
+		if($this->infoJeu)
+			$this->ajouteLigne("<p class='ajoutOk'>Votre jeu a bien été ajouté</p>");
+		if($this->infoVersion)
+			$this->ajouteLigne("<p class='ajoutOk'>Votre version de jeu a bien été ajouté</p>");
+		if($this->infoExemplaire)
+			$this->ajouteLigne("<p class='ajoutOk'>Votre exemplaire de jeu a bien été ajouté</p>");
+    	
+    	
+		$this->ouvreBloc("<div id='menu_gestion_jeux'>");
+		
+    	
+        $this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_JEUX . "' id='formProfil'>");
+        
+		$this->ouvreBloc("<fieldset>");
+		$this->ajouteLigne("<input type='hidden' name='ajouterJeu' value='true' />");
+		$this->ajouteLigne("<button type='submit' name='AjouterJeu' value='true'>" . $this->convertiTexte("Ajouter un jeu") . "</button>");
+		$this->fermeBloc("</fieldset>");
+		
+		$this->fermeBloc("</form>");
+    	
+        $this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_VERSIONS . "' id='formProfil'>");
+        
+		$this->ouvreBloc("<fieldset>");
+		$this->ajouteLigne("<input type='hidden' name='ajouterJeu' value='true' />");
+		$this->ajouteLigne("<button type='submit' name='AjouterJeu' value='true'>" . $this->convertiTexte("Ajouter une version") . "</button>");
+		$this->fermeBloc("</fieldset>");
+		
+		$this->fermeBloc("</form>");
+    	
+        $this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_EXEMPLAIRES . "' id='formProfil'>");
+        
+		$this->ouvreBloc("<fieldset>");
+		$this->ajouteLigne("<input type='hidden' name='ajouterJeu' value='true' />");
+		$this->ajouteLigne("<button type='submit' name='AjouterJeu' value='true'>" . $this->convertiTexte("Ajouter un exemplaire") . "</button>");
+		$this->fermeBloc("</fieldset>");
+		
+		$this->fermeBloc("</form>");
+		
+		
+		$this->fermeBloc("</div>");
+        
+        /*
 		$this->ouvreBloc("<ul id='menu_gestion_jeux'>");
 		
 		$this->ouvreBloc("<li>");
@@ -54,8 +104,7 @@ class ModuleGestionJeux extends Module
 		$this->fermeBloc("</li>");
 		
 		$this->fermeBloc("</ul>");
-		
-		//$this->fermeBloc("</nav>");
+		*/
 		
 		$this->ouvreBloc("<div id='livre_en_retard'>");
 		$this->ouvreBloc("<p>");

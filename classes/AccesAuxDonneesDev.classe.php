@@ -421,37 +421,63 @@ class AccesAuxDonneesDev
 		// On termine l'utilisation de la requete
 		$requete->closeCursor();
 		
+		// Création de la requete pour récupérer l'id du Jeu inséré
+		$requete = "SELECT MAX(" . ID_VERSION . ") FROM " . TABLE_VERSION . " ;";
+		
+		$resultat = $this->requeteSelect($requete);
+		
+		if(count($resultat) == 0)
+			return false;
+		else
+			return $resultat[0][0];
     }
-	
-	
 
 	/**
     * Fonction d'insertion d'un exemplaire
     * Entrée : la description, prix achat, date achat
     * Sortie : true si l'insertion s'est bien passée, sinon false
     */
-    public function InsertionTableExemplaire($descriptionExemplaire, $prixMJDT, $dateAchat)
+    public function InsertionTableExemplaire($uneDescription, $unPrix, $uneDateAchat, $uneDateFinVie, $uneVersion, $unEtatExemplaire, $unLieuReel, $unLieuTempo)
     {
 
 		// On initie la connexion à la base, si ce n'est déjà fait
 		$this->connecteBase();
 		// Création de la requete
-		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_EXEMPLAIRE . " (" . DESCRIPTION_EXEMPLAIRE . ", " . PRIX_MDJT . ", " . DATE_ACHAT . ") VALUES(?, ?, ?) ;");
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_EXEMPLAIRE . " (" . DESCRIPTION_EXEMPLAIRE . ", " . PRIX_MDJT . ", " . DATE_ACHAT . ", " . DATE_FIN_VIE . ", " . ID_VERSION . ", " . ID_ETAT_EXEMPLAIRE . ", " . ID_LIEU_REEL . ", " . ID_LIEU_TEMPO . ") VALUES(?, ?, ?, ?, ?, ?, ?, ?) ;");
 		
-		if(strcmp($descriptionExemplaire, "") == 0)
+		if(strcmp($uneDescription, "") == 0)
 			$requete->bindValue(1, null, PDO::PARAM_NULL);
 		else
-			$requete->bindValue(1, $descriptionExemplaire, PDO::PARAM_STR);
+			$requete->bindValue(1, $uneDescription, PDO::PARAM_STR);
 		
-		$requete->bindValue(2, $prixMJDT, PDO::PARAM_INT);			
-		$requete->bindValue(3, $dateAchat, PDO::PARAM_STR);
-					
+		$requete->bindValue(2, $unPrix, PDO::PARAM_STR);
+		$requete->bindValue(3, $uneDateAchat, PDO::PARAM_STR);
+		
+		if(strcmp($uneDateFinVie, "") == 0)
+			$requete->bindValue(4, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(4, $uneDateFinVie, PDO::PARAM_STR);
+		
+		$requete->bindValue(5, $uneVersion, PDO::PARAM_INT);
+		$requete->bindValue(6, $unEtatExemplaire, PDO::PARAM_INT);
+		$requete->bindValue(7, $unLieuReel, PDO::PARAM_INT);
+		$requete->bindValue(8, $unLieuTempo, PDO::PARAM_INT);
+			
+			
 		$resultat = $requete->execute();
 
 		// On termine l'utilisation de la requete
 		$requete->closeCursor();
 		
-
+		// Création de la requete pour récupérer l'id du Jeu inséré
+		$requete = "SELECT MAX(" . ID_EXEMPLAIRE . ") FROM " . TABLE_EXEMPLAIRE . " ;";
+		
+		$resultat = $this->requeteSelect($requete);
+		
+		if(count($resultat) == 0)
+			return false;
+		else
+			return $resultat[0][0];
     }
 	
 	
@@ -558,6 +584,44 @@ class AccesAuxDonneesDev
             return false;
         }
     }
+    
+    /**
+    * Fonction d'insertion d'une langue
+    * Entrée : id de l'exemplaire
+    * Entrée : id de la langue
+    * Sortie : l'id de la régle dans la langue voulue si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableLangueRegle($unExemplaire, $uneLangue)
+    {
+        // Protection contre injection SQL
+        if (strval($uneLangue))
+        {
+			// On initie la connexion à la base, si ce n'est déjà fait
+			$this->connecteBase();
+			// Création de la requete
+			$requete = $this->maBase->prepare("INSERT INTO " . TABLE_LANGUE_REGLE . " (" . ID_EXEMPLAIRE . ", ". ID_LANGUE . ") VALUES(?, ?) ;");
+			$requete->bindValue(1, $unExemplaire, PDO::PARAM_INT);
+			$requete->bindValue(2, $uneLangue, PDO::PARAM_INT);
+			$resultat = $requete->execute();
+
+			// On termine l'utilisation de la requete
+			$requete->closeCursor();
+			
+			// Création de la requete pour récupérer l'id de la régle pour l'exemplaire et la Langue
+			$requete = "SELECT " . ID_LANGUE_REGLE . " FROM " . TABLE_LANGUE_REGLE . " WHERE " . ID_EXEMPLAIRE . "='" . $unExemplaire . "' AND " . ID_LANGUE . "='" . $uneLangue . "' ;";
+			$resultat = $this->requeteSelect($requete);
+			
+			//var_dump($resultat);
+			if(count($resultat) == 0)
+				return false;
+			else
+				return $resultat[0][ID_LANGUE_REGLE];
+        }
+        else
+        {
+            return false;
+        }
+    }
 	
     /**
 	* Fonction de récupération de la liste des jeux ou un jeu en particulier si on lui passe en paramètre l'id d'un jeu
@@ -594,7 +658,7 @@ class AccesAuxDonneesDev
 	*/
 	public function recupLangue()
 	{
-		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_LANGUE);
+		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_LANGUE . " ORDER BY " . NOM_LANGUE);
 		return $laListe;
 	}
 	
@@ -629,7 +693,22 @@ class AccesAuxDonneesDev
 		$requete .= " ON (l." . ID_LANGUE . "=n." . ID_LANGUE . ")";
 		if($idJeu != null)
 			$requete .= " WHERE " . ID_JEU . "='" . $idJeu . "'";
-		$requete .= ";";
+		$requete .= "ORDER BY " . NOM_JEU . ";";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
+    /**
+	* Fonction de récupération du nom d'une version d'un jeu
+	* Entrée : id du jeu pour lequel on souhaite récupérer le nom de la version
+	* Sortie : le tableau contenant le nom
+	*/
+	public function recupNomVersion($idJeu)
+	{
+		$requete = "SELECT * FROM " . TABLE_VERSION;
+		if($idJeu != null)
+			$requete .= " WHERE " . ID_JEU . "='" . $idJeu . "'";
+		$requete .= "ORDER BY " . NOM_VERSION . ";";
 		$laListe = $this->requeteSelect($requete);
 		return $laListe;
 	}
@@ -643,7 +722,36 @@ class AccesAuxDonneesDev
 	{
 		$requete = "SELECT * FROM " . TABLE_PAYS;
 		if($idPays != null)
-			$requete .= " WHERE " . ID_PAYS . " = '" . $idPays . "';";
+			$requete .= " WHERE " . ID_PAYS . " = '" . $idPays . "'";
+		$requete .= " ORDER BY " . NOM_PAYS . ";";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
+    /**
+	* Fonction de récupération de la liste des langues des régles pour un exemplaire en particulier si on lui passe en paramètre l'id d'un pays
+	* Entrée : id de l'exemplaire pour lequel on veut récupérer des informations (paramètre optionnel)
+	* Sortie : le tableau contenant les catégories
+	*/
+	public function recupReglesLangues($idExemplaire)
+	{
+		$requete = "SELECT * FROM " . TABLE_LANGUE_REGLE;
+		if($idExemplaire != null)
+			$requete .= " WHERE " . ID_EXEMPLAIRE . " = '" . $idExemplaire . "';";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
+    /**
+	* Fonction de récupération de la liste des exemplaire ou d'un exemplaire en particulier si on lui passe en paramètre l'id d'un pays
+	* Entrée : id de l'exemplaire pour lequel on veut récupérer des informations (paramètre optionnel)
+	* Sortie : le tableau contenant les exemplaires
+	*/
+	public function recupExemplaire($idExemplaire)
+	{
+		$requete = "SELECT * FROM " . TABLE_EXEMPLAIRE;
+		if($idExemplaire != null)
+			$requete .= " WHERE " . ID_EXEMPLAIRE . " = '" . $idExemplaire . "';";
 		$laListe = $this->requeteSelect($requete);
 		return $laListe;
 	}
@@ -722,22 +830,103 @@ class AccesAuxDonneesDev
 			, " . DISTRIBUTEUR . "=?	, " . EDITEUR . "=?	, " . ID_JEU . "=?	WHERE " . ID_VERSION . "=?;");
 			
 			
+		
+
 			$requete->bindValue(1, $nom, PDO::PARAM_STR);
-			$requete->bindValue(2, $description, PDO::PARAM_STR);
+			
+			//description	
+			if(strcmp($description, "") == 0)
+				$requete->bindValue(2, null, PDO::PARAM_NULL);
+			else
+				$requete->bindValue(2, $description, PDO::PARAM_STR);
+
+			//age min
+			if(strcmp($age_min, "") == 0)
+				$requete->bindValue(3, null, PDO::PARAM_NULL);
+			else
 			$requete->bindValue(3, $age_min, PDO::PARAM_INT);
-			$requete->bindValue(4, $nb_joueur_reco, PDO::PARAM_INT);
-			$requete->bindValue(5, $duree_partie, PDO::PARAM_INT);
-			$requete->bindValue(6, $prix_achat, PDO::PARAM_INT);
-			$requete->bindValue(7, $annee_sortie, PDO::PARAM_INT);
-			$requete->bindValue(8, $illustrateur, PDO::PARAM_INT);
-			$requete->bindValue(9, $distributeur, PDO::PARAM_INT);
-			$requete->bindValue(10, $editeur, PDO::PARAM_INT);
+			
+			//nombre de joueurs recommandés
+			if(strcmp($nb_joueur_reco, "") == 0)
+				$requete->bindValue(4, null, PDO::PARAM_NULL);
+			else
+				$requete->bindValue(4, $nb_joueur_reco, PDO::PARAM_INT);
+				
+			//durée partie
+			if(strcmp($duree_partie, "") == 0)
+				$requete->bindValue(5, null, PDO::PARAM_NULL);
+			else
+				$requete->bindValue(5, $duree_partie, PDO::PARAM_INT);	
+
+			//prix achat
+			$requete->bindValue(6, $prix_achat, PDO::PARAM_INT);	
+
+			//année de sortie
+			if(strcmp($annee_sortie, "") == 0)
+				$requete->bindValue(7, null, PDO::PARAM_NULL);
+			else
+				$requete->bindValue(7, $annee_sortie, PDO::PARAM_INT);	
+
+			//illustrateur
+			if(strcmp($illustrateur, "") == 0)
+				$requete->bindValue(8, null, PDO::PARAM_NULL);
+			else
+				$requete->bindValue(8, $illustrateur, PDO::PARAM_STR);	
+
+
+			//distributeur
+			if(strcmp($distributeur, "") == 0)
+				$requete->bindValue(9, null, PDO::PARAM_NULL);
+			else
+				$requete->bindValue(9, $distributeur, PDO::PARAM_STR);
+
+			//éditeur
+			$requete->bindValue(10, $editeur, PDO::PARAM_STR);
+		
+
 			$requete->bindValue(11, $idJeu, PDO::PARAM_INT);
 			$requete->bindValue(12, $idVersion, PDO::PARAM_INT);
 			$resultat = $requete->execute();
 			
 			var_dump($age_min);
 	
+			// On termine l'utilisation de la requete
+			$requete->closeCursor();
+			
+			return $resultat;
+		}
+		else
+			return false;
+	}
+	
+	/**
+	* Fonction qui met à jour les informations d'un exemplaire
+	* Entrée : id de l'exemplaire à mettre à jour
+	* Entrée : nouvelle description du jeu
+	* Entrée : nouvel auter du jeu
+	* Entrée : id du nouveau pays
+	* Sortir : booleen pour savoir si la requête à bien était effectuée
+	*/
+	public function UpdateTableExemplaire($unExemplaire, $uneDescription, $unPrixMDJT, $unDateAchat, $uneDateFinVie, $unEtat, $unLieuReel, $unLieuTempo)
+	{
+		if(intval($unExemplaire))
+		{
+			// On initie la connexion à la base, si ce n'est déjà fait
+			$this->connecteBase();
+			
+
+			// Création de la requete
+			$requete = $this->maBase->prepare("UPDATE " . TABLE_EXEMPLAIRE . " SET " . DESCRIPTION_EXEMPLAIRE . "=?, " . PRIX_MDJT . "=?, " . DATE_ACHAT . "=?, " . DATE_FIN_VIE . "=?, " . ID_LIEU_REEL . "=?, " . ID_ETAT_EXEMPLAIRE . "=?, " . ID_LIEU_TEMPO . "=? WHERE " . ID_EXEMPLAIRE . "=?;");
+			$requete->bindValue(1, $uneDescription, PDO::PARAM_STR);
+			$requete->bindValue(2, $unPrixMDJT, PDO::PARAM_INT);
+			$requete->bindValue(3, $unDateAchat, PDO::PARAM_STR);
+			$requete->bindValue(4, $uneDateFinVie, PDO::PARAM_STR);
+			$requete->bindValue(5, $unEtat, PDO::PARAM_INT);
+			$requete->bindValue(6, $unLieuReel, PDO::PARAM_INT);
+			$requete->bindValue(7, $unLieuTempo, PDO::PARAM_INT);
+			$requete->bindValue(8, $unExemplaire, PDO::PARAM_INT);
+			$resultat = $requete->execute();
+			
 			// On termine l'utilisation de la requete
 			$requete->closeCursor();
 			
@@ -772,6 +961,33 @@ class AccesAuxDonneesDev
 		else
 			return false;
 	}
+	
+	/**
+	* Fonction de suppression des langues d'un jeu
+	* Entrée : id du jeu pour lequel on supprime les nom du jeu
+	* Sortie : booleen pour savoir si la requête à bien était effectuée
+	*/
+	public function DeleteTableLanguesRegles($unExemplaire)
+	{
+		if(intval($unExemplaire))
+		{print "delete";
+			// On initie la connexion à la base, si ce n'est déjà fait
+			$this->connecteBase();
+			
+			// Création de la requete
+			$requete = $this->maBase->prepare("DELETE FROM " . TABLE_LANGUE_REGLE . " WHERE " . ID_EXEMPLAIRE . "=?;");
+			$requete->bindValue(1, $unExemplaire, PDO::PARAM_INT);
+			$resultat = $requete->execute();
+	
+			// On termine l'utilisation de la requete
+			$requete->closeCursor();
+			var_dump($resultat);
+			return $resultat;
+		}
+		else
+			return false;
+	}
+
 
         
         /**

@@ -90,7 +90,7 @@ class PageModule extends Page
 					
 				case "GestionJeux" :
                 	// On appelle l'ajout d'un jeux
-                	$this->unModule = new ModuleGestionJeux();
+                	$this->unModule = new ModuleGestionJeux($_GET["ajoutJeu"], $_GET["ajoutVersion"], $_GET["ajoutExemplaire"]);
                 	break;
                 	
                 case "AjoutJeux" :
@@ -100,12 +100,12 @@ class PageModule extends Page
 					
 				case "AjoutVersions" :
                 	// On appelle l'ajout d'un jeux
-                	$this->unModule = new ModuleAjoutVersions($_GET["idVersion"]);//$_GET["idVersion"]); //$_GET["idJeu"],
+                	$this->unModule = new ModuleAjoutVersions($_GET["idJeu"],$_GET["idVersion"]);
                 	break;
 					
 				case "AjoutExemplaires" :
                 	// On appelle l'ajout d'un jeux
-                	$this->unModule = new ModuleAjoutExemplaires();
+                	$this->unModule = new ModuleAjoutExemplaires($_GET["idJeu"], $_GET["idVersion"], $_GET["idExemplaire"]);
                 	break;
 			}
 		}

@@ -29,6 +29,7 @@ class ModuleAjoutJeux extends Module
 	private $erreurPays = false;
 	private $erreurJeu = false;
 	private $erreurUpdateJeu = false;
+	private $erreurLoadJeu = false;
 	// Variables du formulaire
 	private $nom;// = array(0 => "");
 	private $langue;// = array(0 => "");
@@ -57,40 +58,50 @@ class ModuleAjoutJeux extends Module
 		if($idDuJeu != null)
 		{
 			$myGame = $this->maBase->recupJeu($idDuJeu);
-			$this->idJeu = $myGame[0][ID_JEU];
-			$this->description = $myGame[0][DESCRIPTION_JEU];
-			$this->auteur = $myGame[0][AUTEUR];
-			$idDuPays = $myGame[0][ID_PAYS];
-			
-			$myCountry = $this->maBase->recupPays($idDuPays);
-			$this->pays = $myCountry[0][NOM_PAYS];
-			
-			$myNames = $this->maBase->recupNomJeu($this->idJeu);
-			
-			$i = 0;
-			$this->nom = array(0 => "");
-			$this->langue = array(0 => "");
-			foreach($myNames as $name)
+			if($myGame[0] == null || !$myGame)
+				$this->erreurLoadJeu = true;
+			else
 			{
-				//if(!in_array($name[NOM_JEU], $this->nom) && !in_array($name[NOM_LANGUE], $this->langue))
-				//{
-					$this->nom[$i] = $name[NOM_JEU];
-					$this->langue[$i] = $name[NOM_LANGUE];
-				//}
-				$i++;
+				$this->idJeu = $myGame[0][ID_JEU];
+				$this->description = $myGame[0][DESCRIPTION_JEU];
+				$this->auteur = $myGame[0][AUTEUR];
+				$idDuPays = $myGame[0][ID_PAYS];
+				
+				$myCountry = $this->maBase->recupPays($idDuPays);
+				$this->pays = $myCountry[0][NOM_PAYS];
+				
+				$myNames = $this->maBase->recupNomJeu($this->idJeu);
+				
+				$i = 0;
+				$this->nom = array(0 => "");
+				$this->langue = array(0 => "");
+				foreach($myNames as $name)
+				{
+					//if(!in_array($name[NOM_JEU], $this->nom) && !in_array($name[NOM_LANGUE], $this->langue))
+					//{
+						$this->nom[$i] = $name[NOM_JEU];
+						$this->langue[$i] = $name[NOM_LANGUE];
+					//}
+					$i++;
+				}
+				
+				$this->nbJeu = sizeof($this->nom);
+				
+				// CATÉGORIE
 			}
-			
-			$this->nbJeu = sizeof($this->nom);
-			
-			// CATÉGORIE
 		}
 
 		// On traite le formulaire, le cas échéant
 		$this->traiteFormulaire();
 		
 		// On affiche le contenu du module
-		// On affiche le formulaire d'ajout des informations propres à un jeux
-		$this->afficheFormulaire();		
+		if($this->erreurLoadJeu)
+    		$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte(ERREUR_PIRATAGE) . "</p>");
+		else
+		{
+			// On affiche le formulaire d'ajout des informations propres à un jeux
+			$this->afficheFormulaire();
+		}
     }
     
     /**
@@ -149,12 +160,12 @@ class ModuleAjoutJeux extends Module
         $this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_JEUX . "' id='formProfil' autocomplete='off'>");
         
 		// Si on a déjà traité le formulaire
-		if ($this->traitementFormulaire && !$this->erreurPays && $this->erreurJeu && $this->erreurNom && $this->erreurLangue)
+		/*if ($this->traitementFormulaire && !$this->erreurPays && $this->erreurJeu && $this->erreurNom && $this->erreurLangue)
 		{
 			$this->ouvreBloc("<p>");
 			$this->ajouteLigne("Formulaire modifié");
 			$this->fermeBloc("</p>");
-		}
+		}*/
 		if ($this->erreurPays)
 		{
 			$this->ouvreBloc("<p>");
@@ -170,7 +181,7 @@ class ModuleAjoutJeux extends Module
         
 		// First fieldset : Nom du jeu
 		$this->ouvreBloc("<fieldset>");
-		$this->ajouteLigne("<legend>Nom du jeu</legend>");
+		$this->ajouteLigne("<legend>" . $this->convertiTexte("Nom du jeu") . "</legend>");
 		$this->ouvreBloc("<ol>");
 		
 		// Nom
@@ -178,28 +189,29 @@ class ModuleAjoutJeux extends Module
 		$this->ajouteLigne("<label for='" . NOM_JEU . "'>" . $this->convertiTexte("Nom") . "</label>");
 		$this->ajouteLigne("<input type='text' id='" . NOM_JEU . "' name='" . NOM_JEU . "[]' value='" . $this->nom[0] . "' required='required' />");
 		if($this->erreurNom && !strcmp($this->nom[0], ""))
-			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
+			$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte(ERREUR_CHAMP_REQUIS) . "</p>");
 		$this->fermeBloc("</li>");
 		
 		// Langue
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langue du nom") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_LANGUE . "' name='" . NOM_LANGUE . "[]' value='" . $this->langue[0] . "' list='listeLangue' required='required' />");
-		if($this->erreurLangue && !strcmp($this->langue[0], ""))
-			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
-		// Liste des langues pour l'auto-complete
+		$this->ouvreBloc("<select id='" . NOM_LANGUE . "' name='" . NOM_LANGUE . "[]' required='required'>");
+		$this->ajouteLigne("<option value='null'></option>");
 		$listeLangue = $this->maBase->recupLangue();
-		$this->ouvreBloc("<datalist id='listeLangue'>");
 		foreach($listeLangue as $langue)
-			$this->ajouteLigne("<option id='langue_" . $langue[ID_LANGUE] . "' label='" . $langue[NOM_LANGUE] . "' value=\"" . $langue[NOM_LANGUE] . "\">");
-		$this->fermeBloc("</datalist>");
+			if($langue[ID_LANGUE] == $this->langue[0])
+				$this->ajouteLigne("<option value='" . $langue[ID_LANGUE] . "' selected='selected'>" . $this->convertiTexte($langue[NOM_LANGUE]) . "</option><");
+			else
+				$this->ajouteLigne("<option value='" . $langue[ID_LANGUE] . "'>" . $this->convertiTexte($langue[NOM_LANGUE]) . "</option>");
+		$this->fermeBloc("</select>");
+		if($this->erreurLangue && !strcmp($this->langue[0], "null"))
+			$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte(ERREUR_CHAMP_REQUIS) . "</p>");
 		$this->fermeBloc("</li>");
 		
 		$this->fermeBloc("</ol>");
 		
 		if($this->nbJeu > 1)
 		{
-			
 			// Bouton Supprimer Nom du Jeu
 			$this->ajouteLigne("<input type='hidden' name='supprimerNomJeu' value='0' />");
 			$this->ajouteLigne("<button type='submit' name='SupprimerNomJeu' value='0'>Supprimer ce nom de jeu</button>");
@@ -222,17 +234,20 @@ class ModuleAjoutJeux extends Module
 			$this->fermeBloc("</li>");
 			
 			// Langue
+			//$listeLangue = $this->maBase->recupLangue();
 			$this->ouvreBloc("<li>");
 			$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langue du nom") . "</label>");
-			$this->ajouteLigne("<input type='text' id='" . NOM_LANGUE . "' name='" . NOM_LANGUE . "[]' value='" . $this->langue[$i] . "' list='listeLangue' required='required' />");
-			if($this->erreurLangue && !strcmp($this->langue[$i], ""))
-				$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
-			// Liste des langues pour l'auto-complete
+			$this->ouvreBloc("<select id='" . NOM_LANGUE . "' name='" . NOM_LANGUE . "[]' required='required'>");
+			$this->ajouteLigne("<option value='null'></option>");
 			$listeLangue = $this->maBase->recupLangue();
-			$this->ouvreBloc("<datalist id='listeLangue'>");
 			foreach($listeLangue as $langue)
-				$this->ajouteLigne("<option id='langue_" . $langue[ID_LANGUE] . "' label='" . $langue[NOM_LANGUE] . "' value=\"" . $langue[NOM_LANGUE] . "\">");
-			$this->fermeBloc("</datalist>");
+				if($langue[ID_LANGUE] == $this->langue[$i])
+					$this->ajouteLigne("<option value='" . $langue[ID_LANGUE] . "' selected='selected'>" . $this->convertiTexte($langue[NOM_LANGUE]) . "</option><");
+				else
+					$this->ajouteLigne("<option value='" . $langue[ID_LANGUE] . "'>" . $this->convertiTexte($langue[NOM_LANGUE]) . "</option>");
+			$this->fermeBloc("</select>");
+			if($this->erreurLangue && !strcmp($this->langue[$i], "null"))
+				$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte(ERREUR_CHAMP_REQUIS) . "</p>");
 			$this->fermeBloc("</li>");
 			
 			$this->fermeBloc("</ol>");
@@ -263,33 +278,33 @@ class ModuleAjoutJeux extends Module
 		// Description
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . DESCRIPTION_JEU . "'>" . $this->convertiTexte("Description") . "</label>");
-		$this->ajouteLigne("<textarea rows='3' id='" . DESCRIPTION_JEU . "' name='" . DESCRIPTION_JEU . "'>" . $this->description . "</textarea>");
+		$this->ajouteLigne("<textarea rows='3' id='" . DESCRIPTION_JEU . "' name='" . DESCRIPTION_JEU . "'>" . $this->convertiTexte($this->description) . "</textarea>");
 		$this->fermeBloc("</li>");
 		
 		// Auteur
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . AUTEUR . "'>" . $this->convertiTexte("Auteur") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . AUTEUR . "' name='" . AUTEUR . "' value='" . $this->auteur . "' autocomplete='on' />");
+		$this->ajouteLigne("<input type='text' id='" . AUTEUR . "' name='" . AUTEUR . "' value='" . $this->convertiTexte($this->auteur) . "' autocomplete='on' />");
 		$this->fermeBloc("</li>");
 		
 		// Pays
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . NOM_PAYS . "'>" . $this->convertiTexte("Pays d'origine") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_PAYS . "' name='" . NOM_PAYS . "' value='" . $this->pays . "' list='listePays' />");
-		// Liste des langues pour l'auto-complete
+		$this->ouvreBloc("<select id='" . NOM_PAYS . "' name='" . NOM_PAYS . "[]' required='required'>");
+		$this->ajouteLigne("<option value='null'></option>");
 		$listePays = $this->maBase->recupPays(null);
-		$this->ouvreBloc("<datalist id='listePays'>");
 		foreach($listePays as $pays)
-		{
-			$this->ajouteLigne("<option id='pays_" . $pays[ID_PAYS] . "' label='" . $pays[NOM_PAYS] . "' value='" . $pays[NOM_PAYS] . "'>");
-		}
-		$this->fermeBloc("</datalist>");
+			if($pays[ID_PAYS] == $this->langue[0])
+				$this->ajouteLigne("<option value='" . $pays[ID_PAYS] . "' selected='selected'>" . $this->convertiTexte($pays[NOM_PAYS]) . "</option><");
+			else
+				$this->ajouteLigne("<option value='" . $pays[ID_PAYS] . "'>" . $this->convertiTexte($pays[NOM_PAYS]) . "</option>");
+		$this->fermeBloc("</select>");
 		$this->fermeBloc("</li>");
 		
 		// Catégories
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . NOM_CATEGORIE . "'>" . $this->convertiTexte("Catégorie") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_CATEGORIE . "' name='" . NOM_CATEGORIE . "' value='" . $this->categorie . "' />");
+		$this->ajouteLigne("<input type='text' id='" . NOM_CATEGORIE . "' name='" . NOM_CATEGORIE . "' value='" . $this->convertiTexte($this->categorie) . "' />");
 		$this->fermeBloc("</li>");
 		
 		$this->fermeBloc("</ol>");
@@ -310,7 +325,7 @@ class ModuleAjoutJeux extends Module
 	*	Fonction de traitement du formulaire
 	*/
 	private function traiteFormulaire()
-	{		
+	{
 		// Y a-t-il effectivement un formulaire à traiter ?
 		if ($_POST["AjouterJeu"])
 		{
@@ -319,9 +334,9 @@ class ModuleAjoutJeux extends Module
 			
 			$this->recuperationInformationsFormulaire();
 			$this->nbJeu = sizeof($_POST[NOM_JEU]);
-			
-			
-			if(!in_array("", $this->langue) && !in_array("", $this->nom))
+			print "<br />";
+			print_r($this->langue);
+			if(!in_array("null", $this->langue) && !in_array("", $this->nom))
 			{					
 				// Si le champ Pays n'a pas été laissé vide, on récupére l'id du Pays sélectionné,
 				// et s'il s'agit d'un nouveau Pays, on l'insère dans la base de données et on récupére son id
@@ -369,10 +384,10 @@ class ModuleAjoutJeux extends Module
 					
 					$this->erreurLangue = $this->maBase->InsertionTableNomJeu($this->nom[$i], $idLangue, $this->idJeu);
 				}				
-				print "categorie choisie : " . $categorie . "<br />";
+				//print "categorie choisie : " . $categorie . "<br />";
 			}
 
-			if(in_array("", $this->langue))
+			if(in_array("null", $this->langue))
 				$this->erreurLangue = true;
 				
 			if(in_array("", $this->nom))

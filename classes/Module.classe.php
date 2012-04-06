@@ -7,6 +7,8 @@
 // Inclusions
 
 //Constantes
+define("ERREUR_CHAMP_REQUIS", "Ce champ doit être rempli");
+define("ERREUR_PIRATAGE", "Attention, tentative de piratage !!");
 
 class Module
 {
