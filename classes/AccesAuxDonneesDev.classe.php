@@ -329,14 +329,15 @@ class AccesAuxDonneesDev
 		$requete->bindValue(5, DESCRIPTION_JEU, PDO::PARAM_STR);
 		$requete->bindValue(6, $uneDescription, PDO::PARAM_STR);
 		
-		$requete = "SELECT " . ID_JEU . " FROM " . TABLE_JEUX . " WHERE " . ID_PAYS . "='" . $unPays . "' AND " . AUTEUR . " = '". $unAuteur . "';";
+		// Création de la requete pour récupérer l'id de l'exemplaire inséré
+		$requete = "SELECT MAX(" . ID_JEU . ") FROM " . TABLE_JEUX . " ;";
 		
 		$resultat = $this->requeteSelect($requete);
 		
 		if(count($resultat) == 0)
 			return false;
 		else
-			return $resultat[0][ID_JEU];
+			return $resultat[0][0];
     }
 
 	/**
@@ -469,7 +470,7 @@ class AccesAuxDonneesDev
 		// On termine l'utilisation de la requete
 		$requete->closeCursor();
 		
-		// Création de la requete pour récupérer l'id du Jeu inséré
+		// Création de la requete pour récupérer l'id de l'exemplaire inséré
 		$requete = "SELECT MAX(" . ID_EXEMPLAIRE . ") FROM " . TABLE_EXEMPLAIRE . " ;";
 		
 		$resultat = $this->requeteSelect($requete);
@@ -689,11 +690,10 @@ class AccesAuxDonneesDev
 	*/
 	public function recupNomJeu($idJeu)
 	{
-		$requete = "SELECT * FROM " . TABLE_LANGUE . " l JOIN " . TABLE_NOM_JEU . " n";
-		$requete .= " ON (l." . ID_LANGUE . "=n." . ID_LANGUE . ")";
+		$requete = "SELECT * FROM " . TABLE_NOM_JEU;
 		if($idJeu != null)
 			$requete .= " WHERE " . ID_JEU . "='" . $idJeu . "'";
-		$requete .= "ORDER BY " . NOM_JEU . ";";
+		$requete .= " ORDER BY " . NOM_JEU . ";";
 		$laListe = $this->requeteSelect($requete);
 		return $laListe;
 	}
