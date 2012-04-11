@@ -385,15 +385,13 @@ class ModuleAjoutVersions extends Module
 			if(strcmp($this->editeur, "") == 0 || $this->editeur == null)
 				$this->erreurEditeur = true;
 						
-
-			//$resultat2 = move_uploaded_file($_FILES['PHOTO_VERSION']['tmp_name'],$_FILES['PHOTO_VERSION']['name']);  
+			$chemin = 'fichier/';
+			$resultat2 = move_uploaded_file($_FILES['PHOTO_VERSION']['tmp_name'],$chemin.$_FILES['PHOTO_VERSION']['name']);  
 			//var_dump($resultat2);
 
-				
-			
 			if(!$this->erreurNom)
 			{
-				if($this->idVersion == 0)
+				if($this->idVersion == 0 && $resultat2)
 				{
 					$this->idVersion = $this->maBase->InsertionTableVersion($this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->illustrateur, $this->distributeur, $this->editeur, $this->idJeu);													
 					if($this->idVersion == null || !$this->idVersion)
