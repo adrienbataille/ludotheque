@@ -30,8 +30,6 @@ class ModuleAjoutVersions extends Module
 	private $mabase = null;
 	// On stocke les erreurs qui pourront arriver
 	private $erreurNom = false;
-	private $erreurPrixAchat = false;
-	private $erreurEditeur = false;
 	private $erreurVersion = false;	
 	private $erreurLoadVersion = false;
 
@@ -48,6 +46,8 @@ class ModuleAjoutVersions extends Module
 	private $editeur = "";
 	private $idJeu = 0;
 	private $idVersion = 0;
+
+
 	
 // Methodes
 	
@@ -61,7 +61,8 @@ class ModuleAjoutVersions extends Module
 					
 		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
 		$this->maBase = AccesAuxDonneesDev::recupAccesDonnees();
-				
+		
+		
 		if($idDeJeu != null && intval($idDeJeu))
 		{
 			$playId = $this->maBase->recupJeu($idDeJeu);
@@ -95,6 +96,7 @@ class ModuleAjoutVersions extends Module
 					$this->idJeu = $myVersion[0][ID_JEU];
 				elseif($this->idJeu != 0 && $this->idJeu != $myVersion[0][ID_JEU])
 					$this->erreurLoadVersion = true;
+					
 			}
 		}
 			
@@ -139,6 +141,9 @@ class ModuleAjoutVersions extends Module
 		// Nettoyage des variables POST récupérée
 		// Contre injection de code
 		
+		var_dump($_FILES['PHOTO_VERSION']);
+		
+		
 		$this->idVersion = $this->filtreChaine($_POST[ID_VERSION], TAILLE_CHAMPS_COURT);
 	
 		//Nettoyage du nom de la version
@@ -176,6 +181,9 @@ class ModuleAjoutVersions extends Module
 		
 		//id jeu associé
 		$this->idJeu = $this->filtreChaine($_POST[ID_JEU], TAILLE_CHAMPS_COURT);
+
+		
+			
 	}
 	
     public function afficheFormulaire()
@@ -183,7 +191,7 @@ class ModuleAjoutVersions extends Module
 		if($this->erreurVersion)
 			$this->ajouteLigne("<p class='erreurForm'>Une erreur est survenue lors de l'ajout de votre version, veuillez réessayer ou contacter l'administrateur</p>");
 			
-		$this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_VERSIONS . "' id='formProfil'>");
+		$this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_VERSIONS . "' id='formProfil'  enctype='multipart/form-data'>");
 		
 			$this->ajouteLigne("<input type='hidden' name='idVersion' value='" . $this->idVersion . "' />");
 			
@@ -220,14 +228,51 @@ class ModuleAjoutVersions extends Module
 		$this->ajouteLigne("<legend>Nom de la version</legend>");				
 		$this->ouvreBloc("<ol>");
 		
-	
-		// Nom
-		 $this->ouvreBloc("<li>");
-		$this->ajouteLigne("<label for='" . NOM_VERSION . "'>" . $this->convertiTexte("Nom de la version") . "</label>");
-		$this->ajouteLigne("<input type='text' id='". NOM_VERSION . "' name='" . NOM_VERSION . "' value='" . $this->nomVersion . "' required='required'  />");
+
+        
+        // Nom
+        $this->ouvreBloc("<li>");
+        $this->ajouteLigne("<label for='" . NOM_VERSION . "'>" . $this->convertiTexte("Nom de la version") . "</label>");
+        $this->ajouteLigne("<input type='text' id='". NOM_VERSION . "' name='" . NOM_VERSION . "' value='" . $this->nomVersion . "' required='required'  />");
 		if($this->erreurNom)
-			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
+			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être rempli</p>");
 		$this->fermeBloc("</li>");
+        $this->fermeBloc("</li>");
+			
+		$this->ouvreBloc("<li>");
+		$this->ajouteLigne("<label for='" . PHOTO_VERSION . "'>" . $this->convertiTexte("Photo") . "</label>");
+		$this->ajouteLigne("<input type='hidden' name='MAX_FILE_SIZE' value='1234569' />");
+		$this->ajouteLigne("<input type='file' name='". PHOTO_VERSION . "' />");
+
+		$this->fermeBloc("</li>");
+		
+
+        
+        $this->fermeBloc("</ol>");
+        $this->fermeBloc("</fieldset>");
+        
+        // Second fieldset : Informations sur la version
+        $this->ouvreBloc("<fieldset>");
+        $this->ajouteLigne("<legend>Informations sur la version</legend>");
+        $this->ouvreBloc("<ol>");
+        
+        // Description
+        $this->ouvreBloc("<li>");
+        $this->ajouteLigne("<label for='" . DESCRIPTION_VERSION . "'>" . $this->convertiTexte("Description") . "</label>");
+        $this->ajouteLigne("<textarea rows='3' id='" . DESCRIPTION_VERSION ."' name='" . DESCRIPTION_VERSION . "'>" . $this->description . "</textarea>");
+        $this->fermeBloc("</li>");
+        
+        // Age minimum
+        $this->ouvreBloc("<li>");
+        $this->ajouteLigne("<label for='" . AGE_MINIMUM . "'>" . $this->convertiTexte("Age min") . "</label>");
+        $this->ajouteLigne("<input type='text' id='" . AGE_MINIMUM ."' name='" . AGE_MINIMUM . "' value='" . $this->ageMinimum . "' />");
+        $this->fermeBloc("</li>");
+        
+        // Nombre Joueur
+      /*  $this->ouvreBloc("<li>");
+        $this->ajouteLigne("<label for='" . NB_JOUEUR_V . "'>" . $this->convertiTexte("Nombre de joueurs") . "</label>");
+        $this->ajouteLigne("<input type='text' maxlength='2' name='"  . NB_JOUEUR_V . "' value='" . $this->nb_joueur . "' />");
+        $this->fermeBloc("</li>");*/
 		
 		$this->fermeBloc("</ol>");
 		$this->fermeBloc("</fieldset>");
@@ -273,9 +318,7 @@ class ModuleAjoutVersions extends Module
 		// Prix achat
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . PRIX_ACHAT . "'>" . $this->convertiTexte("Prix d'achat") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . PRIX_ACHAT . "' name='"  . PRIX_ACHAT . "' value='" . $this->prixAchat . "' required='required'  />");
-		if($this->erreurPrixAchat)
-			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
+		$this->ajouteLigne("<input type='text' id='" . PRIX_ACHAT . "' name='"  . PRIX_ACHAT . "' value='" . $this->prixAchat . "' />");
 		$this->fermeBloc("</li>");
 		
 		 //Année de sortie
@@ -300,13 +343,16 @@ class ModuleAjoutVersions extends Module
 		//Editeur
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . EDITEUR . "'>" . $this->convertiTexte("Editeur") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . EDITEUR . "' name='"  . EDITEUR . "' value='" . $this->editeur . "' autocomplete='on' required='required'  />");
-		if($this->erreurEditeur)
-			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
+		$this->ajouteLigne("<input type='text' id='" . EDITEUR . "' name='"  . EDITEUR . "' value='" . $this->editeur . "' autocomplete='on' />");
 		$this->fermeBloc("</li>");
 		
 		$this->fermeBloc("</ol>");
 		$this->fermeBloc("</fieldset>");
+		
+				
+			
+        $this->fermeBloc("</ol>");
+        $this->fermeBloc("</fieldset>");
 		
 		$this->ouvreBloc("<fieldset>");	
 		$this->ajouteLigne("<input type='hidden' name='ajouter' value='true' />");
@@ -338,8 +384,14 @@ class ModuleAjoutVersions extends Module
 			
 			if(strcmp($this->editeur, "") == 0 || $this->editeur == null)
 				$this->erreurEditeur = true;
+						
+
+			//$resultat2 = move_uploaded_file($_FILES['PHOTO_VERSION']['tmp_name'],$_FILES['PHOTO_VERSION']['name']);  
+			//var_dump($resultat2);
+
+				
 			
-			if(!$this->erreurNom || !$this->erreurPrixAchat || !$this->erreurEditeur)
+			if(!$this->erreurNom)
 			{
 				if($this->idVersion == 0)
 				{
