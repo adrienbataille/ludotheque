@@ -183,7 +183,7 @@ class ModuleAjoutJeux extends Module
 		
 		// Nom
 		$this->ouvreBloc("<li>");
-		$this->ajouteLigne("<label for='" . NOM_JEU . "'>" . $this->convertiTexte("Nom") . "</label>");
+		$this->ajouteLigne("<label for='" . NOM_JEU . "'>" . $this->convertiTexte("Nom *") . "</label>");
 		$this->ajouteLigne("<input type='text' id='" . NOM_JEU . "' name='" . NOM_JEU . "[]' value='" . $this->nom[0] . "' required='required' />");
 		if($this->erreurNom && !strcmp($this->nom[0], ""))
 			$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte(ERREUR_CHAMP_REQUIS) . "</p>");
@@ -191,7 +191,7 @@ class ModuleAjoutJeux extends Module
 		
 		// Langue
 		$this->ouvreBloc("<li>");
-		$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langue du nom") . "</label>");
+		$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langue du nom *") . "</label>");
 		$this->ouvreBloc("<select id='" . NOM_LANGUE . "' name='" . NOM_LANGUE . "[]' required='required'>");
 		$this->ajouteLigne("<option value='null'></option>");
 		$listeLangue = $this->maBase->recupLangue();
@@ -224,7 +224,7 @@ class ModuleAjoutJeux extends Module
 			
 			// Nom
 			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . NOM_JEU . "'>" . $this->convertiTexte("Nom") . "</label>");
+			$this->ajouteLigne("<label for='" . NOM_JEU . "'>" . $this->convertiTexte("Nom *") . "</label>");
 			$this->ajouteLigne("<input type='text' id='" . NOM_JEU . "' name='" . NOM_JEU . "[]' value='" . $this->nom[$i] . "' required='required' />");
 			if($this->erreurNom && !strcmp($this->nom[$i], ""))
 				$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
@@ -233,7 +233,7 @@ class ModuleAjoutJeux extends Module
 			// Langue
 			//$listeLangue = $this->maBase->recupLangue();
 			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langue du nom") . "</label>");
+			$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langue du nom *") . "</label>");
 			$this->ouvreBloc("<select id='" . NOM_LANGUE . "' name='" . NOM_LANGUE . "[]' required='required'>");
 			$this->ajouteLigne("<option value='null'></option>");
 			$listeLangue = $this->maBase->recupLangue();
@@ -289,7 +289,7 @@ class ModuleAjoutJeux extends Module
 		$this->ajouteLigne("<label for='" . NOM_PAYS . "'>" . $this->convertiTexte("Pays d'origine") . "</label>");
 		$this->ouvreBloc("<select id='" . NOM_PAYS . "' name='" . NOM_PAYS . "' required='required'>");
 		$this->ajouteLigne("<option value='null'></option>");
-		$listePays = $this->maBase->recupPays(null);print_r($listePays);var_dump($this->idPays);
+		$listePays = $this->maBase->recupPays(null);//print_r($listePays);var_dump($this->idPays);
 		foreach($listePays as $pays)
 			if($pays[ID_PAYS] == $this->idPays)
 				$this->ajouteLigne("<option value='" . $pays[ID_PAYS] . "' selected='selected'>" . $this->convertiTexte($pays[NOM_PAYS]) . "</option><");
@@ -349,25 +349,7 @@ class ModuleAjoutJeux extends Module
 					
 					$i = 0;
 					for($i = 0; $i < sizeof($_POST[NOM_JEU]); $i++)
-					{
-						// Si le champ Langue n'a pas été laissé vide, on récupére l'id de la Langue sélectionnée,
-						// et s'il s'agit d'une nouvelle Langue, on l'insère dans la base de données et on récupére son id
-						$idLangue = 0;
-		
-						$listeLangue = $this->maBase->recupLangue();
-						foreach($listeLangue as $uneLangue)
-						{
-							if(strcasecmp($this->langue[$i], $uneLangue[NOM_LANGUE]) == 0)
-								$idLangue = $uneLangue[ID_LANGUE];
-						}
-						if($idLangue == 0)
-							$idLangue = $this->maBase->InsertionTableLangue($this->langue[$i]);
-		
-						if(!intval($idLangue))
-							$this->erreurLangue = true;
-						
-						$this->erreurLangue = $this->maBase->InsertionTableNomJeu($this->nom[$i], $idLangue, $this->idJeu);
-					}				
+						$this->erreurLangue = $this->maBase->InsertionTableNomJeu($this->nom[$i], $this->langue[$i], $this->idJeu);
 					//print "categorie choisie : " . $categorie . "<br />";
 				}
 	
