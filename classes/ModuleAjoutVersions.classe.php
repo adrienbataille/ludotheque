@@ -141,7 +141,7 @@ class ModuleAjoutVersions extends Module
 		// Nettoyage des variables POST récupérée
 		// Contre injection de code
 		
-		var_dump($_FILES['PHOTO_VERSION']);
+		//var_dump($_FILES['PHOTO_VERSION']);
 		
 		
 		$this->idVersion = $this->filtreChaine($_POST[ID_VERSION], TAILLE_CHAMPS_COURT);
@@ -232,7 +232,7 @@ class ModuleAjoutVersions extends Module
         
         // Nom
         $this->ouvreBloc("<li>");
-        $this->ajouteLigne("<label for='" . NOM_VERSION . "'>" . $this->convertiTexte("Nom de la version") . "</label>");
+        $this->ajouteLigne("<label for='" . NOM_VERSION . "'>" . $this->convertiTexte("Nom de la version *") . "</label>");
         $this->ajouteLigne("<input type='text' id='". NOM_VERSION . "' name='" . NOM_VERSION . "' value='" . $this->nomVersion . "' required='required'  />");
 		if($this->erreurNom)
 			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être rempli</p>");
