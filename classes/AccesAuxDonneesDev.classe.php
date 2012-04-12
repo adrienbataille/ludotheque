@@ -839,7 +839,7 @@ class AccesAuxDonneesDev
 	}
 	
     /**
-	* Fonction de récupération de la liste des illustrateurs ou un illustrateurs en particulier si on lui passe en paramètre l'id d'un illustrateur
+	* Fonction de récupération de la liste des illustrateurs ou un illustrateur en particulier si on lui passe en paramètre l'id d'un illustrateur
 	* Entrée : id de l'illustrateur pour lequel on veut récupérer des informations (paramètre optionnel)
 	* Sortie : le tableau contenant les illustrateurs
 	*/
@@ -849,6 +849,36 @@ class AccesAuxDonneesDev
 		if($idPays != null)
 			$requete .= " WHERE " . ID_ILLUSTRATEUR . " = '" . $idIllustrateur . "'";
 		$requete .= " ORDER BY " . NOM_ILLUSTRATEUR . ";";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
+    /**
+	* Fonction de récupération de la liste des distributeurs ou un distributeur en particulier si on lui passe en paramètre l'id d'un illustrateur
+	* Entrée : id du distributeur pour lequel on veut récupérer des informations (paramètre optionnel)
+	* Sortie : le tableau contenant les illustrateurs
+	*/
+	public function recupDistributeur($idDistributeur)
+	{
+		$requete = "SELECT * FROM " . TABLE_DISTRIBUTEUR;
+		if($idPays != null)
+			$requete .= " WHERE " . ID_DISTRIBUTEUR . " = '" . $idDistributeur . "'";
+		$requete .= " ORDER BY " . NOM_DISTRIBUTEUR . ";";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
+    /**
+	* Fonction de récupération de la liste des illustrateurs ou un illustrateurs en particulier si on lui passe en paramètre l'id d'un illustrateur
+	* Entrée : id de l'illustrateur pour lequel on veut récupérer des informations (paramètre optionnel)
+	* Sortie : le tableau contenant les illustrateurs
+	*/
+	public function recupEditeur($idEditeur)
+	{
+		$requete = "SELECT * FROM " . TABLE_EDITEUR;
+		if($idPays != null)
+			$requete .= " WHERE " . ID_EDITEUR . " = '" . $idEditeur . "'";
+		$requete .= " ORDER BY " . NOM_EDITEUR . ";";
 		$laListe = $this->requeteSelect($requete);
 		return $laListe;
 	}
