@@ -255,9 +255,9 @@ class ModuleAjoutExemplaires extends Module
 			
 		foreach($listeJeu as $jeu)
 			if($jeu[ID_JEU] == $this->idJeu)
-				$this->ajouteLigne("<option value='" . $jeu[ID_JEU] . "' selected='selected'>" . $jeu[NOM_JEU] . "</option><");
+				$this->ajouteLigne("<option value='" . $jeu[ID_JEU] . "' selected='selected'>" . $this->convertiTexte($jeu[NOM_JEU]) . "</option><");
 			else
-				$this->ajouteLigne("<option value='" . $jeu[ID_JEU] . "'>" . $jeu[NOM_JEU] . "</option>");
+				$this->ajouteLigne("<option value='" . $jeu[ID_JEU] . "'>" . $this->convertiTexte($jeu[NOM_JEU]) . "</option>");
 		
 		$this->fermeBloc("</select>");
 		
@@ -283,9 +283,9 @@ class ModuleAjoutExemplaires extends Module
 				
 			foreach($listeVersion as $version)
 				if($version[ID_VERSION] == $this->idVersion)
-					$this->ajouteLigne("<option value='" . $version[ID_VERSION] . "' selected='selected'>" . $version[NOM_VERSION] . "</option>");
+					$this->ajouteLigne("<option value='" . $version[ID_VERSION] . "' selected='selected'>" . $this->convertiTexte($version[NOM_VERSION]) . "</option>");
 				else
-					$this->ajouteLigne("<option value='" . $version[ID_VERSION] . "'>" . $version[NOM_VERSION] . "</option>");
+					$this->ajouteLigne("<option value='" . $version[ID_VERSION] . "'>" . $this->convertiTexte($version[NOM_VERSION]) . "</option>");
 				
 			$this->fermeBloc("</select>");
 		
@@ -353,14 +353,14 @@ class ModuleAjoutExemplaires extends Module
 			// Description
 			$this->ouvreBloc("<li>");
 			$this->ajouteLigne("<label for='" . DESCRIPTION_EXEMPLAIRE . "'>" . $this->convertiTexte("Description") . "</label>");
-			$this->ajouteLigne("<textarea rows='3' id='" . DESCRIPTION_EXEMPLAIRE . "'name='" . DESCRIPTION_EXEMPLAIRE . "'>" . $this->descriptionExemplaire . "</textarea>");
+			$this->ajouteLigne("<textarea rows='3' id='" . DESCRIPTION_EXEMPLAIRE . "'name='" . DESCRIPTION_EXEMPLAIRE . "'>" . $this->convertiTexte($this->descriptionExemplaire) . "</textarea>");
 			$this->fermeBloc("</li>");
 			
 					
 			 // Prix mdjt
 			$this->ouvreBloc("<li>");
 			$this->ajouteLigne("<label for='" . PRIX_MDJT . "'>" . $this->convertiTexte("Prix actuel") . "</label>");
-			$this->ajouteLigne("<input type='text' id='" . PRIX_MDJT ."' name='"  . PRIX_MDJT . "' value='" . $this->prixMDJT . "' required='required' />");
+			$this->ajouteLigne("<input type='text' id='" . PRIX_MDJT ."' name='"  . PRIX_MDJT . "' value='" . $this->convertiTexte($this->prixMDJT) . "' required='required' />");
 			if($this->erreurPrixMdjt)
 				$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
 			$this->fermeBloc("</li>");
@@ -368,7 +368,7 @@ class ModuleAjoutExemplaires extends Module
 			// Data achat
 			$this->ouvreBloc("<li>");
 			$this->ajouteLigne("<label for='" . DATE_ACHAT . "'>" . $this->convertiTexte("Date Achat") . "</label>");
-			$this->ajouteLigne("<input type='text' id='" . DATE_ACHAT ."' maxlength='10' name='" . DATE_ACHAT . "' value='" . $this->dateBaseToAffichage($this->dateAchat) . "'  required='required' />");
+			$this->ajouteLigne("<input type='text' id='" . DATE_ACHAT ."' maxlength='10' name='" . DATE_ACHAT . "' value='" . $this->convertiTexte($this->dateBaseToAffichage($this->dateAchat)) . "'  required='required' />");
 			if($this->erreurDateAchat)
 				$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
 			$this->fermeBloc("</li>");
@@ -395,7 +395,7 @@ class ModuleAjoutExemplaires extends Module
 			$this->ajouteLigne("<label for='" . ID_ETAT_EXEMPLAIRE . "'>" . $this->convertiTexte("État") . "</label>");
 			$this->ouvreBloc("<select id='" . ID_ETAT_EXEMPLAIRE . "' name='" . ID_ETAT_EXEMPLAIRE . "' required='required'>");
 			foreach($etatExemplaire as $etat)
-				$this->ajouteLigne("<option name='" . ID_ETAT_EXEMPLAIRE . "' value='" . $etat[ID_ETAT_EXEMPLAIRE] . "'>" . $etat[NOM_ETAT] . "</option>");
+				$this->ajouteLigne("<option name='" . ID_ETAT_EXEMPLAIRE . "' value='" . $etat[ID_ETAT_EXEMPLAIRE] . "'>" . $this->convertiTexte($etat[NOM_ETAT]) . "</option>");
 			$this->fermeBloc("</select>");
 			if($this->erreurEtat)
 				$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
@@ -416,7 +416,7 @@ class ModuleAjoutExemplaires extends Module
 			$this->ajouteLigne("<label for='" . ID_LIEU_REEL . "'>" . $this->convertiTexte("Lieu normal de stockage") . "</label>");
 			$this->ouvreBloc("<select id='" . ID_LIEU_REEL . "' name='" . ID_LIEU_REEL . "' required='required'>");
 			foreach($lieuExemplaire as $lieu)
-				$this->ajouteLigne("<option name='" . ID_LIEU_REEL . "' value='" . $lieu[ID_LIEU] . "'>" . $lieu[NOM_LIEU] . "</option>");
+				$this->ajouteLigne("<option name='" . ID_LIEU_REEL . "' value='" . $lieu[ID_LIEU] . "'>" . $this->convertiTexte($lieu[NOM_LIEU]) . "</option>");
 			$this->fermeBloc("</select>");
 			if($this->erreurLieuReel)
 				$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
@@ -429,7 +429,7 @@ class ModuleAjoutExemplaires extends Module
 			$this->ouvreBloc("<select id='" . ID_LIEU_TEMPO . "' name='" . ID_LIEU_TEMPO . "' required='required'>");
 			$this->ajouteLigne("<option value='null'></option>");
 			foreach($lieuExemplaire as $lieu)
-				$this->ajouteLigne("<option name='" . ID_LIEU_TEMPO . "' value='" . $lieu[ID_LIEU] . "'>" . $lieu[NOM_LIEU] . "</option>");
+				$this->ajouteLigne("<option name='" . ID_LIEU_TEMPO . "' value='" . $lieu[ID_LIEU] . "'>" . $this->convertiTexte($lieu[NOM_LIEU]) . "</option>");
 			$this->fermeBloc("</select>");
 			$this->fermeBloc("</li>");
 			
@@ -444,24 +444,14 @@ class ModuleAjoutExemplaires extends Module
 			
 			// Langues des régles du jeu
 			$langueRegle = $this->maBase->recupLangue();
-			/*
-			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langues des régles du jeu") . "</label>");
-			$this->ouvreBloc("<select id='" . NOM_LANGUE . "' size='5' multiple='multiple'>");
-			foreach($langueRegle as $langue)
-				$this->ajouteLigne("<option name='" . NOM_LANGUE . "' value='" . $langue[ID_LANGUE] . "'>" . $langue[NOM_LANGUE] . "</option>");
-			$this->fermeBloc("</select>");
-			$this->fermeBloc("</li>");
-			*/
-			
 			$this->ouvreBloc("<li>");
 			$this->ajouteLigne("<label for='" . NOM_LANGUE . "'>" . $this->convertiTexte("Langues des régles du jeu") . "</label>");
 			$this->ouvreBloc("<ol id='listeItem'>");
 			foreach($langueRegle as $langue)
 				if(in_array($langue[ID_LANGUE], $this->listeLangueRegle))
-					$this->ajouteLigne("<li class='item'><input type='checkbox' name='" . NOM_LANGUE . "[]' value='" . $langue[ID_LANGUE] . "' checked='checked'>" . $langue[NOM_LANGUE] . "</option></li>");
+					$this->ajouteLigne("<li class='item'><input type='checkbox' name='" . NOM_LANGUE . "[]' value='" . $this->convertiTexte($langue[ID_LANGUE]) . "' checked='checked'>" . $langue[NOM_LANGUE] . "</option></li>");
 				else
-					$this->ajouteLigne("<li class='item'><input type='checkbox' name='" . NOM_LANGUE . "[]' value='" . $langue[ID_LANGUE] . "'>" . $langue[NOM_LANGUE] . "</option></li>");
+					$this->ajouteLigne("<li class='item'><input type='checkbox' name='" . NOM_LANGUE . "[]' value='" . $this->convertiTexte($langue[ID_LANGUE]) . "'>" . $langue[NOM_LANGUE] . "</option></li>");
 			$this->fermeBloc("</ol>");
 			$this->fermeBloc("</li>");
 			

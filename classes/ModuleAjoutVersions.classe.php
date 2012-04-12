@@ -208,11 +208,23 @@ class ModuleAjoutVersions extends Module
 			$this->ouvreBloc("<select name='" . ID_JEU . "'>");
 		else
 			$this->ouvreBloc("<select name='" . ID_JEU . "' disabled='disabled'>");
-		foreach($listeJeu as $jeu)
-			if($jeu[ID_JEU] == $this->idJeu)
-				$this->ajouteLigne("<option value='" . $jeu[ID_JEU] . "' selected='selected'>" . $jeu[NOM_JEU] . "</option>");
+		foreach($listeJeu as $idJeu => $jeu)
+		{
+			$name = "";
+			$i = 0;
+			$taille = sizeof($jeu) - 1;
+			foreach($jeu as $nomJeu)
+			{
+				$name .= $this->convertiTexte($nomJeu[NOM_JEU]);
+				if($i < $taille)
+					$name .= $this->convertiTexte(" - ");
+				$i++;
+			}
+			if($idJeu == $this->idJeu)
+				$this->ajouteLigne("<option value='" . $idJeu . "' selected='selected'>" . $name . "</option>");
 			else
-				$this->ajouteLigne("<option value='" . $jeu[ID_JEU] . "'>" . $jeu[NOM_JEU] . "</option>");
+				$this->ajouteLigne("<option value='" . $idJeu . "'>" . $name . "</option>");
+		}
 		$this->fermeBloc("</select>");
 		$this->fermeBloc("</li>");
 		
@@ -250,33 +262,6 @@ class ModuleAjoutVersions extends Module
         
         $this->fermeBloc("</ol>");
         $this->fermeBloc("</fieldset>");
-        
-        // Second fieldset : Informations sur la version
-        $this->ouvreBloc("<fieldset>");
-        $this->ajouteLigne("<legend>Informations sur la version</legend>");
-        $this->ouvreBloc("<ol>");
-        
-        // Description
-        $this->ouvreBloc("<li>");
-        $this->ajouteLigne("<label for='" . DESCRIPTION_VERSION . "'>" . $this->convertiTexte("Description") . "</label>");
-        $this->ajouteLigne("<textarea rows='3' id='" . DESCRIPTION_VERSION ."' name='" . DESCRIPTION_VERSION . "'>" . $this->description . "</textarea>");
-        $this->fermeBloc("</li>");
-        
-        // Age minimum
-        $this->ouvreBloc("<li>");
-        $this->ajouteLigne("<label for='" . AGE_MINIMUM . "'>" . $this->convertiTexte("Age min") . "</label>");
-        $this->ajouteLigne("<input type='text' id='" . AGE_MINIMUM ."' name='" . AGE_MINIMUM . "' value='" . $this->ageMinimum . "' />");
-        $this->fermeBloc("</li>");
-        
-        // Nombre Joueur
-      /*  $this->ouvreBloc("<li>");
-        $this->ajouteLigne("<label for='" . NB_JOUEUR_V . "'>" . $this->convertiTexte("Nombre de joueurs") . "</label>");
-        $this->ajouteLigne("<input type='text' maxlength='2' name='"  . NB_JOUEUR_V . "' value='" . $this->nb_joueur . "' />");
-        $this->fermeBloc("</li>");*/
-		
-		$this->fermeBloc("</ol>");
-		$this->fermeBloc("</fieldset>");
-		
 		
 		// Second fieldset : Informations sur la version
 		$this->ouvreBloc("<fieldset>");

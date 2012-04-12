@@ -695,7 +695,12 @@ class AccesAuxDonneesDev
 			$requete .= " WHERE " . ID_JEU . "='" . $idJeu . "'";
 		$requete .= " ORDER BY " . NOM_JEU . ";";
 		$laListe = $this->requeteSelect($requete);
-		return $laListe;
+		
+		$resultat;
+		foreach($laListe as $idListe => $nomJeu)
+			$resultat[$nomJeu[ID_JEU]][] = $nomJeu;
+			
+		return $resultat;
 	}
 	
     /**
