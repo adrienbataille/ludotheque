@@ -13,11 +13,14 @@ define("BASE_DEV","mdjtufjjpdev");
 // Constantes - Definition des Tables SQL
 define("TABLE_CATEGORIE", TABLE_PREFIX . "CATEGORIE");
 define("TABLE_CATEGORIE_JEUX", TABLE_PREFIX . "CATEGORIE_JEUX");
+define("TABLE_DISTRIBUTEUR", TABLE_PREFIX . "DISTRIBUTEUR");
+define("TABLE_EDITEUR", TABLE_PREFIX . "EDITEUR");
 define("TABLE_EMPRUNT", TABLE_PREFIX . "EMPRUNT");
 define("TABLE_ETAT_EXEMPLAIRE", TABLE_PREFIX . "ETAT_EXEMPLAIRE");
 define("TABLE_EXEMPLAIRE", TABLE_PREFIX . "EXEMPLAIRE");
 define("TABLE_EXTENSION", TABLE_PREFIX . "EXTENSION");
 define("TABLE_FAIRE_PARTIE_KIT", TABLE_PREFIX . "FAIRE_PARTIE_KIT");
+define("TABLE_ILLUSTRATEUR", TABLE_PREFIX . "ILLUSTRATEUR");
 define("TABLE_INVENTAIRE", TABLE_PREFIX . "INVENTAIRE");
 define("TABLE_JEUX", TABLE_PREFIX . "JEUX");
 define("TABLE_KIT_JEUX", TABLE_PREFIX . "KIT_JEUX");
@@ -42,6 +45,14 @@ define("DESCRIPTION_CATEGORIE", "descriptionCategorie");
 
 // Définition des champs de la table TABLE_CATEGORIE_JEU
 define("ID_CATEGORIE_JEU", "idCategorieJeu");
+
+// Définition des champs de la table TABLE_DISTRIBUTEUR
+define("ID_DISTRIBUTEUR", "idDistributeur");
+define("NOM_DISTRIBUTEUR", "nomDistributeur");
+
+// Définition des champs de la table TABLE_EDITEUR
+define("ID_EDITEUR", "idEditeur");
+define("NOM_EDITEUR", "nomEditeur");
 
 // Définition des champs de la table TABLE_EMPRUNT
 define("ID_EMPRUNT", "idEmprunt");
@@ -70,6 +81,10 @@ define("ID_VERSION_EXTENSION", "idVersionExtension");
 
 // Définition des champs de la table TABLE_FAIRE_PARTIE_KIT
 define("ID_FAIRE_PARTIE_KIT", "idFairePartieKit");
+
+// Définition des champs de la table TABLE_ILLUSTRATEUR
+define("ID_ILLUSTRATEUR", "idIllustrateur");
+define("NOM_ILLUSTRATEUR", "nomIllustrateur");
 
 // Définition des champs de la table TABLE_INVENTAIRE
 define("ID_INVENTAIRE", "idInventaire");
@@ -143,9 +158,6 @@ define("NB_JOUEUR_RECOMMANDE", "nbJoueurRecommande");
 define("DUREE_PARTIE", "dureePartie");
 define("PRIX_ACHAT", "prixAchat");
 define("ANNEE_SORTIE", "anneeSortie");
-define("ILLUSTRATEUR", "illustrateur");
-define("DISTRIBUTEUR", "distributeur");
-define("EDITEUR", "editeur");
 
 
 
@@ -513,6 +525,99 @@ class AccesAuxDonneesDev
 		else
 			return $resultat[0][ID_PAYS];
     }
+
+	/**
+    * Fonction d'insertion d'un illsutrateur
+    * Entrée : le nom de l'illustrateur
+    * Sortie : true si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableIllustrateur($unIllustrateur)
+    {
+
+		// On initie la connexion à la base, si ce n'est déjà fait
+		$this->connecteBase();
+		// Création de la requete
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_ILLUSTRATEUR . " (" . NOM_ILLUSTRATEUR . ") VALUES(?) ;");
+		
+		$requete->bindValue(1, $unIllustrateur, PDO::PARAM_STR);
+		
+		$resultat = $requete->execute();
+
+		// On termine l'utilisation de la requete
+		$requete->closeCursor();
+		
+		// Création de la requete pour récupérer l'id de l'exemplaire inséré
+		$requete = "SELECT MAX(" . ID_ILLUSTRATEUR . ") FROM " . TABLE_ILLUSTRATEUR . " ;";
+		
+		$resultat = $this->requeteSelect($requete);
+		
+		if(count($resultat) == 0)
+			return false;
+		else
+			return $resultat[0][0];
+    }
+
+	/**
+    * Fonction d'insertion d'un distributeur
+    * Entrée : le nom du distributeur
+    * Sortie : true si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableDistributeur($unDistributeur)
+    {
+
+		// On initie la connexion à la base, si ce n'est déjà fait
+		$this->connecteBase();
+		// Création de la requete
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_DISTRIBUTEUR . " (" . NOM_DISTRIBUTEUR . ") VALUES(?) ;");
+		
+		$requete->bindValue(1, $unDistributeur, PDO::PARAM_STR);
+		
+		$resultat = $requete->execute();
+
+		// On termine l'utilisation de la requete
+		$requete->closeCursor();
+		
+		// Création de la requete pour récupérer l'id de l'exemplaire inséré
+		$requete = "SELECT MAX(" . ID_DISTRIBUTEUR . ") FROM " . TABLE_DISTRIBUTEUR . " ;";
+		
+		$resultat = $this->requeteSelect($requete);
+		
+		if(count($resultat) == 0)
+			return false;
+		else
+			return $resultat[0][0];
+    }
+
+	/**
+    * Fonction d'insertion d'un éditeur
+    * Entrée : le nom de l'éditeur
+    * Sortie : true si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableEditeur($unEditeur)
+    {
+
+		// On initie la connexion à la base, si ce n'est déjà fait
+		$this->connecteBase();
+		// Création de la requete
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_EDITEUR . " (" . NOM_EDITEUR . ") VALUES(?) ;");
+		
+		$requete->bindValue(1, $unEditeur, PDO::PARAM_STR);
+		
+		$resultat = $requete->execute();
+
+		// On termine l'utilisation de la requete
+		$requete->closeCursor();
+		
+		// Création de la requete pour récupérer l'id de l'exemplaire inséré
+		$requete = "SELECT MAX(" . ID_EDITEUR . ") FROM " . TABLE_EDITEUR . " ;";
+		
+		$resultat = $this->requeteSelect($requete);
+		
+		if(count($resultat) == 0)
+			return false;
+		else
+			return $resultat[0][0];
+    }
     
     /**
     * Fonction d'insertion d'un pays
@@ -729,6 +834,21 @@ class AccesAuxDonneesDev
 		if($idPays != null)
 			$requete .= " WHERE " . ID_PAYS . " = '" . $idPays . "'";
 		$requete .= " ORDER BY " . NOM_PAYS . ";";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
+    /**
+	* Fonction de récupération de la liste des illustrateurs ou un illustrateurs en particulier si on lui passe en paramètre l'id d'un illustrateur
+	* Entrée : id de l'illustrateur pour lequel on veut récupérer des informations (paramètre optionnel)
+	* Sortie : le tableau contenant les illustrateurs
+	*/
+	public function recupIllustrateur($idIllustrateur)
+	{
+		$requete = "SELECT * FROM " . TABLE_ILLUSTRATEUR;
+		if($idPays != null)
+			$requete .= " WHERE " . ID_ILLUSTRATEUR . " = '" . $idIllustrateur . "'";
+		$requete .= " ORDER BY " . NOM_ILLUSTRATEUR . ";";
 		$laListe = $this->requeteSelect($requete);
 		return $laListe;
 	}
