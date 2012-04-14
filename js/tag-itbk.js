@@ -34,13 +34,11 @@
             tagSource         : null,
             removeConfirmation: false,
             caseSensitive     : true,
+            placeholderText   : null,
 
             // When enabled, quotes are not neccesary
             // for inputting multi-word tags.
             allowSpaces: false,
-
-            // Tag delimiters to use in addition to space, enter and tab
-            delimiterKeyCodes: [$.ui.keyCode.COMMA],
 
             // Whether to animate tag removals or not.
             animate: true,
@@ -74,26 +72,11 @@
             // created for tag-it.
             tabIndex: null,
 
-            // Whether to only create tags only from autocomplete suggestions
-            requireAutocomplete: false,
-
-            // Display title attribute as hint.
-            hints: true,
-
-            // Hint animation.
-            hintHideEffect: 'fade',
-            hintHideEffectOptions: {},
-            hintHideEffectSpeed: 200,
-
-            // Whether to remove the selected tag and all the tags that were added after it when deleting a tag.
-            pruneTags: false,
 
             // Event callbacks.
             onTagAdded  : null,
             onTagRemoved: null,
-            onTagClicked: null,
-
-            onAutocompleteSelected: null
+            onTagClicked: null
         },
 
 
@@ -115,32 +98,26 @@
             }
 
             this._tagInput = $('<input type="text" />').addClass('ui-widget-content');
-            this._hintOverlay = $('<li></li>').addClass('tagit-hint ui-widget-content').text(this.element.attr('title')||"");
-
             if (this.options.tabIndex) {
                 this._tagInput.attr('tabindex', this.options.tabIndex);
             }
-
-            if (!this.options.tagSource && this.options.availableTags.length > 0) {
-                this.options.tagSource = function(search, showChoices) {
-                    var filter = search.term.toLowerCase();
-                    var choices = $.grep(that.options.availableTags, function(element) {
-                        // Only match autocomplete options that begin with the search term.
-                        // (Case insensitive.)
-                        return (element.toLowerCase().indexOf(filter) === 0);
-                    });
-                    showChoices(that._subtractArray(choices, this.assignedTags()));
-                };
+            if (this.options.placeholderText) {
+                this._tagInput.attr('placeholder', this.options.placeholderText);
             }
+
+            this.options.tagSource = this.options.tagSource || function(search, showChoices) {
+                var filter = search.term.toLowerCase();
+                var choices = $.grep(this.options.availableTags, function(element) {
+                    // Only match autocomplete options that begin with the search term.
+                    // (Case insensitive.)
+                    return (element.toLowerCase().indexOf(filter) === 0);
+                });
+                showChoices(this._subtractArray(choices, this.assignedTags()));
+            };
 
             // Bind tagSource callback functions to this context.
             if ($.isFunction(this.options.tagSource)) {
                 this.options.tagSource = $.proxy(this.options.tagSource, this);
-            }
-
-            // cannot require autocomplete without an autocomplete source
-            if (!this.options.tagSource) {
-                this.options.requireAutocomplete = false;
             }
 
             this.tagList
@@ -184,47 +161,43 @@
                 }
             }
 
-            if (this.options.allowSpaces !== true) {
-                this.options.delimiterKeyCodes.push($.ui.keyCode.SPACE);
-            }
-
-            if (this.options.hints && this.element.attr('title') !== undefined) {
-                this.tagList.prepend(this._hintOverlay);
-            }
-            if (this.tagList.children('.tagit-choice').size() != 0) {
-                this._hintOverlay.hide();
-            }
-
             // Events.
-            this._tagInput.keydown(function(event) {
-                // Backspace is not detected within a keypress, so it must use keydown.
-                if (event.which == $.ui.keyCode.BACKSPACE && that._tagInput.val() === '') {
-                    var tag = that._lastTag();
-                    if (!that.options.removeConfirmation || tag.hasClass('remove')) {
-                        // When backspace is pressed, the last tag is deleted.
-                        that.removeTag(tag);
+            this._tagInput
+                .keydown(function(event) {
+                    // Backspace is not detected within a keypress, so it must use keydown.
+                    if (event.which == $.ui.keyCode.BACKSPACE && that._tagInput.val() === '') {
+                        var tag = that._lastTag();
+                        if (!that.options.removeConfirmation || tag.hasClass('remove')) {
+                            // When backspace is pressed, the last tag is deleted.
+                            that.removeTag(tag);
+                        } else if (that.options.removeConfirmation) {
+                            tag.addClass('remove ui-state-highlight');
+                        }
                     } else if (that.options.removeConfirmation) {
-                        tag.addClass('remove ui-state-highlight');
+                        that._lastTag().removeClass('remove ui-state-highlight');
                     }
-                } else if (that.options.removeConfirmation) {
-                    that._lastTag().removeClass('remove ui-state-highlight');
-                }
 
-                if (that.options.requireAutocomplete !== true) {
-                    // Any keyCode in options.delimiterKeyCodes, in addition to
-                    // Enter, are valid delimiters for new tags except when
-                    // there is an open quote.
-                    // Tab will also create a tag, unless the tag input is
-                    // empty, in which case it isn't caught.
+                    // Comma/Space/Enter are all valid delimiters for new tags,
+                    // except when there is an open quote or if setting allowSpaces = true.
+                    // Tab will also create a tag, unless the tag input is empty, in which case it isn't caught.
                     if (
+                        event.which == $.ui.keyCode.COMMA ||
                         event.which == $.ui.keyCode.ENTER ||
                         (
                             event.which == $.ui.keyCode.TAB &&
                             that._tagInput.val() !== ''
                         ) ||
                         (
-                            ($.inArray(event.which, that.options.delimiterKeyCodes) >= 0) &&
-                            that._tagInputHasClosedQuotes()
+                            event.which == $.ui.keyCode.SPACE &&
+                            that.options.allowSpaces !== true &&
+                            (
+                                $.trim(that._tagInput.val()).replace( /^s*/, '' ).charAt(0) != '"' ||
+                                (
+                                    $.trim(that._tagInput.val()).charAt(0) == '"' &&
+                                    $.trim(that._tagInput.val()).charAt($.trim(that._tagInput.val()).length - 1) == '"' &&
+                                    $.trim(that._tagInput.val()).length - 1 !== 0
+                                )
+                            )
                         )
                     ) {
                         event.preventDefault();
@@ -234,76 +207,14 @@
                         // So let's ensure that it closes.
                         that._tagInput.autocomplete('close');
                     }
-                }
-                if (that.options.requireAutocomplete == true) {
-                    // Any keyCode in options.delimiterKeyCodes, in addition to
-                    // Enter, are valid delimiters for new tags except when
-                    // there is an open quote.
-                    // Tab will also create a tag, unless the tag input is
-                    // empty, in which case it isn't caught.
-                    if (
-                        event.which == $.ui.keyCode.ENTER ||
-                        (
-                            event.which == $.ui.keyCode.TAB &&
-                            that._tagInput.val() !== ''
-                        ) ||
-                        (
-                            ($.inArray(event.which, that.options.delimiterKeyCodes) >= 0) &&
-                            that._tagInputHasClosedQuotes()
-                        )
-                    ) {
-                        event.preventDefault();
-                    	if(jQuery.inArray(that._cleanedInput(),that.options.availableTags)!==-1){
-                        that.createTag(that._cleanedInput());
-
-                        // The autocomplete doesn't close automatically when TAB is pressed.
-                        // So let's ensure that it closes.
-                        that._tagInput.autocomplete('close');
-                    	}
-                    }
-                }
-                
-                
-                
-                else if (event.which == $.ui.keyCode.ENTER) {
-                    event.preventDefault();
-                }
-            });
-
-            if (this.options.requireAutocomplete !== true) {
-                this._tagInput.blur(function(e) {
+                }).blur(function(e){
                     // Create a tag when the element loses focus (unless it's empty).
                     that.createTag(that._cleanedInput());
-                    if (that.tagList.children('.tagit-choice').size() == 0) {
-                        that._hintOverlay.show();
-                    }
-                }).focus(function(e) {
-                    that._hintOverlay.hide(
-                        that.options.hintHideEffect,
-                        that.options.hintHideEffectOptions,
-                        that.options.hintHideEffectSpeed);
                 });
-            }
+                
 
-            if (this.options.requireAutocomplete == true) {
-                this._tagInput.blur(function(e) {
-                	if(jQuery.inArray(that._cleanedInput(),that.options.availableTags)!==-1){
-                    // Create a tag when the element loses focus (unless it's empty).
-                    that.createTag(that._cleanedInput());
-                    if (that.tagList.children('.tagit-choice').size() == 0) {
-                        that._hintOverlay.show();
-                    }
-                    }
-                }).focus(function(e) {
-                    that._hintOverlay.hide(
-                        that.options.hintHideEffect,
-                        that.options.hintHideEffectOptions,
-                        that.options.hintHideEffectSpeed);
-                });
-            }
-            
             // Autocomplete.
-            if (this.options.tagSource) {
+            if (this.options.availableTags || this.options.tagSource) {
                 this._tagInput.autocomplete({
                     source: this.options.tagSource,
                     select: function(event, ui) {
@@ -316,12 +227,8 @@
                         if (that._tagInput.val() === '') {
                             that.removeTag(that._lastTag(), false);
                         }
-                        var tag = that.createTag(ui.item.value);
+                        that.createTag(ui.item.value);
                         // Preventing the tag input to be updated with the chosen value.
-                        that._trigger('onAutocompleteSelected', event, {
-                            item: ui.item,
-                            tag: tag
-                        });
                         return false;
                     }
                 });
@@ -335,16 +242,6 @@
 
         _lastTag: function() {
             return this.tagList.children('.tagit-choice:last');
-        },
-
-        _tagInputHasClosedQuotes: function() {
-            var inputVal = this._tagInput.val();
-            return $.trim(inputVal).replace( /^s*/, '' ).charAt(0) != '"' ||
-            (
-                $.trim(inputVal).charAt(0) == '"' &&
-                $.trim(inputVal).charAt($.trim(inputVal).length - 1) == '"' &&
-                $.trim(inputVal).length - 1 !== 0
-            )
         },
 
         assignedTags: function() {
@@ -451,20 +348,11 @@
             // Cleaning the input.
             this._tagInput.val('');
 
-            // Hide any hint text (possible if createTag is called externally)
-            this._hintOverlay.hide();
-
             // insert tag
-            return tag.insertBefore(this._tagInput.parent());
+            this._tagInput.parent().before(tag);
         },
-
-        removeTag: function(tag, animate, removeOnly) {
-            var that = this;
-
-            if (this.options.pruneTags && !removeOnly) {
-                that.pruneTag(tag)
-            }
-
+        
+        removeTag: function(tag, animate) {
             animate = animate || this.options.animate;
 
             tag = $(tag);
@@ -487,14 +375,6 @@
             } else {
                 tag.remove();
             }
-
-            // Show any hint text
-            tag.queue(function(next) {
-                if (!that._tagInput.is(':focus') && that.tagList.children('.tagit-choice').size() == 0) {
-                    that._hintOverlay.show();
-                }
-                next();
-            });
         },
 
         removeAll: function() {
@@ -503,26 +383,8 @@
             this.tagList.children('.tagit-choice').each(function(index, tag) {
                 that.removeTag(tag, false);
             });
-        },
-
-        pruneTag: function(targetTag) {
-            // Removes the specified tag and all the tags that were added after it.
-            console.log('pruning')
-            var that = this;
-            targetTag = $(targetTag)[0];
-            console.log(targetTag);
-
-            var found = false;
-
-            this.tagList.children('.tagit-choice').each(function(index, tag) {
-                if (tag == targetTag){
-                    found = true;
-                }
-                if (found){
-                    that.removeTag(tag, {}, true);
-                }
-            });
         }
+
     });
 
 })(jQuery);

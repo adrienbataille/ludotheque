@@ -354,6 +354,15 @@ class ComposantRecherche extends Module
 		}
 
 	}
+	
+	/**
+	 * Fonction qui crée un champ de recherche pour les catégories avec tag
+	 * @param string nom du tableau POST
+	 * @param string nom de la ligne du tableau
+	 */
+	
+	
+	
 }
 
 

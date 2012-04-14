@@ -8,11 +8,22 @@ require_once("classes/AccesAuxDonnees.classe.php");
 require_once("classes/SessionUtilisateur.classe.php");
 require_once("classes/AccesAuxDonneesDev.classe.php");
 
+
 // Constante de définition des URL
 define("RACINE_SITE", ""); // Racine originale du site http://www.mdjt.org/v2/
 define("CSS_MDJT", "css/mdjt.css");
 define("CSS_RECHERCHE","css/recherche.css");
 define("CSS_RESET", "css/reset.css");
+
+define("JQUERY","js/jquery-1.7.2.min.js");
+define("TAGIT","js/tag-it.js");
+define("JS_DEV","js/mdjt-dev.js");
+define("JQUERY_UI","js/jquery-ui-1.8.18.min.js");
+
+define("CSS_TAGIT","css/jquery.tagit.css");
+define("CSS_JQUERY_UI","css/redmond/jquery-ui.css");
+
+
 define("PAGE_MODULE", RACINE_SITE . "module.php");
 define("PAGE_INDEX", RACINE_SITE . "index.php");
 define("PAGE_MENTIONS", RACINE_SITE . "mentions.php");
@@ -314,7 +325,25 @@ abstract class Page
 		$this->ajouteLigne("<link rel=\"stylesheet\" type=\"text/css\" href=\"" .
 				RACINE_SITE . CSS_RECHERCHE . "\" />");
 		$this->ajouteLigne("<link rel=\"stylesheet\" type=\"text/css\" href=\"" .
+				RACINE_SITE . CSS_TAGIT . "\" />");
+		$this->ajouteLigne("<link rel=\"stylesheet\" type=\"text/css\" href=\"" .
+				RACINE_SITE . CSS_JQUERY_UI . "\" />");
+		
+		$this->ajouteLigne("<link rel=\"stylesheet\" type=\"text/css\" href=\"" .
 			RACINE_SITE . CSS_RESET . "\" />");
+		$this->ajouteLigne("    <script src=\""
+				. RACINE_SITE . JQUERY .
+				 "\" type=\"text/javascript\" charset=\"utf-8\"></script>");
+		$this->ajouteLigne("    <script src=\""
+				. RACINE_SITE . JQUERY_UI .
+				"\" type=\"text/javascript\" charset=\"utf-8\"></script>");
+		$this->ajouteLigne("    <script src=\""
+				. RACINE_SITE . TAGIT .
+				"\" type=\"text/javascript\" charset=\"utf-8\"></script>");
+		$this->ajouteLigne("    <script src=\""
+				. RACINE_SITE . JS_DEV .
+				"\" type=\"text/javascript\" charset=\"utf-8\"></script>");
+		
                 // Si il y a des styles additionnels, on les ajoute
                 if ($cssAdditionnels != NULL)
                 {

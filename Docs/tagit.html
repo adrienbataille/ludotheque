@@ -1,0 +1,233 @@
+<h1>Tag-it: a jQuery UI plugin</h1>
+
+<p>Tag-it was originally inspired by the "tag suggestion" form field in ZenDesk.com. Now it is a full jQuery UI widget, supporting various configurations and themes.</p>
+
+<h2>Demo</h2>
+
+<p><img src="http://aehlke.github.com/tag-it/screenshot.png" alt="Screenshot" title="" /></p>
+
+<p>Check the <a href="http://aehlke.github.com/tag-it/examples.html">examples.html</a> for several demos.</p>
+
+<h2>Usage</h2>
+
+<p>First, load <a href="http://jquery.com/">jQuery</a> (v1.4 or greater), <a href="http://jqueryui.com/">jQuery UI</a> (v1.8 or greater), and the plugin:</p>
+
+<pre><code>&lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js" type="text/javascript" charset="utf-8"&gt;&lt;/script&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript" charset="utf-8"&gt;&lt;/script&gt;
+&lt;script src="js/tag-it.js" type="text/javascript" charset="utf-8"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>The plugin requires a jQuery UI theme to be present, as well as its own included base CSS file (<a href="http://github.com/aehlke/tag-it/raw/master/css/jquery.tagit.css">jquery.tagit.css</a>). Here we use the Flick theme as an example:</p>
+
+<pre><code>&lt;link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css"&gt;
+&lt;link href="css/jquery.tagit.css" rel="stylesheet" type="text/css"&gt;
+</code></pre>
+
+<p>Now, let's attach it to an existing <code>&lt;ul&gt;</code> box:</p>
+
+<pre><code>&lt;script type="text/javascript"&gt;
+    $(document).ready(function() {
+        $("#mytags").tagit();
+    });
+&lt;/script&gt;
+
+&lt;ul id="mytags"&gt;
+    &lt;!-- Existing list items will be pre-added to the tags --&gt;
+    &lt;li&gt;Tag1&lt;/li&gt;
+    &lt;li&gt;Tag2&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>This will turn the list into a tag-it list:</p>
+
+<pre><code>&lt;ul id="mytags" class="tagit ui-widget ui-widget-content ui-corner-all"&gt;
+    &lt;!-- Existing list items will be pre-added to the tags. --&gt;
+    &lt;li class="tagit-choice ui-widget-content ui-state-default ui-corner-all"&gt;
+        &lt;span class="tagit-label"&gt;Tag1&lt;/span&gt;
+        &lt;a class="close"&gt;&lt;span class="ui-icon ui-icon-close"&gt;&lt;/span&gt;&lt;/a&gt;
+        &lt;input type="hidden" style="display:none;" value="Tag1" name="item[tags][]"&gt;
+    &lt;/li&gt;
+    &lt;li class="tagit-choice ui-widget-content ui-state-default ui-corner-all"&gt;
+        &lt;span class="tagit-label"&gt;Tag2&lt;/span&gt;
+        &lt;a class="close"&gt;&lt;span class="ui-icon ui-icon-close"&gt;&lt;/span&gt;&lt;/a&gt;
+        &lt;input type="hidden" style="display:none;" value="Tag2" name="item[tags][]"&gt;
+    &lt;/li&gt;
+    &lt;li class="tagit-new"&gt;
+        &lt;input type="text" class="ui-widget-content ui-autocomplete-input" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true"&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>There are several other possible configurations and ways to instantiate the widget, including one that uses a single comma-delimited <code>input</code> field rather than one per tag, so see the <strong>Options</strong> documentation below as well as the <a href="http://aehlke.github.com/tag-it/examples.html">examples page</a> which demonstrates most of them.</p>
+
+<h2>Theming</h2>
+
+<p>Tag-it is as easily themeable as any jQuery UI widget, using your own theme made with <a href="http://jqueryui.com/themeroller/">Themeroller</a>, or one of the jQuery UI <a href="http://jqueryui.com/themeroller/#themeGallery">premade themes</a>. The old ZenDesk-like theme is included as an optional CSS file (<a href="http://github.com/aehlke/tag-it/raw/master/css/tagit.ui-zendesk.css">tagit.ui-zendesk.css</a>).</p>
+
+<h2>Options</h2>
+
+<p>Tag-it accepts several options to customize the behaviour:</p>
+
+<h3>itemName (String)</h3>
+
+<p>Used to build the name of the hidden input field: <code>itemName[fieldName][]</code>.</p>
+
+<pre><code>$("#mytags").tagit({
+    itemName: "user"
+});
+</code></pre>
+
+<p>Defaults to <em>item</em>.</p>
+
+<h3>fieldName (String)</h3>
+
+<p>Used to build the name of the hidden input field: <code>itemName[fieldName][]</code>.</p>
+
+<pre><code>$("#mytags").tagit({
+    fieldName: "skills"
+});
+</code></pre>
+
+<p>Defaults to <em>tags</em>.</p>
+
+<h3>availableTags (Array)</h3>
+
+<p>Used as source for the autocompletion.</p>
+
+<pre><code>$("#mytags").tagit({
+    availableTags: ["c++", "java", "php", "javascript", "ruby", "python", "c"]
+});
+</code></pre>
+
+<p>Defaults to an empty array <em>[]</em>.</p>
+
+<h3>tagSource (function)</h3>
+
+<p>Can be overwritten in order to use custom autocompletion sources like Ajax requests.
+The default function filters the strings in <strong>availableTags</strong> and subtracts the already assigned tags.</p>
+
+<h3>removeConfirmation (boolean)</h3>
+
+<p>When removeConfirmation is enabled the user has to press the backspace key twice to remove the last tag.
+After the first keypress the last tag receives a <em>remove</em> css class which can be used to visually highlight the tag.</p>
+
+<p>Defaults to <em>false</em>.</p>
+
+<h3>caseSensitive (boolean)</h3>
+
+<p>whether the duplication check should do a case sensitive check or not.</p>
+
+<p>Defaults to <em>true</em>.</p>
+
+<h3>allowSpaces (boolean)</h3>
+
+<p>When allowSpaces is enabled the user is not required to wrap multi-word tags in quotation marks.
+For example, the user can enter <code>John Smith</code> instead of <code>"John Smith"</code>.</p>
+
+<p>Defaults to <em>false</em>.</p>
+
+<h3>singleField (boolean)</h3>
+
+<p>When enabled, will use a single hidden field for the form, rather than one per tag.
+It will delimit tags in the field with <strong>singleFieldDelimiter</strong>.</p>
+
+<p>Defaults to <em>false</em>, unless Tag-it was created on an <code>input</code> element, in which case <strong>singleField</strong> will be overridden as true.</p>
+
+<h3>singleFieldDelimiter (String)</h3>
+
+<p>Defaults to <em>","</em></p>
+
+<h3>singleFieldNode (DomNode)</h3>
+
+<p>Set this to an input DOM node to use an existing form field.
+Any text in it will be erased on init. But it will be populated with the text of tags as they are created, delimited by <strong>singleFieldDelimiter</strong>.
+If this is not set, we create an input node for it, with the name given in <strong>fieldName</strong>, ignoring <strong>itemName</strong>.</p>
+
+<p>Defaults to <em>null</em>, unless Tag-it was created on an <code>input</code> element, in which case <strong>singleFieldNode</strong> will be overridden with that element.</p>
+
+<h3>tabIndex (integer)</h3>
+
+<p>Optionally set a <em>tabindex</em> attribute on the <code>input</code> that gets created for tag-it user input.</p>
+
+<p>Defaults to <em>null</em></p>
+
+<h3>placeholderText (String)</h3>
+
+<p>Optionally set a <em>placeholder</em> attribute on the <code>input</code> that gets created for tag-it user input.</p>
+
+<p>Defaults to <em>null</em></p>
+
+<h2>Events</h2>
+
+<h3>onTagAdded (function, Callback)</h3>
+
+<p>Can be used to add custom behaviour before the Tag is added to the DOM.
+The function receives an empty event, and the tag as parameters.</p>
+
+<pre><code>$("#mytags").tagit({
+    onTagAdded: function(event, tag) {
+        // do something special
+    }
+});
+</code></pre>
+
+<h3>onTagRemoved (function, Callback)</h3>
+
+<p>Can be used to add custom behaviour before the Tag is removed from the DOM.
+The function receives an empty event, and the tag as parameters.</p>
+
+<pre><code>$("#mytags").tagit({
+    onTagRemoved: function(event, tag) {
+        // do something special
+    }
+});
+</code></pre>
+
+<h3>onTagClicked (function, Callback)</h3>
+
+<p>Can be used to add custom behaviour when the Tag is clicked from the DOM.
+The function receives the click event and the tag as parameters.</p>
+
+<pre><code>$("#mytags").tagit({
+    onTagClicked: function(event, tag) {
+        // do something special
+    }
+});
+</code></pre>
+
+<h2>Methods</h2>
+
+<h3>assignedTags()</h3>
+
+<p>Returns an array of the text values of all the tags currently in the widget.</p>
+
+<pre><code>$("#mytags").tagit("assignedTags");
+</code></pre>
+
+<h3>createTag(tagName, additionalClass)</h3>
+
+<p>Adds new tag to the list. The <code>additionalClass</code> parameter is an optional way to add classes to the tag element.</p>
+
+<pre><code>$("#mytags").tagit("createTag", "brand-new-tag");
+</code></pre>
+
+<h3>removeAll()</h3>
+
+<p>Clears the widget of all tags -- removes each tag it contains, so the onTagRemoved event callback (if set in the options) will be called for each.</p>
+
+<pre><code>$("#mytags").tagit("removeAll");
+</code></pre>
+
+<h2>Authors</h2>
+
+<ul>
+<li><a href="http://github.com/levycarneiro">Levy Carneiro Jr.</a> <em>original author</em></li>
+<li><a href="http://github.com/martinrehfeld">Martin Rehfeld</a></li>
+<li><a href="http://github.com/grobie">Tobias Schmidt</a></li>
+<li><a href="http://github.com/sskylar">Skylar Challand</a></li>
+<li><a href="http://github.com/aehlke">Alex Ehlke</a> <em>current maintainer</em></li>
+</ul>
+
+<h2>License</h2>
+
+<p>tag-it is released under the <a href="http://github.com/aehlke/tag-it/raw/master/LICENSE">MIT license</a>.</p>
