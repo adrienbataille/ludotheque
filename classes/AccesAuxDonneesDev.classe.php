@@ -154,7 +154,7 @@ define("INFERIEUR","inf");
 define("EGAL","egal");
 
 //Définition des états
-define("DISPONIBLE",1);
+define("DISPONIBLE","1");
 class AccesAuxDonneesDev
 {
 
@@ -409,21 +409,21 @@ class AccesAuxDonneesDev
 		}
 
 		//Par langue. On regarde seulement la langue de la version ( pour le moment )
-		if(is_numeric($critere[ID_LANGUE])){
-			$query->ajoutAndEgal(TABLE_VERSION, ID_LANGUE, $critere[ID_LANGUE]);
+		if(is_numeric($critere["idLangue"])){
+			$query->ajoutAndEgal(TABLE_VERSION, ID_LANGUE, $critere["idLangue"]);
 		}
 
 		// Par Etat
-		if(is_numeric($critere[ID_ETAT_EXEMPLAIRE])){
-			$query->ajoutAndEgal(TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, $critere[ID_ETAT_EXEMPLAIRE]);
+		if(is_numeric($critere["idEtatExemplaire"])){
+			$query->ajoutAndEgal(TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, $critere["idEtatExemplaire"]);
 		}
 
 		// Par Lieux
-		if(is_numeric($critere[ID_LIEU])){
-			$query->ajoutAndEgal(TABLE_EXEMPLAIRE, ID_LIEU_REEL, $critere[ID_LIEU]);
-			$string="AND (( " . TABLE_EXEMPLAIRE . "." . ID_LIEU_REEL   . "=" .$critere[ID_LIEU].
+		if(is_numeric($critere["idLieu"])){
+			$query->ajoutAndEgal(TABLE_EXEMPLAIRE, ID_LIEU_REEL, $critere["idLieu"]);
+			$string="AND (( " . TABLE_EXEMPLAIRE . "." . ID_LIEU_REEL   . "=" .$critere["idLieu"].
 			" AND " . TABLE_EXEMPLAIRE . "." . ID_LIEU_TEMPO   ."= 0) OR  "
-			. TABLE_EXEMPLAIRE . " . " . ID_LIEU_TEMPO   . "=" .$critere[ID_LIEU].")";
+			. TABLE_EXEMPLAIRE . " . " . ID_LIEU_TEMPO   . "=" .$critere["idLieu"].")";
 			$query->ajoutWhereLibre($string);
 		}
 
