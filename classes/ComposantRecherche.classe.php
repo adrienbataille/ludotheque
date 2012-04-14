@@ -61,7 +61,7 @@ class ComposantRecherche extends Module
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"nom\">" . $this->convertiTexte("Nom du jeu") . "</label>");
 		//$this->ajouteLigne("<input type=\"text\" id=\"nom\" name=\"recherche[nom]\" />");
-		$this->creationInputText("recherche",NOM);
+		$this->creationInputText("recherche","nom");
 		$this->fermeBloc("</div>");
 
 		//Categorie
@@ -95,9 +95,6 @@ class ComposantRecherche extends Module
 		$this->fermeBloc("</div>");
 
 		//Durée
-		/**
-		 * @todo Voir durée partie dans la bdd
-		 */
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"dureeEnMinute\">" . $this->convertiTexte("Durée en minute") . "</label>");
 		$this->creationInputText("recherche","DureeJeu");
@@ -115,25 +112,25 @@ class ComposantRecherche extends Module
 
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"langue\">" . $this->convertiTexte("Langue") . "</label>");
-		$this->creationSelect($langue,"recherche",ID_LANGUE);
+		$this->creationSelect($langue,"recherche","idLangue");
 		$this->fermeBloc("</div>");
 
 		//Etat
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"etat\">" . $this->convertiTexte("Etat") . "</label>");
-		$this->creationSelect($etat,"recherche",ID_ETAT_EXEMPLAIRE);
+		$this->creationSelect($etat,"recherche","idEtatExemplaire");
 		$this->fermeBloc("</div>");
 
 		//Lieu
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"lieu\">" . $this->convertiTexte("Lieu") . "</label>");
-		$this->creationSelect($lieu,"recherche",ID_LIEU);
+		$this->creationSelect($lieu,"recherche","idLieu");
 		$this->fermeBloc("</div>");
 
 
 		//Prix
 		$this->ouvreBloc("<div class='champ_recherche'>");
-		$this->ajouteLigne("<label for=\"prix\">" . $this->convertiTexte("Prix:") . "</label>");
+		$this->ajouteLigne("<label for=\"prix\">" . $this->convertiTexte("Valeur MDJT:") . "</label>");
 		$this->ajouteLigne( $this->convertiTexte("Min"));
 		$this->creationInputText("recherche","prixMin");
 		$this->ajouteLigne("<br/>");

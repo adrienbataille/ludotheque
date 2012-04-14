@@ -13,15 +13,15 @@ define("BASE_DEV","mdjtufjjpdev");
 
 // Constantes - Definition des Tables SQL
 define("TABLE_CATEGORIE", TABLE_PREFIX . "CATEGORIE");
-define("TABLE_CATEGORIE_JEUX", TABLE_PREFIX . "CATEGORIE_JEU");
+define("TABLE_CATEGORIE_JEU", TABLE_PREFIX . "CATEGORIE_JEU");
 define("TABLE_EMPRUNT", TABLE_PREFIX . "EMPRUNT");
 define("TABLE_ETAT_EXEMPLAIRE", TABLE_PREFIX . "ETAT_EXEMPLAIRE");
 define("TABLE_EXEMPLAIRE", TABLE_PREFIX . "EXEMPLAIRE");
 define("TABLE_EXTENSION", TABLE_PREFIX . "EXTENSION");
 define("TABLE_FAIRE_PARTIE_KIT", TABLE_PREFIX . "FAIRE_PARTIE_KIT");
 define("TABLE_INVENTAIRE", TABLE_PREFIX . "INVENTAIRE");
-define("TABLE_JEUX", TABLE_PREFIX . "JEUX");
-define("TABLE_KIT_JEUX", TABLE_PREFIX . "KIT_JEUX");
+define("TABLEU_JEU", TABLE_PREFIX . "JEUX");
+define("TABLE_KIT_", TABLE_PREFIX . "KIT_JEUX");
 define("TABLE_LANGUE", TABLE_PREFIX . "LANGUE");
 define("TABLE_LANGUE_REGLE", TABLE_PREFIX . "LANGUE_REGLE");
 define("TABLE_LIEU", TABLE_PREFIX . "LIEU");
@@ -77,7 +77,7 @@ define("ID_INVENTAIRE", "idInventaire");
 define("DATE_INVENTAIRE", "dateInventaire");
 define("COMMENTAIRE_INVENTAIRE", "commentaireInventaire");
 
-// Définition des champs de la table TABLE_JEUX
+// Définition des champs de la table TABLEU_JEU
 define("ID_JEU", "idJeu");
 define("DESCRIPTION_JEU", "descriptionJeu");
 define("AUTEUR", "auteur");
@@ -338,7 +338,7 @@ class AccesAuxDonneesDev
 	 */
 	
 	public function listeAuteur(){
-		return $this->requeteSelect("SELECT " . AUTEUR . "," . AUTEUR . "  FROM " .  TABLE_JEUX);
+		return $this->requeteSelect("SELECT " . AUTEUR . "," . AUTEUR . "  FROM " .  TABLEU_JEU);
 	}
 	
 	/**
@@ -389,12 +389,12 @@ class AccesAuxDonneesDev
 		//Voir les commentaires dans RequeteSQL pour les méthodes
 
 		//On joint les 6 tables nécessaires pour le SELECT DE BASE
-		$query->jointureLeft(TABLE_JEUX, ID_JEU, TABLE_VERSION, ID_JEU);
+		$query->jointureLeft(TABLEU_JEU, ID_JEU, TABLE_VERSION, ID_JEU);
 		$query->jointureLeft(TABLE_VERSION,ID_VERSION,TABLE_PHOTO_VERSION,ID_VERSION);
 		$query->jointureLeft(TABLE_PHOTO_VERSION,ID_PHOTO,TABLE_PHOTO,ID_PHOTO);
 		$query->jointureLeft(TABLE_EXEMPLAIRE,ID_VERSION,TABLE_VERSION,ID_VERSION);
 		$query->jointure(TABLE_ETAT_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE);
-		$query->jointure(TABLE_NOM_JEU,ID_JEU,TABLE_JEUX,ID_JEU);
+		$query->jointure(TABLE_NOM_JEU,ID_JEU,TABLEU_JEU,ID_JEU);
 
 		$query->setExtra("GROUP BY ". TABLE_VERSION . "." . ID_VERSION . "," . TABLE_EXEMPLAIRE .".". ID_ETAT_EXEMPLAIRE );
 
@@ -531,12 +531,12 @@ class AccesAuxDonneesDev
 
 
 
-		// Par Prix Min et Max
+		// Par Prix MDJT Min et Max
 
 		// Min
 		if(is_numeric($critere["prixMin"]))
 		{
-			$string = "AND ( " . TABLE_EXEMPLAIRE . "." . PRIX_MDJT   .">" .$critere["prixMin"]."%')";
+			$string = "AND " . TABLE_EXEMPLAIRE . "." . PRIX_MDJT   ." > " .$critere["prixMin"] ;
 			$query->ajoutWhereLibre($string);
 		}
 
@@ -544,7 +544,7 @@ class AccesAuxDonneesDev
 
 		if(is_numeric($critere["prixMax"]))
 		{
-			$string = "AND ( " . TABLE_EXEMPLAIRE . "." . PRIX_MDJT   ."<" .$critere["prixMax"]."%')";
+			$string = "AND " . TABLE_EXEMPLAIRE . "." . PRIX_MDJT   ."<" .$critere["prixMax"];
 			$query->ajoutWhereLibre($string);
 		}
 
@@ -555,7 +555,7 @@ class AccesAuxDonneesDev
 		if($critere["auteur"]!=""){
 
 			$critere["auteur"]=mysql_real_escape_string($critere["auteur"]);
-			$string="AND ( " . TABLE_JEU . "." . AUTEUR   ." LIKE '%" .$critere["auteur"]."%')";
+			$string="AND ( " . TABLEU_JEU. "." . AUTEUR   ." LIKE '%" .$critere["auteur"]."%')";
 			$query->ajoutWhereLibre($string);
 		}
 
@@ -580,7 +580,7 @@ class AccesAuxDonneesDev
 
 		if($critere["categorie"]!=""){
 			$query->jointure(TABLE_CATEGORIE,ID_CATEGORIE,TABLE_CATEGORIE_JEUX,ID_CATEGORIE);
-			$query->jointure(TABLE_CATEGORIE,ID_JEU,TABLE_JEUX,ID_JEU);
+			$query->jointure(TABLE_CATEGORIE,ID_JEU,TABLEU_JEU,ID_JEU);
 			$string = explode("," , $critere["categorie"]);
 			foreach($string as $value ){
 				$query->ajoutAndLike(TABLE_CATEGORIE,NOM_CATEGORIE,$value);
