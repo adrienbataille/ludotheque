@@ -1,16 +1,44 @@
 	    $(function(){
-            var sampleTags = ['c++', 'java', 'php', 'coldfusion', 'javascript', 'asp', 'ruby', 'python', 'c', 'scala', 'groovy', 'haskell', 'perl', 'erlang', 'apl', 'cobol', 'go', 'lua'];
+            //var sampleTags = ['c++', 'java', 'php', 'coldfusion', 'javascript', 'asp', 'ruby', 'python', 'c', 'scala', 'groovy', 'haskell', 'perl', 'erlang', 'apl', 'cobol', 'go', 'lua'];
 
 
             //-------------------------------
             // Single field
             //-------------------------------
 		    $('#categorie').tagit({
-			    availableTags: sampleTags,
+			    //availableTags: sampleTags,
 			    // This will make Tag-it submit a single form value, as a comma-delimited field.
 			    singleField: true,
 			    allowSpaces: true,
-			    requireAutocomplete: true
+			    requireAutocomplete: true,
+			    
+			    tagSource: function(search, showChoices) {
+			        var that = this;
+			        var filter = search.term.toLowerCase();
+			        $.ajax({
+			          url: "tagCategorie.php",
+			          dataType: "json",
+			          type: "POST",
+			          data:  { filter: filter } ,
+			          success: function(choices) {
+			            showChoices(that._subtractArray(choices, that.assignedTags()));
+			            availableTags:choices;
+			          }
+			        });
+			      }
+		    
+			    /*
+			    tagSource : function(search, showChoices) {
+                    var filter = search.term.toLowerCase();
+                    var choices = $.grep(this.availableTags, function(element) {
+                        // Only match autocomplete options that begin with the search term.
+                        // (Case insensitive.)
+                        return (element.toLowerCase().indexOf(filter) === 0);
+                    });
+                    alert("test");
+                    showChoices(this._subtractArray(choices, this.assignedTags()));
+                }*/
+			    
 		    });
 
             // singleFieldTags2 is an INPUT element, rather than a UL as in the other 
