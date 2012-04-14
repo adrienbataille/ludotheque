@@ -4,6 +4,7 @@
 require_once("classes/Module.classe.php");
 
 
+
 //Constantes
 
 
@@ -23,6 +24,11 @@ class ComposantRecherche extends Module
 	private $maBase = NULL;
 
 	/**
+	 * @var Array Contient les paramètres de recherche en GET
+	 */
+	private $getRecherche=NULL;
+
+	/**
 	 * Constructeur. Il ouvre une connexion à la BDD et affiche le formulaire
 	 */
 	public function __construct()
@@ -33,34 +39,37 @@ class ComposantRecherche extends Module
 		$this->maBase = AccesAuxDonneesDev::recupAccesDonnees();
 		$this->afficheFormulaire();
 		$this->traitementFormulaire();
-
-
 	}
+
 	/**
 	 * Affiche le formulaire de recherche
 	 */
+
 	private function afficheFormulaire()
 	{
 		$this->ouvreBloc("<form method='post' action='".MODULE_RECHERCHE."'>");
 		$langue=$this->maBase->listeLangue();
 		$etat=$this->maBase->listeEtat();
 		$lieu=$this->maBase->listeLieu();
+		$auteur=$this->maBase->listeAuteur();
+		$illustrateur=$this->maBase->listeIllustrateur();
+		$distributeur=$this->maBase->listeDistributeur();
 		$this->ouvreBloc("<fieldset>");
 		$this->ajouteLigne("<legend>Recherche de jeu</legend>");
-		
+
 		// Nom du jeu
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"nom\">" . $this->convertiTexte("Nom du jeu") . "</label>");
 		//$this->ajouteLigne("<input type=\"text\" id=\"nom\" name=\"recherche[nom]\" />");
-		$this->creationInputText("recherche","nom");
+		$this->creationInputText("recherche",NOM);
 		$this->fermeBloc("</div>");
-		
+
 		//Categorie
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"categorie\">" . $this->convertiTexte("Catégorie") . "</label>");
 		$this->creationInputText("recherche","categorie");
 		$this->fermeBloc("</div>");
-		
+
 		//Nombre de joueur
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"nombreDeJoueur\">" . $this->convertiTexte("Nombre de joueur") . "</label>");
@@ -84,39 +93,41 @@ class ComposantRecherche extends Module
 		$this->creationCheckBox("recherche","j9");
 		$this->ajouteLigne($this->convertiTexte("8+"));
 		$this->fermeBloc("</div>");
-		
+
 		//Durée
+		/**
+		 * @todo Voir durée partie dans la bdd
+		 */
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"dureeEnMinute\">" . $this->convertiTexte("Durée en minute") . "</label>");
 		$this->creationInputText("recherche","DureeJeu");
 		$this->ajouteLigne("<br/>");
-		$this->ajouteLigne("Supérieur à ");
-		$this->creationRadioBox("recherche", "dureeSigne", SUPERIEUR);
-		$this->ajouteLigne("<br/>");
-		$this->ajouteLigne("Inférieur à ");
-		$this->creationRadioBox("recherche", "dureeSigne", INFERIEUR);
-		$this->ajouteLigne("<br/>");
-		$this->ajouteLigne("Plus ou moins 20 min ");
+		$this->ajouteLigne($this->convertiTexte("Plus ou moins 20 min "));
 		$this->creationRadioBox("recherche", "dureeSigne", EGAL,true);
 		$this->ajouteLigne("<br/>");
+		$this->ajouteLigne($this->convertiTexte("Supérieur à "));
+		$this->creationRadioBox("recherche", "dureeSigne", SUPERIEUR);
+		$this->ajouteLigne("<br/>");
+		$this->ajouteLigne($this->convertiTexte("Inférieur à "));
+		$this->creationRadioBox("recherche", "dureeSigne", INFERIEUR);
 		$this->fermeBloc("</div>");
 		//Langue
 
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"langue\">" . $this->convertiTexte("Langue") . "</label>");
-		$this->creationSelect($langue,"recherche","idLangue");
+		$this->creationSelect($langue,"recherche",ID_LANGUE);
 		$this->fermeBloc("</div>");
 
 		//Etat
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"etat\">" . $this->convertiTexte("Etat") . "</label>");
-		$this->creationSelect($etat,"recherche","idEtatExemplaire");
+		$this->creationSelect($etat,"recherche",ID_ETAT_EXEMPLAIRE);
 		$this->fermeBloc("</div>");
 
 		//Lieu
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"lieu\">" . $this->convertiTexte("Lieu") . "</label>");
-		$this->creationSelect($lieu,"recherche","idLieu");
+		$this->creationSelect($lieu,"recherche",ID_LIEU);
 		$this->fermeBloc("</div>");
 
 
@@ -133,19 +144,29 @@ class ComposantRecherche extends Module
 
 		//Recherche avancée
 		$this->ouvreBloc("<fieldset>");
-		$this->ajouteLigne("<legend>Recherche avancée</legend>");
+		$this->ajouteLigne("<legend>" . $this->convertiTexte("Recherche avancée") . "</legend>");
 
 		//Auteur
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"auteur\">" . $this->convertiTexte("Auteur") . "</label>");
-		$this->creationInputText("recherche","auteur");
+		//$this->creationInputText("recherche","auteur");
+		$this->creationSelect($auteur,"recherche","auteur");
 		$this->fermeBloc("</div>");
 
 		//Illustrateur
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"illustrateur\">" . $this->convertiTexte("Illustrateur") . "</label>");
-		$this->creationInputText("recherche","illustrateur");
+		//$this->creationInputText("recherche","illustrateur");
+		$this->creationSelect($illustrateur,"recherche","illustrateur");
 		$this->fermeBloc("</div>");
+
+		//Distributeur
+		$this->ouvreBloc("<div class='champ_recherche'>");
+		$this->ajouteLigne("<label for=\"distributeur\">" . $this->convertiTexte("Distributeur") . "</label>");
+		//$this->creationInputText("recherche","distributeur");
+		$this->creationSelect($distributeur,"recherche","distributeur");
+		$this->fermeBloc("</div>");
+
 
 		//Année
 		$this->ouvreBloc("<div class='champ_recherche'>");
@@ -153,11 +174,6 @@ class ComposantRecherche extends Module
 		$this->creationInputText("recherche","annee");
 		$this->fermeBloc("</div>");
 
-		//Distributeur
-		$this->ouvreBloc("<div class='champ_recherche'>");
-		$this->ajouteLigne("<label for=\"distributeur\">" . $this->convertiTexte("Distributeur") . "</label>");
-		$this->creationInputText("recherche","distributeur");
-		$this->fermeBloc("</div>");
 
 
 		$this->ajouteLigne("<input type='submit' />");
@@ -180,24 +196,73 @@ class ComposantRecherche extends Module
 				}
 			}
 		}
+		elseif($this->getRecherche!=NULL){
+			$param=true;
+			$recherche=$this->getRecherche;
+		}
 		if($param){
-				
+
 			$resultat=$this->maBase->rechercheVersion($recherche);
 			if(count($resultat)==0){
-				$this->ajouteLigne("Aucun Résultat");
+				$this->ajouteLigne($this->convertiTexte("Aucun Résultat"));
 			}
-			foreach ($resultat as $row) {
-				$this->ajouteLigne("photo:" . $row["nom"]);
-				$this->ajouteLigne("nom jeu:" . $row["nomJeu"]);
-				$this->ajouteLigne("nom version :" . $row["nomVersion"]);
-				$this->ajouteLigne("id version :" . $row["idVersion"]);
-				$this->ajouteLigne("nbexamplaire:" . $row["nbExemplaire"]);
+			else{
+				$this->ouvreBloc("<table>");
+				$this->ajouteLigne("<caption>" . $this->convertiTexte("Résultat de la Recherche :") . " </caption>");
+				$this->ouvreBloc("<thead>");
+				$this->ouvreBloc("<tr>");
+				$this->ajouteLigne("<th>Photo</th>");
+				$this->ajouteLigne("<th>Nom</th>");
+				$this->ajouteLigne("<th>Nombre Disponible</th>");
+				$this->ajouteLigne("<th>Nombre Indisponible</th>");
+				$this->fermeBloc("</tr>");
+				$this->fermeBloc("</thead>");
+				$this->ouvreBloc("<tbody>");
+				$idversion=-1;
+				var_dump($resultat);
+				foreach ($resultat as $row) {
+					if($idversion!=$row[ID_VERSION]){
+						if($idversion!=-1){
+							$this->ouvreBloc("<tr>");
+							$this->ajouteLigne("<td>" . $photo . "</td>" );
+							$this->ajouteLigne("<td>" . $nomJeu);
+							$this->ajouteLigne("<br/>" . $nomVersion);
+							$this->ajouteLigne("Id" . $idversion . "</td>");
+							$this->ajouteLigne("<td>" . $nbdisponible . "</td>");
+							$this->ajouteLigne("<td>" . $nbindisponible . "</td>");
+							$this->ouvreBloc("</tr>");
+						}
+						$nbindisponible=0;
+						$nbdisponible=0;
+						$photo=$this->convertiTexte($row[NOM_PHOTO]);
+						$nomJeu= $this->convertiTexte($row[NOM_JEU]);
+						$nomVersion=$this->convertiTexte($row[NOM_VERSION]);
+						$idversion=$row[ID_VERSION];
+					}
+					if($row[ID_ETAT_EXEMPLAIRE]==DISPONIBLE){
+						$nbdisponible+=$row["nbExemplaire"];
+					}
+					else{
+						$nbindisponible+=$row["nbExemplaire"];
+					}
+				}
+				$this->ouvreBloc("<tr>");
+				$this->ouvreBloc("<tr>");
+				$this->ajouteLigne("<td>" . $photo . "</td>" );
+				$this->ajouteLigne("<td>" . $nomJeu);
+				$this->ajouteLigne("<br/>" . $nomVersion);
+				$this->ajouteLigne("Id" . $idversion . "</td>");
+				$this->ajouteLigne("<td>" . $nbdisponible . "</td>");
+				$this->ajouteLigne("<td>" . $nbindisponible . "</td>");
+				$this->ouvreBloc("</tr>");
+				$this->fermeBloc("</table>");
 			}
-				
-
-				
 		}
 	}
+
+
+
+
 
 	/**
 	 * Fonction qui crée des listes HTML <select>
@@ -208,14 +273,22 @@ class ComposantRecherche extends Module
 
 	private function creationSelect($array,$param,$name){
 		$post=$_POST[$param];
+		$get=$_GET[$name];
+		if($post==NULL){
+			$value=$get;
+			$this->getRecherche[$name]=$value;
+		}
+		else{
+			$value=$post[$name];
+		}
 		$this->ouvreBloc("<select name=\"".$param."[".$name."]\">");
-		$this->ajouteLigne("<option value=\"\">Indifférent</option>");
+		$this->ajouteLigne("<option value=\"\">". $this->convertiTexte("Indifférent"). "</option>");
 		foreach($array as $row){
-			if($row[0]==$post[$name]){
+			if($row[0]==$value){
 				$this->ajouteLigne("<option selected=\"selected\" value=\"".$row[0]."\">". $row[1] ."</option>");
 			}
 			else{
-				$this->ajouteLigne("<option value=\"".$row[0]."\">".$row[1]."</option>");
+				$this->ajouteLigne("<option value=\"".$row[0]."\">". $row[1] ."</option>");
 			}
 		}
 		$this->fermeBloc("</select>");
@@ -231,22 +304,22 @@ class ComposantRecherche extends Module
 	private function creationInputText($param,$name){
 		$post=$_POST[$param];
 		$value=$post[$name];
+		$get=$_GET[$name];
 		if($post==NULL||$value==""){
-			$this->ajouteLigne("<input type=\"text\" id=\"".$name."\" name=\"".$param ."[".$name."]\" />");
+			$value=$get;
+			$this->getRecherche[$name]=$get;
 		}
-		else {
-			$this->ajouteLigne("<input type=\"text\" id=\"".$name."\" name=\"".$param ."[".$name."]\" value=\"". $value ."\" />");
-		}
+		$this->ajouteLigne("<input type=\"text\" id=\"".$name."\" name=\"".$param ."[".$name."]\" value=\"". $value ."\" />");
 	}
-	
+
 	/**
 	 * Fonction qui crée des datalist HTML5 pour l'autocomplétion
 	 * @param array tableau de valeur
 	 * @param string le nom qui permet d'assosier au champ
 	 */
-	
+
 	private function creationDatalist($array,$name){
-		
+
 	}
 
 	/**

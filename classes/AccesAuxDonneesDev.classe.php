@@ -13,7 +13,7 @@ define("BASE_DEV","mdjtufjjpdev");
 
 // Constantes - Definition des Tables SQL
 define("TABLE_CATEGORIE", TABLE_PREFIX . "CATEGORIE");
-define("TABLE_CATEGORIE_JEUX", TABLE_PREFIX . "CATEGORIE_JEUX");
+define("TABLE_CATEGORIE_JEUX", TABLE_PREFIX . "CATEGORIE_JEU");
 define("TABLE_EMPRUNT", TABLE_PREFIX . "EMPRUNT");
 define("TABLE_ETAT_EXEMPLAIRE", TABLE_PREFIX . "ETAT_EXEMPLAIRE");
 define("TABLE_EXEMPLAIRE", TABLE_PREFIX . "EXEMPLAIRE");
@@ -153,7 +153,8 @@ define("SUPERIEUR","sup");
 define("INFERIEUR","inf");
 define("EGAL","egal");
 
-
+//Définition des états
+define("DISPONIBLE",1);
 class AccesAuxDonneesDev
 {
 
@@ -310,7 +311,7 @@ class AccesAuxDonneesDev
 	 */
 
 	public function listeLangue(){
-		return $this->requeteSelect("SELECT * FROM MDJT_LANGUE");
+		return $this->requeteSelect("SELECT * FROM " . TABLE_LANGUE );
 	}
 
 	/**
@@ -319,7 +320,7 @@ class AccesAuxDonneesDev
 	 */
 
 	public function listeEtat(){
-		return $this->requeteSelect("SELECT * FROM MDJT_ETAT_EXEMPLAIRE");
+		return $this->requeteSelect("SELECT * FROM " . TABLE_ETAT_EXEMPLAIRE);
 	}
 
 	/**
@@ -328,9 +329,36 @@ class AccesAuxDonneesDev
 	 */
 
 	public function listeLieu(){
-		return $this->requeteSelect("SELECT * FROM MDJT_LIEU");
+		return $this->requeteSelect("SELECT * FROM " . TABLE_LIEU);
 	}
-
+	
+	/**
+	 * Fonction récupérant tous les auteurs
+	 * @return array
+	 */
+	
+	public function listeAuteur(){
+		return $this->requeteSelect("SELECT " . AUTEUR . "," . AUTEUR . "  FROM " .  TABLE_JEUX);
+	}
+	
+	/**
+	 * Fonction récupérant tous les illustrateurs
+	 * @return array
+	 */
+	
+	public function listeIllustrateur(){
+		return $this->requeteSelect("SELECT " . ILLUSTRATEUR . "," . ILLUSTRATEUR . "  FROM " .  TABLE_VERSION);
+	}
+	
+	/**
+	 * Fonction récupérant tous les distributeurs
+	 * @return array
+	 */
+	
+	public function listeDistributeur(){
+		return $this->requeteSelect("SELECT " . DISTRIBUTEUR . "," . DISTRIBUTEUR . "  FROM " .  TABLE_VERSION);
+	}
+	
 
 	/**
 	 * Fonction de recherche
@@ -354,7 +382,7 @@ class AccesAuxDonneesDev
 				TABLE_VERSION . "." . ID_VERSION .", ".
 				TABLE_VERSION . "." . NOM_VERSION .", ".
 				TABLE_NOM_JEU . "." . NOM_JEU . ", " .
-				TABLE_EXEMPLAIRE . "." .  ID_EXEMPLAIRE .
+				TABLE_EXEMPLAIRE . "." .  ID_ETAT_EXEMPLAIRE .
 				" , COUNT(" . TABLE_EXEMPLAIRE . "." . ID_EXEMPLAIRE . ") AS nbExemplaire");
 
 		//pour le moment je garde les X de Jeu tant qu'on a pas la nouvelle BDD corrigé
@@ -368,34 +396,34 @@ class AccesAuxDonneesDev
 		$query->jointure(TABLE_ETAT_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE);
 		$query->jointure(TABLE_NOM_JEU,ID_JEU,TABLE_JEUX,ID_JEU);
 
-		$query->setExtra("GROUP BY ". TABLE_VERSION . "." . ID_VERSION );
+		$query->setExtra("GROUP BY ". TABLE_VERSION . "." . ID_VERSION . "," . TABLE_EXEMPLAIRE .".". ID_ETAT_EXEMPLAIRE );
 
 		// Création dynamique de la requète maintenant
-
+		
 		//Par nom. On regarde aussi bien le nom du jeu que le nom de la version.
-		if($critere["nom"]!=""){
+		if($critere[NOM]!=""){
 			//comme il y a des LIKE, j'ai pas fait de méthode particulière encore
-			$critere["nom"]=mysql_real_escape_string($critere["nom"]);
-			$string="AND ( " . TABLE_NOM_JEU . "." . NOM_JEU . " LIKE '%" .$critere["nom"]."%' OR " . TABLE_VERSION . "." . NOM_VERSION . " LIKE '%" .$critere["nom"]. "%')";
+			$critere[NOM]=mysql_real_escape_string($critere[NOM]);
+			$string="AND ( " . TABLE_NOM_JEU . "." . NOM_JEU . " LIKE '%" .$critere[NOM]."%' OR " . TABLE_VERSION . "." . NOM_VERSION . " LIKE '%" .$critere[NOM]. "%')";
 			$query->ajoutWhereLibre($string);
 		}
 
 		//Par langue. On regarde seulement la langue de la version ( pour le moment )
-		if(is_numeric($critere["idLangue"])){
-			$query->ajoutAndEgal(TABLE_VERSION, ID_LANGUE, $critere["langue"]);
+		if(is_numeric($critere[ID_LANGUE])){
+			$query->ajoutAndEgal(TABLE_VERSION, ID_LANGUE, $critere[ID_LANGUE]);
 		}
 
 		// Par Etat
-		if(is_numeric($critere["idEtatExemplaire"])){
-			$query->ajoutAndEgal(TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, $critere["idEtatExemplaire"]);
+		if(is_numeric($critere[ID_ETAT_EXEMPLAIRE])){
+			$query->ajoutAndEgal(TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, $critere[ID_ETAT_EXEMPLAIRE]);
 		}
 
 		// Par Lieux
-		if(is_numeric($critere["idLieu"])){
-			$query->ajoutAndEgal(TABLE_EXEMPLAIRE, ID_LIEU_REEL, $critere["idLieu"]);
-			$string="AND (( " . TABLE_EXEMPLAIRE . "." . ID_LIEU_REEL   . "=" .$critere["idLieu"].
+		if(is_numeric($critere[ID_LIEU])){
+			$query->ajoutAndEgal(TABLE_EXEMPLAIRE, ID_LIEU_REEL, $critere[ID_LIEU]);
+			$string="AND (( " . TABLE_EXEMPLAIRE . "." . ID_LIEU_REEL   . "=" .$critere[ID_LIEU].
 			" AND " . TABLE_EXEMPLAIRE . "." . ID_LIEU_TEMPO   ."= 0) OR  "
-			. TABLE_EXEMPLAIRE . " . " . ID_LIEU_TEMPO   . "=" .$critere["idLieu"].")";
+			. TABLE_EXEMPLAIRE . " . " . ID_LIEU_TEMPO   . "=" .$critere[ID_LIEU].")";
 			$query->ajoutWhereLibre($string);
 		}
 
