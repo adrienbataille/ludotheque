@@ -13,11 +13,14 @@ define("BASE_DEV","mdjtufjjpdev");
 // Constantes - Definition des Tables SQL
 define("TABLE_CATEGORIE", TABLE_PREFIX . "CATEGORIE");
 define("TABLE_CATEGORIE_JEUX", TABLE_PREFIX . "CATEGORIE_JEUX");
+define("TABLE_DISTRIBUTEUR", TABLE_PREFIX . "DISTRIBUTEUR");
+define("TABLE_EDITEUR", TABLE_PREFIX . "EDITEUR");
 define("TABLE_EMPRUNT", TABLE_PREFIX . "EMPRUNT");
 define("TABLE_ETAT_EXEMPLAIRE", TABLE_PREFIX . "ETAT_EXEMPLAIRE");
 define("TABLE_EXEMPLAIRE", TABLE_PREFIX . "EXEMPLAIRE");
 define("TABLE_EXTENSION", TABLE_PREFIX . "EXTENSION");
 define("TABLE_FAIRE_PARTIE_KIT", TABLE_PREFIX . "FAIRE_PARTIE_KIT");
+define("TABLE_ILLUSTRATEUR", TABLE_PREFIX . "ILLUSTRATEUR");
 define("TABLE_INVENTAIRE", TABLE_PREFIX . "INVENTAIRE");
 define("TABLE_JEUX", TABLE_PREFIX . "JEUX");
 define("TABLE_KIT_JEUX", TABLE_PREFIX . "KIT_JEUX");
@@ -42,6 +45,14 @@ define("DESCRIPTION_CATEGORIE", "descriptionCategorie");
 
 // Définition des champs de la table TABLE_CATEGORIE_JEU
 define("ID_CATEGORIE_JEU", "idCategorieJeu");
+
+// Définition des champs de la table TABLE_DISTRIBUTEUR
+define("ID_DISTRIBUTEUR", "idDistributeur");
+define("NOM_DISTRIBUTEUR", "nomDistributeur");
+
+// Définition des champs de la table TABLE_EDITEUR
+define("ID_EDITEUR", "idEditeur");
+define("NOM_EDITEUR", "nomEditeur");
 
 // Définition des champs de la table TABLE_EMPRUNT
 define("ID_EMPRUNT", "idEmprunt");
@@ -70,6 +81,10 @@ define("ID_VERSION_EXTENSION", "idVersionExtension");
 
 // Définition des champs de la table TABLE_FAIRE_PARTIE_KIT
 define("ID_FAIRE_PARTIE_KIT", "idFairePartieKit");
+
+// Définition des champs de la table TABLE_ILLUSTRATEUR
+define("ID_ILLUSTRATEUR", "idIllustrateur");
+define("NOM_ILLUSTRATEUR", "nomIllustrateur");
 
 // Définition des champs de la table TABLE_INVENTAIRE
 define("ID_INVENTAIRE", "idInventaire");
@@ -143,9 +158,6 @@ define("NB_JOUEUR_RECOMMANDE", "nbJoueurRecommande");
 define("DUREE_PARTIE", "dureePartie");
 define("PRIX_ACHAT", "prixAchat");
 define("ANNEE_SORTIE", "anneeSortie");
-define("ILLUSTRATEUR", "illustrateur");
-define("DISTRIBUTEUR", "distributeur");
-define("EDITEUR", "editeur");
 
 
 
@@ -329,14 +341,15 @@ class AccesAuxDonneesDev
 		$requete->bindValue(5, DESCRIPTION_JEU, PDO::PARAM_STR);
 		$requete->bindValue(6, $uneDescription, PDO::PARAM_STR);
 		
-		$requete = "SELECT " . ID_JEU . " FROM " . TABLE_JEUX . " WHERE " . ID_PAYS . "='" . $unPays . "' AND " . AUTEUR . " = '". $unAuteur . "';";
+		// Création de la requete pour récupérer l'id de l'exemplaire inséré
+		$requete = "SELECT MAX(" . ID_JEU . ") FROM " . TABLE_JEUX . " ;";
 		
 		$resultat = $this->requeteSelect($requete);
 		
 		if(count($resultat) == 0)
 			return false;
 		else
-			return $resultat[0][ID_JEU];
+			return $resultat[0][0];
     }
 
 	/**
@@ -351,8 +364,8 @@ class AccesAuxDonneesDev
 		$this->connecteBase();
 		// Création de la requete
 		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_VERSION . " (" . NOM_VERSION . ", " . DESCRIPTION_VERSION . ", " . AGE_MINIMUM . 
-										", " . NB_JOUEUR_RECOMMANDE ."," . DUREE_PARTIE ."," . PRIX_ACHAT . ",". ANNEE_SORTIE ."," . ILLUSTRATEUR .
-										"," . DISTRIBUTEUR . "," .EDITEUR . "," . ID_JEU .") VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ;");	
+										", " . NB_JOUEUR_RECOMMANDE ."," . DUREE_PARTIE ."," . PRIX_ACHAT . ",". ANNEE_SORTIE ."," . ID_ILLUSTRATEUR .
+										"," . ID_DISTRIBUTEUR . "," . ID_EDITEUR . "," . ID_JEU .") VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ;");	
 
 	
 		//nom
@@ -363,18 +376,12 @@ class AccesAuxDonneesDev
 			$requete->bindValue(2, null, PDO::PARAM_NULL);
 		else
 			$requete->bindValue(2, $description, PDO::PARAM_STR);
+		
 		//age min
 		if(strcmp($age_min, "") == 0)
 			$requete->bindValue(3, null, PDO::PARAM_NULL);
 		else
 			$requete->bindValue(3, $age_min, PDO::PARAM_INT);
-			
-		//nombre de joueurs
-		/*if(strcmp($nb_joueur, "") == 0)
-			$requete->bindValue(4, null, PDO::PARAM_NULL);
-		else
-			$requete->bindValue(4, $nb_joueur, PDO::PARAM_INT);*/
-			
 		
 		//nombre de joueurs recommandés
 		if(strcmp($nb_joueur_reco, "") == 0)
@@ -389,7 +396,10 @@ class AccesAuxDonneesDev
 			$requete->bindValue(5, $duree_partie, PDO::PARAM_INT);	
 
 		//prix achat
-		$requete->bindValue(6, $prix_achat, PDO::PARAM_INT);	
+		if($prix_achat == 0)
+			$requete->bindValue(6, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(6, $prix_achat, PDO::PARAM_INT);
 
 		//année de sortie
 		if(strcmp($annee_sortie, "") == 0)
@@ -398,20 +408,23 @@ class AccesAuxDonneesDev
 			$requete->bindValue(7, $annee_sortie, PDO::PARAM_INT);	
 
 		//illustrateur
-		if(strcmp($illustrateur, "") == 0)
+		if($illustrateur == 0)
 			$requete->bindValue(8, null, PDO::PARAM_NULL);
 		else
-			$requete->bindValue(8, $illustrateur, PDO::PARAM_STR);	
+			$requete->bindValue(8, $illustrateur, PDO::PARAM_INT);	
 
 
 		//distributeur
-		if(strcmp($distributeur, "") == 0)
+		if($distributeur == 0)
 			$requete->bindValue(9, null, PDO::PARAM_NULL);
 		else
-			$requete->bindValue(9, $distributeur, PDO::PARAM_STR);
+			$requete->bindValue(9, $distributeur, PDO::PARAM_INT);
 
 		//éditeur
-		$requete->bindValue(10, $editeur, PDO::PARAM_STR);
+		if($editeur == 0)
+			$requete->bindValue(10, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(10, $editeur, PDO::PARAM_INT);
 		
 		//id jeu associé
 		$requete->bindValue(11, $idJeu, PDO::PARAM_INT);
@@ -469,7 +482,7 @@ class AccesAuxDonneesDev
 		// On termine l'utilisation de la requete
 		$requete->closeCursor();
 		
-		// Création de la requete pour récupérer l'id du Jeu inséré
+		// Création de la requete pour récupérer l'id de l'exemplaire inséré
 		$requete = "SELECT MAX(" . ID_EXEMPLAIRE . ") FROM " . TABLE_EXEMPLAIRE . " ;";
 		
 		$resultat = $this->requeteSelect($requete);
@@ -511,6 +524,99 @@ class AccesAuxDonneesDev
 			return false;
 		else
 			return $resultat[0][ID_PAYS];
+    }
+
+	/**
+    * Fonction d'insertion d'un illsutrateur
+    * Entrée : le nom de l'illustrateur
+    * Sortie : true si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableIllustrateur($unIllustrateur)
+    {
+
+		// On initie la connexion à la base, si ce n'est déjà fait
+		$this->connecteBase();
+		// Création de la requete
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_ILLUSTRATEUR . " (" . NOM_ILLUSTRATEUR . ") VALUES(?) ;");
+		
+		$requete->bindValue(1, $unIllustrateur, PDO::PARAM_STR);
+		
+		$resultat = $requete->execute();
+
+		// On termine l'utilisation de la requete
+		$requete->closeCursor();
+		
+		// Création de la requete pour récupérer l'id de l'exemplaire inséré
+		$requete = "SELECT MAX(" . ID_ILLUSTRATEUR . ") FROM " . TABLE_ILLUSTRATEUR . " ;";
+		
+		$resultat = $this->requeteSelect($requete);
+		
+		if(count($resultat) == 0)
+			return false;
+		else
+			return $resultat[0][0];
+    }
+
+	/**
+    * Fonction d'insertion d'un distributeur
+    * Entrée : le nom du distributeur
+    * Sortie : true si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableDistributeur($unDistributeur)
+    {
+
+		// On initie la connexion à la base, si ce n'est déjà fait
+		$this->connecteBase();
+		// Création de la requete
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_DISTRIBUTEUR . " (" . NOM_DISTRIBUTEUR . ") VALUES(?) ;");
+		
+		$requete->bindValue(1, $unDistributeur, PDO::PARAM_STR);
+		
+		$resultat = $requete->execute();
+
+		// On termine l'utilisation de la requete
+		$requete->closeCursor();
+		
+		// Création de la requete pour récupérer l'id de l'exemplaire inséré
+		$requete = "SELECT MAX(" . ID_DISTRIBUTEUR . ") FROM " . TABLE_DISTRIBUTEUR . " ;";
+		
+		$resultat = $this->requeteSelect($requete);
+		
+		if(count($resultat) == 0)
+			return false;
+		else
+			return $resultat[0][0];
+    }
+
+	/**
+    * Fonction d'insertion d'un éditeur
+    * Entrée : le nom de l'éditeur
+    * Sortie : true si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableEditeur($unEditeur)
+    {
+
+		// On initie la connexion à la base, si ce n'est déjà fait
+		$this->connecteBase();
+		// Création de la requete
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_EDITEUR . " (" . NOM_EDITEUR . ") VALUES(?) ;");
+		
+		$requete->bindValue(1, $unEditeur, PDO::PARAM_STR);
+		
+		$resultat = $requete->execute();
+
+		// On termine l'utilisation de la requete
+		$requete->closeCursor();
+		
+		// Création de la requete pour récupérer l'id de l'exemplaire inséré
+		$requete = "SELECT MAX(" . ID_EDITEUR . ") FROM " . TABLE_EDITEUR . " ;";
+		
+		$resultat = $this->requeteSelect($requete);
+		
+		if(count($resultat) == 0)
+			return false;
+		else
+			return $resultat[0][0];
     }
     
     /**
@@ -689,13 +795,17 @@ class AccesAuxDonneesDev
 	*/
 	public function recupNomJeu($idJeu)
 	{
-		$requete = "SELECT * FROM " . TABLE_LANGUE . " l JOIN " . TABLE_NOM_JEU . " n";
-		$requete .= " ON (l." . ID_LANGUE . "=n." . ID_LANGUE . ")";
+		$requete = "SELECT * FROM " . TABLE_NOM_JEU;
 		if($idJeu != null)
 			$requete .= " WHERE " . ID_JEU . "='" . $idJeu . "'";
-		$requete .= "ORDER BY " . NOM_JEU . ";";
+		$requete .= " ORDER BY " . NOM_JEU . ";";
 		$laListe = $this->requeteSelect($requete);
-		return $laListe;
+		
+		$resultat;
+		foreach($laListe as $idListe => $nomJeu)
+			$resultat[$nomJeu[ID_JEU]][] = $nomJeu;
+			
+		return $resultat;
 	}
 	
     /**
@@ -724,6 +834,51 @@ class AccesAuxDonneesDev
 		if($idPays != null)
 			$requete .= " WHERE " . ID_PAYS . " = '" . $idPays . "'";
 		$requete .= " ORDER BY " . NOM_PAYS . ";";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
+    /**
+	* Fonction de récupération de la liste des illustrateurs ou un illustrateur en particulier si on lui passe en paramètre l'id d'un illustrateur
+	* Entrée : id de l'illustrateur pour lequel on veut récupérer des informations (paramètre optionnel)
+	* Sortie : le tableau contenant les illustrateurs
+	*/
+	public function recupIllustrateur($idIllustrateur)
+	{
+		$requete = "SELECT * FROM " . TABLE_ILLUSTRATEUR;
+		if($idPays != null)
+			$requete .= " WHERE " . ID_ILLUSTRATEUR . " = '" . $idIllustrateur . "'";
+		$requete .= " ORDER BY " . NOM_ILLUSTRATEUR . ";";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
+    /**
+	* Fonction de récupération de la liste des distributeurs ou un distributeur en particulier si on lui passe en paramètre l'id d'un illustrateur
+	* Entrée : id du distributeur pour lequel on veut récupérer des informations (paramètre optionnel)
+	* Sortie : le tableau contenant les illustrateurs
+	*/
+	public function recupDistributeur($idDistributeur)
+	{
+		$requete = "SELECT * FROM " . TABLE_DISTRIBUTEUR;
+		if($idPays != null)
+			$requete .= " WHERE " . ID_DISTRIBUTEUR . " = '" . $idDistributeur . "'";
+		$requete .= " ORDER BY " . NOM_DISTRIBUTEUR . ";";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
+    /**
+	* Fonction de récupération de la liste des illustrateurs ou un illustrateurs en particulier si on lui passe en paramètre l'id d'un illustrateur
+	* Entrée : id de l'illustrateur pour lequel on veut récupérer des informations (paramètre optionnel)
+	* Sortie : le tableau contenant les illustrateurs
+	*/
+	public function recupEditeur($idEditeur)
+	{
+		$requete = "SELECT * FROM " . TABLE_EDITEUR;
+		if($idPays != null)
+			$requete .= " WHERE " . ID_EDITEUR . " = '" . $idEditeur . "'";
+		$requete .= " ORDER BY " . NOM_EDITEUR . ";";
 		$laListe = $this->requeteSelect($requete);
 		return $laListe;
 	}
@@ -826,8 +981,8 @@ class AccesAuxDonneesDev
 			
 			// Création de la requete
 			$requete = $this->maBase->prepare("UPDATE " . TABLE_VERSION . " SET " . NOM_VERSION . "=?, " . DESCRIPTION_VERSION . "=?, " . AGE_MINIMUM . "=?,
-			" . NB_JOUEUR_RECOMMANDE . "=?, " . DUREE_PARTIE . "=?, " . PRIX_ACHAT . "=?, " . ANNEE_SORTIE . "=?, " . ILLUSTRATEUR . "=?	
-			, " . DISTRIBUTEUR . "=?	, " . EDITEUR . "=?	, " . ID_JEU . "=?	WHERE " . ID_VERSION . "=?;");
+			" . NB_JOUEUR_RECOMMANDE . "=?, " . DUREE_PARTIE . "=?, " . PRIX_ACHAT . "=?, " . ANNEE_SORTIE . "=?, " . ID_ILLUSTRATEUR . "=?	
+			, " . ID_DISTRIBUTEUR . "=?	, " . ID_EDITEUR . "=?	, " . ID_JEU . "=?	WHERE " . ID_VERSION . "=?;");
 			
 			
 		
@@ -859,7 +1014,10 @@ class AccesAuxDonneesDev
 				$requete->bindValue(5, $duree_partie, PDO::PARAM_INT);	
 
 			//prix achat
-			$requete->bindValue(6, $prix_achat, PDO::PARAM_INT);	
+			if($prix_achat == 0)
+				$requete->bindValue(6, null, PDO::PARAM_NULL);
+			else
+				$requete->bindValue(6, $prix_achat, PDO::PARAM_INT);	
 
 			//année de sortie
 			if(strcmp($annee_sortie, "") == 0)
@@ -868,27 +1026,28 @@ class AccesAuxDonneesDev
 				$requete->bindValue(7, $annee_sortie, PDO::PARAM_INT);	
 
 			//illustrateur
-			if(strcmp($illustrateur, "") == 0)
+			if($illustrateur == 0)
 				$requete->bindValue(8, null, PDO::PARAM_NULL);
 			else
 				$requete->bindValue(8, $illustrateur, PDO::PARAM_STR);	
 
 
 			//distributeur
-			if(strcmp($distributeur, "") == 0)
+			if($distributeur == 0)
 				$requete->bindValue(9, null, PDO::PARAM_NULL);
 			else
 				$requete->bindValue(9, $distributeur, PDO::PARAM_STR);
 
 			//éditeur
-			$requete->bindValue(10, $editeur, PDO::PARAM_STR);
+			if($editeur == 0)
+				$requete->bindValue(10, null, PDO::PARAM_NULL);
+			else
+				$requete->bindValue(10, $editeur, PDO::PARAM_STR);
 		
 
 			$requete->bindValue(11, $idJeu, PDO::PARAM_INT);
 			$requete->bindValue(12, $idVersion, PDO::PARAM_INT);
 			$resultat = $requete->execute();
-			
-			var_dump($age_min);
 	
 			// On termine l'utilisation de la requete
 			$requete->closeCursor();
@@ -970,7 +1129,7 @@ class AccesAuxDonneesDev
 	public function DeleteTableLanguesRegles($unExemplaire)
 	{
 		if(intval($unExemplaire))
-		{print "delete";
+		{
 			// On initie la connexion à la base, si ce n'est déjà fait
 			$this->connecteBase();
 			
@@ -981,7 +1140,7 @@ class AccesAuxDonneesDev
 	
 			// On termine l'utilisation de la requete
 			$requete->closeCursor();
-			var_dump($resultat);
+			
 			return $resultat;
 		}
 		else

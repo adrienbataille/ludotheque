@@ -141,7 +141,7 @@ class ModuleAjoutVersions extends Module
 		// Nettoyage des variables POST récupérée
 		// Contre injection de code
 		
-		var_dump($_FILES['PHOTO_VERSION']);
+		//var_dump($_FILES['PHOTO_VERSION']);
 		
 		
 		$this->idVersion = $this->filtreChaine($_POST[ID_VERSION], TAILLE_CHAMPS_COURT);
@@ -171,16 +171,16 @@ class ModuleAjoutVersions extends Module
 		$this->anneeSortie = $this->filtreChaine($_POST[ANNEE_SORTIE], TAILLE_CHAMPS_COURT);
 		
 		//Nettoyage de illustrateur
-		$this->illustrateur = $this->filtreChaine($_POST[ILLUSTRATEUR], TAILLE_CHAMPS_COURT);
+		$this->illustrateur = intval($this->filtreChaine($_POST[ILLUSTRATEUR], TAILLE_CHAMPS_COURT));
 		
 		//Nettoyage du distributeur
-		$this->distributeur = $this->filtreChaine($_POST[DISTRIBUTEUR], TAILLE_CHAMPS_COURT);
+		$this->distributeur = intval($this->filtreChaine($_POST[DISTRIBUTEUR], TAILLE_CHAMPS_COURT));
 		
 		//Nettoyage de date fin vie
-		$this->editeur = $this->filtreChaine($_POST[EDITEUR], TAILLE_CHAMPS_COURT);
+		$this->editeur = intval($this->filtreChaine($_POST[EDITEUR], TAILLE_CHAMPS_COURT));
 		
 		//id jeu associé
-		$this->idJeu = $this->filtreChaine($_POST[ID_JEU], TAILLE_CHAMPS_COURT);
+		$this->idJeu = intval($this->filtreChaine($_POST[ID_JEU], TAILLE_CHAMPS_COURT));
 
 		
 			
@@ -193,7 +193,7 @@ class ModuleAjoutVersions extends Module
 			
 		$this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_VERSIONS . "' id='formProfil'  enctype='multipart/form-data'>");
 		
-			$this->ajouteLigne("<input type='hidden' name='idVersion' value='" . $this->idVersion . "' />");
+		$this->ajouteLigne("<input type='hidden' name='idVersion' value='" . $this->idVersion . "' />");
 			
 
 		// First fieldset : Nom de la versions
@@ -208,11 +208,23 @@ class ModuleAjoutVersions extends Module
 			$this->ouvreBloc("<select name='" . ID_JEU . "'>");
 		else
 			$this->ouvreBloc("<select name='" . ID_JEU . "' disabled='disabled'>");
-		foreach($listeJeu as $jeu)
-			if($jeu[ID_JEU] == $this->idJeu)
-				$this->ajouteLigne("<option value='" . $jeu[ID_JEU] . "' selected='selected'>" . $jeu[NOM_JEU] . "</option>");
+		foreach($listeJeu as $idJeu => $jeu)
+		{
+			$name = "";
+			$i = 0;
+			$taille = sizeof($jeu) - 1;
+			foreach($jeu as $nomJeu)
+			{
+				$name .= $this->convertiTexte($nomJeu[NOM_JEU]);
+				if($i < $taille)
+					$name .= $this->convertiTexte(" - ");
+				$i++;
+			}
+			if($idJeu == $this->idJeu)
+				$this->ajouteLigne("<option value='" . $idJeu . "' selected='selected'>" . $this->convertiTexte($name) . "</option>");
 			else
-				$this->ajouteLigne("<option value='" . $jeu[ID_JEU] . "'>" . $jeu[NOM_JEU] . "</option>");
+				$this->ajouteLigne("<option value='" . $idJeu . "'>" . $this->convertiTexte($name) . "</option>");
+		}
 		$this->fermeBloc("</select>");
 		$this->fermeBloc("</li>");
 		
@@ -232,8 +244,8 @@ class ModuleAjoutVersions extends Module
         
         // Nom
         $this->ouvreBloc("<li>");
-        $this->ajouteLigne("<label for='" . NOM_VERSION . "'>" . $this->convertiTexte("Nom de la version") . "</label>");
-        $this->ajouteLigne("<input type='text' id='". NOM_VERSION . "' name='" . NOM_VERSION . "' value='" . $this->nomVersion . "' required='required'  />");
+        $this->ajouteLigne("<label for='" . NOM_VERSION . "'>" . $this->convertiTexte("Nom de la version *") . "</label>");
+        $this->ajouteLigne("<input type='text' id='". NOM_VERSION . "' name='" . NOM_VERSION . "' value='" . $this->convertiTexte($this->nomVersion) . "' required='required'  />");
 		if($this->erreurNom)
 			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être rempli</p>");
 		$this->fermeBloc("</li>");
@@ -250,33 +262,6 @@ class ModuleAjoutVersions extends Module
         
         $this->fermeBloc("</ol>");
         $this->fermeBloc("</fieldset>");
-        
-        // Second fieldset : Informations sur la version
-        $this->ouvreBloc("<fieldset>");
-        $this->ajouteLigne("<legend>Informations sur la version</legend>");
-        $this->ouvreBloc("<ol>");
-        
-        // Description
-        $this->ouvreBloc("<li>");
-        $this->ajouteLigne("<label for='" . DESCRIPTION_VERSION . "'>" . $this->convertiTexte("Description") . "</label>");
-        $this->ajouteLigne("<textarea rows='3' id='" . DESCRIPTION_VERSION ."' name='" . DESCRIPTION_VERSION . "'>" . $this->description . "</textarea>");
-        $this->fermeBloc("</li>");
-        
-        // Age minimum
-        $this->ouvreBloc("<li>");
-        $this->ajouteLigne("<label for='" . AGE_MINIMUM . "'>" . $this->convertiTexte("Age min") . "</label>");
-        $this->ajouteLigne("<input type='text' id='" . AGE_MINIMUM ."' name='" . AGE_MINIMUM . "' value='" . $this->ageMinimum . "' />");
-        $this->fermeBloc("</li>");
-        
-        // Nombre Joueur
-      /*  $this->ouvreBloc("<li>");
-        $this->ajouteLigne("<label for='" . NB_JOUEUR_V . "'>" . $this->convertiTexte("Nombre de joueurs") . "</label>");
-        $this->ajouteLigne("<input type='text' maxlength='2' name='"  . NB_JOUEUR_V . "' value='" . $this->nb_joueur . "' />");
-        $this->fermeBloc("</li>");*/
-		
-		$this->fermeBloc("</ol>");
-		$this->fermeBloc("</fieldset>");
-		
 		
 		// Second fieldset : Informations sur la version
 		$this->ouvreBloc("<fieldset>");
@@ -286,13 +271,13 @@ class ModuleAjoutVersions extends Module
 		// Description
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . DESCRIPTION_VERSION . "'>" . $this->convertiTexte("Description") . "</label>");
-		$this->ajouteLigne("<textarea rows='3' id='" . DESCRIPTION_VERSION ."' name='" . DESCRIPTION_VERSION . "'>" . $this->description . "</textarea>");
+		$this->ajouteLigne("<textarea rows='3' id='" . DESCRIPTION_VERSION ."' name='" . DESCRIPTION_VERSION . "'>" . $this->convertiTexte($this->description) . "</textarea>");
 		$this->fermeBloc("</li>");
 		
 		// Age minimum
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . AGE_MINIMUM . "'>" . $this->convertiTexte("Age minimum") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . AGE_MINIMUM ."' name='" . AGE_MINIMUM . "' value='" . $this->ageMinimum . "' />");
+		$this->ajouteLigne("<input type='text' id='" . AGE_MINIMUM ."' name='" . AGE_MINIMUM . "' value='" . $this->convertiTexte($this->ageMinimum) . "' />");
 		$this->fermeBloc("</li>");
 		
 		// Nombre Joueur
@@ -305,45 +290,66 @@ class ModuleAjoutVersions extends Module
 		// Nombre Joueur recommandés
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . NB_JOUEUR_RECOMMANDE . "'>" . $this->convertiTexte("Joueurs recommandés") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NB_JOUEUR_RECOMMANDE . "' maxlength='2' name='"  . NB_JOUEUR_RECOMMANDE . "' value='" . $this->nbJoueurReco . "' />");
+		$this->ajouteLigne("<input type='text' id='" . NB_JOUEUR_RECOMMANDE . "' maxlength='2' name='"  . NB_JOUEUR_RECOMMANDE . "' value='" . $this->convertiTexte($this->nbJoueurReco) . "' />");
 		$this->fermeBloc("</li>");
 		
 		// Durée partie
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . DUREE_PARTIE . "'>" . $this->convertiTexte("Durée d'une partie") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . DUREE_PARTIE . "' name='"  . DUREE_PARTIE . "' value='" . $this->dureePartie . "' />");
+		$this->ajouteLigne("<input type='text' id='" . DUREE_PARTIE . "' name='"  . DUREE_PARTIE . "' value='" . $this->convertiTexte($this->dureePartie) . "' />");
 		$this->fermeBloc("</li>");
 		
 		
 		// Prix achat
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . PRIX_ACHAT . "'>" . $this->convertiTexte("Prix d'achat") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . PRIX_ACHAT . "' name='"  . PRIX_ACHAT . "' value='" . $this->prixAchat . "' />");
+		$this->ajouteLigne("<input type='text' id='" . PRIX_ACHAT . "' name='"  . PRIX_ACHAT . "' value='" . $this->convertiTexte($this->prixAchat) . "' />");
 		$this->fermeBloc("</li>");
 		
 		 //Année de sortie
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . ANNEE_SORTIE . "'>" . $this->convertiTexte("Année de sortie") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . ANNEE_SORTIE . "' maxlength='4' name='"  . ANNEE_SORTIE . "' value='" . $this->anneeSortie . "' />");
+		$this->ajouteLigne("<input type='text' id='" . ANNEE_SORTIE . "' maxlength='4' name='"  . ANNEE_SORTIE . "' value='" . $this->convertiTexte($this->anneeSortie) . "' />");
 		$this->fermeBloc("</li>");
 		
 		//Illustrateur
+		$listeIllustrateur = $this->maBase->recupIllustrateur(null);
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . ILLUSTRATEUR . "'>" . $this->convertiTexte("Illustrateur") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . ILLUSTRATEUR . "' name='"  . ILLUSTRATEUR . "' value='" . $this->illustrateur . "' autocomplete='on'  />");
+		$this->ajouteLigne("<input type='text' id='" . ILLUSTRATEUR . "' name='"  . ILLUSTRATEUR . "' value='" . $this->convertiTexte($this->illustrateur) . "' list='listeIllustrateur' autocomplete='on'  />");
+		
+		$this->ouvreBloc("<datalist id='listeIllustrateur'>");
+		foreach($listeIllustrateur as $illustrateur)
+			$this->ajouteLigne("<option id='illustrateur_" . $illustrateur[ID_ILLUSTRATEUR] . "' label='" . $illustrateur[NOM_ILLUSTRATEUR] . "' value=\"" . $this->convertiTexte($illustrateur[NOM_ILLUSTRATEUR]) . "\">");
+		$this->fermeBloc("</datalist>");
+		
 		$this->fermeBloc("</li>");
 		
 		
 		//Distributeur
+		$listeDistributeur = $this->maBase->recupDistributeur(null);
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . DISTRIBUTEUR . "'>" . $this->convertiTexte("Distributeur") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . DISTRIBUTEUR ."' name='"  . DISTRIBUTEUR . "' value='" . $this->distributeur . "' autocomplete='on' />");
+		$this->ajouteLigne("<input type='text' id='" . DISTRIBUTEUR ."' name='"  . DISTRIBUTEUR . "' value='" . $this->convertiTexte($this->distributeur) . "' list='listeDistributeur' autocomplete='on' />");
+		
+		$this->ouvreBloc("<datalist id='listeDistributeur'>");
+		foreach($listeDistributeur as $distributeur)
+			$this->ajouteLigne("<option id='distributeur_" . $distributeur[ID_DISTRIBUTEUR] . "' label='" . $distributeur[NOM_DISTRIBUTEUR] . "' value=\"" . $this->convertiTexte($illustrateur[NOM_DISTRIBUTEUR]) . "\">");
+		$this->fermeBloc("</datalist>");
+		
 		$this->fermeBloc("</li>");
 		
 		//Editeur
+		$listeEditeur = $this->maBase->recupEditeur(null);
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . EDITEUR . "'>" . $this->convertiTexte("Editeur") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . EDITEUR . "' name='"  . EDITEUR . "' value='" . $this->editeur . "' autocomplete='on' />");
+		$this->ajouteLigne("<input type='text' id='" . EDITEUR . "' name='"  . EDITEUR . "' value='" . $this->convertiTexte($this->editeur) . "' list='listeEditeur' autocomplete='on' />");
+		
+		$this->ouvreBloc("<datalist id='listeEditeur'>");
+		foreach($listeEditeur as $editeur)
+			$this->ajouteLigne("<option id='editeur_" . $editeur[ID_EDITEUR] . "' label='" . $illustrateur[NOM_EDITEUR] . "' value=\"" . $this->convertiTexte($illustrateur[NOM_EDITEUR]) . "\">");
+		$this->fermeBloc("</datalist>");
+		
 		$this->fermeBloc("</li>");
 		
 		$this->fermeBloc("</ol>");
@@ -388,7 +394,7 @@ class ModuleAjoutVersions extends Module
 			$chemin = 'fichier/';
 			$resultat2 = move_uploaded_file($_FILES['PHOTO_VERSION']['tmp_name'],$chemin.$_FILES['PHOTO_VERSION']['name']);  
 			//var_dump($resultat2);
-
+//var_dump($this);
 			if(!$this->erreurNom)
 			{
 				if($this->idVersion == 0 && $resultat2)
@@ -403,7 +409,12 @@ class ModuleAjoutVersions extends Module
 					}
 				}
 				else
+				{
 					$this->maBase->UpdateTableVersion($this->idVersion, $this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->illustrateur, $this->distributeur, $this->editeur, $this->idJeu);
+					
+					header("Location: " . MODULE_GESTION_JEUX);
+					exit;
+				}
 			}
 		}
 	}	
