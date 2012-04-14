@@ -364,8 +364,8 @@ class AccesAuxDonneesDev
 		$this->connecteBase();
 		// Création de la requete
 		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_VERSION . " (" . NOM_VERSION . ", " . DESCRIPTION_VERSION . ", " . AGE_MINIMUM . 
-										", " . NB_JOUEUR_RECOMMANDE ."," . DUREE_PARTIE ."," . PRIX_ACHAT . ",". ANNEE_SORTIE ."," . ILLUSTRATEUR .
-										"," . DISTRIBUTEUR . "," .EDITEUR . "," . ID_JEU .") VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ;");	
+										", " . NB_JOUEUR_RECOMMANDE ."," . DUREE_PARTIE ."," . PRIX_ACHAT . ",". ANNEE_SORTIE ."," . ID_ILLUSTRATEUR .
+										"," . ID_DISTRIBUTEUR . "," . ID_EDITEUR . "," . ID_JEU .") VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ;");	
 
 	
 		//nom
@@ -376,18 +376,12 @@ class AccesAuxDonneesDev
 			$requete->bindValue(2, null, PDO::PARAM_NULL);
 		else
 			$requete->bindValue(2, $description, PDO::PARAM_STR);
+		
 		//age min
 		if(strcmp($age_min, "") == 0)
 			$requete->bindValue(3, null, PDO::PARAM_NULL);
 		else
 			$requete->bindValue(3, $age_min, PDO::PARAM_INT);
-			
-		//nombre de joueurs
-		/*if(strcmp($nb_joueur, "") == 0)
-			$requete->bindValue(4, null, PDO::PARAM_NULL);
-		else
-			$requete->bindValue(4, $nb_joueur, PDO::PARAM_INT);*/
-			
 		
 		//nombre de joueurs recommandés
 		if(strcmp($nb_joueur_reco, "") == 0)
@@ -402,7 +396,10 @@ class AccesAuxDonneesDev
 			$requete->bindValue(5, $duree_partie, PDO::PARAM_INT);	
 
 		//prix achat
-		$requete->bindValue(6, $prix_achat, PDO::PARAM_INT);	
+		if($prix_achat == 0)
+			$requete->bindValue(6, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(6, $prix_achat, PDO::PARAM_INT);
 
 		//année de sortie
 		if(strcmp($annee_sortie, "") == 0)
@@ -411,20 +408,23 @@ class AccesAuxDonneesDev
 			$requete->bindValue(7, $annee_sortie, PDO::PARAM_INT);	
 
 		//illustrateur
-		if(strcmp($illustrateur, "") == 0)
+		if($illustrateur == 0)
 			$requete->bindValue(8, null, PDO::PARAM_NULL);
 		else
-			$requete->bindValue(8, $illustrateur, PDO::PARAM_STR);	
+			$requete->bindValue(8, $illustrateur, PDO::PARAM_INT);	
 
 
 		//distributeur
-		if(strcmp($distributeur, "") == 0)
+		if($distributeur == 0)
 			$requete->bindValue(9, null, PDO::PARAM_NULL);
 		else
-			$requete->bindValue(9, $distributeur, PDO::PARAM_STR);
+			$requete->bindValue(9, $distributeur, PDO::PARAM_INT);
 
 		//éditeur
-		$requete->bindValue(10, $editeur, PDO::PARAM_STR);
+		if($editeur == 0)
+			$requete->bindValue(10, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(10, $editeur, PDO::PARAM_INT);
 		
 		//id jeu associé
 		$requete->bindValue(11, $idJeu, PDO::PARAM_INT);
@@ -981,8 +981,8 @@ class AccesAuxDonneesDev
 			
 			// Création de la requete
 			$requete = $this->maBase->prepare("UPDATE " . TABLE_VERSION . " SET " . NOM_VERSION . "=?, " . DESCRIPTION_VERSION . "=?, " . AGE_MINIMUM . "=?,
-			" . NB_JOUEUR_RECOMMANDE . "=?, " . DUREE_PARTIE . "=?, " . PRIX_ACHAT . "=?, " . ANNEE_SORTIE . "=?, " . ILLUSTRATEUR . "=?	
-			, " . DISTRIBUTEUR . "=?	, " . EDITEUR . "=?	, " . ID_JEU . "=?	WHERE " . ID_VERSION . "=?;");
+			" . NB_JOUEUR_RECOMMANDE . "=?, " . DUREE_PARTIE . "=?, " . PRIX_ACHAT . "=?, " . ANNEE_SORTIE . "=?, " . ID_ILLUSTRATEUR . "=?	
+			, " . ID_DISTRIBUTEUR . "=?	, " . ID_EDITEUR . "=?	, " . ID_JEU . "=?	WHERE " . ID_VERSION . "=?;");
 			
 			
 		
@@ -1014,7 +1014,10 @@ class AccesAuxDonneesDev
 				$requete->bindValue(5, $duree_partie, PDO::PARAM_INT);	
 
 			//prix achat
-			$requete->bindValue(6, $prix_achat, PDO::PARAM_INT);	
+			if($prix_achat == 0)
+				$requete->bindValue(6, null, PDO::PARAM_NULL);
+			else
+				$requete->bindValue(6, $prix_achat, PDO::PARAM_INT);	
 
 			//année de sortie
 			if(strcmp($annee_sortie, "") == 0)
@@ -1023,27 +1026,28 @@ class AccesAuxDonneesDev
 				$requete->bindValue(7, $annee_sortie, PDO::PARAM_INT);	
 
 			//illustrateur
-			if(strcmp($illustrateur, "") == 0)
+			if($illustrateur == 0)
 				$requete->bindValue(8, null, PDO::PARAM_NULL);
 			else
 				$requete->bindValue(8, $illustrateur, PDO::PARAM_STR);	
 
 
 			//distributeur
-			if(strcmp($distributeur, "") == 0)
+			if($distributeur == 0)
 				$requete->bindValue(9, null, PDO::PARAM_NULL);
 			else
 				$requete->bindValue(9, $distributeur, PDO::PARAM_STR);
 
 			//éditeur
-			$requete->bindValue(10, $editeur, PDO::PARAM_STR);
+			if($editeur == 0)
+				$requete->bindValue(10, null, PDO::PARAM_NULL);
+			else
+				$requete->bindValue(10, $editeur, PDO::PARAM_STR);
 		
 
 			$requete->bindValue(11, $idJeu, PDO::PARAM_INT);
 			$requete->bindValue(12, $idVersion, PDO::PARAM_INT);
 			$resultat = $requete->execute();
-			
-			var_dump($age_min);
 	
 			// On termine l'utilisation de la requete
 			$requete->closeCursor();
@@ -1125,7 +1129,7 @@ class AccesAuxDonneesDev
 	public function DeleteTableLanguesRegles($unExemplaire)
 	{
 		if(intval($unExemplaire))
-		{print "delete";
+		{
 			// On initie la connexion à la base, si ce n'est déjà fait
 			$this->connecteBase();
 			
@@ -1136,7 +1140,7 @@ class AccesAuxDonneesDev
 	
 			// On termine l'utilisation de la requete
 			$requete->closeCursor();
-			var_dump($resultat);
+			
 			return $resultat;
 		}
 		else

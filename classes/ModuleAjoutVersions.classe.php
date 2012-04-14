@@ -171,16 +171,16 @@ class ModuleAjoutVersions extends Module
 		$this->anneeSortie = $this->filtreChaine($_POST[ANNEE_SORTIE], TAILLE_CHAMPS_COURT);
 		
 		//Nettoyage de illustrateur
-		$this->illustrateur = $this->filtreChaine($_POST[ILLUSTRATEUR], TAILLE_CHAMPS_COURT);
+		$this->illustrateur = intval($this->filtreChaine($_POST[ILLUSTRATEUR], TAILLE_CHAMPS_COURT));
 		
 		//Nettoyage du distributeur
-		$this->distributeur = $this->filtreChaine($_POST[DISTRIBUTEUR], TAILLE_CHAMPS_COURT);
+		$this->distributeur = intval($this->filtreChaine($_POST[DISTRIBUTEUR], TAILLE_CHAMPS_COURT));
 		
 		//Nettoyage de date fin vie
-		$this->editeur = $this->filtreChaine($_POST[EDITEUR], TAILLE_CHAMPS_COURT);
+		$this->editeur = intval($this->filtreChaine($_POST[EDITEUR], TAILLE_CHAMPS_COURT));
 		
 		//id jeu associé
-		$this->idJeu = $this->filtreChaine($_POST[ID_JEU], TAILLE_CHAMPS_COURT);
+		$this->idJeu = intval($this->filtreChaine($_POST[ID_JEU], TAILLE_CHAMPS_COURT));
 
 		
 			
@@ -394,7 +394,7 @@ class ModuleAjoutVersions extends Module
 
 			//$resultat2 = move_uploaded_file($_FILES['PHOTO_VERSION']['tmp_name'],$_FILES['PHOTO_VERSION']['name']);  
 			//var_dump($resultat2);
-
+//var_dump($this);
 				
 			
 			if(!$this->erreurNom)
@@ -411,7 +411,12 @@ class ModuleAjoutVersions extends Module
 					}
 				}
 				else
+				{
 					$this->maBase->UpdateTableVersion($this->idVersion, $this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->illustrateur, $this->distributeur, $this->editeur, $this->idJeu);
+					
+					header("Location: " . MODULE_GESTION_JEUX);
+					exit;
+				}
 			}
 		}
 	}	
