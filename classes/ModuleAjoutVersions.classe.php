@@ -393,6 +393,10 @@ class ModuleAjoutVersions extends Module
 				$this->erreurEditeur = true;
 						
 			
+			$chemin = 'fichier/';
+			$resultat2 = move_uploaded_file($_FILES['PHOTO_VERSION']['tmp_name'],$chemin.$_FILES['PHOTO_VERSION']['name']);  
+			//var_dump($resultat2);
+
 			
 			if (is_uploaded_file($_FILES['PHOTO_VERSION']['tmp_name']))
 			{
@@ -416,6 +420,7 @@ class ModuleAjoutVersions extends Module
 			if(!$this->erreurNom)
 			{
 				if($this->idVersion == 0 )
+				if($this->idVersion == 0 && $resultat2)
 				{
 					$this->idVersion = $this->maBase->InsertionTableVersion($this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->illustrateur, $this->distributeur, $this->editeur, $this->idJeu);													
 					//$this->idPhotoVersion = 
