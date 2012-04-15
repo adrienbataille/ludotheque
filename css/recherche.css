@@ -1,8 +1,37 @@
 .champ_recherche{
-	min-height:80px;
+	min-height:.5em;
 	float:left;
 }
 .champ_recherche label:after { 
 	content: '\a' ; 
 	white-space: pre; 
+}
+
+#buttonAvance {
+	padding: .5em 1em;
+	text-decoration: none;
+}
+#rechercheAvancee { 
+	height: 50px;
+	padding: 0.4em;
+	 position: relative;
+}
+#buttonRecherche{
+	margin-top:1em;	
+}
+
+#resultat{
+	width:680px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#resultat td{
+	text-align: center;
+}
+.paginator{
+	display:inline;
+}
+.odd{
+	background-color:#CACAFE;
 }

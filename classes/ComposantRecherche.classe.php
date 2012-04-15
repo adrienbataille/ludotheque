@@ -141,8 +141,9 @@ class ComposantRecherche extends Module
 
 		//Recherche avancée
 		$this->ouvreBloc("<fieldset>");
-		$this->ajouteLigne("<legend>" . $this->convertiTexte("Recherche avancée") . "</legend>");
+		$this->ajouteLigne("<legend><a id=\"buttonAvance\" class=\"ui-state-default ui-corner-all\" >" . $this->convertiTexte("Recherche avancée") . "</a></legend>");
 
+		$this->ouvreBloc("<div id=\"rechercheAvancee\" class=\"ui-widget-content ui-corner-all\">");
 		//Auteur
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"auteur\">" . $this->convertiTexte("Auteur") . "</label>");
@@ -171,12 +172,10 @@ class ComposantRecherche extends Module
 		$this->creationInputText("recherche","annee");
 		$this->fermeBloc("</div>");
 
-
-
-		$this->ajouteLigne("<input type='submit' />");
+		$this->fermeBloc("</div>");
 		$this->fermeBloc("</fieldset>");
+		$this->ajouteLigne("<input type='submit'id='buttonRecherche' value='Rechercher' />");
 		$this->fermeBloc("</form>");
-		print_r($_SERVER['REQUEST_URI']);
 	}
 
 	/**
@@ -205,7 +204,8 @@ class ComposantRecherche extends Module
 				$this->ajouteLigne($this->convertiTexte("Aucun Résultat"));
 			}
 			else{
-				$this->ouvreBloc("<table>");
+				$this->ouvreBloc("<div class='ui-widget-content ui-corner-all' >");
+				$this->ouvreBloc("<table id='resultat' >");
 				$this->ajouteLigne("<caption>" . $this->convertiTexte("Résultat de la Recherche :") . " </caption>");
 				$this->ouvreBloc("<thead>");
 				$this->ouvreBloc("<tr>");
@@ -218,14 +218,14 @@ class ComposantRecherche extends Module
 				$this->ouvreBloc("<tbody>");
 				$idVersion=-1;
 				var_dump($resultat);
-				
+
 				Paginator\Paginator::$total  = count($resultat);
 				Paginator\Paginator::$limit  = 20;
-				Paginator\Paginator::$offset = intval($_GET['offset']); 
+				Paginator\Paginator::$offset = intval($_GET['offset']);
 				Paginator\Paginator::$url    = $_SERVER['REQUEST_URI'];
-				
+
 				$resultat=array_splice($resultat,Paginator\Paginator::$offset,Paginator\Paginator::$total);
-				
+
 				foreach ($resultat as $row) {
 					if($idVersion!=$row[ID_VERSION]){
 						if($idVersion!=-1){
@@ -247,6 +247,7 @@ class ComposantRecherche extends Module
 				}
 				$this->ligneResultat($photo, $nomJeu, $nomVersion, $idVersion, $nbdisponible, $nbindisponible);
 				$this->fermeBloc("</table>");
+				$this->fermeBloc("</div>");
 				$this->ajouteLigne(Paginator\Paginator::links());
 			}
 		}
@@ -260,7 +261,7 @@ class ComposantRecherche extends Module
 	 * @param string nombre disponible
 	 * @param string nombre indisponible
 	 */
-	
+
 	private function ligneResultat($photo,$nomJeu,$nomVersion,$idVersion,$nbdisponible,$nbindisponible){
 		$this->ouvreBloc("<tr>");
 		$this->ajouteLigne("<td>" . $photo . "</td>" );
@@ -367,15 +368,15 @@ class ComposantRecherche extends Module
 		}
 
 	}
-	
+
 	/**
 	 * Fonction qui crée un champ de recherche pour les catégories avec tag
 	 * @param string nom du tableau POST
 	 * @param string nom de la ligne du tableau
 	 */
-	
-	
-	
+
+
+
 }
 
 
