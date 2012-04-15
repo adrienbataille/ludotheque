@@ -233,7 +233,7 @@ class ModuleAjoutExemplaires extends Module
     {
 		if($this->erreurExemplaire)
 			$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte("Une erreur est survenue lors de l'ajout de votre exemplaire, veuillez réessayer ou contacter l'administrateur") . "</p>");
-		
+
 		$this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_EXEMPLAIRES . "' id='formProfil'>");
 		
 		
