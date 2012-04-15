@@ -1,7 +1,6 @@
 <?php
 /**
  * Classe de gestion de l'accès à la base de donnée
- *
  */
 
 // Inclusions
@@ -155,6 +154,12 @@ define("EGAL","egal");
 
 //Définition des états
 define("DISPONIBLE","1");
+
+/**
+ * Classe de gestion de l'accès à la base de donnée
+ * @package common
+ */
+
 class AccesAuxDonneesDev
 {
 
@@ -202,7 +207,7 @@ class AccesAuxDonneesDev
 	 * C'est cette fonction qui doit être utilisée
 	 * chaque fois qu'on veut avoir accès aux données
 	 */
-	public static function recupAccesDonnees()
+	public static function recupAccesDonneesDev()
 	{
 		// Initialisation de l'accès à la Base de Donnees
 		// Si on a pas encore d'objet d'accès aux donnees
@@ -359,6 +364,16 @@ class AccesAuxDonneesDev
 		return $this->requeteSelect("SELECT " . DISTRIBUTEUR . "," . DISTRIBUTEUR . "  FROM " .  TABLE_VERSION);
 	}
 	
+	/**
+	 * Fonction récupérant les catégories commençant par une chaine de caractère
+	 * @param string
+	 * @return string
+	 */
+	
+	public function tagCategorie($chaine){
+		$chaine=mysql_real_escape_string($chaine);
+		return $this->requeteSelect("SELECT " . NOM_CATEGORIE . " FROM " . TABLE_CATEGORIE . " WHERE " . NOM_CATEGORIE . " LIKE '" . $chaine . "%' " );
+	}
 
 	/**
 	 * Fonction de recherche
@@ -588,7 +603,8 @@ class AccesAuxDonneesDev
 		}
 		print_r($query->debug());
 		//ainsi de suite!
-		return $this->requeteSelect($query->compile());
+		$result=$this->requeteSelect($query->compile());
+		return $result;
 	}
 
 

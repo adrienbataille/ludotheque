@@ -12,6 +12,12 @@ require_once("classes/ModuleRecherche.classe.php");
 
 // Constantes
 
+/**
+ * Cette classe permet de créer les pages web interne au format MDJT
+ * Partie privée avec affichage des modules
+ * @package client
+ */
+
 class PageModule extends Page
 {
 // Attributs

@@ -10,6 +10,7 @@
 			    // This will make Tag-it submit a single form value, as a comma-delimited field.
 			    singleField: true,
 			    allowSpaces: true,
+			    autoFocusFirst: true,
 			    requireAutocomplete: true,
 			    
 			    tagSource: function(search, showChoices) {

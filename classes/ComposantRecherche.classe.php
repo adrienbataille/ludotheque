@@ -2,7 +2,7 @@
 
 // Inclusions
 require_once("classes/Module.classe.php");
-
+require_once("classes/paginator.php");
 
 
 //Constantes
@@ -12,7 +12,7 @@ require_once("classes/Module.classe.php");
  * Composant recherche
  * @author Romain Laï-King, Rania Daoudi, Ziyang Ke
  * @package composant
- * @version 0.1
+ * @version 0.2
  */
 
 
@@ -36,7 +36,7 @@ class ComposantRecherche extends Module
 		// On utilise le constructeur de la classe mère
 		parent::__construct();
 		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
-		$this->maBase = AccesAuxDonneesDev::recupAccesDonnees();
+		$this->maBase = AccesAuxDonneesDev::recupAccesDonneesDev();
 		$this->afficheFormulaire();
 		$this->traitementFormulaire();
 	}
@@ -176,6 +176,7 @@ class ComposantRecherche extends Module
 		$this->ajouteLigne("<input type='submit' />");
 		$this->fermeBloc("</fieldset>");
 		$this->fermeBloc("</form>");
+		print_r($_SERVER['REQUEST_URI']);
 	}
 
 	/**
@@ -215,26 +216,27 @@ class ComposantRecherche extends Module
 				$this->fermeBloc("</tr>");
 				$this->fermeBloc("</thead>");
 				$this->ouvreBloc("<tbody>");
-				$idversion=-1;
+				$idVersion=-1;
 				var_dump($resultat);
+				
+				Paginator\Paginator::$total  = count($resultat);
+				Paginator\Paginator::$limit  = 20;
+				Paginator\Paginator::$offset = intval($_GET['offset']); 
+				Paginator\Paginator::$url    = $_SERVER['REQUEST_URI'];
+				
+				$resultat=array_splice($resultat,Paginator\Paginator::$offset,Paginator\Paginator::$total);
+				
 				foreach ($resultat as $row) {
-					if($idversion!=$row[ID_VERSION]){
-						if($idversion!=-1){
-							$this->ouvreBloc("<tr>");
-							$this->ajouteLigne("<td>" . $photo . "</td>" );
-							$this->ajouteLigne("<td>" . $nomJeu);
-							$this->ajouteLigne("<br/>" . $nomVersion);
-							$this->ajouteLigne("Id" . $idversion . "</td>");
-							$this->ajouteLigne("<td>" . $nbdisponible . "</td>");
-							$this->ajouteLigne("<td>" . $nbindisponible . "</td>");
-							$this->ouvreBloc("</tr>");
+					if($idVersion!=$row[ID_VERSION]){
+						if($idVersion!=-1){
+							$this->ligneResultat($photo, $nomJeu, $nomVersion, $idVersion, $nbdisponible, $nbindisponible);
 						}
 						$nbindisponible=0;
 						$nbdisponible=0;
 						$photo=$this->convertiTexte($row[NOM_PHOTO]);
 						$nomJeu= $this->convertiTexte($row[NOM_JEU]);
 						$nomVersion=$this->convertiTexte($row[NOM_VERSION]);
-						$idversion=$row[ID_VERSION];
+						$idVersion=$row[ID_VERSION];
 					}
 					if($row[ID_ETAT_EXEMPLAIRE]==DISPONIBLE){
 						$nbdisponible+=$row["nbExemplaire"];
@@ -243,21 +245,32 @@ class ComposantRecherche extends Module
 						$nbindisponible+=$row["nbExemplaire"];
 					}
 				}
-				$this->ouvreBloc("<tr>");
-				$this->ouvreBloc("<tr>");
-				$this->ajouteLigne("<td>" . $photo . "</td>" );
-				$this->ajouteLigne("<td>" . $nomJeu);
-				$this->ajouteLigne("<br/>" . $nomVersion);
-				$this->ajouteLigne("Id" . $idversion . "</td>");
-				$this->ajouteLigne("<td>" . $nbdisponible . "</td>");
-				$this->ajouteLigne("<td>" . $nbindisponible . "</td>");
-				$this->ouvreBloc("</tr>");
+				$this->ligneResultat($photo, $nomJeu, $nomVersion, $idVersion, $nbdisponible, $nbindisponible);
 				$this->fermeBloc("</table>");
+				$this->ajouteLigne(Paginator\Paginator::links());
 			}
 		}
 	}
-
-
+	/**
+	 * Fonction qui écrit une ligne du tableau de résultat
+	 * @param string photo
+	 * @param string nom jeu
+	 * @param string nom version
+	 * @param string id version
+	 * @param string nombre disponible
+	 * @param string nombre indisponible
+	 */
+	
+	private function ligneResultat($photo,$nomJeu,$nomVersion,$idVersion,$nbdisponible,$nbindisponible){
+		$this->ouvreBloc("<tr>");
+		$this->ajouteLigne("<td>" . $photo . "</td>" );
+		$this->ajouteLigne("<td>" . $nomJeu);
+		$this->ajouteLigne($nomVersion);
+		$this->ajouteLigne("Id" . $idVersion . "</td>");
+		$this->ajouteLigne("<td>" . $nbdisponible . "</td>");
+		$this->ajouteLigne("<td>" . $nbindisponible . "</td>");
+		$this->ouvreBloc("</tr>");
+	}
 
 
 

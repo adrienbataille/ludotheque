@@ -1,7 +1,6 @@
 <?php
 /**
 * Classe de gestion de l'accès à la base de donnée
-*
 */
 
 // Inclusions
@@ -53,6 +52,11 @@ define("TYPE_ADHERENT", "typeAdherent");
 // Définition des champs de la table TABLE_GROUPES
 define("ID_GROUPE", "idGroupe");
 define("NOM_GROUPE", "nomGroupe");
+
+/**
+ * Classe de gestion de l'accès à la base de donnée
+ * @package client
+ */
 
 
 

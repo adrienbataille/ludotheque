@@ -1,28 +1,10 @@
 <?php
-	$_POST["filter"];
-	$availableTags = array(
-				"ActionScript",
-				"AppleScript",
-				"Asp",
-				"BASIC",
-				"C",
-				"C++",
-				"Clojure",
-				"COBOL",
-				"ColdFusion",
-				"Erlang",
-				"Fortran",
-				"Groovy",
-				"Haskell",
-				"Java",
-				"JavaScript",
-				"Lisp",
-				"Perl",
-				"PHP",
-				"Python",
-				"Ruby",
-				"Scala",
-				"Scheme"
-				);
-echo json_encode($availableTags);
+require_once("classes/AccesAuxDonneesDev.classe.php");
+$filter=$_POST["filter"];
+$maBase = AccesAuxDonneesDev::recupAccesDonneesDev();
+$result=$maBase->tagCategorie($filter);
+foreach ($result as $row){
+	$array[]=$row[NOM_CATEGORIE];
+}
+echo json_encode($array);
 ?>

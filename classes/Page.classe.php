@@ -1,6 +1,7 @@
 <?php
 /**
 * Cette classe permet de créer des pages web au format MDJT
+* @package client
 */
 
 // Inclusion des fichiers utiles

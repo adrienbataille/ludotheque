@@ -34,6 +34,7 @@
             tagSource         : null,
             removeConfirmation: false,
             caseSensitive     : true,
+            autoFocusFirst	  : false,
 
             // When enabled, quotes are not neccesary
             // for inputting multi-word tags.
@@ -306,6 +307,7 @@
             if (this.options.tagSource) {
                 this._tagInput.autocomplete({
                     source: this.options.tagSource,
+                    autoFocus: this.options.autoFocusFirst,
                     select: function(event, ui) {
                         // Delete the last tag if we autocomplete something despite the input being empty
                         // This happens because the input's blur event causes the tag to be created when
