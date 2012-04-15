@@ -55,8 +55,8 @@ class ComposantRecherche extends Module
 		$illustrateur=$this->maBase->listeIllustrateur();
 		$distributeur=$this->maBase->listeDistributeur();
 		$this->ouvreBloc("<fieldset>");
-		$this->ajouteLigne("<legend>Recherche de jeu</legend>");
-
+		$this->ajouteLigne("<legend id='titreRecherche' class=\"ui-state-default ui-corner-all\">Recherche de jeu</legend>");
+		$this->ouvreBloc("<div id=\"rechercheBase\" class=\"ui-widget-content ui-corner-all\" >");
 		// Nom du jeu
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"nom\">" . $this->convertiTexte("Nom du jeu") . "</label>");
@@ -137,6 +137,7 @@ class ComposantRecherche extends Module
 		$this->ajouteLigne($this->convertiTexte("Max") );
 		$this->creationInputText("recherche","prixMax");
 		$this->fermeBloc("</div>");
+		$this->fermeBloc("</div>");
 		$this->fermeBloc("</fieldset>");
 
 		//Recherche avancée
@@ -185,7 +186,6 @@ class ComposantRecherche extends Module
 	private function traitementFormulaire(){
 		$param=false;
 		$recherche=$_POST["recherche"];
-		var_dump($recherche);
 		if ($recherche!=NULL){
 			foreach($recherche as $row){
 				if ($row!=""){
@@ -217,7 +217,6 @@ class ComposantRecherche extends Module
 				$this->fermeBloc("</thead>");
 				$this->ouvreBloc("<tbody>");
 				$idVersion=-1;
-				var_dump($resultat);
 
 				Paginator\Paginator::$total  = count($resultat);
 				Paginator\Paginator::$limit  = 20;

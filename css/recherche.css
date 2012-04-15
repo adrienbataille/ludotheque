@@ -11,13 +11,18 @@
 	padding: .5em 1em;
 	text-decoration: none;
 }
+
+#titreRecherche{
+	padding: .5em 1em;
+	text-decoration: none;
+}
 #rechercheAvancee { 
-	height: 50px;
+	height: 5em;
 	padding: 0.4em;
-	 position: relative;
+	position: relative;
 }
 #buttonRecherche{
-	margin-top:1em;	
+	margin-top:1.5em;	
 }
 
 #resultat{
@@ -35,3 +40,10 @@
 .odd{
 	background-color:#CACAFE;
 }
+
+#rechercheBase{
+	display:block;
+	overflow:auto;
+	margin-bottom:1em;
+}
+

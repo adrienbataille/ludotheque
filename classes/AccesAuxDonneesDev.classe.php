@@ -336,40 +336,40 @@ class AccesAuxDonneesDev
 	public function listeLieu(){
 		return $this->requeteSelect("SELECT * FROM " . TABLE_LIEU);
 	}
-	
+
 	/**
 	 * Fonction récupérant tous les auteurs
 	 * @return array
 	 */
-	
+
 	public function listeAuteur(){
 		return $this->requeteSelect("SELECT " . AUTEUR . "," . AUTEUR . "  FROM " .  TABLE_JEU);
 	}
-	
+
 	/**
 	 * Fonction récupérant tous les illustrateurs
 	 * @return array
 	 */
-	
+
 	public function listeIllustrateur(){
 		return $this->requeteSelect("SELECT " . ILLUSTRATEUR . "," . ILLUSTRATEUR . "  FROM " .  TABLE_VERSION);
 	}
-	
+
 	/**
 	 * Fonction récupérant tous les distributeurs
 	 * @return array
 	 */
-	
+
 	public function listeDistributeur(){
 		return $this->requeteSelect("SELECT " . DISTRIBUTEUR . "," . DISTRIBUTEUR . "  FROM " .  TABLE_VERSION);
 	}
-	
+
 	/**
 	 * Fonction récupérant les catégories commençant par une chaine de caractère
 	 * @param string
 	 * @return string
 	 */
-	
+
 	public function tagCategorie($chaine){
 		$chaine=mysql_real_escape_string($chaine);
 		return $this->requeteSelect("SELECT " . NOM_CATEGORIE . " FROM " . TABLE_CATEGORIE . " WHERE " . NOM_CATEGORIE . " LIKE '" . $chaine . "%' " );
@@ -414,7 +414,7 @@ class AccesAuxDonneesDev
 		$query->setExtra("GROUP BY ". TABLE_VERSION . "." . ID_VERSION . "," . TABLE_EXEMPLAIRE .".". ID_ETAT_EXEMPLAIRE );
 
 		// Création dynamique de la requète maintenant
-		
+
 		//Par nom. On regarde aussi bien le nom du jeu que le nom de la version.
 		if($critere[NOM]!=""){
 			//comme il y a des LIKE, j'ai pas fait de méthode particulière encore
@@ -601,7 +601,7 @@ class AccesAuxDonneesDev
 				$query->ajoutAndLike(TABLE_CATEGORIE,NOM_CATEGORIE,$value);
 			}
 		}
-		print_r($query->debug());
+
 		//ainsi de suite!
 		$result=$this->requeteSelect($query->compile());
 		return $result;
