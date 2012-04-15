@@ -27,7 +27,7 @@ class ModuleAjoutExemplaires extends Module
 	private $idVersion = 0;
 	private $idExemplaire = 0;
 	private $descriptionExemplaire = "";
-	private $prixMDJT = 0;
+	private $prixMDJT;
 	private $dateAchat;
 	private $dateFinVie;
 	private $etatExemplaire = 0;
@@ -232,40 +232,49 @@ class ModuleAjoutExemplaires extends Module
     public function afficheFormulaire()
     {
 		if($this->erreurExemplaire)
-			$this->ajouteLigne("<p class='erreurForm'>Une erreur est survenue lors de l'ajout de votre exemplaire, veuillez réessayer ou contacter l'administrateur</p>");
-			
+			$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte("Une erreur est survenue lors de l'ajout de votre exemplaire, veuillez réessayer ou contacter l'administrateur") . "</p>");
+
 		$this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_EXEMPLAIRES . "' id='formProfil'>");
 		
 		
 		// Premier fieldset : Version de l'exemplaire
 		$this->ouvreBloc("<fieldset>");	
-		$this->ajouteLigne("<legend>Informations du jeu</legend>");
+		$this->ajouteLigne("<legend>" . $this->convertiTexte("Informations du jeu") . "</legend>");
 		$this->ouvreBloc("<ol>");
 		
 		// Jeu de l'exemplaire
+		$this->ouvreBloc("<li>");	
+		
+		$this->ajouteLigne("<label for='" . ID_JEU . "'>" . $this->convertiTexte("Jeu associé *") . "</label>");
 		$listeJeu = $this->maBase->recupNomJeu(null);
-		
-		$this->ouvreBloc("<li>");
-		$this->ajouteLigne("<label for='" . ID_JEU . "'>" . $this->convertiTexte("Jeu") . "</label>");
-		
-		if($this->idJeu != 0)
-			$this->ouvreBloc("<select id='" . ID_JEU . "' name='" . ID_JEU . "' disabled='disabled'>");
-		else
+		if($this->idJeu == 0)
 			$this->ouvreBloc("<select id='" . ID_JEU . "' name='" . ID_JEU . "'>");
-			
-		foreach($listeJeu as $jeu)
-			if($jeu[ID_JEU] == $this->idJeu)
-				$this->ajouteLigne("<option value='" . $jeu[ID_JEU] . "' selected='selected'>" . $this->convertiTexte($jeu[NOM_JEU]) . "</option><");
-			else
-				$this->ajouteLigne("<option value='" . $jeu[ID_JEU] . "'>" . $this->convertiTexte($jeu[NOM_JEU]) . "</option>");
+		else
+			$this->ouvreBloc("<select id='" . ID_JEU . "' name='" . ID_JEU . "' disabled='disabled'>");
 		
+		foreach($listeJeu as $idJeu => $jeu)
+		{
+			$name = "";
+			$i = 0;
+			$taille = sizeof($jeu) - 1;
+			foreach($jeu as $nomJeu)
+			{
+				$name .= $this->convertiTexte($nomJeu[NOM_JEU]);
+				if($i < $taille)
+					$name .= $this->convertiTexte(" - ");
+				$i++;
+			}
+			if($idJeu == $this->idJeu)
+				$this->ajouteLigne("<option value='" . $idJeu . "' selected='selected'>" . $this->convertiTexte($name) . "</option>");
+			else
+				$this->ajouteLigne("<option value='" . $idJeu . "'>" . $this->convertiTexte($name) . "</option>");
+		}
 		$this->fermeBloc("</select>");
 		
 		if($this->idJeu != 0)
-			$this->ajouteLigne("<input type='hidden' name='" . ID_JEU . "' value='" . $this->idJeu . "'");
+			$this->ajouteLigne("<input type='hidden' name='" . ID_JEU . "' value='" . $this->idJeu . "' />");
 		
 		$this->fermeBloc("</li>");
-		
 		
 		// Si on choisit un jeu auparavant
 		if($this->idJeu != 0)
@@ -274,7 +283,7 @@ class ModuleAjoutExemplaires extends Module
 			$listeVersion = $this->maBase->recupNomVersion($this->idJeu);
 			
 			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . ID_VERSION . "'>" . $this->convertiTexte("Version du jeu") . "</label>");
+			$this->ajouteLigne("<label for='" . ID_VERSION . "'>" . $this->convertiTexte("Version du jeu *") . "</label>");
 			
 			if($this->idVersion != 0)
 				$this->ouvreBloc("<select id='" . ID_VERSION . "' name='" . ID_VERSION . "' disabled='disabled'>");
@@ -306,7 +315,7 @@ class ModuleAjoutExemplaires extends Module
 			// Bouton pour valider le choix du jeu
 			$this->ouvreBloc("<fieldset>");	
 			$this->ajouteLigne("<input type='hidden' name='validerNomJeu' value='true' />");
-			$this->ajouteLigne("<button type='submit' name='ValiderNomJeu' value='true'>Valider le nom du jeu</button>");
+			$this->ajouteLigne("<button type='submit' name='ValiderNomJeu' value='true'>" . $this->convertiTexte("Valider le nom du jeu") . "</button>");
 			$this->fermeBloc("</fieldset>");
 			
 		}
@@ -323,13 +332,13 @@ class ModuleAjoutExemplaires extends Module
 				$this->fermeBloc("</li>");
 				
 				$this->fermeBloc("</ul>");
+			} else {
+				// Bouton pour valide le choix de la version
+				$this->ouvreBloc("<fieldset>");	
+				$this->ajouteLigne("<input type='hidden' name='validerNomVersion' value='true' />");
+				$this->ajouteLigne("<button type='submit' name='ValiderNomVersion' value='true'>" . $this->convertiTexte("Valider le nom de la version") . "</button>");
+				$this->fermeBloc("</fieldset>");
 			}
-			
-			// Bouton pour valide le choix de la version
-			$this->ouvreBloc("<fieldset>");	
-			$this->ajouteLigne("<input type='hidden' name='validerNomVersion' value='true' />");
-			$this->ajouteLigne("<button type='submit' name='ValiderNomVersion' value='true'>Valider le nom de la version</button>");
-			$this->fermeBloc("</fieldset>");
 		}
 		// Si on a choisit un nom de jeu et de version, on affiche un bouton pour modifier ce choix et le reste du formulaire
 		else
@@ -337,12 +346,12 @@ class ModuleAjoutExemplaires extends Module
 			// Bouton pour remettre à zéro le nom de jeu et de la version choisie
 			$this->ouvreBloc("<fieldset>");	
 			$this->ajouteLigne("<input type='hidden' name='modifierNom' value='true' />");
-			$this->ajouteLigne("<button type='submit' name='ModifierNom' value='true'>Modifier le nom du jeu</button>");
+			$this->ajouteLigne("<button type='submit' name='ModifierNom' value='true'>" . $this->convertiTexte("Modifier le nom du jeu") . "</button>");
 			$this->fermeBloc("</fieldset>");
 			
 			// Troisième fieldset : Informations sur l'exemplaire
 			$this->ouvreBloc("<fieldset>");
-			$this->ajouteLigne("<legend>Informations sur l'exemplaire</legend>");
+			$this->ajouteLigne("<legend>" . $this->convertiTexte("Informations sur l'exemplaire") . "</legend>");
 			$this->ouvreBloc("<ol>");
 			
 			// id de l'exemplaire
@@ -356,13 +365,12 @@ class ModuleAjoutExemplaires extends Module
 			$this->ajouteLigne("<textarea rows='3' id='" . DESCRIPTION_EXEMPLAIRE . "'name='" . DESCRIPTION_EXEMPLAIRE . "'>" . $this->convertiTexte($this->descriptionExemplaire) . "</textarea>");
 			$this->fermeBloc("</li>");
 			
-					
 			 // Prix mdjt
 			$this->ouvreBloc("<li>");
 			$this->ajouteLigne("<label for='" . PRIX_MDJT . "'>" . $this->convertiTexte("Prix actuel") . "</label>");
 			$this->ajouteLigne("<input type='text' id='" . PRIX_MDJT ."' name='"  . PRIX_MDJT . "' value='" . $this->convertiTexte($this->prixMDJT) . "' required='required' />");
 			if($this->erreurPrixMdjt)
-				$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
+				$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte("Ce champ doit être remplit") . "</p>");
 			$this->fermeBloc("</li>");
 			
 			// Data achat
@@ -370,7 +378,7 @@ class ModuleAjoutExemplaires extends Module
 			$this->ajouteLigne("<label for='" . DATE_ACHAT . "'>" . $this->convertiTexte("Date Achat") . "</label>");
 			$this->ajouteLigne("<input type='text' id='" . DATE_ACHAT ."' maxlength='10' name='" . DATE_ACHAT . "' value='" . $this->convertiTexte($this->dateBaseToAffichage($this->dateAchat)) . "'  required='required' />");
 			if($this->erreurDateAchat)
-				$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
+				$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte("Ce champ doit être remplit") . "</p>");
 			$this->fermeBloc("</li>");
 			
 					
@@ -386,7 +394,7 @@ class ModuleAjoutExemplaires extends Module
 			
 			// Troisième fieldset : État de l'exemplaire
 			$this->ouvreBloc("<fieldset>");	
-			$this->ajouteLigne("<legend>État de l'exemplaire</legend>");
+			$this->ajouteLigne("<legend>" . $this->convertiTexte("État de l'exemplaire") . "</legend>");
 			$this->ouvreBloc("<ol>");
 			
 			// État de l'exemplaire
@@ -398,7 +406,7 @@ class ModuleAjoutExemplaires extends Module
 				$this->ajouteLigne("<option name='" . ID_ETAT_EXEMPLAIRE . "' value='" . $etat[ID_ETAT_EXEMPLAIRE] . "'>" . $this->convertiTexte($etat[NOM_ETAT]) . "</option>");
 			$this->fermeBloc("</select>");
 			if($this->erreurEtat)
-				$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
+				$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte("Ce champ doit être remplit") . "</p>");
 			$this->fermeBloc("</li>");
 			
 			$this->fermeBloc("</ol>");
@@ -407,7 +415,7 @@ class ModuleAjoutExemplaires extends Module
 			
 			// Quatrième fieldset : Emplacement du stockage
 			$this->ouvreBloc("<fieldset>");	
-			$this->ajouteLigne("<legend>Emplacement de l'exemplaire</legend>");
+			$this->ajouteLigne("<legend>" . $this->convertiTexte("Emplacement de l'exemplaire") . "</legend>");
 			$this->ouvreBloc("<ol>");
 			
 			// Lieu normal de stockage
@@ -419,7 +427,7 @@ class ModuleAjoutExemplaires extends Module
 				$this->ajouteLigne("<option name='" . ID_LIEU_REEL . "' value='" . $lieu[ID_LIEU] . "'>" . $this->convertiTexte($lieu[NOM_LIEU]) . "</option>");
 			$this->fermeBloc("</select>");
 			if($this->erreurLieuReel)
-				$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
+				$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte("Ce champ doit être remplit") . "</p>");
 			$this->fermeBloc("</li>");
 			
 			// Lieu de stockage temporaire
@@ -439,7 +447,7 @@ class ModuleAjoutExemplaires extends Module
 			
 			// Cinquième fieldset : Langues régles du jeu
 			$this->ouvreBloc("<fieldset>");	
-			$this->ajouteLigne("<legend>Régles du jeu</legend>");
+			$this->ajouteLigne("<legend>" . $this->convertiTexte("Régles du jeu") . "</legend>");
 			$this->ouvreBloc("<ol>");
 			
 			// Langues des régles du jeu
@@ -449,9 +457,9 @@ class ModuleAjoutExemplaires extends Module
 			$this->ouvreBloc("<ol id='listeItem'>");
 			foreach($langueRegle as $langue)
 				if(in_array($langue[ID_LANGUE], $this->listeLangueRegle))
-					$this->ajouteLigne("<li class='item'><input type='checkbox' name='" . NOM_LANGUE . "[]' value='" . $this->convertiTexte($langue[ID_LANGUE]) . "' checked='checked'>" . $langue[NOM_LANGUE] . "</option></li>");
+					$this->ajouteLigne("<li class='item'><input type='checkbox' name='" . NOM_LANGUE . "[]' value='" . $this->convertiTexte($langue[ID_LANGUE]) . "' checked='checked'>" . $this->convertiTexte($langue[NOM_LANGUE]) . "</option></li>");
 				else
-					$this->ajouteLigne("<li class='item'><input type='checkbox' name='" . NOM_LANGUE . "[]' value='" . $this->convertiTexte($langue[ID_LANGUE]) . "'>" . $langue[NOM_LANGUE] . "</option></li>");
+					$this->ajouteLigne("<li class='item'><input type='checkbox' name='" . NOM_LANGUE . "[]' value='" . $this->convertiTexte($langue[ID_LANGUE]) . "'>" . $this->convertiTexte($langue[NOM_LANGUE]) . "</option></li>");
 			$this->fermeBloc("</ol>");
 			$this->fermeBloc("</li>");
 			
@@ -460,12 +468,12 @@ class ModuleAjoutExemplaires extends Module
 			
 			$this->ouvreBloc("<fieldset>");	
 			$this->ajouteLigne("<input type='hidden' name='ajouterExemplaire' value='true' />");
-			$this->ajouteLigne("<button type='submit' name='AjouterExemplaire' value='true'>Valider l'ajout de l'exemple</button>");
+			$this->ajouteLigne("<button type='submit' name='AjouterExemplaire' value='true'>" . $this->convertiTexte("Valider l'ajout de l'exemple") . "</button>");
 			$this->fermeBloc("</fieldset>");
 			
 			$this->ouvreBloc("<fieldset>");	
 			$this->ajouteLigne("<input type='hidden' name='ajouterAutreExemplaire' value='true' />");
-			$this->ajouteLigne("<button type='submit' name='AjouterAutreExemplaire' value='true'>Valider et ajouter un autre exemplaire</button>");
+			$this->ajouteLigne("<button type='submit' name='AjouterAutreExemplaire' value='true'>" . $this->convertiTexte("Valider et ajouter un autre exemplaire") . "</button>");
 			$this->fermeBloc("</fieldset>");
 		}
 		
@@ -478,6 +486,9 @@ class ModuleAjoutExemplaires extends Module
 	
 	private function traiteFormulaire()
 	{
+	//var_dump($_POST);
+	//print "<br />";
+	//var_dump($this);
 		// Y a-t-il effectivement un formulaire à traiter ?
 		if ($_POST["AjouterExemplaire"] || $_POST["AjouterAutreExemplaire"])
 		{
