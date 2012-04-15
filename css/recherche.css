@@ -15,6 +15,7 @@
 #titreRecherche{
 	padding: .5em 1em;
 	text-decoration: none;
+	color:#2A5995;
 }
 #rechercheAvancee { 
 	height: 5em;
@@ -35,10 +36,15 @@
 	text-align: center;
 }
 .paginator{
+	text-align: center;
 	display:inline;
 }
 .odd{
 	background-color:#CACAFE;
+}
+
+#paginator{
+	text-align: center;
 }
 
 #rechercheBase{

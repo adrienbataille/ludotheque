@@ -12,7 +12,7 @@ require_once("classes/paginator.php");
  * Composant recherche
  * @author Romain Laï-King, Rania Daoudi, Ziyang Ke
  * @package composant
- * @version 0.2
+ * @version 0.3
  */
 
 
@@ -26,7 +26,7 @@ class ComposantRecherche extends Module
 	/**
 	 * @var Array Contient les paramètres de recherche en GET
 	 */
-	private $getRecherche=NULL;
+	private $getRecherche = NULL;
 
 	/**
 	 * Constructeur. Il ouvre une connexion à la BDD et affiche le formulaire
@@ -55,7 +55,7 @@ class ComposantRecherche extends Module
 		$illustrateur=$this->maBase->listeIllustrateur();
 		$distributeur=$this->maBase->listeDistributeur();
 		$this->ouvreBloc("<fieldset>");
-		$this->ajouteLigne("<legend id='titreRecherche' class=\"ui-state-default ui-corner-all\">Recherche de jeu</legend>");
+		$this->ajouteLigne("<legend id='titreRecherche' >Recherche jeu</legend>");
 		$this->ouvreBloc("<div id=\"rechercheBase\" class=\"ui-widget-content ui-corner-all\" >");
 		// Nom du jeu
 		$this->ouvreBloc("<div class='champ_recherche'>");
@@ -223,7 +223,7 @@ class ComposantRecherche extends Module
 				Paginator\Paginator::$offset = intval($_GET['offset']);
 				Paginator\Paginator::$url    = $_SERVER['REQUEST_URI'];
 
-				$resultat=array_splice($resultat,Paginator\Paginator::$offset,Paginator\Paginator::$total);
+				$resultat=array_slice($resultat,Paginator\Paginator::$offset,Paginator\Paginator::$offset+Paginator\Paginator::$limit);
 
 				foreach ($resultat as $row) {
 					if($idVersion!=$row[ID_VERSION]){
@@ -247,6 +247,7 @@ class ComposantRecherche extends Module
 				$this->ligneResultat($photo, $nomJeu, $nomVersion, $idVersion, $nbdisponible, $nbindisponible);
 				$this->fermeBloc("</table>");
 				$this->fermeBloc("</div>");
+				$this->ajouteLigne("<div id='paginator'>Page</div>");
 				$this->ajouteLigne(Paginator\Paginator::links());
 			}
 		}
@@ -284,7 +285,7 @@ class ComposantRecherche extends Module
 	private function creationSelect($array,$param,$name){
 		$post=$_POST[$param];
 		$get=$_GET[$name];
-		if($post==NULL){
+		if($post==NULL&&$get!=NULL){
 			$value=$get;
 			$this->getRecherche[$name]=$value;
 		}
@@ -308,29 +309,19 @@ class ComposantRecherche extends Module
 	 *Fonction qui crée des input type text et le prérempli si le paramètre post existe
 	 * @param string nom du tableau POST
 	 * @param string nom de la ligne du tableau
-	 * @todo ajout d'attribut list avec comme valeur $name
 	 */
 
 	private function creationInputText($param,$name){
 		$post=$_POST[$param];
 		$value=$post[$name];
 		$get=$_GET[$name];
-		if($post==NULL||$value==""){
+		if(($post==NULL||$value=="")&&$get!=NULL){
 			$value=$get;
 			$this->getRecherche[$name]=$get;
 		}
 		$this->ajouteLigne("<input type=\"text\" id=\"".$name."\" name=\"".$param ."[".$name."]\" value=\"". $value ."\" />");
 	}
 
-	/**
-	 * Fonction qui crée des datalist HTML5 pour l'autocomplétion
-	 * @param array tableau de valeur
-	 * @param string le nom qui permet d'assosier au champ
-	 */
-
-	private function creationDatalist($array,$name){
-
-	}
 
 	/**
 	 *Fonction qui crée des input type checkbox et le prérempli si le paramètre post existe
@@ -367,13 +358,6 @@ class ComposantRecherche extends Module
 		}
 
 	}
-
-	/**
-	 * Fonction qui crée un champ de recherche pour les catégories avec tag
-	 * @param string nom du tableau POST
-	 * @param string nom de la ligne du tableau
-	 */
-
 
 
 }

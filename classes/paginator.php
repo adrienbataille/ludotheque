@@ -45,7 +45,7 @@ class Paginator
 	 *
 	 * @return string
 	 */
-	
+
 	public static function links()
 	{
 		$all_pages    = ceil(self::$total  / self::$limit);
@@ -55,7 +55,7 @@ class Paginator
 
 		if($current_page > 1)
 		{
-			$string .= '<li>' . self::link("Previous", ($current_page - 1) * self::$limit) . '</li>';
+			$string .= '<li>' . self::link("Pr&eacute;c&eacute;dente", ($current_page - 1) * self::$limit) . '</li>';
 		}
 
 		$from_page = max($current_page - 3, 0);
@@ -68,7 +68,7 @@ class Paginator
 
 		if(($current_page + 1) !== $all_pages)
 		{
-			$string .= '<li>' . self::link("Next", ($current_page + 1) * self::$limit) . '</li>';
+			$string .= '<li>' . self::link("Suivante", ($current_page + 1) * self::$limit) . '</li>';
 		}
 
 		$string .= '</ul></nav>';
@@ -88,7 +88,7 @@ class Paginator
 	{
 		if(!stristr(self::$url,"?")){
 			return '<a href="' . self::$url . '?offset=' . $offset . '">' . $text . '</a>';
-		}	
+		}
 		else{
 			self::$url=preg_replace("/\&offset=[0-9]*/","",self::$url);
 			return '<a href="' . self::$url . '&offset=' . $offset . '">' . $text . '</a>';
