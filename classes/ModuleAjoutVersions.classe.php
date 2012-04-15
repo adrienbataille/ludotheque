@@ -46,6 +46,9 @@ class ModuleAjoutVersions extends Module
 	private $editeur = "";
 	private $idJeu = 0;
 	private $idVersion = 0;
+	
+
+	private $chemin;
 
 
 	
@@ -141,8 +144,7 @@ class ModuleAjoutVersions extends Module
 		// Nettoyage des variables POST récupérée
 		// Contre injection de code
 		
-		//var_dump($_FILES['PHOTO_VERSION']);
-		
+		//var_dump($_FILES['PHOTO_VERSION']);		
 		
 		$this->idVersion = $this->filtreChaine($_POST[ID_VERSION], TAILLE_CHAMPS_COURT);
 	
@@ -181,7 +183,6 @@ class ModuleAjoutVersions extends Module
 		
 		//id jeu associé
 		$this->idJeu = intval($this->filtreChaine($_POST[ID_JEU], TAILLE_CHAMPS_COURT));
-
 		
 			
 	}
@@ -391,15 +392,34 @@ class ModuleAjoutVersions extends Module
 			if(strcmp($this->editeur, "") == 0 || $this->editeur == null)
 				$this->erreurEditeur = true;
 						
-			$chemin = 'fichier/';
-			$resultat2 = move_uploaded_file($_FILES['PHOTO_VERSION']['tmp_name'],$chemin.$_FILES['PHOTO_VERSION']['name']);  
-			//var_dump($resultat2);
-//var_dump($this);
+			
+			
+			if (is_uploaded_file($_FILES['PHOTO_VERSION']['tmp_name']))
+			{
+				$nomPhoto = $_FILES['PHOTO_VERSION']['name'];
+				 // recupération de l'extension du fichier
+				// autrement dit tout ce qu'il y a après le dernier point (inclus)
+				$extension = substr($nomPhoto,strrpos($nomPhoto,"."));
+				// Contrôle de l'extension du fichier
+				$extensionsAutorisees = array(".jpeg", ".jpg", ".gif");
+				if (!(in_array($extension, $extensionsAutorisees))) {
+				die("Le fichier n'a pas l'extension attendue");
+				}
+			}
+			
+			$this->chemin = 'fichier/';
+			move_uploaded_file($_FILES['PHOTO_VERSION']['tmp_name'],$chemin.$_FILES['PHOTO_VERSION']['name']);  
+			
+			$this->chemin .= $_FILES['PHOTO_VERSION']['name'];
+	
+			
 			if(!$this->erreurNom)
 			{
-				if($this->idVersion == 0 && $resultat2)
+				if($this->idVersion == 0 )
 				{
 					$this->idVersion = $this->maBase->InsertionTableVersion($this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->illustrateur, $this->distributeur, $this->editeur, $this->idJeu);													
+					//$this->idPhotoVersion = 
+					$this->maBase->InsertionTablePhoto($this->chemin);
 					if($this->idVersion == null || !$this->idVersion)
 						$this->erreurVersion = true;
 					else
@@ -407,6 +427,8 @@ class ModuleAjoutVersions extends Module
 						header("Location: " . MODULE_AJOUT_EXEMPLAIRES . "&idVersion=" . $this->idVersion);
 						exit;
 					}
+				
+					
 				}
 				else
 				{
@@ -416,6 +438,7 @@ class ModuleAjoutVersions extends Module
 					exit;
 				}
 			}
+
 		}
 	}	
     

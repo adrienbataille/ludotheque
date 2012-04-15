@@ -396,11 +396,11 @@ class AccesAuxDonneesDev
 			$requete->bindValue(5, $duree_partie, PDO::PARAM_INT);	
 
 		//prix achat
-		if($prix_achat == 0)
-			$requete->bindValue(6, null, PDO::PARAM_NULL);
-		else
+		if($prix_achat != 0)
 			$requete->bindValue(6, $prix_achat, PDO::PARAM_INT);
-
+		else
+			$requete->bindValue(6, "", PDO::PARAM_INT);
+	
 		//année de sortie
 		if(strcmp($annee_sortie, "") == 0)
 			$requete->bindValue(7, null, PDO::PARAM_NULL);
@@ -444,6 +444,27 @@ class AccesAuxDonneesDev
 		else
 			return $resultat[0][0];
     }
+	
+	/**
+    * Fonction d'insertion d'une photo de version
+    * Entrée : chemin de la photo
+    */
+    public function InsertionTablePhoto($chemin)
+	{
+
+		// On initie la connexion à la base, si ce n'est déjà fait
+		$this->connecteBase();
+		// Création de la requete
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_PHOTO . " (" . NOM_PHOTO . ") VALUES(?) ;");	
+		
+		//nom
+		$requete->bindValue(1, $chemin, PDO::PARAM_STR);
+		
+		$resultat = $requete->execute();
+
+		// On termine l'utilisation de la requete
+		$requete->closeCursor();
+	}
 
 	/**
     * Fonction d'insertion d'un exemplaire
