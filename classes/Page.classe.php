@@ -1,7 +1,6 @@
 <?php
 /**
 * Cette classe permet de créer des pages web au format MDJT
-* @package client
 */
 
 // Inclusion des fichiers utiles
@@ -46,6 +45,11 @@ define ("PAGE_LOGIN_PHPBB", "forum/ucp.php?mode=login");
 define("TABULATION", "  ");
 
 // Constantes liées au style
+
+/**
+ * Cette classe permet de créer des pages web au format MDJT
+ * @package client
+ */
 
 abstract class Page
 {
