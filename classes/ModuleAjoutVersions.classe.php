@@ -32,7 +32,8 @@ class ModuleAjoutVersions extends Module
 	private $erreurNom = false;
 	private $erreurVersion = false;	
 	private $erreurLoadVersion = false;
-	private $erreurPhoto = false;
+	private $erreurPhotoFormat = false;
+	private $erreurPhotoTaille = false;
 
 	private $nomVersion = "";
 	private $description = "";
@@ -257,10 +258,12 @@ class ModuleAjoutVersions extends Module
 			
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . PHOTO_VERSION . "'>" . $this->convertiTexte("Photo") . "</label>");
-		$this->ajouteLigne("<input type='hidden' name='MAX_FILE_SIZE' value='1234569' />");
+		$this->ajouteLigne("<input type='hidden' name='MAX_FILE_SIZE' value='512000' />");
 		$this->ajouteLigne("<input id='". PHOTO_VERSION . "' type='file' name='". PHOTO_VERSION . "' />");
-		if($this->erreurPhoto)
+		if($this->erreurPhotoFormat)
 			$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte(ERREUR_PHOTO_FORMAT) . "</p>");
+		if($this->erreurPhotoTaille)
+			$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte(ERREUR_PHOTO_TAILLE) . "</p>");
 		$this->fermeBloc("</li>");
 		
 
@@ -398,58 +401,58 @@ class ModuleAjoutVersions extends Module
 			
 			if((!floatval($this->prixAchat) || $this->prixAchat < 0) && $this->prixAchat != null)
 				$this->erreurPrixAchat = true;
-						
 			
-			//$chemin = 'fichier/';
-			//$resultat2 = move_uploaded_file($_FILES[PHOTO_VERSION]['tmp_name'],$chemin.$_FILES[PHOTO_VERSION]['name']);  
-			//var_dump($resultat2);
-			//var_dump($_FILES[PHOTO_VERSION]['name']);
-			
-			if (is_uploaded_file($_FILES[PHOTO_VERSION]['tmp_name']))
-			{//print "UPLOAD";
-				$nomPhoto = $_FILES[PHOTO_VERSION]['name'];
-				 // recupération de l'extension du fichier
-				// autrement dit tout ce qu'il y a après le dernier point (inclus)
-				$extension = substr($nomPhoto,strrpos($nomPhoto,"."));//var_dump($extension);
-				// Contrôle de l'extension du fichier
-				$extensionsAutorisees = array(".jpeg", ".jpg", ".gif");
-				if (!(in_array($extension, $extensionsAutorisees))) {
-					$this->erreurPhoto = true;
-					//die("Le fichier n'a pas l'extension attendue");
-				}
-			}
-			
-			$this->chemin = 'fichier/';
-			move_uploaded_file($_FILES[PHOTO_VERSION]['tmp_name'],$chemin.$_FILES[PHOTO_VERSION]['name']);  
-			
-			$this->chemin .= $_FILES[PHOTO_VERSION]['name'];
 		
-			if(!$this->erreurNom && !$this->erreurPrixAchat && !$this->erreurPhoto)
+			if(!$this->erreurNom && !$this->erreurPrixAchat)
 			{
-				if($this->idVersion == 0/* && $resultat2*/)
-				{
-					$this->idVersion = $this->maBase->InsertionTableVersion($this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->illustrateur, $this->distributeur, $this->editeur, $this->idJeu);													
-					//if($resultat2)
-						$this->maBase->InsertionTablePhoto($this->chemin);
-				}
-				else
-					$this->maBase->UpdateTableVersion($this->idVersion, $this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->illustrateur, $this->distributeur, $this->editeur, $this->idJeu);
-
-
-				if($this->idVersion == null || !$this->idVersion)
-					$this->erreurVersion = true;
-				else
-				{
-					if($_POST["Ajouter"]) {
-						header("Location: " . MODULE_GESTION_JEUX);
-						exit;
-					} else if($_POST["AjouterExemplaire"]) {
-						header("Location: " . MODULE_AJOUT_EXEMPLAIRES . "&idVersion=" . $this->idVersion);
-						exit;
-					} else if($_POST["AjouterVersion"]) {
-						header("Location: " . MODULE_AJOUT_VERSIONS . "&idJeu=" . $this->idJeu);
-						exit;
-					} else {}
+				
+				if (($_FILES[PHOTO_VERSION]['size'] == 0 && $_FILES[PHOTO_VERSION]['name'] != null) || $_FILES[PHOTO_VERSION]['size'] > 512000)
+					$this->erreurPhotoTaille = true;
+				
+				$nomPhoto = $_FILES[PHOTO_VERSION]['name'];
+				// recupération de l'extension du fichier
+				// autrement dit tout ce qu'il y a après le dernier point (inclus)
+				$extension = substr($nomPhoto,strrpos($nomPhoto,"."));
+				// Contrôle de l'extension du fichier
+				$extensionsAutorisees = array(".jpeg", ".jpg", ".gif", ".png");
+				
+				if (!(in_array($extension, $extensionsAutorisees)))
+					$this->erreurPhotoFormat = true;
+					//die("Le fichier n'a pas l'extension attendue");
+				
+				if(!$this->erreurPhotoFormat && !$this->erreurPhotoTaille) {
+				
+					if (is_uploaded_file($_FILES[PHOTO_VERSION]['tmp_name'])) {
+						$this->chemin = 'fichier/' . $_FILES[PHOTO_VERSION]['name'];
+						$resultat2 = move_uploaded_file($_FILES[PHOTO_VERSION]['tmp_name'],$this->chemin);
+						var_dump($resultat2);
+					}
+			
+					if($this->idVersion == 0/* && $resultat2*/)
+					{
+						$this->idVersion = $this->maBase->InsertionTableVersion($this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->illustrateur, $this->distributeur, $this->editeur, $this->idJeu);													
+						if($this->chemin != null)
+							$this->maBase->InsertionTablePhoto($this->chemin);
+					}
+					else
+						$this->maBase->UpdateTableVersion($this->idVersion, $this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->illustrateur, $this->distributeur, $this->editeur, $this->idJeu);
+	
+	
+					if($this->idVersion == null || !$this->idVersion)
+						$this->erreurVersion = true;
+					else
+					{
+						if($_POST["Ajouter"]) {
+							header("Location: " . MODULE_GESTION_JEUX);
+							exit;
+						} else if($_POST["AjouterExemplaire"]) {
+							header("Location: " . MODULE_AJOUT_EXEMPLAIRES . "&idVersion=" . $this->idVersion);
+							exit;
+						} else if($_POST["AjouterVersion"]) {
+							header("Location: " . MODULE_AJOUT_VERSIONS . "&idJeu=" . $this->idJeu);
+							exit;
+						} else {}
+					}
 				}
 			}
 		}

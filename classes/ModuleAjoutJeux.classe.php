@@ -309,8 +309,18 @@ class ModuleAjoutJeux extends Module
 		
 		// Bouton valider
 		$this->ouvreBloc("<fieldset>");
+		$this->ajouteLigne("<input type='hidden' name='ajouter' value='true' />");
+		$this->ajouteLigne("<button type='submit' name='Ajouter' value='true'>Valider</button>");
+		$this->fermeBloc("</fieldset>");
+		
+		$this->ouvreBloc("<fieldset>");
 		$this->ajouteLigne("<input type='hidden' name='ajouterJeu' value='true' />");
-		$this->ajouteLigne("<button type='submit' name='AjouterJeu' value='true'>Valider et ajouter une version</button>");
+		$this->ajouteLigne("<button type='submit' name='AjouterJeu' value='true'>Valider et ajouter un autre jeu</button>");
+		$this->fermeBloc("</fieldset>");
+		
+		$this->ouvreBloc("<fieldset>");
+		$this->ajouteLigne("<input type='hidden' name='ajouterVersion' value='true' />");
+		$this->ajouteLigne("<button type='submit' name='AjouterVersion' value='true'>Valider et ajouter une version</button>");
 		$this->fermeBloc("</fieldset>");
 		
 		$this->fermeBloc("</form>");
@@ -324,7 +334,7 @@ class ModuleAjoutJeux extends Module
 	private function traiteFormulaire()
 	{
 		// Y a-t-il effectivement un formulaire à traiter ?
-		if ($_POST["AjouterJeu"])
+		if ($_POST["Ajouter"] || $_POST["AjouterJeu"] || $_POST["AjouterVersion"])
 		{
 			// Traitement du formulaire
 			$this->traitementFormulaire = true;
@@ -361,8 +371,16 @@ class ModuleAjoutJeux extends Module
 					
 				if(!$this->erreurLangue && !$this->erreurNom && !$this->erreurPays && !$this->erreurJeu && !$this->erreurUpdateJeu)
 				{
-					header("Location: http://localhost/ludotheque/module.php?idModule=AjoutVersions&idJeu=" . $this->idJeu);
-					exit;
+					if($_POST["Ajouter"]) {
+						header("Location: " . MODULE_GESTION_JEUX);
+						exit;
+					} elseif ($_POST["AjouterJeu"]) {
+						header("Location: " . MODULE_AJOUT_JEUX);
+						exit;
+					} elseif ($_POST["AjouterVersion"]) {
+						header("Location: " . MODULE_AJOUT_VERSIONS . "&idJeu=" . $this->idJeu);
+						exit;
+					}
 				}
 			}			
 		} elseif($_POST["AjouterNom"])
