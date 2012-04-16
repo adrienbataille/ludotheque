@@ -12,7 +12,7 @@ require_once("classes/paginator.php");
  * Composant recherche
  * @author Romain Laï-King, Rania Daoudi, Ziyang Ke
  * @package composant
- * @version 0.3
+ * @version 0.4
  */
 
 
@@ -48,13 +48,16 @@ class ComposantRecherche extends Module
 	private function afficheFormulaire()
 	{
 		$this->ouvreBloc("<form id=\"recherche\" method='get' action='" .
-				MODULE_RECHERCHE."'>");
+				$_SERVER['REQUEST_URI']."'>");
+		//extraction de l'url du module afin de le rapeler
 		$parametre=explode("?", $_SERVER['REQUEST_URI']);
 		$url=explode("=",$parametre[1]);
 		if(strpos($url[1],"&")!=FALSE){
 			$url[1]=substr($url[1],0,strpos($url[1],"&"));
 		}
 		$this->ajouteLigne("<input type='text' name='$url[0]' style='display:none;' value='$url[1]'/> ");
+
+		//Liste des différents élément en select
 		$langue=$this->maBase->listeLangue();
 		$etat=$this->maBase->listeEtat();
 		$lieu=$this->maBase->listeLieu();
@@ -193,15 +196,8 @@ class ComposantRecherche extends Module
 
 	private function traitementFormulaire(){
 		$param=false;
-		$recherche=$_POST["recherche"];
-		if ($recherche!=NULL){
-			foreach($recherche as $row){
-				if ($row!=""){
-					$param=true;
-				}
-			}
-		}
-		elseif($this->getRecherche!=NULL){
+		//Vérification que l'on ait bien les paramètrs
+		if($this->getRecherche!=NULL){
 			$param=true;
 			$recherche=$this->getRecherche;
 		}
@@ -212,6 +208,7 @@ class ComposantRecherche extends Module
 				$this->ajouteLigne($this->convertiTexte("Aucun Résultat"));
 			}
 			else{
+				//affichage résultat
 				$this->ouvreBloc("<div class='ui-widget-content ui-corner-all' >");
 				$this->ouvreBloc("<table id='resultat' >");
 				$this->ajouteLigne("<caption>" . $this->convertiTexte("Résultat de la Recherche :") . " </caption>");
@@ -234,6 +231,7 @@ class ComposantRecherche extends Module
 				$resultat=array_slice($resultat,Paginator\Paginator::$offset,Paginator\Paginator::$offset+Paginator\Paginator::$limit);
 
 				foreach ($resultat as $row) {
+					//On affiche une fois par version, et on compte le nombre d'exemplaire dispo et non dispo
 					if($idVersion!=$row[ID_VERSION]){
 						if($idVersion!=-1){
 							$this->ligneResultat($photo, $nomJeu, $nomVersion, $idVersion, $nbdisponible, $nbindisponible);
