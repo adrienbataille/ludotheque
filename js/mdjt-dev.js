@@ -40,7 +40,7 @@ $(document).ready(function() {
 		$( "#rechercheAvancee" ).toggle( 'blind',options, 500 );
     		return false;
 		});
-	$("#resultat td:nth-child(odd)").addClass("odd");
-	$("#resultat th:nth-child(odd)").addClass("odd");
+	$("#resultat tr:nth-child(odd)").addClass("odd");
+	
 });
 		  

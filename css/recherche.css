@@ -28,6 +28,7 @@
 
 #resultat{
 	width:680px;
+	overflow:none;
 	margin-left:auto;
 	margin-right:auto;
 }
