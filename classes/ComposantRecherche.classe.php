@@ -47,9 +47,14 @@ class ComposantRecherche extends Module
 
 	private function afficheFormulaire()
 	{
-		$this->ouvreBloc("<form method='get' action='" .
+		$this->ouvreBloc("<form id=\"recherche\" method='get' action='" .
 				MODULE_RECHERCHE."'>");
-		$this->ajouteLigne("<input type='text' name='idModule' style='display:none;' value='idModule=Recherche'/> ");
+		$parametre=explode("?", $_SERVER['REQUEST_URI']);
+		$url=explode("=",$parametre[1]);
+		if(strpos($url[1],"&")!=FALSE){
+			$url[1]=substr($url[1],0,strpos($url[1],"&"));
+		}
+		$this->ajouteLigne("<input type='text' name='$url[0]' style='display:none;' value='$url[1]'/> ");
 		$langue=$this->maBase->listeLangue();
 		$etat=$this->maBase->listeEtat();
 		$lieu=$this->maBase->listeLieu();

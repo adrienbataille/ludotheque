@@ -40,7 +40,20 @@ $(document).ready(function() {
 		$( "#rechercheAvancee" ).toggle( 'blind',options, 500 );
     		return false;
 		});
-	$("#resultat tr:nth-child(odd)").addClass("odd");
+	
+	$("#recherche").submit(function() {
+		$("form#recherche input:text").each(function(){
+			   if($(this).val()==""){
+				   $(this).remove();
+			   }
+			});
+		$("form#recherche select").each(function(){
+			   if($(this).val()==""){
+				   $(this).remove();
+			   }
+			});
+    });
+	//$("#resultat tr:nth-child(odd)").addClass("odd");
 	
 });
 		  
