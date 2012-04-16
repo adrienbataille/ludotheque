@@ -32,6 +32,7 @@ class ModuleAjoutVersions extends Module
 	private $erreurNom = false;
 	private $erreurVersion = false;	
 	private $erreurLoadVersion = false;
+	private $erreurPhoto = false;
 
 	private $nomVersion = "";
 	private $description = "";
@@ -92,9 +93,9 @@ class ModuleAjoutVersions extends Module
 				$this->dureePartie = $myVersion[0][DUREE_PARTIE];
 				$this->prixAchat = $myVersion[0][PRIX_ACHAT];
 				$this->anneeSortie = $myVersion[0][ANNEE_SORTIE];
-				$this->illustrateur = $myVersion[0][ILLUSTRATEUR];
-				$this->distributeur = $myVersion[0][DISTRIBUTEUR];
-				$this->editeur = $myVersion[0][EDITEUR];
+				$this->illustrateur = $myVersion[0][ID_ILLUSTRATEUR];
+				$this->distributeur = $myVersion[0][ID_DISTRIBUTEUR];
+				$this->editeur = $myVersion[0][ID_EDITEUR];
 				if($this->idJeu == 0)
 					$this->idJeu = $myVersion[0][ID_JEU];
 				elseif($this->idJeu != 0 && $this->idJeu != $myVersion[0][ID_JEU])
@@ -109,7 +110,7 @@ class ModuleAjoutVersions extends Module
 		
 		// On affiche le contenu du module
 		if($this->erreurLoadVersion)
-    		$this->ajouteLigne("<p class='erreurForm'>Attention, tentative de piratage !!</p>");
+    		$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte("Attention, tentative de piratage !!") . "</p>");
 		else 
 		{
 			// On affiche le formulaire d'ajout des informations propres à une version d'un jeu
@@ -190,7 +191,7 @@ class ModuleAjoutVersions extends Module
     public function afficheFormulaire()
     {
 		if($this->erreurVersion)
-			$this->ajouteLigne("<p class='erreurForm'>Une erreur est survenue lors de l'ajout de votre version, veuillez réessayer ou contacter l'administrateur</p>");
+			$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte("Une erreur est survenue lors de l'ajout de votre version, veuillez réessayer ou contacter l'administrateur") . "</p>");
 			
 		$this->ouvreBloc("<form method='post' action='" . MODULE_AJOUT_VERSIONS . "' id='formProfil'  enctype='multipart/form-data'>");
 		
@@ -199,16 +200,16 @@ class ModuleAjoutVersions extends Module
 
 		// First fieldset : Nom de la versions
 		$this->ouvreBloc("<fieldset>");
-		$this->ajouteLigne("<legend>Jeu associé à la version</legend>");				
+		$this->ajouteLigne("<legend>" . $this->convertiTexte("Jeu associé à la version") . "</legend>");				
 		$this->ouvreBloc("<ol>");
 		$this->ouvreBloc("<li>");	
 		
 		$this->ajouteLigne("<label for='" . ID_JEU . "'>" . $this->convertiTexte("Jeu associé") . "</label>");
 		$listeJeu = $this->maBase->recupNomJeu(null);
 		if($this->idJeu == 0)
-			$this->ouvreBloc("<select name='" . ID_JEU . "'>");
+			$this->ouvreBloc("<select id='" . ID_JEU . "' name='" . ID_JEU . "'>");
 		else
-			$this->ouvreBloc("<select name='" . ID_JEU . "' disabled='disabled'>");
+			$this->ouvreBloc("<select id='" . ID_JEU . "' name='" . ID_JEU . "' disabled='disabled'>");
 		foreach($listeJeu as $idJeu => $jeu)
 		{
 			$name = "";
@@ -229,16 +230,19 @@ class ModuleAjoutVersions extends Module
 		$this->fermeBloc("</select>");
 		$this->fermeBloc("</li>");
 		
-		$this->ouvreBloc("<li style='display:none;'>");	
-		$this->ajouteLigne("<input type='hidden' id='" . ID_JEU . "' name='" . ID_JEU . "' value='" . $this->idJeu . "' />");
-		$this->fermeBloc("</li>");
+		if($this->idJeu != 0)
+		{
+			$this->ouvreBloc("<li style='display:none;'>");	
+			$this->ajouteLigne("<input type='hidden' id='" . ID_JEU . "' name='" . ID_JEU . "' value='" . $this->idJeu . "' />");
+			$this->fermeBloc("</li>");
+		}
 		
 		$this->fermeBloc("</ol>");
 		$this->fermeBloc("</fieldset>");
 		
 		// deuxième fieldset : Nom de la versions
 		$this->ouvreBloc("<fieldset>");
-		$this->ajouteLigne("<legend>Nom de la version</legend>");				
+		$this->ajouteLigne("<legend>" . $this->convertiTexte("Nom de la version") . "</legend>");				
 		$this->ouvreBloc("<ol>");
 		
 
@@ -248,15 +252,15 @@ class ModuleAjoutVersions extends Module
         $this->ajouteLigne("<label for='" . NOM_VERSION . "'>" . $this->convertiTexte("Nom de la version *") . "</label>");
         $this->ajouteLigne("<input type='text' id='". NOM_VERSION . "' name='" . NOM_VERSION . "' value='" . $this->convertiTexte($this->nomVersion) . "' required='required'  />");
 		if($this->erreurNom)
-			$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être rempli</p>");
+			$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte(ERREUR_CHAMP_REQUIS) . "</p>");
 		$this->fermeBloc("</li>");
-        $this->fermeBloc("</li>");
 			
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . PHOTO_VERSION . "'>" . $this->convertiTexte("Photo") . "</label>");
 		$this->ajouteLigne("<input type='hidden' name='MAX_FILE_SIZE' value='1234569' />");
-		$this->ajouteLigne("<input type='file' name='". PHOTO_VERSION . "' />");
-
+		$this->ajouteLigne("<input id='". PHOTO_VERSION . "' type='file' name='". PHOTO_VERSION . "' />");
+		if($this->erreurPhoto)
+			$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte(ERREUR_PHOTO_FORMAT) . "</p>");
 		$this->fermeBloc("</li>");
 		
 
@@ -266,7 +270,7 @@ class ModuleAjoutVersions extends Module
 		
 		// Second fieldset : Informations sur la version
 		$this->ouvreBloc("<fieldset>");
-		$this->ajouteLigne("<legend>Informations sur la version</legend>");
+		$this->ajouteLigne("<legend>" . $this->convertiTexte("Informations sur la version") . "</legend>");
 		$this->ouvreBloc("<ol>");
 		
 		// Description
@@ -356,14 +360,20 @@ class ModuleAjoutVersions extends Module
 		$this->fermeBloc("</ol>");
 		$this->fermeBloc("</fieldset>");
 		
-				
-			
-        $this->fermeBloc("</ol>");
-        $this->fermeBloc("</fieldset>");
 		
 		$this->ouvreBloc("<fieldset>");	
 		$this->ajouteLigne("<input type='hidden' name='ajouter' value='true' />");
-		$this->ajouteLigne("<button type='submit' name='Ajouter'>Valider</button>");
+		$this->ajouteLigne("<button type='submit' name='Ajouter' value='true'>" . $this->convertiTexte("Valider") . "</button>");
+		$this->fermeBloc("</fieldset>");
+		
+		$this->ouvreBloc("<fieldset>");	
+		$this->ajouteLigne("<input type='hidden' name='ajouterVersion' value='true' />");
+		$this->ajouteLigne("<button type='submit' name='AjouterVersion' value='true'>" . $this->convertiTexte("Valider et ajouter une autre version") . "</button>");
+		$this->fermeBloc("</fieldset>");
+		
+		$this->ouvreBloc("<fieldset>");	
+		$this->ajouteLigne("<input type='hidden' name='ajouterExemplaire' value='true' />");
+		$this->ajouteLigne("<button type='submit' name='AjouterExemplaire' value='true'>" . $this->convertiTexte("Valider et ajouter des exemplaires à cette version") . "</button>");
 		$this->fermeBloc("</fieldset>");
 		
 		$this->fermeBloc("</form>");
@@ -376,7 +386,7 @@ class ModuleAjoutVersions extends Module
 	private function traiteFormulaire()
 	{
 		// Y a-t-il effectivement un formulaire à traiter ?
-		if ($_POST["ajouter"])
+		if ($_POST["Ajouter"] || $_POST["AjouterVersion"] || $_POST["AjouterExemplaire"])
 		{
 			// Traitement du formulaire
 			$this->traitementFormulaire = true;	
@@ -386,64 +396,62 @@ class ModuleAjoutVersions extends Module
 			if(strcmp($this->nomVersion, "") == 0 || $this->nomVersion == null)
 				$this->erreurNom = true;
 			
-			if(!floatval($this->prixAchat) || $this->prixAchat < 0)
+			if((!floatval($this->prixAchat) || $this->prixAchat < 0) && $this->prixAchat != null)
 				$this->erreurPrixAchat = true;
-			
-			if(strcmp($this->editeur, "") == 0 || $this->editeur == null)
-				$this->erreurEditeur = true;
 						
 			
-			$chemin = 'fichier/';
-			$resultat2 = move_uploaded_file($_FILES['PHOTO_VERSION']['tmp_name'],$chemin.$_FILES['PHOTO_VERSION']['name']);  
+			//$chemin = 'fichier/';
+			//$resultat2 = move_uploaded_file($_FILES[PHOTO_VERSION]['tmp_name'],$chemin.$_FILES[PHOTO_VERSION]['name']);  
 			//var_dump($resultat2);
-
+			//var_dump($_FILES[PHOTO_VERSION]['name']);
 			
-			if (is_uploaded_file($_FILES['PHOTO_VERSION']['tmp_name']))
-			{
-				$nomPhoto = $_FILES['PHOTO_VERSION']['name'];
+			if (is_uploaded_file($_FILES[PHOTO_VERSION]['tmp_name']))
+			{//print "UPLOAD";
+				$nomPhoto = $_FILES[PHOTO_VERSION]['name'];
 				 // recupération de l'extension du fichier
 				// autrement dit tout ce qu'il y a après le dernier point (inclus)
-				$extension = substr($nomPhoto,strrpos($nomPhoto,"."));
+				$extension = substr($nomPhoto,strrpos($nomPhoto,"."));//var_dump($extension);
 				// Contrôle de l'extension du fichier
 				$extensionsAutorisees = array(".jpeg", ".jpg", ".gif");
 				if (!(in_array($extension, $extensionsAutorisees))) {
-				die("Le fichier n'a pas l'extension attendue");
+					$this->erreurPhoto = true;
+					//die("Le fichier n'a pas l'extension attendue");
 				}
 			}
 			
 			$this->chemin = 'fichier/';
-			move_uploaded_file($_FILES['PHOTO_VERSION']['tmp_name'],$chemin.$_FILES['PHOTO_VERSION']['name']);  
+			move_uploaded_file($_FILES[PHOTO_VERSION]['tmp_name'],$chemin.$_FILES[PHOTO_VERSION]['name']);  
 			
-			$this->chemin .= $_FILES['PHOTO_VERSION']['name'];
-	
-			
-			if(!$this->erreurNom)
+			$this->chemin .= $_FILES[PHOTO_VERSION]['name'];
+		
+			if(!$this->erreurNom && !$this->erreurPrixAchat && !$this->erreurPhoto)
 			{
-				if($this->idVersion == 0 )
-				if($this->idVersion == 0 && $resultat2)
+				if($this->idVersion == 0/* && $resultat2*/)
 				{
 					$this->idVersion = $this->maBase->InsertionTableVersion($this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->illustrateur, $this->distributeur, $this->editeur, $this->idJeu);													
-					//$this->idPhotoVersion = 
-					$this->maBase->InsertionTablePhoto($this->chemin);
-					if($this->idVersion == null || !$this->idVersion)
-						$this->erreurVersion = true;
-					else
-					{
-						header("Location: " . MODULE_AJOUT_EXEMPLAIRES . "&idVersion=" . $this->idVersion);
-						exit;
-					}
-				
-					
+					//if($resultat2)
+						$this->maBase->InsertionTablePhoto($this->chemin);
 				}
 				else
-				{
 					$this->maBase->UpdateTableVersion($this->idVersion, $this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->illustrateur, $this->distributeur, $this->editeur, $this->idJeu);
-					
-					header("Location: " . MODULE_GESTION_JEUX);
-					exit;
+
+
+				if($this->idVersion == null || !$this->idVersion)
+					$this->erreurVersion = true;
+				else
+				{
+					if($_POST["Ajouter"]) {
+						header("Location: " . MODULE_GESTION_JEUX);
+						exit;
+					} else if($_POST["AjouterExemplaire"]) {
+						header("Location: " . MODULE_AJOUT_EXEMPLAIRES . "&idVersion=" . $this->idVersion);
+						exit;
+					} else if($_POST["AjouterVersion"]) {
+						header("Location: " . MODULE_AJOUT_VERSIONS . "&idJeu=" . $this->idJeu);
+						exit;
+					} else {}
 				}
 			}
-
 		}
 	}	
     

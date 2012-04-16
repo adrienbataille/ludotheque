@@ -107,7 +107,7 @@ class ModuleAjoutExemplaires extends Module
 		
 		// On affiche le contenu du module
     	if($this->erreurLoadExemplaire)
-    		$this->ajouteLigne("<p class='erreurForm'>Attention, tentative de piratage !!</p>");
+    		$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte("Attention, tentative de piratage !!") . "</p>");
     	else
 		{
 			// On affiche le formulaire d'ajout des informations propres à un jeux
