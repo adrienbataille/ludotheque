@@ -12,15 +12,18 @@ define("BASE_DEV","mdjtufjjpdev");
 
 // Constantes - Definition des Tables SQL
 define("TABLE_CATEGORIE", TABLE_PREFIX . "CATEGORIE");
-define("TABLE_CATEGORIE_JEU", TABLE_PREFIX . "CATEGORIE_JEU");
+define("TABLE_CATEGORIE_JEUX", TABLE_PREFIX . "CATEGORIE_JEUX");
+define("TABLE_DISTRIBUTEUR", TABLE_PREFIX . "DISTRIBUTEUR");
+define("TABLE_EDITEUR", TABLE_PREFIX . "EDITEUR");
 define("TABLE_EMPRUNT", TABLE_PREFIX . "EMPRUNT");
 define("TABLE_ETAT_EXEMPLAIRE", TABLE_PREFIX . "ETAT_EXEMPLAIRE");
 define("TABLE_EXEMPLAIRE", TABLE_PREFIX . "EXEMPLAIRE");
 define("TABLE_EXTENSION", TABLE_PREFIX . "EXTENSION");
 define("TABLE_FAIRE_PARTIE_KIT", TABLE_PREFIX . "FAIRE_PARTIE_KIT");
+define("TABLE_ILLUSTRATEUR", TABLE_PREFIX . "ILLUSTRATEUR");
 define("TABLE_INVENTAIRE", TABLE_PREFIX . "INVENTAIRE");
-define("TABLE_JEU", TABLE_PREFIX . "JEU");
-define("TABLE_KIT_", TABLE_PREFIX . "KIT_JEU");
+define("TABLE_JEUX", TABLE_PREFIX . "JEUX");
+define("TABLE_KIT_JEUX", TABLE_PREFIX . "KIT_JEUX");
 define("TABLE_LANGUE", TABLE_PREFIX . "LANGUE");
 define("TABLE_LANGUE_REGLE", TABLE_PREFIX . "LANGUE_REGLE");
 define("TABLE_LIEU", TABLE_PREFIX . "LIEU");
@@ -42,6 +45,14 @@ define("DESCRIPTION_CATEGORIE", "descriptionCategorie");
 
 // Définition des champs de la table TABLE_CATEGORIE_JEU
 define("ID_CATEGORIE_JEU", "idCategorieJeu");
+
+// Définition des champs de la table TABLE_DISTRIBUTEUR
+define("ID_DISTRIBUTEUR", "idDistributeur");
+define("NOM_DISTRIBUTEUR", "nomDistributeur");
+
+// Définition des champs de la table TABLE_EDITEUR
+define("ID_EDITEUR", "idEditeur");
+define("NOM_EDITEUR", "nomEditeur");
 
 // Définition des champs de la table TABLE_EMPRUNT
 define("ID_EMPRUNT", "idEmprunt");
@@ -71,17 +82,21 @@ define("ID_VERSION_EXTENSION", "idVersionExtension");
 // Définition des champs de la table TABLE_FAIRE_PARTIE_KIT
 define("ID_FAIRE_PARTIE_KIT", "idFairePartieKit");
 
+// Définition des champs de la table TABLE_ILLUSTRATEUR
+define("ID_ILLUSTRATEUR", "idIllustrateur");
+define("NOM_ILLUSTRATEUR", "nomIllustrateur");
+
 // Définition des champs de la table TABLE_INVENTAIRE
 define("ID_INVENTAIRE", "idInventaire");
 define("DATE_INVENTAIRE", "dateInventaire");
 define("COMMENTAIRE_INVENTAIRE", "commentaireInventaire");
 
-// Définition des champs de la table TABLE_JEU
+// Définition des champs de la table TABLE_JEUX
 define("ID_JEU", "idJeu");
 define("DESCRIPTION_JEU", "descriptionJeu");
 define("AUTEUR", "auteur");
 
-// Définition des champs de la table TABLE_KIT_JEU
+// Définition des champs de la table TABLE_KIT_JEUX
 define("ID_KIT_JEU", "idKitJeu");
 define("NOM_KIT_JEU", "nomKit");
 define("DESCRIPTIOIN_KIT", "descriptionKit");
@@ -96,10 +111,6 @@ define("ID_LANGUE_REGLE", "idLangueRegle");
 // Définition des champs de la table TABLE_LIEU
 define("ID_LIEU", "idLieu");
 define("NOM_LIEU", "nomLieu");
-
-// Définition des champs de la table TABLE_NB_JOUEUR
-define("ID_NB_JOUEUR", "idNbJoueur");
-define("NB_JOUEUR", "nbJoueur");
 
 // Définition des champs de la table TABLE_NB_JOUEUR_VERSION_JEU
 define("ID_NB_JOUEUR_VERSION_JEU", "idNbJoueurJeu");
@@ -143,9 +154,8 @@ define("NB_JOUEUR_RECOMMANDE", "nbJoueurRecommande");
 define("DUREE_PARTIE", "dureePartie");
 define("PRIX_ACHAT", "prixAchat");
 define("ANNEE_SORTIE", "anneeSortie");
-define("ILLUSTRATEUR", "illustrateur");
-define("DISTRIBUTEUR", "distributeur");
-define("EDITEUR", "editeur");
+define("NB_JOUEUR", "nbJoueur");
+
 
 //Définition des signes
 define("SUPERIEUR","sup");
@@ -343,7 +353,7 @@ class AccesAuxDonneesDev
 	 */
 
 	public function listeAuteur(){
-		return $this->requeteSelect("SELECT " . AUTEUR . "," . AUTEUR . "  FROM " .  TABLE_JEU);
+		return $this->requeteSelect("SELECT *  FROM " .  TABLE_JEUX);
 	}
 
 	/**
@@ -352,7 +362,7 @@ class AccesAuxDonneesDev
 	 */
 
 	public function listeIllustrateur(){
-		return $this->requeteSelect("SELECT " . ILLUSTRATEUR . "," . ILLUSTRATEUR . "  FROM " .  TABLE_VERSION);
+		return $this->requeteSelect("SELECT * FROM " .  TABLE_ILLUSTRATEUR);
 	}
 
 	/**
@@ -361,7 +371,7 @@ class AccesAuxDonneesDev
 	 */
 
 	public function listeDistributeur(){
-		return $this->requeteSelect("SELECT " . DISTRIBUTEUR . "," . DISTRIBUTEUR . "  FROM " .  TABLE_VERSION);
+		return $this->requeteSelect("SELECT * FROM " .  TABLE_DISTRIBUTEUR);
 	}
 
 	/**
@@ -404,12 +414,12 @@ class AccesAuxDonneesDev
 		//Voir les commentaires dans RequeteSQL pour les méthodes
 
 		//On joint les 6 tables nécessaires pour le SELECT DE BASE
-		$query->jointureLeft(TABLE_JEU, ID_JEU, TABLE_VERSION, ID_JEU);
+		$query->jointureLeft(TABLE_JEUX, ID_JEU, TABLE_VERSION, ID_JEU);
 		$query->jointureLeft(TABLE_VERSION,ID_VERSION,TABLE_PHOTO_VERSION,ID_VERSION);
 		$query->jointureLeft(TABLE_PHOTO_VERSION,ID_PHOTO,TABLE_PHOTO,ID_PHOTO);
 		$query->jointureLeft(TABLE_EXEMPLAIRE,ID_VERSION,TABLE_VERSION,ID_VERSION);
 		$query->jointure(TABLE_ETAT_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE);
-		$query->jointure(TABLE_NOM_JEU,ID_JEU,TABLE_JEU,ID_JEU);
+		$query->jointure(TABLE_NOM_JEU,ID_JEU,TABLE_JEUX,ID_JEU);
 
 		$query->setExtra("GROUP BY ". TABLE_VERSION . "." . ID_VERSION . "," . TABLE_EXEMPLAIRE .".". ID_ETAT_EXEMPLAIRE );
 
@@ -425,17 +435,17 @@ class AccesAuxDonneesDev
 
 		//Par langue. On regarde seulement la langue de la version ( pour le moment )
 		if(is_numeric($critere["idLangue"])){
-			$query->ajoutAndEgal(TABLE_VERSION, ID_LANGUE, $critere["idLangue"]);
+			$query->ajoutAnd("=",TABLE_VERSION, ID_LANGUE, $critere["idLangue"]);
 		}
 
 		// Par Etat
 		if(is_numeric($critere["idEtatExemplaire"])){
-			$query->ajoutAndEgal(TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, $critere["idEtatExemplaire"]);
+			$query->ajoutAnd("=",TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, $critere["idEtatExemplaire"]);
 		}
 
 		// Par Lieux
 		if(is_numeric($critere["idLieu"])){
-			$query->ajoutAndEgal(TABLE_EXEMPLAIRE, ID_LIEU_REEL, $critere["idLieu"]);
+			$query->ajoutAnd("=",TABLE_EXEMPLAIRE, ID_LIEU_REEL, $critere["idLieu"]);
 			$string="AND (( " . TABLE_EXEMPLAIRE . "." . ID_LIEU_REEL   . "=" .$critere["idLieu"].
 			" AND " . TABLE_EXEMPLAIRE . "." . ID_LIEU_TEMPO   ."= 0) OR  "
 			. TABLE_EXEMPLAIRE . " . " . ID_LIEU_TEMPO   . "=" .$critere["idLieu"].")";
@@ -445,16 +455,17 @@ class AccesAuxDonneesDev
 		// Par Durée
 		if(is_numeric($critere["DureeJeu"]))
 		{
-			$query->jointure(TABLE_VERSION, ID);
-
-			if(is_numeric($critere["idDureeJeu"])&& $critere["dureeSigne"]==SUPERIEUR){
-				$query->ajoutAndEgal(TABLE_VERSION, DUREE_PARTIE, $critere["idDureeJeu"]);
+			print_r($critere["DureeJeu"]);
+			$critere["DureeJeu"]=$critere["DureeJeu"]*60;
+			$critere["DureeJeu"]=$this->formatTime($critere["DureeJeu"]);
+			if($critere["dureeSigne"]==SUPERIEUR){
+				$query->ajoutAnd(">",TABLE_VERSION, DUREE_PARTIE, $critere["DureeJeu"]);
 			}
-			if(is_numeric($critere["idDureeJeu"]) && $critere["dureeSigne"]==INFERIEUR   ){
-				$query->ajoutAndEgal(TABLE_VERSION, DUREE_PARTIE, $critere["idDureeJeu"]);
+			if($critere["dureeSigne"]==INFERIEUR   ){
+				$query->ajoutAnd("<",TABLE_VERSION, DUREE_PARTIE, $critere["DureeJeu"]);
 			}
-			if(is_numeric($critere["idDureeJeu"]) && $critere["dureeSigne"]==EGAL){
-				$query->ajoutAndEgal(TABLE_VERSION, DUREE_PARTIE, $critere["idDureeJeu"]);
+			if($critere["dureeSigne"]==EGAL){
+				$query->ajoutAnd("=",TABLE_VERSION, DUREE_PARTIE, $critere["DureeJeu"]);
 			}
 		}
 
@@ -570,7 +581,7 @@ class AccesAuxDonneesDev
 		if($critere["auteur"]!=""){
 
 			$critere["auteur"]=mysql_real_escape_string($critere["auteur"]);
-			$string="AND ( " . TABLE_JEU. "." . AUTEUR   ." LIKE '%" .$critere["auteur"]."%')";
+			$string="AND ( " . TABLE_JEUX. "." . AUTEUR   ." LIKE '%" .$critere["auteur"]."%')";
 			$query->ajoutWhereLibre($string);
 		}
 
@@ -586,7 +597,7 @@ class AccesAuxDonneesDev
 		// Par Année
 
 		if(is_numeric($critere["anneeSortie"])){
-			$query->ajoutAndEgal(TABLE_VERSION, ANNEE_SORTIE, $critere["anneeSortie"]);
+			$query->ajoutAnd("=",TABLE_VERSION, ANNEE_SORTIE, $critere["anneeSortie"]);
 		}
 
 
@@ -595,7 +606,7 @@ class AccesAuxDonneesDev
 
 		if($critere["categorie"]!=""){
 			$query->jointure(TABLE_CATEGORIE,ID_CATEGORIE,TABLE_CATEGORIE_JEU,ID_CATEGORIE);
-			$query->jointure(TABLE_CATEGORIE_JEU,ID_JEU,TABLE_JEU,ID_JEU);
+			$query->jointure(TABLE_CATEGORIE_JEU,ID_JEU,TABLE_JEUX,ID_JEU);
 			$string = explode("," , $critere["categorie"]);
 			foreach($string as $value ){
 				$query->ajoutAndLike(TABLE_CATEGORIE,NOM_CATEGORIE,$value);
@@ -603,10 +614,38 @@ class AccesAuxDonneesDev
 		}
 
 		//ainsi de suite!
+		print_r($query->debug());
 		$result=$this->requeteSelect($query->compile());
+
 		return $result;
 	}
 
+	/**
+	 * Fonction de convertion des secondes en time
+	 * @param int le temps en seconde
+	 * @return string format time HH:MM:SS
+	 */
+
+	public function formatTime($secs) {
+		$times = array(3600, 60, 1);
+		$time = '';
+		$tmp = '';
+		for($i = 0; $i < 3; $i++) {
+			$tmp = floor($secs / $times[$i]);
+			if($tmp < 1) {
+				$tmp = '00';
+			}
+			elseif($tmp < 10) {
+				$tmp = '0' . $tmp;
+			}
+			$time .= $tmp;
+			if($i < 2) {
+				$time .= ':';
+			}
+			$secs = $secs % $times[$i];
+		}
+		return $time;
+	}
 
 
 }

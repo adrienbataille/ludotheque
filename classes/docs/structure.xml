@@ -450,16 +450,16 @@ notamment en supprimant les caractères d'échappement.]]></description>
       </method>
     </class>
   </file>
-  <file path="AccesAuxDonneesDev.classe.php" hash="2c06441a6a3e95e40a44bed25b1bc6ac" package="client">
+  <file path="AccesAuxDonneesDev.classe.php" hash="babc69b02fd4073169d22161fc1ee010" package="client">
     <parse_markers>
-      <error line="169" code="50018">No DocBlock was found for property $connexionBase</error>
-      <error line="171" code="50018">No DocBlock was found for property $maBase</error>
-      <error line="173" code="50018">No DocBlock was found for property $estConnecte</error>
-      <error line="180" code="50010">No DocBlock was found for method __construct()</error>
-      <error line="187" code="50010">No DocBlock was found for method __clone()</error>
-      <error line="193" code="50010">No DocBlock was found for method __wakeup()</error>
-      <error line="261" code="50015">Argument $uneRequeteSQL is missing from the Docblock of requeteSelect()</error>
-      <notice line="302" code="50017">The type for the @param tag in conversionDepuisBase() is "type"; isn't this an IDE default?</notice>
+      <error line="179" code="50018">No DocBlock was found for property $connexionBase</error>
+      <error line="181" code="50018">No DocBlock was found for property $maBase</error>
+      <error line="183" code="50018">No DocBlock was found for property $estConnecte</error>
+      <error line="190" code="50010">No DocBlock was found for method __construct()</error>
+      <error line="197" code="50010">No DocBlock was found for method __clone()</error>
+      <error line="203" code="50010">No DocBlock was found for method __wakeup()</error>
+      <error line="271" code="50015">Argument $uneRequeteSQL is missing from the Docblock of requeteSelect()</error>
+      <notice line="312" code="50017">The type for the @param tag in conversionDepuisBase() is "type"; isn't this an IDE default?</notice>
       <error line="1" code="50007">No page-level DocBlock was found in file AccesAuxDonneesDev.classe.php</error>
     </parse_markers>
     <include line="7" type="Require Once" package="Default">
@@ -481,410 +481,430 @@ notamment en supprimant les caractères d'échappement.]]></description>
       <value><![CDATA[TABLE_PREFIX . "CATEGORIE"]]></value>
     </constant>
     <constant namespace="default" line="15" package="client">
-      <name>TABLE_CATEGORIE_JEU</name>
-      <value><![CDATA[TABLE_PREFIX . "CATEGORIE_JEU"]]></value>
+      <name>TABLE_CATEGORIE_JEUX</name>
+      <value><![CDATA[TABLE_PREFIX . "CATEGORIE_JEUX"]]></value>
     </constant>
     <constant namespace="default" line="16" package="client">
+      <name>TABLE_DISTRIBUTEUR</name>
+      <value><![CDATA[TABLE_PREFIX . "DISTRIBUTEUR"]]></value>
+    </constant>
+    <constant namespace="default" line="17" package="client">
+      <name>TABLE_EDITEUR</name>
+      <value><![CDATA[TABLE_PREFIX . "EDITEUR"]]></value>
+    </constant>
+    <constant namespace="default" line="18" package="client">
       <name>TABLE_EMPRUNT</name>
       <value><![CDATA[TABLE_PREFIX . "EMPRUNT"]]></value>
     </constant>
-    <constant namespace="default" line="17" package="client">
+    <constant namespace="default" line="19" package="client">
       <name>TABLE_ETAT_EXEMPLAIRE</name>
       <value><![CDATA[TABLE_PREFIX . "ETAT_EXEMPLAIRE"]]></value>
     </constant>
-    <constant namespace="default" line="18" package="client">
+    <constant namespace="default" line="20" package="client">
       <name>TABLE_EXEMPLAIRE</name>
       <value><![CDATA[TABLE_PREFIX . "EXEMPLAIRE"]]></value>
     </constant>
-    <constant namespace="default" line="19" package="client">
+    <constant namespace="default" line="21" package="client">
       <name>TABLE_EXTENSION</name>
       <value><![CDATA[TABLE_PREFIX . "EXTENSION"]]></value>
     </constant>
-    <constant namespace="default" line="20" package="client">
+    <constant namespace="default" line="22" package="client">
       <name>TABLE_FAIRE_PARTIE_KIT</name>
       <value><![CDATA[TABLE_PREFIX . "FAIRE_PARTIE_KIT"]]></value>
     </constant>
-    <constant namespace="default" line="21" package="client">
+    <constant namespace="default" line="23" package="client">
+      <name>TABLE_ILLUSTRATEUR</name>
+      <value><![CDATA[TABLE_PREFIX . "ILLUSTRATEUR"]]></value>
+    </constant>
+    <constant namespace="default" line="24" package="client">
       <name>TABLE_INVENTAIRE</name>
       <value><![CDATA[TABLE_PREFIX . "INVENTAIRE"]]></value>
     </constant>
-    <constant namespace="default" line="22" package="client">
-      <name>TABLE_JEU</name>
-      <value><![CDATA[TABLE_PREFIX . "JEU"]]></value>
+    <constant namespace="default" line="25" package="client">
+      <name>TABLE_JEUX</name>
+      <value><![CDATA[TABLE_PREFIX . "JEUX"]]></value>
     </constant>
-    <constant namespace="default" line="23" package="client">
-      <name>TABLE_KIT_</name>
-      <value><![CDATA[TABLE_PREFIX . "KIT_JEU"]]></value>
+    <constant namespace="default" line="26" package="client">
+      <name>TABLE_KIT_JEUX</name>
+      <value><![CDATA[TABLE_PREFIX . "KIT_JEUX"]]></value>
     </constant>
-    <constant namespace="default" line="24" package="client">
+    <constant namespace="default" line="27" package="client">
       <name>TABLE_LANGUE</name>
       <value><![CDATA[TABLE_PREFIX . "LANGUE"]]></value>
     </constant>
-    <constant namespace="default" line="25" package="client">
+    <constant namespace="default" line="28" package="client">
       <name>TABLE_LANGUE_REGLE</name>
       <value><![CDATA[TABLE_PREFIX . "LANGUE_REGLE"]]></value>
     </constant>
-    <constant namespace="default" line="26" package="client">
+    <constant namespace="default" line="29" package="client">
       <name>TABLE_LIEU</name>
       <value><![CDATA[TABLE_PREFIX . "LIEU"]]></value>
     </constant>
-    <constant namespace="default" line="27" package="client">
+    <constant namespace="default" line="30" package="client">
       <name>TABLE_NB_JOUEUR</name>
       <value><![CDATA[TABLE_PREFIX . "NB_JOUEUR"]]></value>
     </constant>
-    <constant namespace="default" line="28" package="client">
+    <constant namespace="default" line="31" package="client">
       <name>TABLE_NB_JOUEUR_VERSION_JEU</name>
       <value><![CDATA[TABLE_PREFIX . "NB_JOUEUR_VERSION_JEU"]]></value>
     </constant>
-    <constant namespace="default" line="29" package="client">
+    <constant namespace="default" line="32" package="client">
       <name>TABLE_NOM_JEU</name>
       <value><![CDATA[TABLE_PREFIX . "NOM_JEU"]]></value>
     </constant>
-    <constant namespace="default" line="30" package="client">
+    <constant namespace="default" line="33" package="client">
       <name>TABLE_NOTE_VERSION</name>
       <value><![CDATA[TABLE_PREFIX . "NOTE_VERSION"]]></value>
     </constant>
-    <constant namespace="default" line="31" package="client">
+    <constant namespace="default" line="34" package="client">
       <name>TABLE_PAYS</name>
       <value><![CDATA[TABLE_PREFIX . "PAYS"]]></value>
     </constant>
-    <constant namespace="default" line="32" package="client">
+    <constant namespace="default" line="35" package="client">
       <name>TABLE_PHOTO</name>
       <value><![CDATA[TABLE_PREFIX . "PHOTO"]]></value>
     </constant>
-    <constant namespace="default" line="33" package="client">
+    <constant namespace="default" line="36" package="client">
       <name>TABLE_PHOTO_VERSION</name>
       <value><![CDATA[TABLE_PREFIX . "PHOTO_VERSION"]]></value>
     </constant>
-    <constant namespace="default" line="34" package="client">
+    <constant namespace="default" line="37" package="client">
       <name>TABLE_RESERVATION</name>
       <value><![CDATA[TABLE_PREFIX . "RESERVATION"]]></value>
     </constant>
-    <constant namespace="default" line="35" package="client">
+    <constant namespace="default" line="38" package="client">
       <name>TABLE_SUGGESTION</name>
       <value><![CDATA[TABLE_PREFIX . "SUGGESTION"]]></value>
     </constant>
-    <constant namespace="default" line="36" package="client">
+    <constant namespace="default" line="39" package="client">
       <name>TABLE_VERSION</name>
       <value><![CDATA[TABLE_PREFIX . "VERSION"]]></value>
     </constant>
-    <constant namespace="default" line="39" package="client">
+    <constant namespace="default" line="42" package="client">
       <name>ID_CATEGORIE</name>
       <value><![CDATA["idCategorie"]]></value>
     </constant>
-    <constant namespace="default" line="40" package="client">
+    <constant namespace="default" line="43" package="client">
       <name>NOM_CATEGORIE</name>
       <value><![CDATA["nomCategorie"]]></value>
     </constant>
-    <constant namespace="default" line="41" package="client">
+    <constant namespace="default" line="44" package="client">
       <name>DESCRIPTION_CATEGORIE</name>
       <value><![CDATA["descriptionCategorie"]]></value>
     </constant>
-    <constant namespace="default" line="44" package="client">
+    <constant namespace="default" line="47" package="client">
       <name>ID_CATEGORIE_JEU</name>
       <value><![CDATA["idCategorieJeu"]]></value>
     </constant>
-    <constant namespace="default" line="47" package="client">
+    <constant namespace="default" line="50" package="client">
+      <name>ID_DISTRIBUTEUR</name>
+      <value><![CDATA["idDistributeur"]]></value>
+    </constant>
+    <constant namespace="default" line="51" package="client">
+      <name>NOM_DISTRIBUTEUR</name>
+      <value><![CDATA["nomDistributeur"]]></value>
+    </constant>
+    <constant namespace="default" line="54" package="client">
+      <name>ID_EDITEUR</name>
+      <value><![CDATA["idEditeur"]]></value>
+    </constant>
+    <constant namespace="default" line="55" package="client">
+      <name>NOM_EDITEUR</name>
+      <value><![CDATA["nomEditeur"]]></value>
+    </constant>
+    <constant namespace="default" line="58" package="client">
       <name>ID_EMPRUNT</name>
       <value><![CDATA["idEmprunt"]]></value>
     </constant>
-    <constant namespace="default" line="48" package="client">
+    <constant namespace="default" line="59" package="client">
       <name>DATE_EMPRUNT</name>
       <value><![CDATA["dateEmprunt"]]></value>
     </constant>
-    <constant namespace="default" line="49" package="client">
+    <constant namespace="default" line="60" package="client">
       <name>DATE_RETOUR_SOUHAITE</name>
       <value><![CDATA["dateRetourSouhaite"]]></value>
     </constant>
-    <constant namespace="default" line="50" package="client">
+    <constant namespace="default" line="61" package="client">
       <name>DATE_RETOUR_REEL</name>
       <value><![CDATA["dateRetourReel"]]></value>
     </constant>
-    <constant namespace="default" line="53" package="client">
+    <constant namespace="default" line="64" package="client">
       <name>ID_ETAT_EXEMPLAIRE</name>
       <value><![CDATA["idEtatExemplaire"]]></value>
     </constant>
-    <constant namespace="default" line="54" package="client">
+    <constant namespace="default" line="65" package="client">
       <name>NOM_ETAT</name>
       <value><![CDATA["nomEtat"]]></value>
     </constant>
-    <constant namespace="default" line="57" package="client">
+    <constant namespace="default" line="68" package="client">
       <name>ID_EXEMPLAIRE</name>
       <value><![CDATA["idExemplaire"]]></value>
     </constant>
-    <constant namespace="default" line="58" package="client">
+    <constant namespace="default" line="69" package="client">
       <name>DESCRIPTION_EXEMPLAIRE</name>
       <value><![CDATA["descriptionExemplaire"]]></value>
     </constant>
-    <constant namespace="default" line="59" package="client">
+    <constant namespace="default" line="70" package="client">
       <name>PRIX_MDJT</name>
       <value><![CDATA["prixMJDT"]]></value>
     </constant>
-    <constant namespace="default" line="60" package="client">
+    <constant namespace="default" line="71" package="client">
       <name>DATE_ACHAT</name>
       <value><![CDATA["dateAchat"]]></value>
     </constant>
-    <constant namespace="default" line="61" package="client">
+    <constant namespace="default" line="72" package="client">
       <name>DATE_FIN_VIE</name>
       <value><![CDATA["dateFinVie"]]></value>
     </constant>
-    <constant namespace="default" line="62" package="client">
+    <constant namespace="default" line="73" package="client">
       <name>ID_LIEU_REEL</name>
       <value><![CDATA["idLieuReel"]]></value>
     </constant>
-    <constant namespace="default" line="63" package="client">
+    <constant namespace="default" line="74" package="client">
       <name>ID_LIEU_TEMPO</name>
       <value><![CDATA["idLieuTempo"]]></value>
     </constant>
-    <constant namespace="default" line="66" package="client">
+    <constant namespace="default" line="77" package="client">
       <name>ID_EXTENSION</name>
       <value><![CDATA["idExtension"]]></value>
     </constant>
-    <constant namespace="default" line="67" package="client">
+    <constant namespace="default" line="78" package="client">
       <name>NATURE</name>
       <value><![CDATA["nature"]]></value>
     </constant>
-    <constant namespace="default" line="68" package="client">
+    <constant namespace="default" line="79" package="client">
       <name>ID_VERSION_BASE</name>
       <value><![CDATA["idVesionBase"]]></value>
     </constant>
-    <constant namespace="default" line="69" package="client">
+    <constant namespace="default" line="80" package="client">
       <name>ID_VERSION_EXTENSION</name>
       <value><![CDATA["idVersionExtension"]]></value>
     </constant>
-    <constant namespace="default" line="72" package="client">
+    <constant namespace="default" line="83" package="client">
       <name>ID_FAIRE_PARTIE_KIT</name>
       <value><![CDATA["idFairePartieKit"]]></value>
     </constant>
-    <constant namespace="default" line="75" package="client">
+    <constant namespace="default" line="86" package="client">
+      <name>ID_ILLUSTRATEUR</name>
+      <value><![CDATA["idIllustrateur"]]></value>
+    </constant>
+    <constant namespace="default" line="87" package="client">
+      <name>NOM_ILLUSTRATEUR</name>
+      <value><![CDATA["nomIllustrateur"]]></value>
+    </constant>
+    <constant namespace="default" line="90" package="client">
       <name>ID_INVENTAIRE</name>
       <value><![CDATA["idInventaire"]]></value>
     </constant>
-    <constant namespace="default" line="76" package="client">
+    <constant namespace="default" line="91" package="client">
       <name>DATE_INVENTAIRE</name>
       <value><![CDATA["dateInventaire"]]></value>
     </constant>
-    <constant namespace="default" line="77" package="client">
+    <constant namespace="default" line="92" package="client">
       <name>COMMENTAIRE_INVENTAIRE</name>
       <value><![CDATA["commentaireInventaire"]]></value>
     </constant>
-    <constant namespace="default" line="80" package="client">
+    <constant namespace="default" line="95" package="client">
       <name>ID_JEU</name>
       <value><![CDATA["idJeu"]]></value>
     </constant>
-    <constant namespace="default" line="81" package="client">
+    <constant namespace="default" line="96" package="client">
       <name>DESCRIPTION_JEU</name>
       <value><![CDATA["descriptionJeu"]]></value>
     </constant>
-    <constant namespace="default" line="82" package="client">
+    <constant namespace="default" line="97" package="client">
       <name>AUTEUR</name>
       <value><![CDATA["auteur"]]></value>
     </constant>
-    <constant namespace="default" line="85" package="client">
+    <constant namespace="default" line="100" package="client">
       <name>ID_KIT_JEU</name>
       <value><![CDATA["idKitJeu"]]></value>
     </constant>
-    <constant namespace="default" line="86" package="client">
+    <constant namespace="default" line="101" package="client">
       <name>NOM_KIT_JEU</name>
       <value><![CDATA["nomKit"]]></value>
     </constant>
-    <constant namespace="default" line="87" package="client">
+    <constant namespace="default" line="102" package="client">
       <name>DESCRIPTIOIN_KIT</name>
       <value><![CDATA["descriptionKit"]]></value>
     </constant>
-    <constant namespace="default" line="90" package="client">
+    <constant namespace="default" line="105" package="client">
       <name>ID_LANGUE</name>
       <value><![CDATA["idLangue"]]></value>
     </constant>
-    <constant namespace="default" line="91" package="client">
+    <constant namespace="default" line="106" package="client">
       <name>NOM_LANGUE</name>
       <value><![CDATA["nomLangue"]]></value>
     </constant>
-    <constant namespace="default" line="94" package="client">
+    <constant namespace="default" line="109" package="client">
       <name>ID_LANGUE_REGLE</name>
       <value><![CDATA["idLangueRegle"]]></value>
     </constant>
-    <constant namespace="default" line="97" package="client">
+    <constant namespace="default" line="112" package="client">
       <name>ID_LIEU</name>
       <value><![CDATA["idLieu"]]></value>
     </constant>
-    <constant namespace="default" line="98" package="client">
+    <constant namespace="default" line="113" package="client">
       <name>NOM_LIEU</name>
       <value><![CDATA["nomLieu"]]></value>
     </constant>
-    <constant namespace="default" line="101" package="client">
-      <name>ID_NB_JOUEUR</name>
-      <value><![CDATA["idNbJoueur"]]></value>
-    </constant>
-    <constant namespace="default" line="102" package="client">
-      <name>NB_JOUEUR</name>
-      <value><![CDATA["nbJoueur"]]></value>
-    </constant>
-    <constant namespace="default" line="105" package="client">
+    <constant namespace="default" line="116" package="client">
       <name>ID_NB_JOUEUR_VERSION_JEU</name>
       <value><![CDATA["idNbJoueurJeu"]]></value>
     </constant>
-    <constant namespace="default" line="108" package="client">
+    <constant namespace="default" line="119" package="client">
       <name>ID_NOM_JEU</name>
       <value><![CDATA["idNomJeu"]]></value>
     </constant>
-    <constant namespace="default" line="109" package="client">
+    <constant namespace="default" line="120" package="client">
       <name>NOM_JEU</name>
       <value><![CDATA["nomJeu"]]></value>
     </constant>
-    <constant namespace="default" line="112" package="client">
+    <constant namespace="default" line="123" package="client">
       <name>ID_NOTE_VERSION</name>
       <value><![CDATA["idNoteVersion"]]></value>
     </constant>
-    <constant namespace="default" line="113" package="client">
+    <constant namespace="default" line="124" package="client">
       <name>NOTE_VERSION</name>
       <value><![CDATA["noteVersion"]]></value>
     </constant>
-    <constant namespace="default" line="114" package="client">
+    <constant namespace="default" line="125" package="client">
       <name>COMMENTAIRE_NOTE_VERSION</name>
       <value><![CDATA["commentaireNoteVersion"]]></value>
     </constant>
-    <constant namespace="default" line="117" package="client">
+    <constant namespace="default" line="128" package="client">
       <name>ID_PAYS</name>
       <value><![CDATA["idPays"]]></value>
     </constant>
-    <constant namespace="default" line="118" package="client">
+    <constant namespace="default" line="129" package="client">
       <name>NOM_PAYS</name>
       <value><![CDATA["nomPays"]]></value>
     </constant>
-    <constant namespace="default" line="121" package="client">
+    <constant namespace="default" line="132" package="client">
       <name>ID_PHOTO</name>
       <value><![CDATA["idPhoto"]]></value>
     </constant>
-    <constant namespace="default" line="122" package="client">
+    <constant namespace="default" line="133" package="client">
       <name>NOM_PHOTO</name>
       <value><![CDATA["nomPhoto"]]></value>
     </constant>
-    <constant namespace="default" line="123" package="client">
+    <constant namespace="default" line="134" package="client">
       <name>TEXTE_ALTERNATIF</name>
       <value><![CDATA["texteAlternatif"]]></value>
     </constant>
-    <constant namespace="default" line="126" package="client">
+    <constant namespace="default" line="137" package="client">
       <name>ID_PHOTO_VERSION</name>
       <value><![CDATA["idPhotoVERSION"]]></value>
     </constant>
-    <constant namespace="default" line="129" package="client">
+    <constant namespace="default" line="140" package="client">
       <name>ID_RESERVATION</name>
       <value><![CDATA["idReversation"]]></value>
     </constant>
-    <constant namespace="default" line="130" package="client">
+    <constant namespace="default" line="141" package="client">
       <name>DATE_SOUHAITE_EMPRUNT</name>
       <value><![CDATA["dateSouhaiteEmprunt"]]></value>
     </constant>
-    <constant namespace="default" line="133" package="client">
+    <constant namespace="default" line="144" package="client">
       <name>ID_SUGGESTION</name>
       <value><![CDATA["idSuggestion"]]></value>
     </constant>
-    <constant namespace="default" line="134" package="client">
+    <constant namespace="default" line="145" package="client">
       <name>COMMENTAIRE_SUGGESTION</name>
       <value><![CDATA["commentaireSugeestion"]]></value>
     </constant>
-    <constant namespace="default" line="135" package="client">
+    <constant namespace="default" line="146" package="client">
       <name>ETAT_SUGGESTION</name>
       <value><![CDATA["etatSuggestion"]]></value>
     </constant>
-    <constant namespace="default" line="138" package="client">
+    <constant namespace="default" line="149" package="client">
       <name>ID_VERSION</name>
       <value><![CDATA["idVersion"]]></value>
     </constant>
-    <constant namespace="default" line="139" package="client">
+    <constant namespace="default" line="150" package="client">
       <name>NOM_VERSION</name>
       <value><![CDATA["nomVersion"]]></value>
     </constant>
-    <constant namespace="default" line="140" package="client">
+    <constant namespace="default" line="151" package="client">
       <name>DESCRIPTION_VERSION</name>
       <value><![CDATA["descriptionVersion"]]></value>
     </constant>
-    <constant namespace="default" line="141" package="client">
+    <constant namespace="default" line="152" package="client">
       <name>AGE_MINIMUM</name>
       <value><![CDATA["ageMinimum"]]></value>
     </constant>
-    <constant namespace="default" line="142" package="client">
+    <constant namespace="default" line="153" package="client">
       <name>NB_JOUEUR_RECOMMANDE</name>
       <value><![CDATA["nbJoueurRecommande"]]></value>
     </constant>
-    <constant namespace="default" line="143" package="client">
+    <constant namespace="default" line="154" package="client">
       <name>DUREE_PARTIE</name>
       <value><![CDATA["dureePartie"]]></value>
     </constant>
-    <constant namespace="default" line="144" package="client">
+    <constant namespace="default" line="155" package="client">
       <name>PRIX_ACHAT</name>
       <value><![CDATA["prixAchat"]]></value>
     </constant>
-    <constant namespace="default" line="145" package="client">
+    <constant namespace="default" line="156" package="client">
       <name>ANNEE_SORTIE</name>
       <value><![CDATA["anneeSortie"]]></value>
     </constant>
-    <constant namespace="default" line="146" package="client">
-      <name>ILLUSTRATEUR</name>
-      <value><![CDATA["illustrateur"]]></value>
+    <constant namespace="default" line="157" package="client">
+      <name>NB_JOUEUR</name>
+      <value><![CDATA["nbJoueur"]]></value>
     </constant>
-    <constant namespace="default" line="147" package="client">
-      <name>DISTRIBUTEUR</name>
-      <value><![CDATA["distributeur"]]></value>
-    </constant>
-    <constant namespace="default" line="148" package="client">
-      <name>EDITEUR</name>
-      <value><![CDATA["editeur"]]></value>
-    </constant>
-    <constant namespace="default" line="151" package="client">
+    <constant namespace="default" line="161" package="client">
       <name>SUPERIEUR</name>
       <value><![CDATA["sup"]]></value>
     </constant>
-    <constant namespace="default" line="152" package="client">
+    <constant namespace="default" line="162" package="client">
       <name>INFERIEUR</name>
       <value><![CDATA["inf"]]></value>
     </constant>
-    <constant namespace="default" line="153" package="client">
+    <constant namespace="default" line="163" package="client">
       <name>EGAL</name>
       <value><![CDATA["egal"]]></value>
     </constant>
-    <constant namespace="default" line="156" package="client">
+    <constant namespace="default" line="166" package="client">
       <name>DISPONIBLE</name>
       <value><![CDATA["1"]]></value>
     </constant>
-    <class final="false" abstract="false" namespace="default" line="163" package="common">
+    <class final="false" abstract="false" namespace="default" line="173" package="common">
       <name>AccesAuxDonneesDev</name>
       <full_name>\AccesAuxDonneesDev</full_name>
       <extends/>
-      <docblock line="158">
+      <docblock line="168">
         <description><![CDATA[Classe de gestion de l'accès à la base de donnée]]></description>
         <long-description><![CDATA[]]></long-description>
-        <tag line="158" name="package" description="common"/>
+        <tag line="168" name="package" description="common"/>
       </docblock>
-      <property final="false" static="true" visibility="private" line="169" package="client">
+      <property final="false" static="true" visibility="private" line="179" package="client">
         <name>$connexionBase</name>
         <default><![CDATA[NULL]]></default>
       </property>
-      <property final="false" static="false" visibility="private" line="171" package="client">
+      <property final="false" static="false" visibility="private" line="181" package="client">
         <name>$maBase</name>
         <default><![CDATA[NULL]]></default>
       </property>
-      <property final="false" static="false" visibility="private" line="173" package="client">
+      <property final="false" static="false" visibility="private" line="183" package="client">
         <name>$estConnecte</name>
         <default><![CDATA[NULL]]></default>
       </property>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="180" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="190" package="">
         <name>__construct</name>
         <type>function</type>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="187" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="197" package="">
         <name>__clone</name>
         <type>function</type>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="193" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="203" package="">
         <name>__wakeup</name>
         <type>function</type>
       </method>
-      <method final="false" abstract="false" static="true" visibility="public" namespace="default" line="210" package="">
+      <method final="false" abstract="false" static="true" visibility="public" namespace="default" line="220" package="">
         <name>recupAccesDonneesDev</name>
         <type>function</type>
-        <docblock line="202">
+        <docblock line="212">
           <description><![CDATA[Fonction statique de création d'un accès aux données
 Cette fonction vérifie qu'un accès aux données n'existe pas avant
 Elle renvoi l'accès pré-existant, ou un nouvel accès]]></description>
@@ -892,144 +912,163 @@ Elle renvoi l'accès pré-existant, ou un nouvel accès]]></description>
 chaque fois qu'on veut avoir accès aux données</p>]]></long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="237" package="">
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="247" package="">
         <name>connecteBase</name>
         <type>function</type>
-        <docblock line="231">
+        <docblock line="241">
           <description><![CDATA[Fonction de connexion à la base de donnée
 Cette fonction initie la connexion à la base de données
 Uniquement si ce n'est pas déjà fait.]]></description>
           <long-description><![CDATA[<p>On l'utilise donc au début de chaque requête</p>]]></long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="264" package="">
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="274" package="">
         <name>requeteSelect</name>
         <type>function</type>
-        <docblock line="261">
+        <docblock line="271">
           <description><![CDATA[Fonction générique de requête type sélection dans la base]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>
-        <argument line="264">
+        <argument line="274">
           <name>$uneRequeteSQL</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="307" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="317" package="">
         <name>conversionDepuisBase</name>
         <type>function</type>
-        <docblock line="302">
+        <docblock line="312">
           <description><![CDATA[Fonction permettant de convertir les données stockées en base vers les données réelles
 notamment en supprimant les caractères d'échappement.]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="302" name="param" description="" type="\type" variable="$uneVariable">
+          <tag line="312" name="param" description="" type="\type" variable="$uneVariable">
             <type by_reference="false">\type</type>
           </tag>
         </docblock>
-        <argument line="307">
+        <argument line="317">
           <name>$uneVariable</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="318" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="328" package="">
         <name>listeLangue</name>
         <type>function</type>
-        <docblock line="313">
+        <docblock line="323">
           <description><![CDATA[Fonction récupérant toutes les langues]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="313" name="return" description="" type="array">
+          <tag line="323" name="return" description="" type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="327" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="337" package="">
         <name>listeEtat</name>
         <type>function</type>
-        <docblock line="322">
+        <docblock line="332">
           <description><![CDATA[Fonction récupérant tous les états]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="322" name="return" description="" type="array">
+          <tag line="332" name="return" description="" type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="336" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="346" package="">
         <name>listeLieu</name>
         <type>function</type>
-        <docblock line="331">
+        <docblock line="341">
           <description><![CDATA[Fonction récupérant tous les lieux]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="331" name="return" description="" type="array">
+          <tag line="341" name="return" description="" type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="345" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="355" package="">
         <name>listeAuteur</name>
         <type>function</type>
-        <docblock line="340">
+        <docblock line="350">
           <description><![CDATA[Fonction récupérant tous les auteurs]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="340" name="return" description="" type="array">
+          <tag line="350" name="return" description="" type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="354" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="364" package="">
         <name>listeIllustrateur</name>
         <type>function</type>
-        <docblock line="349">
+        <docblock line="359">
           <description><![CDATA[Fonction récupérant tous les illustrateurs]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="349" name="return" description="" type="array">
-            <type by_reference="false">array</type>
-          </tag>
-        </docblock>
-      </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="363" package="">
-        <name>listeDistributeur</name>
-        <type>function</type>
-        <docblock line="358">
-          <description><![CDATA[Fonction récupérant tous les distributeurs]]></description>
-          <long-description><![CDATA[]]></long-description>
-          <tag line="358" name="return" description="" type="array">
+          <tag line="359" name="return" description="" type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
       </method>
       <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="373" package="">
+        <name>listeDistributeur</name>
+        <type>function</type>
+        <docblock line="368">
+          <description><![CDATA[Fonction récupérant tous les distributeurs]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="368" name="return" description="" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="383" package="">
         <name>tagCategorie</name>
         <type>function</type>
-        <docblock line="367">
+        <docblock line="377">
           <description><![CDATA[Fonction récupérant les catégories commençant par une chaine de caractère]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="367" name="param" description="string" type="" variable="$chaine"/>
-          <tag line="367" name="return" description="" type="string">
+          <tag line="377" name="param" description="string" type="" variable="$chaine"/>
+          <tag line="377" name="return" description="" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-        <argument line="373">
+        <argument line="383">
           <name>$chaine</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="383" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="393" package="">
         <name>rechercheVersion</name>
         <type>function</type>
-        <docblock line="378">
+        <docblock line="388">
           <description><![CDATA[Fonction de recherche]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="378" name="param" description="Tableau contenant les critères de recherche. Les paramètres sont indexés par un nom identique à ceux du formulaire." type="array" variable="$critere">
+          <tag line="388" name="param" description="Tableau contenant les critères de recherche. Les paramètres sont indexés par un nom identique à ceux du formulaire." type="array" variable="$critere">
             <type by_reference="false">array</type>
           </tag>
-          <tag line="378" name="return" description="" type="array">
+          <tag line="388" name="return" description="" type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
-        <argument line="383">
+        <argument line="393">
           <name>$critere</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="629" package="">
+        <name>formatTime</name>
+        <type>function</type>
+        <docblock line="623">
+          <description><![CDATA[Fonction de convertion des secondes en time]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="623" name="param" description="le temps en seconde" type="int" variable="$secs">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="623" name="return" description="format time HH:MM:SS" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="629">
+          <name>$secs</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
@@ -1292,17 +1331,21 @@ un evenement est un tableau de la forme :
       </method>
     </class>
   </file>
-  <file path="ComposantRecherche.classe.php" hash="339bf63aaf6adcf092087694c47e292c" package="composant">
+  <file path="ComposantRecherche.classe.php" hash="c489d3526daa4c1e198dfaeb8574496e" package="composant">
     <docblock line="11">
       <description><![CDATA[Composant recherche]]></description>
       <long-description><![CDATA[]]></long-description>
       <tag line="11" name="author" description="Romain Laï-King, Rania Daoudi, Ziyang Ke"/>
       <tag line="11" name="package" description="composant"/>
-      <tag line="11" name="version" description="0.2"/>
+      <tag line="11" name="version" description="0.4"/>
     </docblock>
     <parse_markers>
       <critical line="21" code="50019">No short description for property $maBase</critical>
       <critical line="26" code="50019">No short description for property $getRecherche</critical>
+      <notice line="284" code="50013">Parameter  could not be found in creationSelect()</notice>
+      <notice line="310" code="50013">Parameter  could not be found in creationInputText()</notice>
+      <notice line="326" code="50013">Parameter  could not be found in creationCheckBox()</notice>
+      <notice line="342" code="50013">Parameter  could not be found in creationRadioBox()</notice>
     </parse_markers>
     <include line="4" type="Require Once" package="Default">
       <name>classes/Module.classe.php</name>
@@ -1319,7 +1362,7 @@ un evenement est un tableau de la forme :
         <long-description><![CDATA[]]></long-description>
         <tag line="11" name="author" description="Romain Laï-King, Rania Daoudi, Ziyang Ke"/>
         <tag line="11" name="package" description="composant"/>
-        <tag line="11" name="version" description="0.2"/>
+        <tag line="11" name="version" description="0.4"/>
       </docblock>
       <property final="false" static="false" visibility="private" line="24" package="client">
         <name>$maBase</name>
@@ -1359,210 +1402,165 @@ un evenement est un tableau de la forme :
           <long-description><![CDATA[]]></long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="186" package="">
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="197" package="">
         <name>traitementFormulaire</name>
         <type>function</type>
-        <docblock line="182">
+        <docblock line="193">
           <description><![CDATA[Traitement du formulaire pour la recherche. Cette fonction s'occupe d'afficher les résultats de la recherche]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="264" package="">
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="271" package="">
         <name>ligneResultat</name>
         <type>function</type>
-        <docblock line="254">
+        <docblock line="261">
           <description><![CDATA[Fonction qui écrit une ligne du tableau de résultat]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="254" name="param" description="photo" type="string" variable="$photo">
+          <tag line="261" name="param" description="photo" type="string" variable="$photo">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="254" name="param" description="nom jeu" type="string" variable="$nomJeu">
+          <tag line="261" name="param" description="nom jeu" type="string" variable="$nomJeu">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="254" name="param" description="nom version" type="string" variable="$nomVersion">
+          <tag line="261" name="param" description="nom version" type="string" variable="$nomVersion">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="254" name="param" description="id version" type="string" variable="$idVersion">
+          <tag line="261" name="param" description="id version" type="string" variable="$idVersion">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="254" name="param" description="nombre disponible" type="string" variable="$nbdisponible">
+          <tag line="261" name="param" description="nombre disponible" type="string" variable="$nbdisponible">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="254" name="param" description="nombre indisponible" type="string" variable="$nbindisponible">
+          <tag line="261" name="param" description="nombre indisponible" type="string" variable="$nbindisponible">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-        <argument line="264">
+        <argument line="271">
           <name>$photo</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="264">
+        <argument line="271">
           <name>$nomJeu</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="264">
+        <argument line="271">
           <name>$nomVersion</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="264">
+        <argument line="271">
           <name>$idVersion</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="264">
+        <argument line="271">
           <name>$nbdisponible</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="264">
+        <argument line="271">
           <name>$nbindisponible</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="284" package="">
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="291" package="">
         <name>creationSelect</name>
         <type>function</type>
-        <docblock line="277">
+        <docblock line="284">
           <description><![CDATA[Fonction qui crée des listes HTML <select>]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="277" name="param" description="tableau 2 colonnes, la première étant la value, deuxième le nom" type="array" variable="$array">
+          <tag line="284" name="param" description="tableau 2 colonnes, la première étant la value, deuxième le nom" type="array" variable="$array">
             <type by_reference="false">array</type>
           </tag>
-          <tag line="277" name="param" description="nom du tableau POST" type="string" variable="$param">
+          <tag line="284" name="param" description="nom du tableau POST" type="string" variable="$name">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="277" name="param" description="nom de la ligne du tableau" type="string" variable="$name">
+          <tag line="284" name="param" description="nom de la ligne du tableau" type="string" variable="">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-        <argument line="284">
+        <argument line="291">
           <name>$array</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="284">
-          <name>$param</name>
-          <default><![CDATA[]]></default>
-          <type/>
-        </argument>
-        <argument line="284">
+        <argument line="291">
           <name>$name</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="314" package="">
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="316" package="">
         <name>creationInputText</name>
         <type>function</type>
-        <docblock line="307">
+        <docblock line="310">
           <description><![CDATA[Fonction qui crée des input type text et le prérempli si le paramètre post existe]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="307" name="param" description="nom du tableau POST" type="string" variable="$param">
+          <tag line="310" name="param" description="nom du tableau POST" type="string" variable="$name">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="307" name="param" description="nom de la ligne du tableau" type="string" variable="$name">
+          <tag line="310" name="param" description="nom de la ligne du tableau" type="string" variable="">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="307" name="todo" description="ajout d'attribut list avec comme valeur $name"/>
         </docblock>
-        <argument line="314">
-          <name>$param</name>
-          <default><![CDATA[]]></default>
-          <type/>
-        </argument>
-        <argument line="314">
+        <argument line="316">
           <name>$name</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="331" package="">
-        <name>creationDatalist</name>
-        <type>function</type>
-        <docblock line="325">
-          <description><![CDATA[Fonction qui crée des datalist HTML5 pour l'autocomplétion]]></description>
-          <long-description><![CDATA[]]></long-description>
-          <tag line="325" name="param" description="tableau de valeur" type="array" variable="$array">
-            <type by_reference="false">array</type>
-          </tag>
-          <tag line="325" name="param" description="le nom qui permet d'assosier au champ" type="string" variable="$name">
-            <type by_reference="false">string</type>
-          </tag>
-        </docblock>
-        <argument line="331">
-          <name>$array</name>
-          <default><![CDATA[]]></default>
-          <type/>
-        </argument>
-        <argument line="331">
-          <name>$name</name>
-          <default><![CDATA[]]></default>
-          <type/>
-        </argument>
-      </method>
-      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="341" package="">
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="332" package="">
         <name>creationCheckBox</name>
         <type>function</type>
-        <docblock line="335">
+        <docblock line="326">
           <description><![CDATA[Fonction qui crée des input type checkbox et le prérempli si le paramètre post existe]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="335" name="param" description="nom du tableau POST" type="string" variable="$param">
+          <tag line="326" name="param" description="nom du tableau POST" type="string" variable="$name">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="335" name="param" description="nom de la ligne du tableau" type="string" variable="$name">
+          <tag line="326" name="param" description="nom de la ligne du tableau" type="string" variable="">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-        <argument line="341">
-          <name>$param</name>
-          <default><![CDATA[]]></default>
-          <type/>
-        </argument>
-        <argument line="341">
+        <argument line="332">
           <name>$name</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="359" package="">
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="350" package="">
         <name>creationRadioBox</name>
         <type>function</type>
-        <docblock line="351">
+        <docblock line="342">
           <description><![CDATA[Fonction qui crée des input type radiobox et le prérempli si le paramètre post existe]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="351" name="param" description="nom du tableau POST" type="string" variable="$param">
+          <tag line="342" name="param" description="nom du tableau POST" type="string" variable="$name">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="351" name="param" description="nom de la ligne du tableau" type="string" variable="$name">
+          <tag line="342" name="param" description="nom de la ligne du tableau" type="string" variable="$value">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="351" name="param" description="value de la radiobox" type="string" variable="$value">
+          <tag line="342" name="param" description="value de la radiobox" type="string" variable="$checked">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="351" name="param" description="checked par défaut ou non" type="boolean" variable="$checked">
+          <tag line="342" name="param" description="checked par défaut ou non" type="boolean" variable="">
             <type by_reference="false">boolean</type>
           </tag>
         </docblock>
-        <argument line="359">
-          <name>$param</name>
-          <default><![CDATA[]]></default>
-          <type/>
-        </argument>
-        <argument line="359">
+        <argument line="350">
           <name>$name</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="359">
+        <argument line="350">
           <name>$value</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="359">
+        <argument line="350">
           <name>$checked</name>
           <default><![CDATA[false]]></default>
           <type/>
@@ -2036,309 +2034,308 @@ Prends en paramètre la chaine à filtrer, et la taille max de cette chaine]]></
       </method>
     </class>
   </file>
-  <file path="Page.classe.php" hash="a7d6dbecccb31a78bcee1ef417d7e8db" package="client">
-    <docblock line="2">
-      <description><![CDATA[Cette classe permet de créer des pages web au format MDJT]]></description>
-      <long-description><![CDATA[]]></long-description>
-      <tag line="2" name="package" description="client"/>
-    </docblock>
+  <file path="Page.classe.php" hash="6f2839422bbd1a475e9b17702e280094" package="client">
     <parse_markers>
-      <error line="54" code="50018">No DocBlock was found for property $contenuHTML</error>
-      <error line="56" code="50018">No DocBlock was found for property $niveauIndentation</error>
-      <error line="58" code="50018">No DocBlock was found for property $monUtilisateur</error>
-      <error line="60" code="50018">No DocBlock was found for property $indexStyleMenu</error>
-      <error line="120" code="50015">Argument $HTML is missing from the Docblock of ouvreBloc()</error>
-      <error line="135" code="50015">Argument $html is missing from the Docblock of fermeBloc()</error>
-      <error line="150" code="50015">Argument $html is missing from the Docblock of ajouteLigne()</error>
-      <error line="163" code="50015">Argument $texte is missing from the Docblock of convertiTexte()</error>
-      <error line="172" code="50015">Argument $cible is missing from the Docblock of ajouteElementMenu()</error>
-      <error line="172" code="50015">Argument $texte is missing from the Docblock of ajouteElementMenu()</error>
-      <error line="50" code="50000">No DocBlock was found for Page</error>
+      <error line="58" code="50018">No DocBlock was found for property $contenuHTML</error>
+      <error line="60" code="50018">No DocBlock was found for property $niveauIndentation</error>
+      <error line="62" code="50018">No DocBlock was found for property $monUtilisateur</error>
+      <error line="64" code="50018">No DocBlock was found for property $indexStyleMenu</error>
+      <error line="124" code="50015">Argument $HTML is missing from the Docblock of ouvreBloc()</error>
+      <error line="139" code="50015">Argument $html is missing from the Docblock of fermeBloc()</error>
+      <error line="154" code="50015">Argument $html is missing from the Docblock of ajouteLigne()</error>
+      <error line="167" code="50015">Argument $texte is missing from the Docblock of convertiTexte()</error>
+      <error line="176" code="50015">Argument $cible is missing from the Docblock of ajouteElementMenu()</error>
+      <error line="176" code="50015">Argument $texte is missing from the Docblock of ajouteElementMenu()</error>
+      <error line="1" code="50007">No page-level DocBlock was found in file Page.classe.php</error>
     </parse_markers>
-    <include line="8" type="Require Once" package="client">
+    <include line="7" type="Require Once" package="Default">
       <name>classes/AccesAuxDonnees.classe.php</name>
       <docblock line="2">
         <description><![CDATA[Cette classe permet de créer des pages web au format MDJT]]></description>
         <long-description><![CDATA[]]></long-description>
-        <tag line="2" name="package" description="client"/>
       </docblock>
     </include>
-    <include line="9" type="Require Once" package="Default">
+    <include line="8" type="Require Once" package="Default">
       <name>classes/SessionUtilisateur.classe.php</name>
     </include>
-    <include line="10" type="Require Once" package="Default">
+    <include line="9" type="Require Once" package="Default">
       <name>classes/AccesAuxDonneesDev.classe.php</name>
     </include>
-    <constant namespace="default" line="14" package="client">
+    <constant namespace="default" line="13" package="client">
       <name>RACINE_SITE</name>
       <value><![CDATA[""]]></value>
     </constant>
-    <constant namespace="default" line="15" package="client">
+    <constant namespace="default" line="14" package="client">
       <name>CSS_MDJT</name>
       <value><![CDATA["css/mdjt.css"]]></value>
     </constant>
-    <constant namespace="default" line="16" package="client">
+    <constant namespace="default" line="15" package="client">
       <name>CSS_RECHERCHE</name>
       <value><![CDATA["css/recherche.css"]]></value>
     </constant>
-    <constant namespace="default" line="17" package="client">
+    <constant namespace="default" line="16" package="client">
       <name>CSS_RESET</name>
       <value><![CDATA["css/reset.css"]]></value>
     </constant>
-    <constant namespace="default" line="19" package="client">
+    <constant namespace="default" line="18" package="client">
       <name>JQUERY</name>
       <value><![CDATA["js/jquery-1.7.2.min.js"]]></value>
     </constant>
-    <constant namespace="default" line="20" package="client">
+    <constant namespace="default" line="19" package="client">
       <name>TAGIT</name>
       <value><![CDATA["js/tag-it.js"]]></value>
     </constant>
-    <constant namespace="default" line="21" package="client">
+    <constant namespace="default" line="20" package="client">
       <name>JS_DEV</name>
       <value><![CDATA["js/mdjt-dev.js"]]></value>
     </constant>
-    <constant namespace="default" line="22" package="client">
+    <constant namespace="default" line="21" package="client">
       <name>JQUERY_UI</name>
       <value><![CDATA["js/jquery-ui-1.8.18.min.js"]]></value>
     </constant>
-    <constant namespace="default" line="24" package="client">
+    <constant namespace="default" line="23" package="client">
       <name>CSS_TAGIT</name>
       <value><![CDATA["css/jquery.tagit.css"]]></value>
     </constant>
-    <constant namespace="default" line="25" package="client">
+    <constant namespace="default" line="24" package="client">
       <name>CSS_JQUERY_UI</name>
       <value><![CDATA["css/redmond/jquery-ui.css"]]></value>
     </constant>
-    <constant namespace="default" line="28" package="client">
+    <constant namespace="default" line="27" package="client">
       <name>PAGE_MODULE</name>
       <value><![CDATA[RACINE_SITE . "module.php"]]></value>
     </constant>
-    <constant namespace="default" line="29" package="client">
+    <constant namespace="default" line="28" package="client">
       <name>PAGE_INDEX</name>
       <value><![CDATA[RACINE_SITE . "index.php"]]></value>
     </constant>
-    <constant namespace="default" line="30" package="client">
+    <constant namespace="default" line="29" package="client">
       <name>PAGE_MENTIONS</name>
       <value><![CDATA[RACINE_SITE . "mentions.php"]]></value>
     </constant>
-    <constant namespace="default" line="31" package="client">
+    <constant namespace="default" line="30" package="client">
       <name>PAGE_CONTACT</name>
       <value><![CDATA[RACINE_SITE . "contact.php"]]></value>
     </constant>
-    <constant namespace="default" line="32" package="client">
+    <constant namespace="default" line="31" package="client">
       <name>PAGE_CONNEXION</name>
       <value><![CDATA[RACINE_SITE . "connexion.php"]]></value>
     </constant>
-    <constant namespace="default" line="33" package="client">
+    <constant namespace="default" line="32" package="client">
       <name>FORUM</name>
       <value><![CDATA[RACINE_SITE . "../forum/"]]></value>
     </constant>
-    <constant namespace="default" line="34" package="client">
+    <constant namespace="default" line="33" package="client">
       <name>IMAGES</name>
       <value><![CDATA[RACINE_SITE . "images/"]]></value>
     </constant>
-    <constant namespace="default" line="35" package="client">
+    <constant namespace="default" line="34" package="client">
       <name>DECONNEXION</name>
       <value><![CDATA[RACINE_SITE . "deconnexion.php"]]></value>
     </constant>
-    <constant namespace="default" line="40" package="client">
+    <constant namespace="default" line="39" package="client">
       <name>REDIRECTION_PHPBB</name>
       <value><![CDATA["../module.php"]]></value>
     </constant>
-    <constant namespace="default" line="42" package="client">
+    <constant namespace="default" line="41" package="client">
       <name>PAGE_LOGIN_PHPBB</name>
       <value><![CDATA["forum/ucp.php?mode=login"]]></value>
     </constant>
-    <constant namespace="default" line="46" package="client">
+    <constant namespace="default" line="45" package="client">
       <name>TABULATION</name>
       <value><![CDATA["  "]]></value>
     </constant>
-    <class final="false" abstract="true" namespace="default" line="50" package="client">
+    <class final="false" abstract="true" namespace="default" line="54" package="client">
       <name>Page</name>
       <full_name>\Page</full_name>
       <extends/>
-      <property final="false" static="false" visibility="protected" line="54" package="client">
+      <docblock line="49">
+        <description><![CDATA[Cette classe permet de créer des pages web au format MDJT]]></description>
+        <long-description><![CDATA[]]></long-description>
+        <tag line="49" name="package" description="client"/>
+      </docblock>
+      <property final="false" static="false" visibility="protected" line="58" package="client">
         <name>$contenuHTML</name>
         <default><![CDATA[]]></default>
       </property>
-      <property final="false" static="false" visibility="private" line="56" package="client">
+      <property final="false" static="false" visibility="private" line="60" package="client">
         <name>$niveauIndentation</name>
         <default><![CDATA[]]></default>
       </property>
-      <property final="false" static="false" visibility="protected" line="58" package="client">
+      <property final="false" static="false" visibility="protected" line="62" package="client">
         <name>$monUtilisateur</name>
         <default><![CDATA[]]></default>
       </property>
-      <property final="false" static="false" visibility="protected" line="60" package="client">
+      <property final="false" static="false" visibility="protected" line="64" package="client">
         <name>$indexStyleMenu</name>
         <default><![CDATA[]]></default>
       </property>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="71" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="75" package="">
         <name>__construct</name>
         <type>function</type>
-        <docblock line="66">
+        <docblock line="70">
           <description><![CDATA[Constructeur
 Le constructeur initialise la construction d'une page, il crée notamment la session utilisateur et l'entête de la page]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="66" name="param" description=": tableau contenant la liste des fichiers css supplémentaires qu'on souhaite inclure" type="\cssAdditionnels" variable="$cssAdditionnels">
+          <tag line="70" name="param" description=": tableau contenant la liste des fichiers css supplémentaires qu'on souhaite inclure" type="\cssAdditionnels" variable="$cssAdditionnels">
             <type by_reference="false">\cssAdditionnels</type>
           </tag>
         </docblock>
-        <argument line="71">
+        <argument line="75">
           <name>$cssAdditionnels</name>
           <default><![CDATA[NULL]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="91" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="95" package="">
         <name>__destruct</name>
         <type>function</type>
-        <docblock line="87">
+        <docblock line="91">
           <description><![CDATA[Destructeur de la classe
 Le destructeur termine la construction de la page et l'affiche]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="110" package="">
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="114" package="">
         <name>indente</name>
         <type>function</type>
-        <docblock line="106">
+        <docblock line="110">
           <description><![CDATA[Fonction d'indentation du code HTML en fonction du niveau courant
 Renvoie les espaces nécessaires à indenter]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="123" package="">
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="127" package="">
         <name>ouvreBloc</name>
         <type>function</type>
-        <docblock line="120">
+        <docblock line="124">
           <description><![CDATA[Fonction d'ouverture d'un bloc HTML]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>
-        <argument line="123">
+        <argument line="127">
           <name>$HTML</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="138" package="">
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="142" package="">
         <name>fermeBloc</name>
         <type>function</type>
-        <docblock line="135">
+        <docblock line="139">
           <description><![CDATA[Fonction de fermeture d'un bloc HTML]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>
-        <argument line="138">
+        <argument line="142">
           <name>$html</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="153" package="">
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="157" package="">
         <name>ajouteLigne</name>
         <type>function</type>
-        <docblock line="150">
+        <docblock line="154">
           <description><![CDATA[Fonction d'ajout de balise dans un bloc]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>
-        <argument line="153">
+        <argument line="157">
           <name>$html</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="167" package="">
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="171" package="">
         <name>convertiTexte</name>
         <type>function</type>
-        <docblock line="163">
+        <docblock line="167">
           <description><![CDATA[Fonction de conversion texte -> HTML
 Renvoie le texte au format HTML]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>
-        <argument line="167">
+        <argument line="171">
           <name>$texte</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="178" package="">
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="182" package="">
         <name>ajouteElementMenu</name>
         <type>function</type>
-        <docblock line="172">
+        <docblock line="176">
           <description><![CDATA[Fonction d'ajout d'un élément de menu
 Permet le cyle des couleurs dans les éléments de menus]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="172" name="parameter" description=": $cible : l'URL vers laquelle pointe l'élément de menu"/>
-          <tag line="172" name="parameter" description=": $texte : le texte qu'affiche l'élément"/>
+          <tag line="176" name="parameter" description=": $cible : l'URL vers laquelle pointe l'élément de menu"/>
+          <tag line="176" name="parameter" description=": $texte : le texte qu'affiche l'élément"/>
         </docblock>
-        <argument line="178">
+        <argument line="182">
           <name>$cible</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="178">
+        <argument line="182">
           <name>$texte</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="221" package="">
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="default" line="225" package="">
         <name>ajouteMenuConnexion</name>
         <type>function</type>
-        <docblock line="216">
+        <docblock line="220">
           <description><![CDATA[Fonction ajoutant le menu connexion (afficher en bas de page)
 propose la connexion à un utilisateur non connecté
 ou d'aller sur la partie privé à un utilisateur connecté]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>
       </method>
-      <method final="false" abstract="true" static="false" visibility="protected" namespace="default" line="291" package="">
+      <method final="false" abstract="true" static="false" visibility="protected" namespace="default" line="295" package="">
         <name>afficheMiniActu</name>
         <type>function</type>
-        <docblock line="287">
+        <docblock line="291">
           <description><![CDATA[Fonction d'affichage de la zone mini actu
 Cette fonction est à définir dans les classes filles]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="306" package="">
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="310" package="">
         <name>ouvrePage</name>
         <type>function</type>
-        <docblock line="301">
+        <docblock line="305">
           <description><![CDATA[Fonction d'initialisation de l'entête de la page
 La page est créée jusqu'à l'ouverture de la balise body]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="301" name="param" description=": tableau contenant la liste des fichiers css qu'on souhaite ajouter" type="\$cssAdditionnels" variable="$cssAdditionnels">
+          <tag line="305" name="param" description=": tableau contenant la liste des fichiers css qu'on souhaite ajouter" type="\$cssAdditionnels" variable="$cssAdditionnels">
             <type by_reference="false">\$cssAdditionnels</type>
           </tag>
         </docblock>
-        <argument line="306">
+        <argument line="310">
           <name>$cssAdditionnels</name>
           <default><![CDATA[NULL]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="369" package="">
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="373" package="">
         <name>fermePage</name>
         <type>function</type>
-        <docblock line="365">
+        <docblock line="369">
           <description><![CDATA[Fonction de fermeture de la page
 Ferme body et html]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="380" package="">
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="384" package="">
         <name>ajouteHautPage</name>
         <type>function</type>
-        <docblock line="377">
+        <docblock line="381">
           <description><![CDATA[Fonction d'ajout du Haut d'une page standard]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="405" package="">
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="409" package="">
         <name>ajouteBasPage</name>
         <type>function</type>
-        <docblock line="402">
+        <docblock line="406">
           <description><![CDATA[Fonction d'ajout du Bas d'une page standard]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>
@@ -2565,7 +2562,7 @@ Le destructeur termine la construction de la page et l'affiche]]></description>
       </method>
     </class>
   </file>
-  <file path="paginator.php" hash="29c5f4f9081220fa6d6bda75e154ec23" package="client">
+  <file path="paginator.php" hash="497832406bd9fdc967d974ba29a8a64b" package="client">
     <parse_markers>
       <error line="1" code="50007">No page-level DocBlock was found in file paginator.php</error>
     </parse_markers>
@@ -2663,7 +2660,7 @@ Le destructeur termine la construction de la page et l'affiche]]></description>
       </method>
     </class>
   </file>
-  <file path="RequeteSQL.classe.php" hash="71d451468b455f2d33580c227c4cae28" package="common">
+  <file path="RequeteSQL.classe.php" hash="965c97be155a28c6236e28598fbe7b7d" package="common">
     <docblock line="3">
       <description><![CDATA[Classe permettant de manipuler des requètes SQL dyanmiquement en simplifiant leur écriture.]]></description>
       <long-description><![CDATA[<p>A utiliser pour les très grosses requètes afin de préserver leur cohérence en limitant les erreurs
@@ -2878,12 +2875,14 @@ Deplus, SQL émet une erreur en cas de table dupliqué.</p>]]></long-description
         </argument>
       </method>
       <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="159" package="">
-        <name>ajoutAndEgal</name>
+        <name>ajoutAnd</name>
         <type>function</type>
         <docblock line="152">
-          <description><![CDATA[Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et =
-Principalement pour les recherches de type =]]></description>
+          <description><![CDATA[Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et =]]></description>
           <long-description><![CDATA[]]></long-description>
+          <tag line="152" name="param" description="signe" type="string" variable="$signe">
+            <type by_reference="false">string</type>
+          </tag>
           <tag line="152" name="param" description="Nom de la table" type="string" variable="$table">
             <type by_reference="false">string</type>
           </tag>
@@ -2895,6 +2894,11 @@ Principalement pour les recherches de type =]]></description>
           </tag>
         </docblock>
         <argument line="159">
+          <name>$signe</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="159">
           <name>$table</name>
           <default><![CDATA[]]></default>
           <type/>
@@ -2910,71 +2914,71 @@ Principalement pour les recherches de type =]]></description>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="188" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="189" package="">
         <name>ajoutAndLike</name>
         <type>function</type>
-        <docblock line="181">
+        <docblock line="182">
           <description><![CDATA[Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et LIKE
 Principalement pour les recherches de type LIKE]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="181" name="param" description="Nom de la table" type="string" variable="$table">
+          <tag line="182" name="param" description="Nom de la table" type="string" variable="$table">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="181" name="param" description="Le champ de la table concerné par le critère de recherche" type="string" variable="$champ">
+          <tag line="182" name="param" description="Le champ de la table concerné par le critère de recherche" type="string" variable="$champ">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="181" name="param" description="La valeur du critère de recherche" type="string" variable="$valeur">
+          <tag line="182" name="param" description="La valeur du critère de recherche" type="string" variable="$valeur">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-        <argument line="188">
+        <argument line="189">
           <name>$table</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="188">
+        <argument line="189">
           <name>$champ</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="188">
+        <argument line="189">
           <name>$valeur</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="207" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="208" package="">
         <name>ajoutWhereLibre</name>
         <type>function</type>
-        <docblock line="201">
+        <docblock line="202">
           <description><![CDATA[Fonction de manipulation de chainer pour ajouter librement à la clause WHERE
 A utiliser dans les cas non couvert par la fonction précédente.]]></description>
           <long-description><![CDATA[<p>Attention, la fonction ne gère pas les injections SQL.</p>]]></long-description>
-          <tag line="201" name="param" description="La clause where qui sera concaténé à $where" type="string" variable="$clause">
+          <tag line="202" name="param" description="La clause where qui sera concaténé à $where" type="string" variable="$clause">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-        <argument line="207">
+        <argument line="208">
           <name>$clause</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="221" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="222" package="">
         <name>compile</name>
         <type>function</type>
-        <docblock line="215">
+        <docblock line="216">
           <description><![CDATA[Fonction qui compile les différentes parties ensembles pour créer la requète SQL finale.]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="215" name="return" description="Requète SQL" type="string">
+          <tag line="216" name="return" description="Requète SQL" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="234" package="">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="235" package="">
         <name>debug</name>
         <type>function</type>
-        <docblock line="230">
+        <docblock line="231">
           <description><![CDATA[Fonction de debug. Affiche la requète compilé avec des sauts de ligne <br/>]]></description>
           <long-description><![CDATA[]]></long-description>
         </docblock>

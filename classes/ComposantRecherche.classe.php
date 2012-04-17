@@ -12,7 +12,7 @@ require_once("classes/paginator.php");
  * Composant recherche
  * @author Romain Laï-King, Rania Daoudi, Ziyang Ke
  * @package composant
- * @version 0.4
+ * @version 0.5
  */
 
 

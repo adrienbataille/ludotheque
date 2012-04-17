@@ -68,7 +68,6 @@ Renvoie le texte au format HTML</span><pre>convertiTexte()</pre></a></li>
 <li class="nav-header private">» Private</li>
 <li class="method private "><a href="#afficheFormulaire" title="afficheFormulaire :: Affiche le formulaire de recherche"><span class="description">Affiche le formulaire de recherche</span><pre>afficheFormulaire()</pre></a></li>
 <li class="method private "><a href="#creationCheckBox" title="creationCheckBox :: Fonction qui crée des input type checkbox et le prérempli si le paramètre post existe"><span class="description">Fonction qui crée des input type checkbox et le prérempli si le paramètre post existe</span><pre>creationCheckBox()</pre></a></li>
-<li class="method private "><a href="#creationDatalist" title="creationDatalist :: Fonction qui crée des datalist HTML5 pour l'autocomplétion"><span class="description">Fonction qui crée des datalist HTML5 pour l'autocomplétion</span><pre>creationDatalist()</pre></a></li>
 <li class="method private "><a href="#creationInputText" title="creationInputText :: Fonction qui crée des input type text et le prérempli si le paramètre post existe"><span class="description">Fonction qui crée des input type text et le prérempli si le paramètre post existe</span><pre>creationInputText()</pre></a></li>
 <li class="method private "><a href="#creationRadioBox" title="creationRadioBox :: Fonction qui crée des input type radiobox et le prérempli si le paramètre post existe"><span class="description">Fonction qui crée des input type radiobox et le prérempli si le paramètre post existe</span><pre>creationRadioBox()</pre></a></li>
 <li class="method private "><a href="#creationSelect" title="creationSelect :: Fonction qui crée des listes HTML &lt;select&gt;"><span class="description">Fonction qui crée des listes HTML &lt;select&gt;</span><pre>creationSelect()</pre></a></li>
@@ -103,7 +102,7 @@ Renvoie les espaces nécessaires à indenter</span><pre>indente()</pre></a></li>
 </tr>
 <tr>
 <th>version</th>
-<td>0.2</td>
+<td>0.4</td>
 </tr>
 </table>
 <h3>
@@ -204,79 +203,49 @@ Renvoie le texte au format HTML</h2>
 </div>
 <a name="creationCheckBox" id="creationCheckBox"></a><div class="element clickable method private creationCheckBox" data-toggle="collapse" data-target=".creationCheckBox .collapse">
 <h2>Fonction qui crée des input type checkbox et le prérempli si le paramètre post existe</h2>
-<pre>creationCheckBox(string $param, string $name) </pre>
+<pre>creationCheckBox(string $name) </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8">
 <p class="long_description"></p>
 <h3>Parameters</h3>
 <div class="subelement argument">
-<h4>$param</h4>
+<h4>$name</h4>
 <code>string</code><p>nom du tableau POST</p></div>
-<div class="subelement argument">
-<h4>$name</h4>
-<code>string</code><p>nom de la ligne du tableau</p></div>
-</div></div>
-</div>
-<a name="creationDatalist" id="creationDatalist"></a><div class="element clickable method private creationDatalist" data-toggle="collapse" data-target=".creationDatalist .collapse">
-<h2>Fonction qui crée des datalist HTML5 pour l'autocomplétion</h2>
-<pre>creationDatalist(array $array, string $name) </pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="span8">
-<p class="long_description"></p>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$array</h4>
-<code>array</code><p>tableau de valeur</p></div>
-<div class="subelement argument">
-<h4>$name</h4>
-<code>string</code><p>le nom qui permet d'assosier au champ</p>
-</div>
 </div></div>
 </div>
 <a name="creationInputText" id="creationInputText"></a><div class="element clickable method private creationInputText" data-toggle="collapse" data-target=".creationInputText .collapse">
 <h2>Fonction qui crée des input type text et le prérempli si le paramètre post existe</h2>
-<pre>creationInputText(string $param, string $name) </pre>
+<pre>creationInputText(string $name) </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8">
 <p class="long_description"></p>
-<table class="table table-bordered"><tr>
-<th>todo</th>
-<td>ajout d'attribut list avec comme valeur $name</td>
-</tr></table>
 <h3>Parameters</h3>
 <div class="subelement argument">
-<h4>$param</h4>
-<code>string</code><p>nom du tableau POST</p></div>
-<div class="subelement argument">
 <h4>$name</h4>
-<code>string</code><p>nom de la ligne du tableau</p></div>
+<code>string</code><p>nom du tableau POST</p></div>
 </div></div>
 </div>
 <a name="creationRadioBox" id="creationRadioBox"></a><div class="element clickable method private creationRadioBox" data-toggle="collapse" data-target=".creationRadioBox .collapse">
 <h2>Fonction qui crée des input type radiobox et le prérempli si le paramètre post existe</h2>
-<pre>creationRadioBox(string $param, string $name, string $value, boolean $checked) </pre>
+<pre>creationRadioBox(string $name, string $value, string $checked) </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8">
 <p class="long_description"></p>
 <h3>Parameters</h3>
 <div class="subelement argument">
-<h4>$param</h4>
+<h4>$name</h4>
 <code>string</code><p>nom du tableau POST</p></div>
 <div class="subelement argument">
-<h4>$name</h4>
+<h4>$value</h4>
 <code>string</code><p>nom de la ligne du tableau</p></div>
 <div class="subelement argument">
-<h4>$value</h4>
-<code>string</code><p>value de la radiobox</p></div>
-<div class="subelement argument">
 <h4>$checked</h4>
-<code>boolean</code><p>checked par défaut ou non</p>
-</div>
+<code>string</code><p>value de la radiobox</p></div>
 </div></div>
 </div>
 <a name="creationSelect" id="creationSelect"></a><div class="element clickable method private creationSelect" data-toggle="collapse" data-target=".creationSelect .collapse">
 <h2>Fonction qui crée des listes HTML &lt;select&gt;</h2>
-<pre>creationSelect(array $array, string $param, string $name) </pre>
+<pre>creationSelect(array $array, string $name) </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8">
 <p class="long_description"></p>
@@ -286,11 +255,8 @@ Renvoie le texte au format HTML</h2>
 <code>array</code><p>tableau 2 colonnes, la première étant la value, deuxième le nom</p>
 </div>
 <div class="subelement argument">
-<h4>$param</h4>
-<code>string</code><p>nom du tableau POST</p></div>
-<div class="subelement argument">
 <h4>$name</h4>
-<code>string</code><p>nom de la ligne du tableau</p></div>
+<code>string</code><p>nom du tableau POST</p></div>
 </div></div>
 </div>
 <a name="indente" id="indente"></a><div class="element clickable method private indente" data-toggle="collapse" data-target=".indente .collapse">
@@ -384,7 +350,7 @@ Renvoie les espaces nécessaires à indenter</h2>
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a1</a> and<br>
-            generated on 2012-04-15T10:37:33+02:00.<br></footer></div>
+            generated on 2012-04-17T09:49:59+02:00.<br></footer></div>
 </div>
 </body>
 </html>

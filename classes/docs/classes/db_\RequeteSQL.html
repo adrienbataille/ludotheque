@@ -56,9 +56,7 @@
 <li class="nav-header">
 <i class="icon-custom icon-method"></i> Methods</li>
 <li class="method public "><a href="#__construct" title="__construct :: Constructeur. Il fait rien pour le moment"><span class="description">Constructeur. Il fait rien pour le moment</span><pre>__construct()</pre></a></li>
-<li class="method public "><a href="#ajoutAndEgal" title="ajoutAndEgal :: Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et =
-Principalement pour les recherches de type ="><span class="description">Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et =
-Principalement pour les recherches de type =</span><pre>ajoutAndEgal()</pre></a></li>
+<li class="method public "><a href="#ajoutAnd" title="ajoutAnd :: Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et ="><span class="description">Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et =</span><pre>ajoutAnd()</pre></a></li>
 <li class="method public "><a href="#ajoutAndLike" title="ajoutAndLike :: Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et LIKE
 Principalement pour les recherches de type LIKE"><span class="description">Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et LIKE
 Principalement pour les recherches de type LIKE</span><pre>ajoutAndLike()</pre></a></li>
@@ -118,14 +116,16 @@ de développement et utilisateur.</p></p>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
 </div>
-<a name="ajoutAndEgal" id="ajoutAndEgal"></a><div class="element clickable method public ajoutAndEgal" data-toggle="collapse" data-target=".ajoutAndEgal .collapse">
-<h2>Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et =
-Principalement pour les recherches de type =</h2>
-<pre>ajoutAndEgal(string $table, string $champ, \string/numeric $valeur) </pre>
+<a name="ajoutAnd" id="ajoutAnd"></a><div class="element clickable method public ajoutAnd" data-toggle="collapse" data-target=".ajoutAnd .collapse">
+<h2>Fonction de manipulation de chaine pour créer et ajouter des clause WHERE avec AND et =</h2>
+<pre>ajoutAnd(string $signe, string $table, string $champ, \string/numeric $valeur) </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8">
 <p class="long_description"></p>
 <h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$signe</h4>
+<code>string</code><p>signe</p></div>
 <div class="subelement argument">
 <h4>$table</h4>
 <code>string</code><p>Nom de la table</p></div>
@@ -315,7 +315,7 @@ Deplus, SQL émet une erreur en cas de table dupliqué.</p></p>
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a1</a> and<br>
-            generated on 2012-04-15T10:37:33+02:00.<br></footer></div>
+            generated on 2012-04-17T09:49:59+02:00.<br></footer></div>
 </div>
 </body>
 </html>
