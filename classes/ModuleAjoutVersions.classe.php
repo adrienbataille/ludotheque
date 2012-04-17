@@ -48,7 +48,9 @@ class ModuleAjoutVersions extends Module
 	private $editeur = "";
 	private $idJeu = 0;
 	private $idVersion = 0;
-	
+	private $idEditeur = 0;
+	private $idIllustrateur = 0;
+	private $idDistributeur = 0;
 
 	private $chemin;
 
@@ -175,13 +177,13 @@ class ModuleAjoutVersions extends Module
 		$this->anneeSortie = $this->filtreChaine($_POST[ANNEE_SORTIE], TAILLE_CHAMPS_COURT);
 		
 		//Nettoyage de illustrateur
-		$this->illustrateur = intval($this->filtreChaine($_POST[ILLUSTRATEUR], TAILLE_CHAMPS_COURT));
+		$this->illustrateur = $this->filtreChaine($_POST[NOM_ILLUSTRATEUR], TAILLE_CHAMPS_COURT);
 		
 		//Nettoyage du distributeur
-		$this->distributeur = intval($this->filtreChaine($_POST[DISTRIBUTEUR], TAILLE_CHAMPS_COURT));
+		$this->distributeur = $this->filtreChaine($_POST[NOM_DISTRIBUTEUR], TAILLE_CHAMPS_COURT);
 		
 		//Nettoyage de date fin vie
-		$this->editeur = intval($this->filtreChaine($_POST[EDITEUR], TAILLE_CHAMPS_COURT));
+		$this->editeur = $this->filtreChaine($_POST[NOM_EDITEUR], TAILLE_CHAMPS_COURT);
 		
 		//id jeu associé
 		$this->idJeu = intval($this->filtreChaine($_POST[ID_JEU], TAILLE_CHAMPS_COURT));
@@ -323,8 +325,8 @@ class ModuleAjoutVersions extends Module
 		//Illustrateur
 		$listeIllustrateur = $this->maBase->recupIllustrateur(null);
 		$this->ouvreBloc("<li>");
-		$this->ajouteLigne("<label for='" . ILLUSTRATEUR . "'>" . $this->convertiTexte("Illustrateur") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . ILLUSTRATEUR . "' name='"  . ILLUSTRATEUR . "' value='" . $this->convertiTexte($this->illustrateur) . "' list='listeIllustrateur' autocomplete='on'  />");
+		$this->ajouteLigne("<label for='" . NOM_ILLUSTRATEUR . "'>" . $this->convertiTexte("Illustrateur") . "</label>");
+		$this->ajouteLigne("<input type='text' id='" . NOM_ILLUSTRATEUR . "' name='"  . NOM_ILLUSTRATEUR . "' value='" . $this->convertiTexte($this->illustrateur) . "' list='listeIllustrateur' autocomplete='off'  />");
 		
 		$this->ouvreBloc("<datalist id='listeIllustrateur'>");
 		foreach($listeIllustrateur as $illustrateur)
@@ -337,12 +339,12 @@ class ModuleAjoutVersions extends Module
 		//Distributeur
 		$listeDistributeur = $this->maBase->recupDistributeur(null);
 		$this->ouvreBloc("<li>");
-		$this->ajouteLigne("<label for='" . DISTRIBUTEUR . "'>" . $this->convertiTexte("Distributeur") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . DISTRIBUTEUR ."' name='"  . DISTRIBUTEUR . "' value='" . $this->convertiTexte($this->distributeur) . "' list='listeDistributeur' autocomplete='on' />");
+		$this->ajouteLigne("<label for='" . NOM_DISTRIBUTEUR . "'>" . $this->convertiTexte("Distributeur") . "</label>");
+		$this->ajouteLigne("<input type='text' id='" . NOM_DISTRIBUTEUR ."' name='"  . NOM_DISTRIBUTEUR . "' value='" . $this->convertiTexte($this->distributeur) . "' list='listeDistributeur' autocomplete='off' />");
 		
 		$this->ouvreBloc("<datalist id='listeDistributeur'>");
 		foreach($listeDistributeur as $distributeur)
-			$this->ajouteLigne("<option id='distributeur_" . $distributeur[ID_DISTRIBUTEUR] . "' label='" . $distributeur[NOM_DISTRIBUTEUR] . "' value=\"" . $this->convertiTexte($illustrateur[NOM_DISTRIBUTEUR]) . "\">");
+			$this->ajouteLigne("<option id='distributeur_" . $distributeur[ID_DISTRIBUTEUR] . "' label='" . $distributeur[NOM_DISTRIBUTEUR] . "' value=\"" . $this->convertiTexte($distributeur[NOM_DISTRIBUTEUR]) . "\">");
 		$this->fermeBloc("</datalist>");
 		
 		$this->fermeBloc("</li>");
@@ -350,12 +352,12 @@ class ModuleAjoutVersions extends Module
 		//Editeur
 		$listeEditeur = $this->maBase->recupEditeur(null);
 		$this->ouvreBloc("<li>");
-		$this->ajouteLigne("<label for='" . EDITEUR . "'>" . $this->convertiTexte("Editeur") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . EDITEUR . "' name='"  . EDITEUR . "' value='" . $this->convertiTexte($this->editeur) . "' list='listeEditeur' autocomplete='on' />");
+		$this->ajouteLigne("<label for='" . NOM_EDITEUR . "'>" . $this->convertiTexte("Editeur") . "</label>");
+		$this->ajouteLigne("<input type='text' id='" . NOM_EDITEUR . "' name='"  . NOM_EDITEUR . "' value='" . $this->convertiTexte($this->editeur) . "' list='listeEditeur' autocomplete='off' />");
 		
 		$this->ouvreBloc("<datalist id='listeEditeur'>");
 		foreach($listeEditeur as $editeur)
-			$this->ajouteLigne("<option id='editeur_" . $editeur[ID_EDITEUR] . "' label='" . $illustrateur[NOM_EDITEUR] . "' value=\"" . $this->convertiTexte($illustrateur[NOM_EDITEUR]) . "\">");
+			$this->ajouteLigne("<option id='editeur_" . $editeur[ID_EDITEUR] . "' label='" . $editeur[NOM_EDITEUR] . "' value=\"" . $this->convertiTexte($editeur[NOM_EDITEUR]) . "\">");
 		$this->fermeBloc("</datalist>");
 		
 		$this->fermeBloc("</li>");
@@ -402,40 +404,78 @@ class ModuleAjoutVersions extends Module
 			if((!floatval($this->prixAchat) || $this->prixAchat < 0) && $this->prixAchat != null)
 				$this->erreurPrixAchat = true;
 			
+			//var_dump($this);
+			
+			$listeIllustrateur = $this->maBase->recupIllustrateur(null);
+			$illustrateurTab;
+			foreach($listeIllustrateur as $idIllustrator => $illustrator)
+				$illustrateurTab[] = $illustrator[NOM_ILLUSTRATEUR];
+			if($illustrateurTab == null)
+				$this->idIllustrateur = $this->maBase->InsertionTableIllustrateur($this->illustrateur);
+			else
+				if(!in_array($this->illustrateur, $illustrateurTab))
+					$this->idIllustrateur = $this->maBase->InsertionTableIllustrateur($this->illustrateur);
+			
+			$listeDistributeur = $this->maBase->recupDistributeur(null);
+			$distributeurTab;
+			foreach($listeDistributeur as $idDistributor => $distributor)
+				$distributeurTab[] = $distributor[NOM_DISTRIBUTEUR];
+			if($distributeurTab == null)
+				$this->idDistributeur = $this->maBase->InsertionTableDistributeur($this->distributeur);
+			else
+				if(!in_array($this->distributeur, $distributeurTab))
+					$this->idDistributeur = $this->maBase->InsertionTableDistributeur($this->distributeur);
+			
+			$listeEditeur = $this->maBase->recupEditeur(null);
+			$editeurTab;
+			foreach($listeEditeur as $idEditor => $editor)
+				$editeurTab[] = $editor[NOM_EDITEUR];
+			if($editeurTab == null)
+				$this->idEditeur = $this->maBase->InsertionTableEditeur($this->editeur);
+			else
+				if(!in_array($this->editeur, $editeurTab))
+					$this->idEditeur = $this->maBase->InsertionTableEditeur($this->editeur);
+			
 		
 			if(!$this->erreurNom && !$this->erreurPrixAchat)
 			{
-				
-				if (($_FILES[PHOTO_VERSION]['size'] == 0 && $_FILES[PHOTO_VERSION]['name'] != null) || $_FILES[PHOTO_VERSION]['size'] > 512000)
-					$this->erreurPhotoTaille = true;
-				
-				$nomPhoto = $_FILES[PHOTO_VERSION]['name'];
-				// recupération de l'extension du fichier
-				// autrement dit tout ce qu'il y a après le dernier point (inclus)
-				$extension = substr($nomPhoto,strrpos($nomPhoto,"."));
-				// Contrôle de l'extension du fichier
-				$extensionsAutorisees = array(".jpeg", ".jpg", ".gif", ".png");
-				
-				if (!(in_array($extension, $extensionsAutorisees)))
-					$this->erreurPhotoFormat = true;
-					//die("Le fichier n'a pas l'extension attendue");
+				if($_FILES[PHOTO_VERSION]['name'] != null)
+				{
+					if (($_FILES[PHOTO_VERSION]['size'] == 0 && $_FILES[PHOTO_VERSION]['name'] != null) || $_FILES[PHOTO_VERSION]['size'] > 512000)
+						$this->erreurPhotoTaille = true;
+					
+					$nomPhoto = $_FILES[PHOTO_VERSION]['name'];
+					// recupération de l'extension du fichier
+					// autrement dit tout ce qu'il y a après le dernier point (inclus)
+					$extension = substr($nomPhoto,strrpos($nomPhoto,"."));
+					// Contrôle de l'extension du fichier
+					$extensionsAutorisees = array(".jpeg", ".jpg", ".gif", ".png");
+					
+					if (!(in_array($extension, $extensionsAutorisees)))
+						$this->erreurPhotoFormat = true;
+						//die("Le fichier n'a pas l'extension attendue");
+					
+				}
 				
 				if(!$this->erreurPhotoFormat && !$this->erreurPhotoTaille) {
 				
-					if (is_uploaded_file($_FILES[PHOTO_VERSION]['tmp_name'])) {
-						$this->chemin = 'fichier/' . $_FILES[PHOTO_VERSION]['name'];
-						$resultat2 = move_uploaded_file($_FILES[PHOTO_VERSION]['tmp_name'],$this->chemin);
-						var_dump($resultat2);
+					if($_FILES[PHOTO_VERSION]['name'] != null)
+					{
+						if (is_uploaded_file($_FILES[PHOTO_VERSION]['tmp_name'])) {
+							$this->chemin = 'fichier/' . $_FILES[PHOTO_VERSION]['name'];
+							$resultat2 = move_uploaded_file($_FILES[PHOTO_VERSION]['tmp_name'],$this->chemin);
+							//var_dump($resultat2);
+						}
 					}
-			
+					
 					if($this->idVersion == 0/* && $resultat2*/)
 					{
-						$this->idVersion = $this->maBase->InsertionTableVersion($this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->illustrateur, $this->distributeur, $this->editeur, $this->idJeu);													
+						$this->idVersion = $this->maBase->InsertionTableVersion($this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->idIllustrateur, $this->idDistributeur, $this->idEditeur, $this->idJeu);													
 						if($this->chemin != null)
 							$this->maBase->InsertionTablePhoto($this->chemin);
 					}
 					else
-						$this->maBase->UpdateTableVersion($this->idVersion, $this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->illustrateur, $this->distributeur, $this->editeur, $this->idJeu);
+						$this->maBase->UpdateTableVersion($this->idVersion, $this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->idIllustrateur, $this->idDistributeur, $this->idEditeur, $this->idJeu);
 	
 	
 					if($this->idVersion == null || !$this->idVersion)

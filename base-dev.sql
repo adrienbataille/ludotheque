@@ -377,7 +377,7 @@ CREATE TABLE IF NOT EXISTS `MDJT_SUGGESTION` (
   `commentaireSugeestion` text COLLATE utf8_unicode_ci,
   `etatSuggestion` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `idUtilisateur` int(10) unsigned NOT NULL,
-  `idJeux` int(10) unsigned NOT NULL,
+  `idJeu` int(10) unsigned NOT NULL,
   PRIMARY KEY (`idSuggestion`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
