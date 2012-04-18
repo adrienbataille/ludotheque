@@ -453,9 +453,7 @@ class AccesAuxDonneesDev
 		}
 
 		// Par Durée
-		if(is_numeric($critere["DureeJeu"]))
-		{
-			print_r($critere["DureeJeu"]);
+		if(is_numeric($critere["DureeJeu"])){
 			$critere["DureeJeu"]=$critere["DureeJeu"]*60;
 			$critere["DureeJeu"]=$this->formatTime($critere["DureeJeu"]);
 			if($critere["dureeSigne"]==SUPERIEUR){
@@ -588,10 +586,13 @@ class AccesAuxDonneesDev
 		// Par illustrateur
 
 		if($critere["illustrateur"]!=""){
+			$query->ajoutAnd("=", TABLE_VERSION, ID_ILLUSTRATEUR, $critere["illustrateur"]);
+		}
 
-			$critere["illustrateur"]=mysql_real_escape_string($critere["illustrateur"]);
-			$string="AND ( " . TABLE_VERSION . "." . ILLUSTRATEUR   ." LIKE '%" . $critere["illustrateur"] . "%')";
-			$query->ajoutWhereLibre($string);
+		//Par distributeur
+
+		if($critere["distributeur"]!=""){
+			$query->ajoutAnd("=", TABLE_VERSION, ID_DISTRIBUTEUR, $critere["distributeur"]);
 		}
 
 		// Par Année
@@ -614,7 +615,7 @@ class AccesAuxDonneesDev
 		}
 
 		//ainsi de suite!
-		print_r($query->debug());
+
 		$result=$this->requeteSelect($query->compile());
 
 		return $result;
