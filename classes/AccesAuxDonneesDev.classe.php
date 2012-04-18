@@ -12,7 +12,7 @@ define("BASE_DEV","mdjtufjjpdev");
 
 // Constantes - Definition des Tables SQL
 define("TABLE_CATEGORIE", TABLE_PREFIX . "CATEGORIE");
-define("TABLE_CATEGORIE_JEUX", TABLE_PREFIX . "CATEGORIE_JEUX");
+define("TABLE_CATEGORIE_JEU", TABLE_PREFIX . "CATEGORIE_JEU");
 define("TABLE_DISTRIBUTEUR", TABLE_PREFIX . "DISTRIBUTEUR");
 define("TABLE_EDITEUR", TABLE_PREFIX . "EDITEUR");
 define("TABLE_EMPRUNT", TABLE_PREFIX . "EMPRUNT");
@@ -639,6 +639,61 @@ class AccesAuxDonneesDev
 		else
 			return $resultat[0][0];
     }
+
+	/**
+    * Fonction d'insertion d'une catégorie
+    * Entrée : le nom de la catégorie
+    * Sortie : true si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableCategorie($uneCategorie)
+    {
+
+		// On initie la connexion à la base, si ce n'est déjà fait
+		$this->connecteBase();
+		// Création de la requete
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_CATEGORIE . " (" . NOM_CATEGORIE . ") VALUES(?) ;");
+		
+		$requete->bindValue(1, $uneCategorie, PDO::PARAM_STR);
+		
+		$resultat = $requete->execute();
+
+		// On termine l'utilisation de la requete
+		$requete->closeCursor();
+		
+		// Création de la requete pour récupérer l'id de l'exemplaire inséré
+		$requete = "SELECT MAX(" . ID_CATEGORIE . ") FROM " . TABLE_CATEGORIE . " ;";
+		
+		$resultat = $this->requeteSelect($requete);
+		
+		if(count($resultat) == 0)
+			return false;
+		else
+			return $resultat[0][0];
+    }
+
+	/**
+    * Fonction d'insertion d'une catégorie à jeu
+    * Entrée : l'id de la catégorie que l'on souhaite affecter à un jeu
+    * Sortie : true si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableCategorieJeu($uneCategorie, $unJeu)
+    {
+
+		// On initie la connexion à la base, si ce n'est déjà fait
+		$this->connecteBase();
+		// Création de la requete
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_CATEGORIE_JEU . " (" . ID_CATEGORIE . ", " . ID_JEU . ") VALUES(?, ?) ;");
+		
+		$requete->bindValue(1, $uneCategorie, PDO::PARAM_STR);
+		$requete->bindValue(2, $unJeu, PDO::PARAM_STR);
+		
+		$resultat = $requete->execute();
+
+		// On termine l'utilisation de la requete
+		$requete->closeCursor();
+		
+		return $resultat;
+    }
     
     /**
     * Fonction d'insertion d'un pays
@@ -788,16 +843,26 @@ class AccesAuxDonneesDev
 		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_LANGUE . " ORDER BY " . NOM_LANGUE);
 		return $laListe;
 	}
-	
-	/**
+
+    /**
 	* Fonction de récupération de la liste des catégories disponibles
 	* Sortie : le tableau contenant les catégories
 	*/
 	public function recupCategorie()
 	{
-		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_CATEGORIE);
+		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_CATEGORIE . " ORDER BY " . NOM_CATEGORIE);
 		return $laListe;
 	}
+	
+	/**
+	* Fonction de récupération de la liste des catégories disponibles
+	* Sortie : le tableau contenant les catégories
+	*/
+	/*public function recupCategorie()
+	{
+		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_CATEGORIE);
+		return $laListe;
+	}*/
 	
 	/**
 	* Fonction de récupération de la liste des lieux disponibles
@@ -1157,6 +1222,32 @@ class AccesAuxDonneesDev
 			// Création de la requete
 			$requete = $this->maBase->prepare("DELETE FROM " . TABLE_LANGUE_REGLE . " WHERE " . ID_EXEMPLAIRE . "=?;");
 			$requete->bindValue(1, $unExemplaire, PDO::PARAM_INT);
+			$resultat = $requete->execute();
+	
+			// On termine l'utilisation de la requete
+			$requete->closeCursor();
+			
+			return $resultat;
+		}
+		else
+			return false;
+	}
+	
+	/**
+	* Fonction de suppression des catégorie d'un jeu
+	* Entrée : id du jeu pour lequel on supprime les catégories du jeu
+	* Sortie : booleen pour savoir si la requête à bien était effectuée
+	*/
+	public function DeleteTableCategorieJeu($unJeu)
+	{
+		if(intval($unExemplaire))
+		{
+			// On initie la connexion à la base, si ce n'est déjà fait
+			$this->connecteBase();
+			
+			// Création de la requete
+			$requete = $this->maBase->prepare("DELETE FROM " . TABLE_CATEGORIE_JEU . " WHERE " . ID_JEU . "=?;");
+			$requete->bindValue(1, $unJeu, PDO::PARAM_INT);
 			$resultat = $requete->execute();
 	
 			// On termine l'utilisation de la requete

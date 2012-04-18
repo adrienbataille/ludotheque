@@ -341,26 +341,45 @@ class ModuleAjoutJeux extends Module
 			
 			$this->recuperationInformationsFormulaire();
 			$this->nbJeu = sizeof($_POST[NOM_JEU]);
-			//print "<br />";
-			//print_r($this->langue);
+			
 			if($this->langue != null && $this->nom != null)
 			{
 				if(!in_array("null", $this->langue) && !in_array("", $this->nom))
 				{
 					$this->pays = $unPays[ID_PAYS];
 					
+					$listeCateSelect = split(",", $this->categorie);
+					$listeCateBase = $this->maBase->recupCategorie();
+					$listeCateId;
+					foreach($listeCateBase as $arrayCat => $uneCategorie)
+					{
+						//var_dump($uneCategorie);print "<br />";var_dump($arrayCat);print "@@@@<br/>";
+						if(in_array($uneCategorie[NOM_CATEGORIE], $listeCateSelect))
+						{
+							$listeCateId[] = $uneCategorie[ID_CATEGORIE];
+							unset($listeCateSelect[array_search($uneCategorie[NOM_CATEGORIE], $listeCateSelect)]);
+						}
+					}
+					foreach($listeCateSelect as $categorie)
+						$listeCateId[] = $this->maBase->InsertionTableCategorie($categorie);
+					
 					if($this->idJeu == 0)
 						$this->idJeu = $this->maBase->InsertionTableJeu($this->description, $this->auteur, $this->idPays);
 					else
+					{
 						if(!$this->maBase->UpdateTableJeu($this->idJeu, $this->description, $this->auteur, $this->idPays))
 							$this->erreurUpdateJeu = true;
 						else
 							$this->maBase->DeleteTableNomJeu($this->idJeu);
-					
+					}
 					$i = 0;
 					for($i = 0; $i < sizeof($_POST[NOM_JEU]); $i++)
 						$this->erreurLangue = $this->maBase->InsertionTableNomJeu($this->nom[$i], $this->langue[$i], $this->idJeu);
 					//print "categorie choisie : " . $categorie . "<br />";
+					$this->maBase->DeleteTableCategorieJeu($this->idJeu);
+					$i = 0;
+					for($i = 0; $i < sizeof($listeCateId); $i++)
+						$this->maBase->InsertionTableCategorieJeu($listeCateId[$i], $this->idJeu);
 				}
 	
 				if(in_array("null", $this->langue))
@@ -372,8 +391,8 @@ class ModuleAjoutJeux extends Module
 				if(!$this->erreurLangue && !$this->erreurNom && !$this->erreurPays && !$this->erreurJeu && !$this->erreurUpdateJeu)
 				{
 					if($_POST["Ajouter"]) {
-						header("Location: " . MODULE_GESTION_JEUX);
-						exit;
+						//header("Location: " . MODULE_GESTION_JEUX);
+						//exit;
 					} elseif ($_POST["AjouterJeu"]) {
 						header("Location: " . MODULE_AJOUT_JEUX);
 						exit;
