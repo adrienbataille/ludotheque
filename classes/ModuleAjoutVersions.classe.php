@@ -48,6 +48,7 @@ class ModuleAjoutVersions extends Module
 	private $editeur = "";
 	private $idJeu = 0;
 	private $idVersion = 0;
+	private $idPhotoVersion = 0;
 	
 
 	private $chemin;
@@ -409,12 +410,14 @@ class ModuleAjoutVersions extends Module
 				if (($_FILES[PHOTO_VERSION]['size'] == 0 && $_FILES[PHOTO_VERSION]['name'] != null) || $_FILES[PHOTO_VERSION]['size'] > 512000)
 					$this->erreurPhotoTaille = true;
 				
-				$nomPhoto = $_FILES[PHOTO_VERSION]['name'];
+				$nomPhoto = md5(date("Y-m-d-H-i-s")).$_FILES[PHOTO_VERSION]['name'];
 				// recupération de l'extension du fichier
 				// autrement dit tout ce qu'il y a après le dernier point (inclus)
 				$extension = substr($nomPhoto,strrpos($nomPhoto,"."));
 				// Contrôle de l'extension du fichier
 				$extensionsAutorisees = array(".jpeg", ".jpg", ".gif", ".png");
+				
+				
 				
 				if (!(in_array($extension, $extensionsAutorisees)))
 					$this->erreurPhotoFormat = true;
@@ -423,7 +426,7 @@ class ModuleAjoutVersions extends Module
 				if(!$this->erreurPhotoFormat && !$this->erreurPhotoTaille) {
 				
 					if (is_uploaded_file($_FILES[PHOTO_VERSION]['tmp_name'])) {
-						$this->chemin = 'fichier/' . $_FILES[PHOTO_VERSION]['name'];
+						$this->chemin = 'fichier/' . $nomPhoto;
 						$resultat2 = move_uploaded_file($_FILES[PHOTO_VERSION]['tmp_name'],$this->chemin);
 						var_dump($resultat2);
 					}
@@ -432,7 +435,8 @@ class ModuleAjoutVersions extends Module
 					{
 						$this->idVersion = $this->maBase->InsertionTableVersion($this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->illustrateur, $this->distributeur, $this->editeur, $this->idJeu);													
 						if($this->chemin != null)
-							$this->maBase->InsertionTablePhoto($this->chemin);
+						$this->idPhotoVersion = $this->maBase->InsertionTablePhoto($this->chemin);
+						$this->maBase->InsertionTablePhotoVersion($this->idPhotoVersion,$this->idVersion);
 					}
 					else
 						$this->maBase->UpdateTableVersion($this->idVersion, $this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->illustrateur, $this->distributeur, $this->editeur, $this->idJeu);
