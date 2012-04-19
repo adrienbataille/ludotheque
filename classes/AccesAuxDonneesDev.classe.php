@@ -450,21 +450,58 @@ class AccesAuxDonneesDev
     * Fonction d'insertion d'une photo de version
     * Entrée : chemin de la photo
     */
-    public function InsertionTablePhoto($chemin)
+    public function InsertionTablePhoto($chemin,$TexteAlternatif)
 	{
 
 		// On initie la connexion à la base, si ce n'est déjà fait
 		$this->connecteBase();
 		// Création de la requete
-		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_PHOTO . " (" . NOM_PHOTO . ") VALUES(?) ;");	
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_PHOTO . " (" . NOM_PHOTO . "," . TEXTE_ALTERNATIF .") VALUES(?,?) ;");	
 		
 		//nom
 		$requete->bindValue(1, $chemin, PDO::PARAM_STR);
+		
+		//nom
+		$requete->bindValue(2, $TexteAlternatif, PDO::PARAM_STR);
+
 		
 		$resultat = $requete->execute();
 
 		// On termine l'utilisation de la requete
 		$requete->closeCursor();
+		
+		$requete = "SELECT MAX(" . ID_PHOTO. ") FROM " . TABLE_PHOTO . " ;";
+		
+		$resultat = $this->requeteSelect($requete);
+		
+		if(count($resultat) == 0)
+			return false;
+		else
+			return $resultat[0][0];
+	}
+	
+	/**
+    * Fonction d'insertion d'une photo de version dans TABLE_PHOTO_VERSION
+    * Entrée : chemin de la photo
+    */
+    public function InsertionTablePhotoVersion($idPhotoVersion, $idVersion)
+	{
+
+		// On initie la connexion à la base, si ce n'est déjà fait
+		$this->connecteBase();
+		// Création de la requete
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_PHOTO_VERSION . " (" . ID_PHOTO . "," .ID_VERSION .") VALUES(?,?) ;");	
+		
+				
+		//idPhotoVersion
+		$requete->bindValue(1, $idPhotoVersion, PDO::PARAM_INT);
+		
+		//idVersion
+		$requete->bindValue(2, $idVersion, PDO::PARAM_INT);
+		
+		$resultat = $requete->execute();
+
+
 	}
 
 	/**
