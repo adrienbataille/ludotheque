@@ -26,6 +26,7 @@ class ModuleAjoutExemplaires extends Module
 	private $idJeu = 0;
 	private $idVersion = 0;
 	private $idExemplaire = 0;
+	private $codeBarre = "";
 	private $descriptionExemplaire = "";
 	private $prixMDJT;
 	private $dateAchat;
@@ -42,6 +43,7 @@ class ModuleAjoutExemplaires extends Module
 	private $erreurLieuReel = false;
 	private $erreurExemplaire = false;
 	private $erreurLoadExemplaire = false;
+	private $erreurCodeBarre = false;
     
 	// Methodes
 
@@ -199,6 +201,9 @@ class ModuleAjoutExemplaires extends Module
 		
 		// Nettoyage de l'id de la version du jeu
 		$this->idExemplaire = $this->filtreChaine($_POST[ID_EXEMPLAIRE], TAILLE_CHAMPS_COURT);
+		
+		// Nettoyage du code barre de l'exemplaire du jeu
+		$this->codeBarre = $this->filtreChaine($_POST[CODE_BARRE], TAILLE_CHAMPS_COURT);
 
 		// Nettoyage de la Description
 		$this->descriptionExemplaire = $this->filtreChaine($_POST[DESCRIPTION_EXEMPLAIRE], TAILLE_CHAMPS_LONG);
@@ -359,6 +364,14 @@ class ModuleAjoutExemplaires extends Module
 			$this->ajouteLigne("<input type='hidden' id='" . ID_EXEMPLAIRE ."' name='"  . ID_EXEMPLAIRE . "' value='" . $this->idExemplaire . "' />");
 			$this->fermeBloc("</li>");
 			
+			// Code Barre
+			$this->ouvreBloc("<li>");
+			$this->ajouteLigne("<label for='" . CODE_BARRE . "'>" . $this->convertiTexte("Code barre *") . "</label>");
+			$this->ajouteLigne("<input type='text' id='" . CODE_BARRE . "'name='" . CODE_BARRE . "' value='" . $this->convertiTexte($this->descriptionExemplaire) . "' required='required' />");
+			if($this->erreurCodeBarre)
+				$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte(ERREUR_CHAMP_REQUIS) . "</p>");
+			$this->fermeBloc("</li>");
+			
 			// Description
 			$this->ouvreBloc("<li>");
 			$this->ajouteLigne("<label for='" . DESCRIPTION_EXEMPLAIRE . "'>" . $this->convertiTexte("Description") . "</label>");
@@ -508,13 +521,16 @@ class ModuleAjoutExemplaires extends Module
 				
 			if($this->lieuReel == 0)
 				$this->erreurLieuReel = true;
+				
+			if(strcmp($this->codeBarre, "") == 0)
+				$this->erreurCodeBarre = true;
 			
-			if(!$this->erreurPrixMdjt && !$this->erreurDateAchat && !$this->erreurEtat && !$this->erreurLieuReel)
+			if(!$this->erreurPrixMdjt && !$this->erreurDateAchat && !$this->erreurEtat && !$this->erreurLieuReel && !$this->erreurCodeBarre)
 			{
 				if($this->idExemplaire == 0)
-					$this->idExemplaire = $this->maBase->InsertionTableExemplaire($this->descriptionExemplaire, $this->prixMDJT, $this->dateAchat, $this->dateFinVie, $this->idVersion, $this->etatExemplaire, $this->lieuReel, $this->lieuTempo);
+					$this->idExemplaire = $this->maBase->InsertionTableExemplaire($this->codeBarre, $this->descriptionExemplaire, $this->prixMDJT, $this->dateAchat, $this->dateFinVie, $this->idVersion, $this->etatExemplaire, $this->lieuReel, $this->lieuTempo);
 				else
-					if(!$this->maBase->UpdateTableExemplaire($this->idExemplaire, $this->descriptionExemplaire, $this->prixMDJT, $this->dateAchat, $this->dateFinVie, $this->idVersion, $this->etatExemplaire, $this->lieuReel, $this->lieuTempo))
+					if(!$this->maBase->UpdateTableExemplaire($this->idExemplaire, $this->codeBarre, $this->descriptionExemplaire, $this->prixMDJT, $this->dateAchat, $this->dateFinVie, $this->idVersion, $this->etatExemplaire, $this->lieuReel, $this->lieuTempo))
 						$this->erreurUpdate = true;
 					else
 						$this->maBase->DeleteTableLanguesRegles($this->idExemplaire);

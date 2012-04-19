@@ -66,6 +66,7 @@ define("NOM_ETAT", "nomEtat");
 
 // Définition des champs de la table TABLE_EXEMPLAIRE
 define("ID_EXEMPLAIRE", "idExemplaire");
+define("CODE_BARRE", "codeBarre");
 define("DESCRIPTION_EXEMPLAIRE", "descriptionExemplaire");
 define("PRIX_MDJT", "prixMJDT");
 define("DATE_ACHAT", "dateAchat");
@@ -471,31 +472,33 @@ class AccesAuxDonneesDev
     * Entrée : la description, prix achat, date achat
     * Sortie : true si l'insertion s'est bien passée, sinon false
     */
-    public function InsertionTableExemplaire($uneDescription, $unPrix, $uneDateAchat, $uneDateFinVie, $uneVersion, $unEtatExemplaire, $unLieuReel, $unLieuTempo)
+    public function InsertionTableExemplaire($unCodeBarre, $uneDescription, $unPrix, $uneDateAchat, $uneDateFinVie, $uneVersion, $unEtatExemplaire, $unLieuReel, $unLieuTempo)
     {
 
 		// On initie la connexion à la base, si ce n'est déjà fait
 		$this->connecteBase();
 		// Création de la requete
-		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_EXEMPLAIRE . " (" . DESCRIPTION_EXEMPLAIRE . ", " . PRIX_MDJT . ", " . DATE_ACHAT . ", " . DATE_FIN_VIE . ", " . ID_VERSION . ", " . ID_ETAT_EXEMPLAIRE . ", " . ID_LIEU_REEL . ", " . ID_LIEU_TEMPO . ") VALUES(?, ?, ?, ?, ?, ?, ?, ?) ;");
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_EXEMPLAIRE . " (" . CODE_BARRE . ", " . DESCRIPTION_EXEMPLAIRE . ", " . PRIX_MDJT . ", " . DATE_ACHAT . ", " . DATE_FIN_VIE . ", " . ID_VERSION . ", " . ID_ETAT_EXEMPLAIRE . ", " . ID_LIEU_REEL . ", " . ID_LIEU_TEMPO . ") VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) ;");
+		
+		$requete->bindValue(1, $unCodeBarre, PDO::PARAM_STR);
 		
 		if(strcmp($uneDescription, "") == 0)
-			$requete->bindValue(1, null, PDO::PARAM_NULL);
+			$requete->bindValue(2, null, PDO::PARAM_NULL);
 		else
-			$requete->bindValue(1, $uneDescription, PDO::PARAM_STR);
+			$requete->bindValue(2, $uneDescription, PDO::PARAM_STR);
 		
-		$requete->bindValue(2, $unPrix, PDO::PARAM_STR);
-		$requete->bindValue(3, $uneDateAchat, PDO::PARAM_STR);
+		$requete->bindValue(3, $unPrix, PDO::PARAM_STR);
+		$requete->bindValue(4, $uneDateAchat, PDO::PARAM_STR);
 		
 		if(strcmp($uneDateFinVie, "") == 0)
-			$requete->bindValue(4, null, PDO::PARAM_NULL);
+			$requete->bindValue(5, null, PDO::PARAM_NULL);
 		else
-			$requete->bindValue(4, $uneDateFinVie, PDO::PARAM_STR);
+			$requete->bindValue(5, $uneDateFinVie, PDO::PARAM_STR);
 		
-		$requete->bindValue(5, $uneVersion, PDO::PARAM_INT);
-		$requete->bindValue(6, $unEtatExemplaire, PDO::PARAM_INT);
-		$requete->bindValue(7, $unLieuReel, PDO::PARAM_INT);
-		$requete->bindValue(8, $unLieuTempo, PDO::PARAM_INT);
+		$requete->bindValue(6, $uneVersion, PDO::PARAM_INT);
+		$requete->bindValue(7, $unEtatExemplaire, PDO::PARAM_INT);
+		$requete->bindValue(8, $unLieuReel, PDO::PARAM_INT);
+		$requete->bindValue(9, $unLieuTempo, PDO::PARAM_INT);
 			
 			
 		$resultat = $requete->execute();
@@ -1152,24 +1155,24 @@ class AccesAuxDonneesDev
 	* Entrée : id du nouveau pays
 	* Sortir : booleen pour savoir si la requête à bien était effectuée
 	*/
-	public function UpdateTableExemplaire($unExemplaire, $uneDescription, $unPrixMDJT, $unDateAchat, $uneDateFinVie, $unEtat, $unLieuReel, $unLieuTempo)
+	public function UpdateTableExemplaire($unExemplaire, $unCodeBarre, $uneDescription, $unPrixMDJT, $unDateAchat, $uneDateFinVie, $unEtat, $unLieuReel, $unLieuTempo)
 	{
 		if(intval($unExemplaire))
 		{
 			// On initie la connexion à la base, si ce n'est déjà fait
 			$this->connecteBase();
 			
-
 			// Création de la requete
-			$requete = $this->maBase->prepare("UPDATE " . TABLE_EXEMPLAIRE . " SET " . DESCRIPTION_EXEMPLAIRE . "=?, " . PRIX_MDJT . "=?, " . DATE_ACHAT . "=?, " . DATE_FIN_VIE . "=?, " . ID_LIEU_REEL . "=?, " . ID_ETAT_EXEMPLAIRE . "=?, " . ID_LIEU_TEMPO . "=? WHERE " . ID_EXEMPLAIRE . "=?;");
-			$requete->bindValue(1, $uneDescription, PDO::PARAM_STR);
-			$requete->bindValue(2, $unPrixMDJT, PDO::PARAM_INT);
-			$requete->bindValue(3, $unDateAchat, PDO::PARAM_STR);
-			$requete->bindValue(4, $uneDateFinVie, PDO::PARAM_STR);
-			$requete->bindValue(5, $unEtat, PDO::PARAM_INT);
-			$requete->bindValue(6, $unLieuReel, PDO::PARAM_INT);
-			$requete->bindValue(7, $unLieuTempo, PDO::PARAM_INT);
-			$requete->bindValue(8, $unExemplaire, PDO::PARAM_INT);
+			$requete = $this->maBase->prepare("UPDATE " . TABLE_EXEMPLAIRE . " SET " . CODE_BARRE . "=?, " . DESCRIPTION_EXEMPLAIRE . "=?, " . PRIX_MDJT . "=?, " . DATE_ACHAT . "=?, " . DATE_FIN_VIE . "=?, " . ID_LIEU_REEL . "=?, " . ID_ETAT_EXEMPLAIRE . "=?, " . ID_LIEU_TEMPO . "=? WHERE " . ID_EXEMPLAIRE . "=?;");
+			$requete->bindValue(1, $unCodeBarre, PDO::PARAM_STR);
+			$requete->bindValue(2, $uneDescription, PDO::PARAM_STR);
+			$requete->bindValue(3, $unPrixMDJT, PDO::PARAM_INT);
+			$requete->bindValue(4, $unDateAchat, PDO::PARAM_STR);
+			$requete->bindValue(5, $uneDateFinVie, PDO::PARAM_STR);
+			$requete->bindValue(6, $unEtat, PDO::PARAM_INT);
+			$requete->bindValue(7, $unLieuReel, PDO::PARAM_INT);
+			$requete->bindValue(8, $unLieuTempo, PDO::PARAM_INT);
+			$requete->bindValue(9, $unExemplaire, PDO::PARAM_INT);
 			$resultat = $requete->execute();
 			
 			// On termine l'utilisation de la requete
