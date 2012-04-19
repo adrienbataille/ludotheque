@@ -423,39 +423,51 @@ class ModuleAjoutVersions extends Module
 			
 			//var_dump($this);
 			
-			$listeIllustrateur = $this->maBase->recupIllustrateur(null);
-			$illustrateurTab;
-			foreach($listeIllustrateur as $idIllustrator => $illustrator)
-				$illustrateurTab[] = $illustrator[NOM_ILLUSTRATEUR];
-			if($illustrateurTab == null)
-				$this->idIllustrateur = $this->maBase->InsertionTableIllustrateur($this->illustrateur);
-			else
-				if(!in_array($this->illustrateur, $illustrateurTab))
-					$this->idIllustrateur = $this->maBase->InsertionTableIllustrateur($this->illustrateur);
+			$listeIllustrateurSelect = split(",", $this->distributeur);
+			$listeIllustrateurBase = $this->maBase->recupIllustrateur(null);
+			foreach($listeIllustrateurBase as $arrayIll => $unIllustrateur)
+			{
+				if(in_array($unIllustrateur[NOM_ILLUSTRATEUR], $listeIllustrateurSelect))
+				{
+					$this->idIllustrateur[] = $unIllustrateur[ID_ILLUSTRATEUR];
+					unset($listeIllustrateurSelect[array_search($unIllustrateur[NOM_ILLUSTRATEUR], $listeIllustrateurSelect)]);
+				}
+			}
+			foreach($listeIllustrateurSelect as $illustrateur)
+				$this->idIllustrateur[] = $this->maBase->InsertionTableIllustrateur($illustrateur);
 			
-			$listeDistributeur = $this->maBase->recupDistributeur(null);
-			$distributeurTab;
-			foreach($listeDistributeur as $idDistributor => $distributor)
-				$distributeurTab[] = $distributor[NOM_DISTRIBUTEUR];
-			if($distributeurTab == null)
-				$this->idDistributeur = $this->maBase->InsertionTableDistributeur($this->distributeur);
-			else
-				if(!in_array($this->distributeur, $distributeurTab))
-					$this->idDistributeur = $this->maBase->InsertionTableDistributeur($this->distributeur);
 			
-			$listeEditeur = $this->maBase->recupEditeur(null);
-			$editeurTab;
-			foreach($listeEditeur as $idEditor => $editor)
-				$editeurTab[] = $editor[NOM_EDITEUR];
-			if($editeurTab == null)
-				$this->idEditeur = $this->maBase->InsertionTableEditeur($this->editeur);
-			else
-				if(!in_array($this->editeur, $editeurTab))
-					$this->idEditeur = $this->maBase->InsertionTableEditeur($this->editeur);
+			$listeDistributeurSelect = split(",", $this->distributeur);
+			$listeDistributeurBase = $this->maBase->recupDistributeur(null);
+			foreach($listeDistributeurBase as $arrayDis => $unDistributeur)
+			{
+				if(in_array($unDistributeur[NOM_DISTRIBUTEUR], $listeDistributeurSelect))
+				{
+					$this->idDistributeur[] = $unDistributeur[ID_DISTRIBUTEUR];
+					unset($listeDistributeurSelect[array_search($unDistributeur[NOM_DISTRIBUTEUR], $listeDistributeurSelect)]);
+				}
+			}
+			foreach($listeDistributeurSelect as $distributeur)
+				$this->idDistributeur[] = $this->maBase->InsertionTableDistributeur($distributeur);
 			
+			
+			$listeEditeurSelect = split(",", $this->editeur);
+			$listeEditeurBase = $this->maBase->recupEditeur(null);
+			foreach($listeEditeurBase as $arrayEd => $unEditeur)
+			{
+				if(in_array($unEditeur[NOM_EDITEUR], $listeEditeurSelect))
+				{
+					$this->idEditeur[] = $unEditeur[ID_EDITEUR];
+					unset($listeEditeurSelect[array_search($unEditeur[NOM_EDITEUR], $listeEditeurSelect)]);
+				}
+			}
+			foreach($listeEditeurSelect as $editeur)
+				$this->idEditeur[] = $this->maBase->InsertionTableEditeur($editeur);
 		
 			if(!$this->erreurNom && !$this->erreurPrixAchat)
 			{
+						
+						
 				if($_FILES[PHOTO_VERSION]['name'] != null)
 				{
 					if (($_FILES[PHOTO_VERSION]['size'] == 0 && $_FILES[PHOTO_VERSION]['name'] != null) || $_FILES[PHOTO_VERSION]['size'] > 512000)
@@ -487,14 +499,25 @@ class ModuleAjoutVersions extends Module
 					
 					if($this->idVersion == 0/* && $resultat2*/)
 					{
-						$this->idVersion = $this->maBase->InsertionTableVersion($this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->idIllustrateur, $this->idDistributeur, $this->idEditeur, $this->idJeu);													
+						$this->idVersion = $this->maBase->InsertionTableVersion($this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->idJeu);													
 						if($this->chemin != null)
 						$this->idPhotoVersion = $this->maBase->InsertionTablePhoto($this->chemin, $this->TexteAlternatif);
 						$this->maBase->InsertionTablePhotoVersion($this->idPhotoVersion,$this->idVersion);
 					}
 					else
-						$this->maBase->UpdateTableVersion($this->idVersion, $this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->idIllustrateur, $this->idDistributeur, $this->idEditeur, $this->idJeu);
-	
+						$this->maBase->UpdateTableVersion($this->idVersion, $this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->idJeu);
+					
+					$this->maBase->DeleteTableEditeurVersion($this->idVersion);
+					$this->maBase->DeleteTableDistributeurVersion($this->idVersion);
+					$this->maBase->DeleteTableIllustrateurVersion($this->idVersion);
+					
+					//print_r($this->idEditeur);
+					foreach($this->idEditeur as $editeur)
+						var_dump($this->maBase->InsertionTableEditeurVersion($this->idVersion, $editeur));
+					foreach($this->idDistributeur as $distributeur)
+						$this->maBase->InsertionTableDistributeurVersion($this->idVersion, $distributeur);
+					foreach($this->idIllustrateur as $illustrateur)
+						$this->maBase->InsertionTableIllustrateurVersion($this->idVersion, $illustrateur);
 	
 					if($this->idVersion == null || !$this->idVersion)
 						$this->erreurVersion = true;

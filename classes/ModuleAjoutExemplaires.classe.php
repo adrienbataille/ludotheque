@@ -367,7 +367,7 @@ class ModuleAjoutExemplaires extends Module
 			// Code Barre
 			$this->ouvreBloc("<li>");
 			$this->ajouteLigne("<label for='" . CODE_BARRE . "'>" . $this->convertiTexte("Code barre *") . "</label>");
-			$this->ajouteLigne("<input type='text' id='" . CODE_BARRE . "'name='" . CODE_BARRE . "' value='" . $this->convertiTexte($this->descriptionExemplaire) . "' required='required' />");
+			$this->ajouteLigne("<input type='text' id='" . CODE_BARRE . "'name='" . CODE_BARRE . "' value='" . $this->convertiTexte($this->codeBarre) . "' required='required' />");
 			if($this->erreurCodeBarre)
 				$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte(ERREUR_CHAMP_REQUIS) . "</p>");
 			$this->fermeBloc("</li>");
