@@ -50,9 +50,8 @@ class ModuleAjoutVersions extends Module
 	private $idVersion = 0;
 	private $idPhotoVersion = 0;
 	
-
 	private $chemin;
-
+	private $TexteAlternatif="";
 
 	
 // Methodes
@@ -154,6 +153,9 @@ class ModuleAjoutVersions extends Module
 		//Nettoyage du nom de la version
 		$this->nomVersion = $this->filtreChaine($_POST[NOM_VERSION], TAILLE_CHAMPS_COURT);
 		
+		//Nettoyage du texte alternatif de la photo
+		$this->TexteAlternatif = $this->filtreChaine($_POST[TEXTE_ALTERNATIF], TAILLE_CHAMPS_COURT);
+		
 		// Nettoyage de la Description
 		$this->description = $this->filtreChaine($_POST[DESCRIPTION_VERSION], TAILLE_CHAMPS_LONG);
 		
@@ -242,13 +244,12 @@ class ModuleAjoutVersions extends Module
 		$this->fermeBloc("</ol>");
 		$this->fermeBloc("</fieldset>");
 		
-		// deuxième fieldset : Nom de la versions
+		//fieldset : Nom de la versions
 		$this->ouvreBloc("<fieldset>");
 		$this->ajouteLigne("<legend>" . $this->convertiTexte("Nom de la version") . "</legend>");				
 		$this->ouvreBloc("<ol>");
 		
-
-        
+	        
         // Nom
         $this->ouvreBloc("<li>");
         $this->ajouteLigne("<label for='" . NOM_VERSION . "'>" . $this->convertiTexte("Nom de la version *") . "</label>");
@@ -256,7 +257,16 @@ class ModuleAjoutVersions extends Module
 		if($this->erreurNom)
 			$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte(ERREUR_CHAMP_REQUIS) . "</p>");
 		$this->fermeBloc("</li>");
-			
+		
+		$this->fermeBloc("</ol>");
+        $this->fermeBloc("</fieldset>");
+		
+		
+		//fieldset : Photo
+		$this->ouvreBloc("<fieldset>");
+		$this->ajouteLigne("<legend>" . $this->convertiTexte("Photo") . "</legend>");				
+		$this->ouvreBloc("<ol>");
+				
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . PHOTO_VERSION . "'>" . $this->convertiTexte("Photo") . "</label>");
 		$this->ajouteLigne("<input type='hidden' name='MAX_FILE_SIZE' value='512000' />");
@@ -267,12 +277,17 @@ class ModuleAjoutVersions extends Module
 			$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte(ERREUR_PHOTO_TAILLE) . "</p>");
 		$this->fermeBloc("</li>");
 		
-
-        
-        $this->fermeBloc("</ol>");
-        $this->fermeBloc("</fieldset>");
+		// Texte alternatif photo
+		$this->ouvreBloc("<li>");
+		$this->ajouteLigne("<label for='" . TEXTE_ALTERNATIF . "'>" . $this->convertiTexte("Texte alternatif") . "</label>");
+		$this->ajouteLigne("<input type='text' id='" . TEXTE_ALTERNATIF ."' name='" . TEXTE_ALTERNATIF . "' value='" . $this->convertiTexte($this->TexteAlternatif) . "' />");
+		$this->fermeBloc("</li>");
 		
-		// Second fieldset : Informations sur la version
+		$this->fermeBloc("</ol>");
+        $this->fermeBloc("</fieldset>");
+        
+
+		// fieldset : Informations sur la version
 		$this->ouvreBloc("<fieldset>");
 		$this->ajouteLigne("<legend>" . $this->convertiTexte("Informations sur la version") . "</legend>");
 		$this->ouvreBloc("<ol>");
@@ -435,7 +450,7 @@ class ModuleAjoutVersions extends Module
 					{
 						$this->idVersion = $this->maBase->InsertionTableVersion($this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->illustrateur, $this->distributeur, $this->editeur, $this->idJeu);													
 						if($this->chemin != null)
-						$this->idPhotoVersion = $this->maBase->InsertionTablePhoto($this->chemin);
+						$this->idPhotoVersion = $this->maBase->InsertionTablePhoto($this->chemin, $this->TexteAlternatif);
 						$this->maBase->InsertionTablePhotoVersion($this->idPhotoVersion,$this->idVersion);
 					}
 					else

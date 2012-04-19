@@ -449,16 +449,20 @@ class AccesAuxDonneesDev
     * Fonction d'insertion d'une photo de version
     * Entrée : chemin de la photo
     */
-    public function InsertionTablePhoto($chemin)
+    public function InsertionTablePhoto($chemin,$TexteAlternatif)
 	{
 
 		// On initie la connexion à la base, si ce n'est déjà fait
 		$this->connecteBase();
 		// Création de la requete
-		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_PHOTO . " (" . NOM_PHOTO . ") VALUES(?) ;");	
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_PHOTO . " (" . NOM_PHOTO . "," . TEXTE_ALTERNATIF .") VALUES(?,?) ;");	
 		
 		//nom
 		$requete->bindValue(1, $chemin, PDO::PARAM_STR);
+		
+		//nom
+		$requete->bindValue(2, $TexteAlternatif, PDO::PARAM_STR);
+
 		
 		$resultat = $requete->execute();
 
