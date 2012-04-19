@@ -8,35 +8,37 @@
 require_once("classes/AccesAuxDonnees.classe.php");
 
 //Constantes - paramètre du système
+define("SERVEUR_DEV","127.0.0.1");
+define("LOGIN_DEV","ludotheque");
+define("MDP_DEV","ludo");
 define("BASE_DEV","mdjtufjjpdev");
+define("TABLE_PREFIX_DEV","MDJT_");
 
 // Constantes - Definition des Tables SQL
-define("TABLE_CATEGORIE", TABLE_PREFIX . "CATEGORIE");
-define("TABLE_CATEGORIE_JEU", TABLE_PREFIX . "CATEGORIE_JEU");
-define("TABLE_DISTRIBUTEUR", TABLE_PREFIX . "DISTRIBUTEUR");
-define("TABLE_EDITEUR", TABLE_PREFIX . "EDITEUR");
-define("TABLE_EMPRUNT", TABLE_PREFIX . "EMPRUNT");
-define("TABLE_ETAT_EXEMPLAIRE", TABLE_PREFIX . "ETAT_EXEMPLAIRE");
-define("TABLE_EXEMPLAIRE", TABLE_PREFIX . "EXEMPLAIRE");
-define("TABLE_EXTENSION", TABLE_PREFIX . "EXTENSION");
-define("TABLE_FAIRE_PARTIE_KIT", TABLE_PREFIX . "FAIRE_PARTIE_KIT");
-define("TABLE_ILLUSTRATEUR", TABLE_PREFIX . "ILLUSTRATEUR");
-define("TABLE_INVENTAIRE", TABLE_PREFIX . "INVENTAIRE");
-define("TABLE_JEUX", TABLE_PREFIX . "JEUX");
-define("TABLE_KIT_JEUX", TABLE_PREFIX . "KIT_JEUX");
-define("TABLE_LANGUE", TABLE_PREFIX . "LANGUE");
-define("TABLE_LANGUE_REGLE", TABLE_PREFIX . "LANGUE_REGLE");
-define("TABLE_LIEU", TABLE_PREFIX . "LIEU");
-define("TABLE_NB_JOUEUR", TABLE_PREFIX . "NB_JOUEUR");
-define("TABLE_NB_JOUEUR_VERSION_JEU", TABLE_PREFIX . "NB_JOUEUR_VERSION_JEU");
-define("TABLE_NOM_JEU", TABLE_PREFIX . "NOM_JEU");
-define("TABLE_NOTE_VERSION", TABLE_PREFIX . "NOTE_VERSION");
-define("TABLE_PAYS", TABLE_PREFIX . "PAYS");
-define("TABLE_PHOTO", TABLE_PREFIX . "PHOTO");
-define("TABLE_PHOTO_VERSION", TABLE_PREFIX . "PHOTO_VERSION");
-define("TABLE_RESERVATION", TABLE_PREFIX . "RESERVATION");
-define("TABLE_SUGGESTION", TABLE_PREFIX . "SUGGESTION");
-define("TABLE_VERSION", TABLE_PREFIX . "VERSION");
+define("TABLE_CATEGORIE", TABLE_PREFIX_DEV . "CATEGORIE");
+define("TABLE_CATEGORIE_JEU", TABLE_PREFIX_DEV . "CATEGORIE_JEU");
+define("TABLE_DISTRIBUTEUR", TABLE_PREFIX_DEV . "DISTRIBUTEUR");
+define("TABLE_EDITEUR", TABLE_PREFIX_DEV . "EDITEUR");
+define("TABLE_EMPRUNT", TABLE_PREFIX_DEV . "EMPRUNT");
+define("TABLE_ETAT_EXEMPLAIRE", TABLE_PREFIX_DEV . "ETAT_EXEMPLAIRE");
+define("TABLE_EXEMPLAIRE", TABLE_PREFIX_DEV . "EXEMPLAIRE");
+define("TABLE_EXTENSION", TABLE_PREFIX_DEV . "EXTENSION");
+define("TABLE_FAIRE_PARTIE_KIT", TABLE_PREFIX_DEV . "FAIRE_PARTIE_KIT");
+define("TABLE_ILLUSTRATEUR", TABLE_PREFIX_DEV . "ILLUSTRATEUR");
+define("TABLE_INVENTAIRE", TABLE_PREFIX_DEV . "INVENTAIRE");
+define("TABLE_JEUX", TABLE_PREFIX_DEV . "JEUX");
+define("TABLE_KIT_JEUX", TABLE_PREFIX_DEV . "KIT_JEUX");
+define("TABLE_LANGUE", TABLE_PREFIX_DEV . "LANGUE");
+define("TABLE_LANGUE_REGLE", TABLE_PREFIX_DEV . "LANGUE_REGLE");
+define("TABLE_LIEU", TABLE_PREFIX_DEV . "LIEU");
+define("TABLE_NOM_JEU", TABLE_PREFIX_DEV . "NOM_JEU");
+define("TABLE_NOTE_VERSION", TABLE_PREFIX_DEV . "NOTE_VERSION");
+define("TABLE_PAYS", TABLE_PREFIX_DEV . "PAYS");
+define("TABLE_PHOTO", TABLE_PREFIX_DEV . "PHOTO");
+define("TABLE_PHOTO_VERSION", TABLE_PREFIX_DEV . "PHOTO_VERSION");
+define("TABLE_RESERVATION", TABLE_PREFIX_DEV . "RESERVATION");
+define("TABLE_SUGGESTION", TABLE_PREFIX_DEV . "SUGGESTION");
+define("TABLE_VERSION", TABLE_PREFIX_DEV . "VERSION");
 
 // Définition des champs de la table TABLE_CATEGORIE
 define("ID_CATEGORIE", "idCategorie");
@@ -113,13 +115,6 @@ define("ID_LANGUE_REGLE", "idLangueRegle");
 define("ID_LIEU", "idLieu");
 define("NOM_LIEU", "nomLieu");
 
-// Définition des champs de la table TABLE_NB_JOUEUR
-define("ID_NB_JOUEUR", "idNbJoueur");
-define("NB_JOUEUR", "nbJoueur");
-
-// Définition des champs de la table TABLE_NB_JOUEUR_VERSION_JEU
-define("ID_NB_JOUEUR_VERSION_JEU", "idNbJoueurJeu");
-
 // Définition des champs de la table TABLE_NOM_JEU
 define("ID_NOM_JEU", "idNomJeu");
 define("NOM_JEU", "nomJeu");
@@ -155,6 +150,7 @@ define("ID_VERSION", "idVersion");
 define("NOM_VERSION", "nomVersion");
 define("DESCRIPTION_VERSION", "descriptionVersion");
 define("AGE_MINIMUM", "ageMinimum");
+define("NB_JOUEUR", "nbJoueur");
 define("NB_JOUEUR_RECOMMANDE", "nbJoueurRecommande");
 define("DUREE_PARTIE", "dureePartie");
 define("PRIX_ACHAT", "prixAchat");
@@ -246,7 +242,7 @@ class AccesAuxDonneesDev
                 {
                     // Connexion en mode debug
                     $option[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-                    $this->maBase = new PDO("mysql:host=" . SERVEUR . ";dbname=" . BASE_DEV, LOGIN, MDP,$option);
+                    $this->maBase = new PDO("mysql:host=" . SERVEUR_DEV . ";dbname=" . BASE_DEV, LOGIN_DEV, MDP_DEV,$option_dev);
                     // Connexion normale
                     // $this->maBase = new PDO("mysql:host=" . SERVEUR . ";dbname=" . BASE, LOGIN, MDP);
                 } 
@@ -358,15 +354,13 @@ class AccesAuxDonneesDev
     * Entrée : nom, description, age_min, nb_joueur, nb_joueur recommandés, prix achat, année sortie, illustrateur, distributeur, éditeur
     * Sortie : true si l'insertion s'est bien passée, sinon false
     */
-    public function InsertionTableVersion($nom,$description,$age_min,$nb_joueur_reco,$duree_partie,$prix_achat,$annee_sortie,
-											$illustrateur,$distributeur,$editeur,$idJeu)
+    public function InsertionTableVersion($nom,$description,$age_min,$nb_joueur_reco,$duree_partie,$prix_achat,$annee_sortie,$idJeu)
     {
 		// On initie la connexion à la base, si ce n'est déjà fait
 		$this->connecteBase();
 		// Création de la requete
 		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_VERSION . " (" . NOM_VERSION . ", " . DESCRIPTION_VERSION . ", " . AGE_MINIMUM . 
-										", " . NB_JOUEUR_RECOMMANDE ."," . DUREE_PARTIE ."," . PRIX_ACHAT . ",". ANNEE_SORTIE ."," . ID_ILLUSTRATEUR .
-										"," . ID_DISTRIBUTEUR . "," . ID_EDITEUR . "," . ID_JEU .") VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ;");	
+										", " . NB_JOUEUR_RECOMMANDE ."," . DUREE_PARTIE ."," . PRIX_ACHAT . ",". ANNEE_SORTIE ."," . ID_JEU .") VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ;");	
 
 	
 		//nom
@@ -406,29 +400,10 @@ class AccesAuxDonneesDev
 		if(strcmp($annee_sortie, "") == 0)
 			$requete->bindValue(7, null, PDO::PARAM_NULL);
 		else
-			$requete->bindValue(7, $annee_sortie, PDO::PARAM_INT);	
-
-		//illustrateur
-		if($illustrateur == 0)
-			$requete->bindValue(8, null, PDO::PARAM_NULL);
-		else
-			$requete->bindValue(8, $illustrateur, PDO::PARAM_INT);	
-
-
-		//distributeur
-		if($distributeur == 0)
-			$requete->bindValue(9, null, PDO::PARAM_NULL);
-		else
-			$requete->bindValue(9, $distributeur, PDO::PARAM_INT);
-
-		//éditeur
-		if($editeur == 0)
-			$requete->bindValue(10, null, PDO::PARAM_NULL);
-		else
-			$requete->bindValue(10, $editeur, PDO::PARAM_INT);
+			$requete->bindValue(7, $annee_sortie, PDO::PARAM_INT);
 		
 		//id jeu associé
-		$requete->bindValue(11, $idJeu, PDO::PARAM_INT);
+		$requete->bindValue(8, $idJeu, PDO::PARAM_INT);
 			
 		$resultat = $requete->execute();
 
@@ -734,6 +709,78 @@ class AccesAuxDonneesDev
 		
 		return $resultat;
     }
+
+	/**
+    * Fonction d'insertion d'un éditeur d'une version d'un jeu
+    * Entrée : l'id de l'éditeur que l'on souhaite affecter à une version
+    * Sortie : true si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableEditeurVersion($uneVersion, $unEditeur)
+    {
+
+		// On initie la connexion à la base, si ce n'est déjà fait
+		$this->connecteBase();
+		// Création de la requete
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_EDITEUR_VERSION . " (" . ID_EDITEUR . ", " . ID_VERSION . ") VALUES(?, ?) ;");
+		
+		$requete->bindValue(1, $unEditeur, PDO::PARAM_STR);
+		$requete->bindValue(2, $uneVersion, PDO::PARAM_STR);
+		
+		$resultat = $requete->execute();
+
+		// On termine l'utilisation de la requete
+		$requete->closeCursor();
+		
+		return $resultat;
+    }
+
+	/**
+    * Fonction d'insertion d'un distributeur d'une version d'un jeu
+    * Entrée : l'id de le distributeur que l'on souhaite affecter à une version
+    * Sortie : true si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableDistributeurVersion($uneVersion, $unDistributeur)
+    {
+
+		// On initie la connexion à la base, si ce n'est déjà fait
+		$this->connecteBase();
+		// Création de la requete
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_DISTRIBUTEUR_VERSION . " (" . ID_DISTRIBUTEUR . ", " . ID_VERSION . ") VALUES(?, ?) ;");
+		
+		$requete->bindValue(1, $unDistributeur, PDO::PARAM_STR);
+		$requete->bindValue(2, $uneVersion, PDO::PARAM_STR);
+		
+		$resultat = $requete->execute();
+
+		// On termine l'utilisation de la requete
+		$requete->closeCursor();
+		
+		return $resultat;
+    }
+
+	/**
+    * Fonction d'insertion d'un illustrateur d'une version d'un jeu
+    * Entrée : l'id de l'illustrateur que l'on souhaite affecter à une version
+    * Sortie : true si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableIllustrateurVersion($uneVersion, $unIllustrateur)
+    {
+
+		// On initie la connexion à la base, si ce n'est déjà fait
+		$this->connecteBase();
+		// Création de la requete
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_ILLUSTRATEUR_VERSION . " (" . ID_ILLUSTRATEUR . ", " . ID_VERSION . ") VALUES(?, ?) ;");
+		
+		$requete->bindValue(1, $unIllustrateur, PDO::PARAM_STR);
+		$requete->bindValue(2, $uneVersion, PDO::PARAM_STR);
+		
+		$resultat = $requete->execute();
+
+		// On termine l'utilisation de la requete
+		$requete->closeCursor();
+		
+		return $resultat;
+    }
     
     /**
     * Fonction d'insertion d'un pays
@@ -883,16 +930,6 @@ class AccesAuxDonneesDev
 		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_LANGUE . " ORDER BY " . NOM_LANGUE);
 		return $laListe;
 	}
-
-    /**
-	* Fonction de récupération de la liste des catégories disponibles
-	* Sortie : le tableau contenant les catégories
-	*/
-	public function recupCategorie()
-	{
-		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_CATEGORIE . " ORDER BY " . NOM_CATEGORIE);
-		return $laListe;
-	}
 	
 	/**
 	* Fonction de récupération de la liste des catégories disponibles
@@ -1037,6 +1074,34 @@ class AccesAuxDonneesDev
 		return $laListe;
 	}
 	
+    /**
+	* Fonction de récupération des catégories d'un jeu
+	* Entrée : id du jeu pour lequel on souhaite récupérer les catégories
+	* Sortie : le tableau contenant les catégories utilisées pour un jeu
+	*/
+	public function recupCategorieJeu($idJeu)
+	{
+		$requete = "SELECT * FROM " . TABLE_CATEGORIE_JEU;
+		$requete .= " WHERE " . ID_JEU . " = '" . $idJeu . "';";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
+    /**
+	* Fonction des catégories
+	* Entrée : id de la catégorie pour laquelle on souhaite avoir le informations (paramètre optionnel)
+	* Sortie : le tableau contenant les catégories
+	*/
+	public function recupCategorie($idCategorie)
+	{
+		$requete = "SELECT * FROM " . TABLE_CATEGORIE;
+		if($idCategorie != null)
+			$requete .= " WHERE " . ID_CATEGORIE . " = '" . $idCategorie . "';";
+		$requete .= " ORDER BY " . NOM_CATEGORIE;
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
 	/**
 	* Fonction de récupération de la liste des lieux
 	* Sortie : le tableau contenant les lieux
@@ -1096,8 +1161,7 @@ class AccesAuxDonneesDev
 	* Entrée : nouveau attributs à modifier
 	* Sortir : booleen pour savoir si la requête à bien était effectuée
 	*/
-	public function UpdateTableVersion($idVersion,$nom,$description,$age_min,$nb_joueur_reco,$duree_partie,$prix_achat,$annee_sortie,
-											$illustrateur,$distributeur,$editeur,$idJeu)
+	public function UpdateTableVersion($idVersion,$nom,$description,$age_min,$nb_joueur_reco,$duree_partie,$prix_achat,$annee_sortie,$idJeu)
 	{
 		if(intval($idVersion))
 		{
@@ -1107,12 +1171,8 @@ class AccesAuxDonneesDev
 			
 			// Création de la requete
 			$requete = $this->maBase->prepare("UPDATE " . TABLE_VERSION . " SET " . NOM_VERSION . "=?, " . DESCRIPTION_VERSION . "=?, " . AGE_MINIMUM . "=?,
-			" . NB_JOUEUR_RECOMMANDE . "=?, " . DUREE_PARTIE . "=?, " . PRIX_ACHAT . "=?, " . ANNEE_SORTIE . "=?, " . ID_ILLUSTRATEUR . "=?	
-			, " . ID_DISTRIBUTEUR . "=?	, " . ID_EDITEUR . "=?	, " . ID_JEU . "=?	WHERE " . ID_VERSION . "=?;");
+			" . NB_JOUEUR_RECOMMANDE . "=?, " . DUREE_PARTIE . "=?, " . PRIX_ACHAT . "=?, " . ANNEE_SORTIE . "=?, " . ID_JEU . "=?	WHERE " . ID_VERSION . "=?;");
 			
-			
-		
-
 			$requete->bindValue(1, $nom, PDO::PARAM_STR);
 			
 			//description	
@@ -1149,30 +1209,11 @@ class AccesAuxDonneesDev
 			if(strcmp($annee_sortie, "") == 0)
 				$requete->bindValue(7, null, PDO::PARAM_NULL);
 			else
-				$requete->bindValue(7, $annee_sortie, PDO::PARAM_INT);	
-
-			//illustrateur
-			if($illustrateur == 0)
-				$requete->bindValue(8, null, PDO::PARAM_NULL);
-			else
-				$requete->bindValue(8, $illustrateur, PDO::PARAM_STR);	
-
-
-			//distributeur
-			if($distributeur == 0)
-				$requete->bindValue(9, null, PDO::PARAM_NULL);
-			else
-				$requete->bindValue(9, $distributeur, PDO::PARAM_STR);
-
-			//éditeur
-			if($editeur == 0)
-				$requete->bindValue(10, null, PDO::PARAM_NULL);
-			else
-				$requete->bindValue(10, $editeur, PDO::PARAM_STR);
+				$requete->bindValue(7, $annee_sortie, PDO::PARAM_INT);
 		
 
-			$requete->bindValue(11, $idJeu, PDO::PARAM_INT);
-			$requete->bindValue(12, $idVersion, PDO::PARAM_INT);
+			$requete->bindValue(8, $idJeu, PDO::PARAM_INT);
+			$requete->bindValue(9, $idVersion, PDO::PARAM_INT);
 			$resultat = $requete->execute();
 	
 			// On termine l'utilisation de la requete
@@ -1274,13 +1315,13 @@ class AccesAuxDonneesDev
 	}
 	
 	/**
-	* Fonction de suppression des catégorie d'un jeu
+	* Fonction de suppression des catégories d'un jeu
 	* Entrée : id du jeu pour lequel on supprime les catégories du jeu
 	* Sortie : booleen pour savoir si la requête à bien était effectuée
 	*/
 	public function DeleteTableCategorieJeu($unJeu)
 	{
-		if(intval($unExemplaire))
+		if(intval($unJeu))
 		{
 			// On initie la connexion à la base, si ce n'est déjà fait
 			$this->connecteBase();
@@ -1288,6 +1329,84 @@ class AccesAuxDonneesDev
 			// Création de la requete
 			$requete = $this->maBase->prepare("DELETE FROM " . TABLE_CATEGORIE_JEU . " WHERE " . ID_JEU . "=?;");
 			$requete->bindValue(1, $unJeu, PDO::PARAM_INT);
+			$resultat = $requete->execute();
+	
+			// On termine l'utilisation de la requete
+			$requete->closeCursor();
+			
+			return $resultat;
+		}
+		else
+			return false;
+	}
+	
+	/**
+	* Fonction de suppression des éditeurs d'une version
+	* Entrée : id de la version pour laquelle on supprime les éditeurs du jeu
+	* Sortie : booleen pour savoir si la requête à bien était effectuée
+	*/
+	public function DeleteTableEditeurVersion($uneVersion)
+	{
+		if(intval($uneVersion))
+		{
+			// On initie la connexion à la base, si ce n'est déjà fait
+			$this->connecteBase();
+			
+			// Création de la requete
+			$requete = $this->maBase->prepare("DELETE FROM " . TABLE_EDITEUR_VERSION . " WHERE " . ID_VERSION . "=?;");
+			$requete->bindValue(1, $uneVersion, PDO::PARAM_INT);
+			$resultat = $requete->execute();
+	
+			// On termine l'utilisation de la requete
+			$requete->closeCursor();
+			
+			return $resultat;
+		}
+		else
+			return false;
+	}
+	
+	/**
+	* Fonction de suppression des distributeurs d'une version
+	* Entrée : id de la version pour laquelle on supprime les distributeurs du jeu
+	* Sortie : booleen pour savoir si la requête à bien était effectuée
+	*/
+	public function DeleteTableDistributeurVersion($uneVersion)
+	{
+		if(intval($uneVersion))
+		{
+			// On initie la connexion à la base, si ce n'est déjà fait
+			$this->connecteBase();
+			
+			// Création de la requete
+			$requete = $this->maBase->prepare("DELETE FROM " . TABLE_DISTRIBUTEUR_VERSION . " WHERE " . ID_VERSION . "=?;");
+			$requete->bindValue(1, $uneVersion, PDO::PARAM_INT);
+			$resultat = $requete->execute();
+	
+			// On termine l'utilisation de la requete
+			$requete->closeCursor();
+			
+			return $resultat;
+		}
+		else
+			return false;
+	}
+	
+	/**
+	* Fonction de suppression des illustrateurs d'une version
+	* Entrée : id de la version pour laquelle on supprime les illustrateurs du jeu
+	* Sortie : booleen pour savoir si la requête à bien était effectuée
+	*/
+	public function DeleteTableIllustrateurVersion($uneVersion)
+	{
+		if(intval($uneVersion))
+		{
+			// On initie la connexion à la base, si ce n'est déjà fait
+			$this->connecteBase();
+			
+			// Création de la requete
+			$requete = $this->maBase->prepare("DELETE FROM " . TABLE_ILLUSTRATEUR_VERSION . " WHERE " . ID_VERSION . "=?;");
+			$requete->bindValue(1, $uneVersion, PDO::PARAM_INT);
 			$resultat = $requete->execute();
 	
 			// On termine l'utilisation de la requete

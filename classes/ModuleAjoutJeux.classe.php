@@ -74,14 +74,24 @@ class ModuleAjoutJeux extends Module
 				$this->langue = array(0 => "");
 				foreach($myNames as $name)
 				{
-					$this->nom[$i] = $name[NOM_JEU];
-					$this->langue[$i] = $name[ID_LANGUE];
+					$this->nom[$i] = $name[$i][NOM_JEU];
+					$this->langue[$i] = $name[$i][ID_LANGUE];
 					$i++;
+				}
+				
+				$myCategoriesPlays = $this->maBase->recupCategorieJeu($this->idJeu);
+				$nbCate = sizeof($myCategoriesPlays) - 1;
+				foreach($myCategoriesPlays as $idCatePlayTab => $categoriePlay)
+				{
+					$myCategories = $this->maBase->recupCategorie($categoriePlay[ID_CATEGORIE]);
+					$this->categorie .= $myCategories[0][NOM_CATEGORIE];
+					if($nbCate)
+						$this->categorie .= ",";
+					$nbCate--;
 				}
 				
 				$this->nbJeu = sizeof($this->nom);
 				
-				// CATÉGORIE
 			}
 		}
 
@@ -391,8 +401,8 @@ class ModuleAjoutJeux extends Module
 				if(!$this->erreurLangue && !$this->erreurNom && !$this->erreurPays && !$this->erreurJeu && !$this->erreurUpdateJeu)
 				{
 					if($_POST["Ajouter"]) {
-						//header("Location: " . MODULE_GESTION_JEUX);
-						//exit;
+						header("Location: " . MODULE_GESTION_JEUX);
+						exit;
 					} elseif ($_POST["AjouterJeu"]) {
 						header("Location: " . MODULE_AJOUT_JEUX);
 						exit;
