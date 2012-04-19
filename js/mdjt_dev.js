@@ -1,9 +1,58 @@
+$(function(){
+    // var sampleTags = ['c++', 'java', 'php', 'coldfusion',
+	// 'javascript', 'asp', 'ruby', 'python', 'c', 'scala', 'groovy',
+	// 'haskell', 'perl', 'erlang', 'apl', 'cobol', 'go', 'lua'];
 
-function ajouterNomFormAjoutJeu() {
-    if(document.getElementById("addNomFormAjoutJeu"))
-    {
-        var input = document.getElementById("addNomFormAjoutJeu").innerHTML
-        document.getElementById("addNomFormAjoutJeu").innerHTML = input + '<fieldset><legend>Autre Nom du jeu</legend><ol><li><label for="nom_jeu">Nom</label><input type="text" id="nom_jeuxxxx" name="nom_jeuxxx" value="" required="required" /></li><li><label for="nom_langue">Langue du nom</label><input type="text" name="nom_langueeee" value="" list="listeCategorie" required="required" /></li></ol></fieldset>\n';
-    }
-    return false;
-}
+
+    // -------------------------------
+    // Single field
+    // -------------------------------
+    $('#categorie').tagit({
+	    // availableTags: sampleTags,
+	    // This will make Tag-it submit a single form value, as a
+		// comma-delimited field.
+	    singleField: true,
+	    allowSpaces: true,
+	    autoFocusFirst: true,
+	    requireAutocomplete: true,
+	    
+	    tagSource: function(search, showChoices) {
+	        var that = this;
+	        var filter = search.term.toLowerCase();
+	        $.ajax({
+	          url: "tagCategorie.php",
+	          dataType: "json",
+	          type: "POST",
+	          data:  { filter: filter } ,
+	          success: function(choices) {
+	            showChoices(that._subtractArray(choices, that.assignedTags()));
+	            availableTags:choices;
+	          }
+	        });
+	      }
+    });
+});
+$(document).ready(function() {
+	$("#rechercheAvancee").hide();
+	
+	$( "#buttonAvance" ).click(function() {
+		var options = {};
+		$( "#rechercheAvancee" ).toggle( 'blind',options, 500 );
+    		return false;
+		});
+	
+	$("#recherche").submit(function() {
+		$("form#recherche input:text").each(function(){
+			   if($(this).val()==""){
+				   $(this).remove();
+			   }
+			});
+		$("form#recherche select").each(function(){
+			   if($(this).val()==""){
+				   $(this).remove();
+			   }
+			});
+    });
+	//$("#resultat tr:nth-child(odd)").addClass("odd");
+	
+});
