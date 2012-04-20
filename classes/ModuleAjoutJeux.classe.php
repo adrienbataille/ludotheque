@@ -53,7 +53,7 @@ class ModuleAjoutJeux extends Module
 		parent::__construct();
 		
 		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
-		$this->maBase = AccesAuxDonneesDev::recupAccesDonnees();
+		$this->maBase = AccesAuxDonneesDev::recupAccesDonneesDev();
 		
 		if($idDuJeu != null)
 		{

@@ -7,7 +7,7 @@ $(function(){
     // -------------------------------
     // Single field
     // -------------------------------
-    $('#categorie').tagit({
+    $('#nomCategorie').tagit({
 	    // availableTags: sampleTags,
 	    // This will make Tag-it submit a single form value, as a
 		// comma-delimited field.
@@ -21,6 +21,81 @@ $(function(){
 	        var filter = search.term.toLowerCase();
 	        $.ajax({
 	          url: "tagCategorie.php",
+	          dataType: "json",
+	          type: "POST",
+	          data:  { filter: filter } ,
+	          success: function(choices) {
+	            showChoices(that._subtractArray(choices, that.assignedTags()));
+	            availableTags:choices;
+	          }
+	        });
+	      }
+    });
+    
+    $('#nomEditeur').tagit({
+	    // availableTags: sampleTags,
+	    // This will make Tag-it submit a single form value, as a
+		// comma-delimited field.
+	    singleField: true,
+	    allowSpaces: true,
+	    autoFocusFirst: true,
+	    requireAutocomplete: true,
+	    
+	    tagSource: function(search, showChoices) {
+	        var that = this;
+	        var filter = search.term.toLowerCase();
+	        $.ajax({
+	          url: "tagEditeur.php",
+	          dataType: "json",
+	          type: "POST",
+	          data:  { filter: filter } ,
+	          success: function(choices) {
+	            showChoices(that._subtractArray(choices, that.assignedTags()));
+	            availableTags:choices;
+	          }
+	        });
+	      }
+    });
+    
+    $('#nomDistributeur').tagit({
+	    // availableTags: sampleTags,
+	    // This will make Tag-it submit a single form value, as a
+		// comma-delimited field.
+	    singleField: true,
+	    allowSpaces: true,
+	    autoFocusFirst: true,
+	    requireAutocomplete: true,
+	    
+	    tagSource: function(search, showChoices) {
+	        var that = this;
+	        var filter = search.term.toLowerCase();
+	        $.ajax({
+	          url: "tagDistributeur.php",
+	          dataType: "json",
+	          type: "POST",
+	          data:  { filter: filter } ,
+	          success: function(choices) {
+	            showChoices(that._subtractArray(choices, that.assignedTags()));
+	            availableTags:choices;
+	          }
+	        });
+	      }
+    });
+    
+    $('#nomIllustrateur').tagit({
+	    // availableTags: sampleTags,
+	    // This will make Tag-it submit a single form value, as a
+		// comma-delimited field.
+	    singleField: true,
+	    allowSpaces: true,
+	    autoFocusFirst: true,
+	    requireAutocomplete: true,
+	    
+	    tagSource: function(search, showChoices) {
+	        var that = this;
+	        var filter = search.term.toLowerCase();
+	        $.ajax({
+	          url: "tagIllustrateur.php",
 	          dataType: "json",
 	          type: "POST",
 	          data:  { filter: filter } ,

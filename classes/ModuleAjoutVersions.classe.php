@@ -68,7 +68,7 @@ class ModuleAjoutVersions extends Module
 		parent::__construct();
 					
 		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
-		$this->maBase = AccesAuxDonneesDev::recupAccesDonnees();
+		$this->maBase = AccesAuxDonneesDev::recupAccesDonneesDev();
 		
 		
 		if($idDeJeu != null && intval($idDeJeu))

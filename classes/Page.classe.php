@@ -343,8 +343,6 @@ abstract class Page
 				
 				
         // Javascript
-		$this->ajouteLigne("<script type=\"text/javascript\" src=\"" .
-			RACINE_SITE . JS_MDJT_DEV . "\"></script>");
 			
 			
 			
@@ -358,6 +356,8 @@ abstract class Page
 		$this->ajouteLigne("    <script src=\""
 				. RACINE_SITE . JS_MDJT_TAGIT .
 				"\" type=\"text/javascript\" charset=\"utf-8\"></script>");
+		$this->ajouteLigne("<script type=\"text/javascript\" src=\"" .
+			RACINE_SITE . JS_MDJT_DEV . "\"></script>");
 			
 		// Fermeture header
 		$this->fermeBloc("</head>");

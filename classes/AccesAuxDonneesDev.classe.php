@@ -209,7 +209,7 @@ class AccesAuxDonneesDev
 	* C'est cette fonction qui doit être utilisée 
 	* chaque fois qu'on veut avoir accès aux données
 	*/
-	public static function recupAccesDonnees()
+	public static function recupAccesDonneesDev()
 	{
 		// Initialisation de l'accès à la Base de Donnees
 		// Si on a pas encore d'objet d'accès aux donnees
@@ -1419,6 +1419,52 @@ class AccesAuxDonneesDev
 		}
 		else
 			return false;
+	}
+	
+	
+
+	/**
+	 * Fonction récupérant les catégories commençant par une chaine de caractère
+	 * @param string
+	 * @return string
+	 */
+
+	public function tagCategorie($chaine){
+		$chaine=mysql_real_escape_string($chaine);
+		return $this->requeteSelect("SELECT " . NOM_CATEGORIE . " FROM " . TABLE_CATEGORIE . " WHERE " . NOM_CATEGORIE . " LIKE '" . $chaine . "%' " );
+	}
+
+	/**
+	 * Fonction récupérant les catégories commençant par une chaine de caractère
+	 * @param string
+	 * @return string
+	 */
+
+	public function tagEditeur($chaine){
+		$chaine=mysql_real_escape_string($chaine);
+		return $this->requeteSelect("SELECT " . NOM_EDITEUR . " FROM " . TABLE_EDITEUR . " WHERE " . NOM_EDITEUR . " LIKE '" . $chaine . "%' " );
+	}
+
+	/**
+	 * Fonction récupérant les catégories commençant par une chaine de caractère
+	 * @param string
+	 * @return string
+	 */
+
+	public function tagDistributeur($chaine){
+		$chaine=mysql_real_escape_string($chaine);
+		return $this->requeteSelect("SELECT " . NOM_DISTRIBUTEUR . " FROM " . TABLE_DISTRIBUTEUR . " WHERE " . NOM_DISTRIBUTEUR . " LIKE '" . $chaine . "%' " );
+	}
+
+	/**
+	 * Fonction récupérant les catégories commençant par une chaine de caractère
+	 * @param string
+	 * @return string
+	 */
+
+	public function tagIllustrateur($chaine){
+		$chaine=mysql_real_escape_string($chaine);
+		return $this->requeteSelect("SELECT " . NOM_ILLUSTRATEUR . " FROM " . TABLE_ILLUSTRATEUR . " WHERE " . NOM_ILLUSTRATEUR . " LIKE '" . $chaine . "%' " );
 	}
 
 
