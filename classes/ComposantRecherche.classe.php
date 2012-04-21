@@ -165,15 +165,15 @@ class ComposantRecherche extends Module
 		//Illustrateur
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"illustrateur\">" . $this->convertiTexte("Illustrateur") . "</label>");
-		//$this->creationInputText("illustrateur");
-		$this->creationSelect($illustrateur,"illustrateur");
+		$this->creationInputText("illustrateur");
+		//$this->creationSelect($illustrateur,"illustrateur");
 		$this->fermeBloc("</div>");
 
 		//Distributeur
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"distributeur\">" . $this->convertiTexte("Distributeur") . "</label>");
-		//$this->creationInputText("distributeur");
-		$this->creationSelect($distributeur,"distributeur");
+		$this->creationInputText("distributeur");
+		//$this->creationSelect($distributeur,"distributeur");
 		$this->fermeBloc("</div>");
 
 
@@ -234,11 +234,12 @@ class ComposantRecherche extends Module
 					//On affiche une fois par version, et on compte le nombre d'exemplaire dispo et non dispo
 					if($idVersion!=$row[ID_VERSION]){
 						if($idVersion!=-1){
-							$this->ligneResultat($photo, $nomJeu, $nomVersion, $idVersion, $nbdisponible, $nbindisponible);
+							$this->ligneResultat($photo, $textealt, $nomJeu, $nomVersion, $idVersion, $nbdisponible, $nbindisponible);
 						}
 						$nbindisponible=0;
 						$nbdisponible=0;
 						$photo=$this->convertiTexte($row[NOM_PHOTO]);
+						$textealt=$this->convertiTexte($row[TEXT_ALTERNATIF]);
 						$nomJeu= $this->convertiTexte($row[NOM_JEU]);
 						$nomVersion=$this->convertiTexte($row[NOM_VERSION]);
 						$idVersion=$row[ID_VERSION];
@@ -250,7 +251,7 @@ class ComposantRecherche extends Module
 						$nbindisponible+=$row["nbExemplaire"];
 					}
 				}
-				$this->ligneResultat($photo, $nomJeu, $nomVersion, $idVersion, $nbdisponible, $nbindisponible);
+				$this->ligneResultat($photo, $textealt, $nomJeu, $nomVersion, $idVersion, $nbdisponible, $nbindisponible);
 				$this->fermeBloc("</table>");
 				$this->fermeBloc("</div>");
 				$this->ajouteLigne("<div id='paginator'>Page</div>");
@@ -268,9 +269,9 @@ class ComposantRecherche extends Module
 	 * @param string nombre indisponible
 	 */
 
-	private function ligneResultat($photo,$nomJeu,$nomVersion,$idVersion,$nbdisponible,$nbindisponible){
+	private function ligneResultat($photo,$textealt,$nomJeu,$nomVersion,$idVersion,$nbdisponible,$nbindisponible){
 		$this->ouvreBloc("<tr>");
-		$this->ajouteLigne("<td>" . $photo . "</td>" );
+		$this->ajouteLigne("<td><img src='" . $photo . "'</td>" );
 		$this->ajouteLigne("<td>" . $nomJeu);
 		$this->ajouteLigne($nomVersion);
 		$this->ajouteLigne("Id" . $idVersion . "</td>");

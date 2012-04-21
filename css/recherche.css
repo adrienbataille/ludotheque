@@ -18,9 +18,11 @@
 	color:#2A5995;
 }
 #rechercheAvancee { 
-	height: 5em;
+	min-height: 5em;
+	display:block;
 	padding: 0.4em;
 	position: relative;
+	overflow:auto;
 }
 #buttonRecherche{
 	margin-top:1.5em;	

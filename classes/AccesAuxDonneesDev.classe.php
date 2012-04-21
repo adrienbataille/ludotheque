@@ -37,6 +37,8 @@ define("TABLE_PHOTO_VERSION", TABLE_PREFIX . "PHOTO_VERSION");
 define("TABLE_RESERVATION", TABLE_PREFIX . "RESERVATION");
 define("TABLE_SUGGESTION", TABLE_PREFIX . "SUGGESTION");
 define("TABLE_VERSION", TABLE_PREFIX . "VERSION");
+define("TABLE_ILLUSTRATEUR_VERSION", TABLE_PREFIX . "ILLUSTRATEUR_VERSION");
+define("TABLE_DISTRIBUTEUR_VERSION", TABLE_PREFIX . "DISTRIBUTEUR_VERSION");
 
 // Définition des champs de la table TABLE_CATEGORIE
 define("ID_CATEGORIE", "idCategorie");
@@ -85,6 +87,9 @@ define("ID_FAIRE_PARTIE_KIT", "idFairePartieKit");
 // Définition des champs de la table TABLE_ILLUSTRATEUR
 define("ID_ILLUSTRATEUR", "idIllustrateur");
 define("NOM_ILLUSTRATEUR", "nomIllustrateur");
+
+// Définition des champs de la table TABLE_ILLUSTRATEUR_VERSION
+
 
 // Définition des champs de la table TABLE_INVENTAIRE
 define("ID_INVENTAIRE", "idInventaire");
@@ -386,6 +391,29 @@ class AccesAuxDonneesDev
 	}
 
 	/**
+	 * Fonction récupérant les disitributeurs commençant par une chaine de caractère
+	 * @param string
+	 * @return string
+	 */
+
+	public function tagDistributeur($chaine){
+		$chaine=mysql_real_escape_string($chaine);
+		return $this->requeteSelect("SELECT " . NOM_DISTRIBUTEUR . " FROM " . TABLE_DISTRIBUTEUR . " WHERE " . NOM_DISTRIBUTEUR . " LIKE '" . $chaine . "%' " );
+	}
+
+	/**
+	 * Fonction récupérant les disitributeurs commençant par une chaine de caractère
+	 * @param string
+	 * @return string
+	 */
+
+	public function tagIllustrateur($chaine){
+		$chaine=mysql_real_escape_string($chaine);
+		return $this->requeteSelect("SELECT " . NOM_ILLUSTRATEUR . " FROM " . TABLE_ILLUSTRATEUR . " WHERE " . NOM_ILLUSTRATEUR . " LIKE '" . $chaine . "%' " );
+	}
+
+
+	/**
 	 * Fonction de recherche
 	 * @param array $critere Tableau contenant les critères de recherche. Les paramètres sont indexés par un nom identique à ceux du formulaire.
 	 * @return array
@@ -403,7 +431,8 @@ class AccesAuxDonneesDev
 		$query=new RequeteSQL();
 
 		$query->setRequete("SELECT " .
-				NOM_PHOTO .", ".
+				TABLE_PHOTO . "." . NOM_PHOTO .", ".
+				TABLE_PHOTO . "." . TEXTE_ALTERNATIF .", ".
 				TABLE_VERSION . "." . ID_VERSION .", ".
 				TABLE_VERSION . "." . NOM_VERSION .", ".
 				TABLE_NOM_JEU . "." . NOM_JEU . ", " .
@@ -586,13 +615,28 @@ class AccesAuxDonneesDev
 		// Par illustrateur
 
 		if($critere["illustrateur"]!=""){
-			$query->ajoutAnd("=", TABLE_VERSION, ID_ILLUSTRATEUR, $critere["illustrateur"]);
+			//sans tag
+			//$query->ajoutAnd("=", TABLE_VERSION, ID_ILLUSTRATEUR, $critere["illustrateur"]);
+
+			$query->jointure(TABLE_ILLUSTRATEUR,ID_ILLUSTRATEUR,TABLE_ILLUSTRATEUR_VERSION,ID_ILLUSTRATEUR);
+			$query->jointure(TABLE_ILLUSTRATEUR_VERSION,ID_VERSION,TABLE_VERSION,ID_VERSION);
+			$string = explode("," , $critere["illustrateur"]);
+			foreach($string as $value ){
+				$query->ajoutAndLike(TABLE_ILLUSTRATEUR,NOM_ILLUSTRATEUR,$value);
+			}
 		}
 
 		//Par distributeur
 
 		if($critere["distributeur"]!=""){
-			$query->ajoutAnd("=", TABLE_VERSION, ID_DISTRIBUTEUR, $critere["distributeur"]);
+			//$query->ajoutAnd("=", TABLE_VERSION, ID_DISTRIBUTEUR, $critere["distributeur"]);
+
+			$query->jointure(TABLE_DISTRIBUTEUR,ID_DISTRIBUTEUR,TABLE_DISTRIBUTEUR_VERSION,ID_DISTRIBUTEUR);
+			$query->jointure(TABLE_DISTRIBUTEUR_VERSION,ID_VERSION,TABLE_VERSION,ID_VERSION);
+			$string = explode("," , $critere["distributeur"]);
+			foreach($string as $value ){
+				$query->ajoutAndLike(TABLE_DISTRIBUTEUR,NOM_DISTRIBUTEUR,$value);
+			}
 		}
 
 		// Par Année

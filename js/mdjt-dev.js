@@ -1,16 +1,10 @@
 $(function(){
-    // var sampleTags = ['c++', 'java', 'php', 'coldfusion',
-	// 'javascript', 'asp', 'ruby', 'python', 'c', 'scala', 'groovy',
-	// 'haskell', 'perl', 'erlang', 'apl', 'cobol', 'go', 'lua'];
 
 
-    // -------------------------------
-    // Single field
-    // -------------------------------
+
+	//tagging catégorie
     $('#categorie').tagit({
-	    // availableTags: sampleTags,
-	    // This will make Tag-it submit a single form value, as a
-		// comma-delimited field.
+
 	    singleField: true,
 	    allowSpaces: true,
 	    autoFocusFirst: true,
@@ -20,7 +14,57 @@ $(function(){
 	        var that = this;
 	        var filter = search.term.toLowerCase();
 	        $.ajax({
-	          url: "tagCategorie.php",
+	          url: "tagcategorie.php",
+	          dataType: "json",
+	          type: "POST",
+	          data:  { filter: filter } ,
+	          success: function(choices) {
+	            showChoices(that._subtractArray(choices, that.assignedTags()));
+	            availableTags:choices;
+	          }
+	        });
+	      }
+    });
+    
+    //tagging illustrateur
+    
+    $('#illustrateur').tagit({
+
+	    singleField: true,
+	    allowSpaces: true,
+	    autoFocusFirst: true,
+	    requireAutocomplete: true,
+	    
+	    tagSource: function(search, showChoices) {
+	        var that = this;
+	        var filter = search.term.toLowerCase();
+	        $.ajax({
+	          url: "tagillustrateur.php",
+	          dataType: "json",
+	          type: "POST",
+	          data:  { filter: filter } ,
+	          success: function(choices) {
+	            showChoices(that._subtractArray(choices, that.assignedTags()));
+	            availableTags:choices;
+	          }
+	        });
+	      }
+    });
+    
+    //tagging distributeur
+    
+    $('#distributeur').tagit({
+
+	    singleField: true,
+	    allowSpaces: true,
+	    autoFocusFirst: true,
+	    requireAutocomplete: true,
+	    
+	    tagSource: function(search, showChoices) {
+	        var that = this;
+	        var filter = search.term.toLowerCase();
+	        $.ajax({
+	          url: "tagdistributeur.php",
 	          dataType: "json",
 	          type: "POST",
 	          data:  { filter: filter } ,
