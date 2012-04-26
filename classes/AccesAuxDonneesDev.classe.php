@@ -1572,59 +1572,6 @@ class AccesAuxDonneesDev
 
 	}
 
-	/**
-	 * Fonction récupérant les catégories commençant par une chaine de caractère
-	 * @param string
-	 * @return string
-	 */
-
-
-	public function tagCategorie($chaine){
-		$chaine=mysql_real_escape_string($chaine);
-		return $this->requeteSelect("SELECT " . NOM_CATEGORIE . " FROM " . TABLE_CATEGORIE . " WHERE " . NOM_CATEGORIE . " LIKE '" . $chaine . "%' " );
-	}
-
-	/**
-
-	 * Fonction récupérant les disitributeurs commençant par une chaine de caractère
-
-	 * @param string
-
-	 * @return string
-
-	 */
-
-
-
-	public function tagDistributeur($chaine){
-
-		$chaine=mysql_real_escape_string($chaine);
-
-		return $this->requeteSelect("SELECT " . NOM_DISTRIBUTEUR . " FROM " . TABLE_DISTRIBUTEUR . " WHERE " . NOM_DISTRIBUTEUR . " LIKE '" . $chaine . "%' " );
-
-	}
-
-
-	/**
-
-	 * Fonction récupérant les disitributeurs commençant par une chaine de caractère
-
-	 * @param string
-
-	 * @return string
-
-	 */
-
-
-
-	public function tagIllustrateur($chaine){
-
-		$chaine=mysql_real_escape_string($chaine);
-
-		return $this->requeteSelect("SELECT " . NOM_ILLUSTRATEUR . " FROM " . TABLE_ILLUSTRATEUR . " WHERE " . NOM_ILLUSTRATEUR . " LIKE '" . $chaine . "%' " );
-
-	}
-
 
 
 	/**

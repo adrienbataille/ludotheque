@@ -163,6 +163,7 @@ class PageModule extends Page
 		$this->ouvreBloc("<ol>");
 		$this->ajouteLigne("<li><a href=\"" . MODULE_PROFIL ."\">Mon profil</a></li>");
 		$this->ajouteLigne("<li><a href=\"" . MODULE_GESTION_JEUX . "\">Gestion des jeux</a></li>");
+		$this->ajouteLigne("<li><a href=\"" . MODULE_RECHERCHE . "\">Recherche</a></li>");
 		//$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_JEUX . "\">Ajouter Jeux</a></li>");
 		//$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_VERSIONS . "\">Ajouter Versions</a></li>");
 		//$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_EXEMPLAIRES . "\">Ajouter Exemplaires</a></li>");
@@ -181,8 +182,6 @@ class PageModule extends Page
                     // On lui affiche le lien
                     $this->ajouteLigne("<li><a href=\"" . MODULE_GROUPES . "\">Groupes</a></li>");
                 }
-		$this->ajouteLigne("<li><a href=\"" . RACINE_SITE . "\">Retour Accueil</a></li>");	
-		$this->ajouteLigne("<li><a href=\"" . MODULE_RECHERCHE . "\">Recherche</a></li>");
 		$this->fermeBloc("</ol>");
 		$this->fermeBloc("</nav>");
 	}
