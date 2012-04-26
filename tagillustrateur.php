@@ -4,7 +4,7 @@ $filter=$_POST["filter"];
 $maBase = AccesAuxDonneesDev::recupAccesDonneesDev();
 $result=$maBase->tagIllustrateur($filter);
 foreach ($result as $row){
-	$array[]=$row[NOM_CATEGORIE];
+	$array[]=$row[NOM_ILLUSTRATEUR];
 }
 echo json_encode($array);
 ?>

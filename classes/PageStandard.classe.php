@@ -9,6 +9,11 @@ require_once("classes/Calendrier.classe.php");
 
 // Constante
 
+/**
+ * Cette classe permet de créer des pages web au format MDJT
+ * @package client
+ */
+
 class PageStandard extends Page 
 {
 // Attributs

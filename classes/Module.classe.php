@@ -2,6 +2,7 @@
 /**
 * Classe mère des classes modules
 * Elle définit les fonctions qu'un module doit avoir pour s'afficher correctement
+* @package module
 */
 
 // Inclusions

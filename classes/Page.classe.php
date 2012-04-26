@@ -7,12 +7,15 @@
 require_once("classes/AccesAuxDonnees.classe.php");
 require_once("classes/AccesAuxDonneesDev.classe.php");
 require_once("classes/SessionUtilisateur.classe.php");
+require_once("classes/AccesAuxDonneesDev.classe.php");
+
 
 // Constante de définition des URL
 define("RACINE_SITE", ""); // Racine originale du site http://www.mdjt.org/v2/ - On perd le CSS si on met http://localhost/ludotheque
 define("CSS_MDJT", "css/mdjt.css");
 define("CSS_MDJT_DEV", "css/mdjt_dev.css");
 define("CSS_RESET", "css/reset.css");
+define("CSS_RECHERCHE","css/recherche.css");
 
 define("JS_MDJT_DEV", "js/mdjt_dev.js");
 define("JS_MDJT_JQUERY","js/jquery-1.7.2.min.js");
@@ -34,15 +37,25 @@ define("DECONNEXION", RACINE_SITE . "deconnexion.php");
 // Constantes pour le lien avec PHPBB
 // Constante permettant la redirection depuis PHPBB, pour les login
 // Elle doit être l'emplacement du fichier module.php en relatif depuis l'emplacement du forum
+
 define ("REDIRECTION_PHPBB", "../module.php"); // Avant : ./v2/module.php
 // Page de PHPBB interceptant le formulaire de connexion
 define ("PAGE_LOGIN_PHPBB", "forum/ucp.php?mode=login"); // Avant : http://mdjt.org/forum/ucp.php?mode=login
+
 // Test à supprimer define ("PAGE_LOGOUT_PHPBB", "http://mdjt.org/forum/ucp.php?mode=logout");
 
 // Constante - nombre d'espace d'indentation
 define("TABULATION", "  ");
 
 // Constantes liées au style
+
+/**
+
+ * Cette classe permet de créer des pages web au format MDJT
+
+ * @package client
+
+ */
 
 abstract class Page
 {
@@ -321,9 +334,21 @@ abstract class Page
 		$this->ajouteLigne("<link rel=\"stylesheet\" type=\"text/css\" href=\"" .
 			RACINE_SITE . CSS_MDJT . "\" />");
 		$this->ajouteLigne("<link rel=\"stylesheet\" type=\"text/css\" href=\"" .
+
+				RACINE_SITE . CSS_RECHERCHE . "\" />");
+		$this->ajouteLigne("<link rel=\"stylesheet\" type=\"text/css\" href=\"" .
+
+				RACINE_SITE . CSS_TAGIT . "\" />");
+		$this->ajouteLigne("<link rel=\"stylesheet\" type=\"text/css\" href=\"" .
+
+				RACINE_SITE . CSS_JQUERY_UI . "\" />");
+		
+		$this->ajouteLigne("<link rel=\"stylesheet\" type=\"text/css\" href=\"" .
 			RACINE_SITE . CSS_MDJT_DEV . "\" />");
 		$this->ajouteLigne("<link rel=\"stylesheet\" type=\"text/css\" href=\"" .
 			RACINE_SITE . CSS_RESET . "\" />");
+
+		
                 // Si il y a des styles additionnels, on les ajoute
                 if ($cssAdditionnels != NULL)
                 {

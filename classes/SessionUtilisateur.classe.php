@@ -1,8 +1,4 @@
 <?php
-/**
-* Classe de la session PHP et des paramètres d'un utilisateur
-*
-*/
 
 // Inclusions
 require_once("classes/AccesAuxDonnees.classe.php");
@@ -13,6 +9,10 @@ require_once("classes/AccesAuxDonneesDev.classe.php");
 define("MES_GROUPES", "mesGroupes");
 // Liste des groupes disponibles
 define("GROUPE_ADMINISTRATEUR", "Administrateurs");
+/**
+ * Classe de la session PHP et des paramètres d'un utilisateur
+ * @package client
+ */
 
 class SessionUtilisateur
 {

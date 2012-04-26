@@ -1,13 +1,16 @@
 <?php
-/**
-* Classe mère des classes modules
-* Elle défini les fonctions qu'un module doit avoir pour s'afficher correctement
-*/
+
 
 // Inclusions
 require_once("classes/Module.classe.php");
 
 //Constantes
+
+/**
+ * Classe mère des classes modules
+ * Elle défini les fonctions qu'un module doit avoir pour s'afficher correctement
+ * @package module
+ */
 
 class ModuleAdminUtilisateurs extends Module
 {

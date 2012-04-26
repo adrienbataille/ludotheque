@@ -12,8 +12,19 @@ require_once("classes/ModuleGestionJeux.classe.php");
 require_once("classes/ModuleAjoutJeux.classe.php");
 require_once("classes/ModuleAjoutVersions.classe.php");
 require_once("classes/ModuleAjoutExemplaires.classe.php");
+require_once("classes/ModuleRecherche.classe.php");
 
 // Constantes
+
+/**
+
+ * Cette classe permet de créer les pages web interne au format MDJT
+
+ * Partie privée avec affichage des modules
+
+ * @package client
+
+ */
 
 class PageModule extends Page
 {
@@ -87,7 +98,6 @@ class PageModule extends Page
                         exit();
                     }
                     break;
-					
 				case "GestionJeux" :
                 	// On appelle l'ajout d'un jeux
                 	$this->unModule = new ModuleGestionJeux($_GET["ajoutJeu"], $_GET["ajoutVersion"], $_GET["ajoutExemplaire"]);
@@ -107,6 +117,10 @@ class PageModule extends Page
                 	// On appelle l'ajout d'un jeux
                 	$this->unModule = new ModuleAjoutExemplaires($_GET["idJeu"], $_GET["idVersion"], $_GET["idExemplaire"]);
                 	break;
+				case "Recherche" :
+					// On créé l'objet chargé de faire des recherches. Ceci est une page de test.
+					$this->unModule = new ModuleRecherche();
+					break;
 			}
 		}
 		else
@@ -161,6 +175,14 @@ class PageModule extends Page
             $this->ajouteLigne("<li><a href=\"" . MODULE_GROUPES . "\">Groupes</a></li>");
         }
 		$this->ajouteLigne("<li><a href=\"" . RACINE_SITE . "\">Retour Accueil</a></li>");
+                // Si l'utilisateur à accès au module Groupes
+                if ($this->monUtilisateur->accesGroupes())
+                {
+                    // On lui affiche le lien
+                    $this->ajouteLigne("<li><a href=\"" . MODULE_GROUPES . "\">Groupes</a></li>");
+                }
+		$this->ajouteLigne("<li><a href=\"" . RACINE_SITE . "\">Retour Accueil</a></li>");	
+		$this->ajouteLigne("<li><a href=\"" . MODULE_RECHERCHE . "\">Recherche</a></li>");
 		$this->fermeBloc("</ol>");
 		$this->fermeBloc("</nav>");
 	}

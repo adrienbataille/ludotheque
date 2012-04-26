@@ -1,16 +1,14 @@
 <?php
-/**
-* Classe de gestion du calendrier MDJT
-* 
-*
-* 
-*/
+
 
 // Inclusions
 
 //Constantes
 define("EMPLACEMENT_CALENDRIER", "http://www.google.com/calendar/feeds/agenda%40mdjt.org/public/full?futureevents=true&sortorder=ascending");
-
+/**
+ * Classe de gestion du calendrier MDJT
+ * @package client
+ */
 class Calendrier
 {
 

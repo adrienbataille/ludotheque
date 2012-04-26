@@ -6,6 +6,7 @@
 
 // Inclusions
 require_once("classes/AccesAuxDonnees.classe.php");
+require_once("classes/RequeteSQL.classe.php");
 
 //Constantes - paramètre du système
 define("SERVEUR_DEV","127.0.0.1");
@@ -160,12 +161,29 @@ define("PRIX_ACHAT", "prixAchat");
 define("ANNEE_SORTIE", "anneeSortie");
 
 
+//Définition des signes
 
+define("SUPERIEUR","sup");
+
+define("INFERIEUR","inf");
+
+define("EGAL","egal");
+
+//Définition des états
+define("DISPONIBLE","1");
+
+/**
+
+ * Classe de gestion de l'accès à la base de donnée
+
+ * @package common
+
+ */
 
 class AccesAuxDonneesDev
 {
 
-// Attributs
+	// Attributs
 	// Variable de classe stockant le premier objet créé
 	// Sert à garantir qu'on ne créera qu'un seul objet
 	private static $connexionBase = NULL;
@@ -174,10 +192,10 @@ class AccesAuxDonneesDev
 	// Est-on déjà connecté à la base - sert à éviter les connexions multiples
 	private $estConnecte = NULL;
 
-// Methodes
+	// Methodes
 
 	/*
-	* Le constructeur d'une connexion à la base
+	 * Le constructeur d'une connexion à la base
 	*/
 	public function __construct()
 	{
@@ -277,7 +295,7 @@ class AccesAuxDonneesDev
 				// La requete a échoué
 				return false;
 			}
-			else 
+			else
 			{
 				// On récupère le resultat de la requete sous la forme d'un tableau
 				$tableauResultat = $resultat->fetchAll();
@@ -287,7 +305,7 @@ class AccesAuxDonneesDev
 				return $tableauResultat;
 			}
 		}
-		else 
+		else
 		{ // Sinon, pas de connexion à la base
 			// La requete a échoué
 			return false;
@@ -1478,6 +1496,458 @@ class AccesAuxDonneesDev
         {
             return stripslashes($uneVariable);
         }
+
+
+	/**
+	 * Fonction récupérant toutes les langues
+	 * @return array
+	 */
+
+	public function listeLangue(){
+		return $this->requeteSelect("SELECT * FROM " . TABLE_LANGUE );
+	}
+
+	/**
+	 * Fonction récupérant tous les états
+	 * @return array
+	 */
+
+	public function listeEtat(){
+		return $this->requeteSelect("SELECT * FROM " . TABLE_ETAT_EXEMPLAIRE);
+	}
+
+	/**
+	 * Fonction récupérant tous les lieux
+	 * @return array
+	 */
+
+	public function listeLieu(){
+		return $this->requeteSelect("SELECT * FROM " . TABLE_LIEU);
+	}
+
+	/**
+
+	 * Fonction récupérant tous les auteurs
+
+	 * @return array
+
+	 */
+
+
+
+	public function listeAuteur(){
+
+		return $this->requeteSelect("SELECT *  FROM " .  TABLE_JEUX);
+
+	}
+
+	/**
+
+	 * Fonction récupérant tous les illustrateurs
+
+	 * @return array
+
+	 */
+
+
+	public function listeIllustrateur(){
+
+		return $this->requeteSelect("SELECT * FROM " .  TABLE_ILLUSTRATEUR);
+
+	}
+
+	/**
+
+	 * Fonction récupérant tous les distributeurs
+
+	 * @return array
+
+	 */
+
+
+
+	public function listeDistributeur(){
+
+		return $this->requeteSelect("SELECT * FROM " .  TABLE_DISTRIBUTEUR);
+
+	}
+
+	/**
+	 * Fonction récupérant les catégories commençant par une chaine de caractère
+	 * @param string
+	 * @return string
+	 */
+
+
+	public function tagCategorie($chaine){
+		$chaine=mysql_real_escape_string($chaine);
+		return $this->requeteSelect("SELECT " . NOM_CATEGORIE . " FROM " . TABLE_CATEGORIE . " WHERE " . NOM_CATEGORIE . " LIKE '" . $chaine . "%' " );
+	}
+
+	/**
+
+	 * Fonction récupérant les disitributeurs commençant par une chaine de caractère
+
+	 * @param string
+
+	 * @return string
+
+	 */
+
+
+
+	public function tagDistributeur($chaine){
+
+		$chaine=mysql_real_escape_string($chaine);
+
+		return $this->requeteSelect("SELECT " . NOM_DISTRIBUTEUR . " FROM " . TABLE_DISTRIBUTEUR . " WHERE " . NOM_DISTRIBUTEUR . " LIKE '" . $chaine . "%' " );
+
+	}
+
+
+	/**
+
+	 * Fonction récupérant les disitributeurs commençant par une chaine de caractère
+
+	 * @param string
+
+	 * @return string
+
+	 */
+
+
+
+	public function tagIllustrateur($chaine){
+
+		$chaine=mysql_real_escape_string($chaine);
+
+		return $this->requeteSelect("SELECT " . NOM_ILLUSTRATEUR . " FROM " . TABLE_ILLUSTRATEUR . " WHERE " . NOM_ILLUSTRATEUR . " LIKE '" . $chaine . "%' " );
+
+	}
+
+
+
+	/**
+	 * Fonction de recherche
+	 * @param array $critere Tableau contenant les critères de recherche. Les paramètres sont indexés par un nom identique à ceux du formulaire.
+	 * @return array
+	 */
+	public function rechercheVersion($critere){
+		/*
+		 Afin de simplifier la construction de la requète,
+		nous utiliserons la classe RequeteSQL car c'est assez complexe
+
+		Voir les commentaires dans RequeteSQL pour les méthodes!
+		Voir en haut de ce fichier pour les defines.
+		Je recommande fortement un IDE.
+		*/
+
+		$query=new RequeteSQL();
+
+		$query->setRequete("SELECT " .
+				TABLE_PHOTO . "." . NOM_PHOTO .", ".
+				TABLE_PHOTO . "." . TEXTE_ALTERNATIF .", ".
+				TABLE_VERSION . "." . ID_VERSION .", ".
+				TABLE_VERSION . "." . NOM_VERSION .", ".
+				TABLE_NOM_JEU . "." . NOM_JEU . ", " .
+				TABLE_EXEMPLAIRE . "." .  ID_ETAT_EXEMPLAIRE .
+				" , COUNT(" . TABLE_EXEMPLAIRE . "." . ID_EXEMPLAIRE . ") AS nbExemplaire");
+
+		//pour le moment je garde les X de Jeu tant qu'on a pas la nouvelle BDD corrigé
+		//Voir les commentaires dans RequeteSQL pour les méthodes
+
+		//On joint les 6 tables nécessaires pour le SELECT DE BASE
+		$query->jointureLeft(TABLE_JEUX, ID_JEU, TABLE_VERSION, ID_JEU);
+
+		$query->jointureLeft(TABLE_VERSION,ID_VERSION,TABLE_PHOTO_VERSION,ID_VERSION);
+
+		$query->jointureLeft(TABLE_PHOTO_VERSION,ID_PHOTO,TABLE_PHOTO,ID_PHOTO);
+
+		$query->jointureLeft(TABLE_EXEMPLAIRE,ID_VERSION,TABLE_VERSION,ID_VERSION);
+		$query->jointure(TABLE_ETAT_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE);
+		$query->jointure(TABLE_NOM_JEU,ID_JEU,TABLE_JEUX,ID_JEU);
+
+		$query->setExtra("GROUP BY ". TABLE_VERSION . "." . ID_VERSION . "," . TABLE_EXEMPLAIRE .".". ID_ETAT_EXEMPLAIRE );
+
+		// Création dynamique de la requète maintenant
+
+		//Par nom. On regarde aussi bien le nom du jeu que le nom de la version.
+		if($critere[NOM]!=""){
+			//comme il y a des LIKE, j'ai pas fait de méthode particulière encore
+			$critere[NOM]=mysql_real_escape_string($critere[NOM]);
+			$string="AND ( " . TABLE_NOM_JEU . "." . NOM_JEU . " LIKE '%" .$critere[NOM]."%' OR " . TABLE_VERSION . "." . NOM_VERSION . " LIKE '%" .$critere[NOM]. "%')";
+			$query->ajoutWhereLibre($string);
+		}
+
+		//Par langue. On regarde seulement la langue de la version ( pour le moment )
+		if(is_numeric($critere["idLangue"])){
+			$query->ajoutAnd("=",TABLE_VERSION, ID_LANGUE, $critere["idLangue"]);
+		}
+
+		// Par Etat
+		if(is_numeric($critere["idEtatExemplaire"])){
+			$query->ajoutAnd("=",TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, $critere["idEtatExemplaire"]);
+		}
+
+		// Par Lieux
+		if(is_numeric($critere["idLieu"])){
+			$query->ajoutAnd("=",TABLE_EXEMPLAIRE, ID_LIEU_REEL, $critere["idLieu"]);
+			$string="AND (( " . TABLE_EXEMPLAIRE . "." . ID_LIEU_REEL   . "=" .$critere["idLieu"].
+			" AND " . TABLE_EXEMPLAIRE . "." . ID_LIEU_TEMPO   ."= 0) OR  "
+			. TABLE_EXEMPLAIRE . " . " . ID_LIEU_TEMPO   . "=" .$critere["idLieu"].")";
+			$query->ajoutWhereLibre($string);
+		}
+
+		// Par Durée
+		if(is_numeric($critere["DureeJeu"])){
+			$critere["DureeJeu"]=$critere["DureeJeu"]*60;
+			$critere["DureeJeu"]=$this->formatTime($critere["DureeJeu"]);
+			if($critere["dureeSigne"]==SUPERIEUR){
+				$query->ajoutAnd(">",TABLE_VERSION, DUREE_PARTIE, $critere["DureeJeu"]);
+			}
+			if($critere["dureeSigne"]==INFERIEUR   ){
+				$query->ajoutAnd("<",TABLE_VERSION, DUREE_PARTIE, $critere["DureeJeu"]);
+			}
+			if($critere["dureeSigne"]==EGAL){
+				$query->ajoutAnd("=",TABLE_VERSION, DUREE_PARTIE, $critere["DureeJeu"]);
+			}
+		}
+
+
+		// Par Nombre De Joueur
+
+
+		if($critere[j1]=="on"){
+			$nbjoueur = " AND ( " . NB_JOUEUR . " LIKE '%1%' " ;
+		}
+
+		if($critere[j2]=="on"){
+			if($nbjoueur!=""||$nbjoueur!=NULL){
+				$nbjoueur.=" OR " . NB_JOUEUR . " LIKE '%2%' ";
+			}
+			else {
+				$nbjoueur=" AND ( " . NB_JOUEUR . " LIKE '%2%' ";
+			}
+		}
+
+		if($critere[j3]=="on"){
+			if($nbjoueur!=""||$nbjoueur!=NULL){
+				$nbjoueur.=" OR " . NB_JOUEUR . " LIKE '%3%' ";
+			}
+			else {
+				$nbjoueur=" AND ( " . NB_JOUEUR . " LIKE '%3%' ";
+			}
+		}
+
+		if($critere[j4]=="on"){
+			if($nbjoueur!=""||$nbjoueur!=NULL){
+				$nbjoueur.=" OR " . NB_JOUEUR . " LIKE '%4%' ";
+			}
+			else {
+				$nbjoueur=" AND ( " . NB_JOUEUR . " LIKE '%4%' ";
+			}
+		}
+
+		if($critere[j5]=="on"){
+			if($nbjoueur!=""||$nbjoueur!=NULL){
+				$nbjoueur.=" OR " . NB_JOUEUR . " LIKE '%5%' ";
+			}
+			else {
+				$nbjoueur=" AND ( " . NB_JOUEUR . " LIKE '%5%' ";
+			}
+		}
+
+
+		if($critere[j6]=="on"){
+			if($nbjoueur!=""||$nbjoueur!=NULL){
+				$nbjoueur.=" OR " . NB_JOUEUR . " LIKE '%6%' ";
+			}
+			else {
+				$nbjoueur=" AND ( " . NB_JOUEUR . " LIKE '%6%' ";
+			}
+		}
+
+		if($critere[j7]=="on"){
+			if($nbjoueur!=""||$nbjoueur!=NULL){
+				$nbjoueur.=" OR " . NB_JOUEUR . " LIKE '%7%' ";
+			}
+			else {
+				$nbjoueur=" AND ( " . NB_JOUEUR . " LIKE '%7%' ";
+			}
+		}
+
+		if($critere[j8]=="on"){
+			if($nbjoueur!=""||$nbjoueur!=NULL){
+				$nbjoueur.=" OR " . NB_JOUEUR . " LIKE '%8%' ";
+			}
+			else {
+				$nbjoueur=" AND ( " . NB_JOUEUR . " LIKE '%8%' ";
+			}
+		}
+
+		if($critere[j9]=="on"){
+			if($nbjoueur!=""||$nbjoueur!=NULL){
+				$nbjoueur.=" OR " . NB_JOUEUR . " LIKE '%+%' ";
+			}
+			else {
+				$nbjoueur=" AND ( " . NB_JOUEUR . " LIKE '%+%' ";
+			}
+		}
+
+		if($nbjoueur!=NULL){
+			$nbjoueur.=" ) ";
+			$query->ajoutWhereLibre($nbjoueur);
+		}
+
+
+
+		// Par Prix MDJT Min et Max
+
+		// Min
+		if(is_numeric($critere["prixMin"]))
+		{
+			$string = "AND " . TABLE_EXEMPLAIRE . "." . PRIX_MDJT   ." > " .$critere["prixMin"] ;
+			$query->ajoutWhereLibre($string);
+		}
+
+		// Max
+
+		if(is_numeric($critere["prixMax"]))
+		{
+			$string = "AND " . TABLE_EXEMPLAIRE . "." . PRIX_MDJT   ."<" .$critere["prixMax"];
+			$query->ajoutWhereLibre($string);
+		}
+
+
+
+		//Par Auteur
+
+		if($critere["auteur"]!=""){
+
+			$critere["auteur"]=mysql_real_escape_string($critere["auteur"]);
+			$string="AND ( " . TABLE_JEUX. "." . AUTEUR   ." LIKE '%" .$critere["auteur"]."%')";
+			$query->ajoutWhereLibre($string);
+		}
+
+		// Par illustrateur
+
+		if($critere["illustrateur"]!=""){
+			//sans tag
+			//$query->ajoutAnd("=", TABLE_VERSION, ID_ILLUSTRATEUR, $critere["illustrateur"]);
+
+			$query->jointure(TABLE_ILLUSTRATEUR,ID_ILLUSTRATEUR,TABLE_ILLUSTRATEUR_VERSION,ID_ILLUSTRATEUR);
+
+			$query->jointure(TABLE_ILLUSTRATEUR_VERSION,ID_VERSION,TABLE_VERSION,ID_VERSION);
+
+			$string = explode("," , $critere["illustrateur"]);
+
+			foreach($string as $value ){
+
+				$query->ajoutAndLike(TABLE_ILLUSTRATEUR,NOM_ILLUSTRATEUR,$value);
+
+			}
+		}
+
+		//Par distributeur
+
+		if($critere["distributeur"]!=""){
+
+			//$query->ajoutAnd("=", TABLE_VERSION, ID_DISTRIBUTEUR, $critere["distributeur"]);
+
+			$query->jointure(TABLE_DISTRIBUTEUR,ID_DISTRIBUTEUR,TABLE_DISTRIBUTEUR_VERSION,ID_DISTRIBUTEUR);
+
+			$query->jointure(TABLE_DISTRIBUTEUR_VERSION,ID_VERSION,TABLE_VERSION,ID_VERSION);
+
+			$string = explode("," , $critere["distributeur"]);
+
+			foreach($string as $value ){
+
+				$query->ajoutAndLike(TABLE_DISTRIBUTEUR,NOM_DISTRIBUTEUR,$value);
+
+			}
+
+		}
+
+		// Par Année
+
+		if(is_numeric($critere["anneeSortie"])){
+			$query->ajoutAnd("=",TABLE_VERSION, ANNEE_SORTIE, $critere["anneeSortie"]);
+		}
+
+
+
+
+		//Par Catégorie
+
+
+
+		if($critere["categorie"]!=""){
+			$query->jointure(TABLE_CATEGORIE,ID_CATEGORIE,TABLE_CATEGORIE_JEU,ID_CATEGORIE);
+
+			$query->jointure(TABLE_CATEGORIE_JEU,ID_JEU,TABLE_JEUX,ID_JEU);
+
+			$string = explode("," , $critere["categorie"]);
+
+			foreach($string as $value ){
+
+				$query->ajoutAndLike(TABLE_CATEGORIE,NOM_CATEGORIE,$value);
+
+			}
+		}
+
+		//ainsi de suite!
+
+		$result=$this->requeteSelect($query->compile());
+
+		return $result;
+	}
+
+	/**
+	 * Fonction de convertion des secondes en time
+	 * @param int le temps en seconde
+	 * @return string format time HH:MM:SS
+	 */
+
+	public function formatTime($secs) {
+
+		$times = array(3600, 60, 1);
+
+		$time = '';
+
+		$tmp = '';
+
+		for($i = 0; $i < 3; $i++) {
+
+			$tmp = floor($secs / $times[$i]);
+
+			if($tmp < 1) {
+
+				$tmp = '00';
+
+			}
+
+			elseif($tmp < 10) {
+
+				$tmp = '0' . $tmp;
+
+			}
+
+			$time .= $tmp;
+
+			if($i < 2) {
+
+				$time .= ':';
+
+			}
+
+			$secs = $secs % $times[$i];
+
+		}
+
+		return $time;
+
+	}
+
 
 }
 

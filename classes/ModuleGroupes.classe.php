@@ -1,10 +1,5 @@
 <?php
-/**
-* Classe du module "Groupes"
-* Le module Groupes permet la gestion des groupes, c'est à dire :
-*   - L'affectation des utilisateurs à un groupe
-* Les groupes servent à définir les droits des utilisateurs sur le site 
-*/
+
 
 // Inclusions
 require_once("classes/Module.classe.php");
@@ -14,6 +9,14 @@ define("MODULE_GROUPES", RACINE_SITE . "module.php?idModule=Groupes");
 define("FORMULAIRE_CHOIX",0);
 define("FORMULAIRE_GROUPE",1);
 define("FORMULAIRE_UTILISATEUR",2);
+
+/**
+ * Classe du module "Groupes"
+ * Le module Groupes permet la gestion des groupes, c'est à dire :
+ *   - L'affectation des utilisateurs à un groupe
+ * Les groupes servent à définir les droits des utilisateurs sur le site
+ * @package module
+ */
 
 class ModuleGroupes extends Module
 {

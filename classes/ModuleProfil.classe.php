@@ -1,14 +1,21 @@
 <?php
-/**
-* Classe du module "Mon Profil"
-* Permet le module de gestion du profil d'un utilisateur
-*/
 
 // Inclusions
 require_once("classes/Module.classe.php");
 
 //Constantes
 define("MODULE_PROFIL", RACINE_SITE . "module.php?idModule=Profil");
+
+/**
+
+ * Classe du module "Mon Profil"
+
+ * Permet le module de gestion du profil d'un utilisateur
+
+ * @package module
+
+ */
+
 
 
 class ModuleProfil extends Module

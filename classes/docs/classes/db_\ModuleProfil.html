@@ -1,0 +1,388 @@
+<!DOCTYPE html><html xmlns:date="http://exslt.org/dates-and-times" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>Projet Ludotheque » \ModuleProfil</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">Projet Ludotheque</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Packages</a></li>
+<li><a href="../packages/db_client.html"><i class="icon-folder-open"></i> client</a></li>
+<li><a href="../packages/db_common.html"><i class="icon-folder-open"></i> common</a></li>
+<li><a href="../packages/db_composant.html"><i class="icon-folder-open"></i> composant</a></li>
+<li><a href="../packages/db_module.html"><i class="icon-folder-open"></i> module</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors</a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers (TODO/FIXME)</a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements</a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods</li>
+<li class="method public "><a href="#__construct" title="__construct :: Le constructeur du module Mon Profil"><span class="description">Le constructeur du module Mon Profil</span><pre>__construct()</pre></a></li>
+<li class="method public inherited"><a href="#recupContenu" title="recupContenu :: "><span class="description">recupContenu()
+        </span><pre>recupContenu()</pre></a></li>
+<li class="nav-header protected">» Protected</li>
+<li class="method protected inherited"><a href="#ajouteLigne" title="ajouteLigne :: Fonction d'ajout de balise dans un bloc"><span class="description">Fonction d'ajout de balise dans un bloc</span><pre>ajouteLigne()</pre></a></li>
+<li class="method protected inherited"><a href="#convertiTexte" title="convertiTexte :: Fonction de conversion texte -&gt; HTML
+Renvoie le texte au format HTML"><span class="description">Fonction de conversion texte -&gt; HTML
+Renvoie le texte au format HTML</span><pre>convertiTexte()</pre></a></li>
+<li class="method protected inherited"><a href="#fermeBloc" title="fermeBloc :: Fonction de fermeture d'un bloc HTML"><span class="description">Fonction de fermeture d'un bloc HTML</span><pre>fermeBloc()</pre></a></li>
+<li class="method protected inherited"><a href="#ouvreBloc" title="ouvreBloc :: Fonction d'ouverture d'un bloc HTML"><span class="description">Fonction d'ouverture d'un bloc HTML</span><pre>ouvreBloc()</pre></a></li>
+<li class="nav-header private">» Private</li>
+<li class="method private "><a href="#afficheFormulaire" title="afficheFormulaire :: Fonction d'affichage du formulaire"><span class="description">Fonction d'affichage du formulaire</span><pre>afficheFormulaire()</pre></a></li>
+<li class="method private "><a href="#afficheInfo" title="afficheInfo :: Fonction d'affichage des informations non modifiables"><span class="description">Fonction d'affichage des informations non modifiables</span><pre>afficheInfo()</pre></a></li>
+<li class="method private "><a href="#afficheNomUtilisateur" title="afficheNomUtilisateur :: Fonction d'affichage du nom complet de l'utilisateur"><span class="description">Fonction d'affichage du nom complet de l'utilisateur</span><pre>afficheNomUtilisateur()</pre></a></li>
+<li class="method private "><a href="#dateAffichageToBase" title="dateAffichageToBase :: Fonction de conversion des dates
+Converti les dates affichée en date stockable en base
+jj/mm/aaaa -&gt; AAAA-MM-JJ"><span class="description">Fonction de conversion des dates
+Converti les dates affichée en date stockable en base
+jj/mm/aaaa -&gt; AAAA-MM-JJ</span><pre>dateAffichageToBase()</pre></a></li>
+<li class="method private "><a href="#dateBaseToAffichage" title="dateBaseToAffichage :: Fonction de conversion des dates
+Converti les dates stockée en date affichable
+AAAA-MM-JJ -&gt; jj/mm/aaaa"><span class="description">Fonction de conversion des dates
+Converti les dates stockée en date affichable
+AAAA-MM-JJ -&gt; jj/mm/aaaa</span><pre>dateBaseToAffichage()</pre></a></li>
+<li class="method private "><a href="#filtreChaine" title="filtreChaine :: Fonction de nettoyage des chaine de caractères
+Prends en paramètre la chaine à filtrer, et la taille max de cette chaine"><span class="description">Fonction de nettoyage des chaine de caractères
+Prends en paramètre la chaine à filtrer, et la taille max de cette chaine</span><pre>filtreChaine()</pre></a></li>
+<li class="method private inherited"><a href="#indente" title="indente :: Fonction d'indentation du code HTML en fonction du niveau courant
+Renvoie les espaces nécessaires à indenter"><span class="description">Fonction d'indentation du code HTML en fonction du niveau courant
+Renvoie les espaces nécessaires à indenter</span><pre>indente()</pre></a></li>
+<li class="method private "><a href="#traiteFormulaire" title="traiteFormulaire :: Fonction de traitement du formulaire"><span class="description">Fonction de traitement du formulaire</span><pre>traiteFormulaire()</pre></a></li>
+<li class="method private "><a href="#verifDateAffichee" title="verifDateAffichee :: Fonction de vérification d'une date au format d'affichage"><span class="description">Fonction de vérification d'une date au format d'affichage</span><pre>verifDateAffichee()</pre></a></li>
+<li class="method private "><a href="#verifMail" title="verifMail :: Fonction de vérification d'une adresse mail"><span class="description">Fonction de vérification d'une adresse mail</span><pre>verifMail()</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties</li>
+<li class="nav-header protected">» Protected</li>
+<li class="property protected inherited"><a href="#%24contenuHTML" title="$contenuHTML :: "><span class="description">$contenuHTML</span><pre>$contenuHTML</pre></a></li>
+<li class="nav-header private">» Private</li>
+<li class="property private "><a href="#%24emailOk" title="$emailOk :: "><span class="description">$emailOk</span><pre>$emailOk</pre></a></li>
+<li class="property private "><a href="#%24estModifie" title="$estModifie :: "><span class="description">$estModifie</span><pre>$estModifie</pre></a></li>
+<li class="property private "><a href="#%24modificationOK" title="$modificationOK :: "><span class="description">$modificationOK</span><pre>$modificationOK</pre></a></li>
+<li class="property private "><a href="#%24monUtilisateur" title="$monUtilisateur :: "><span class="description">$monUtilisateur</span><pre>$monUtilisateur</pre></a></li>
+<li class="property private inherited"><a href="#%24niveauIndentation" title="$niveauIndentation :: "><span class="description">$niveauIndentation</span><pre>$niveauIndentation</pre></a></li>
+<li class="property private "><a href="#%24traitementFormulaire" title="$traitementFormulaire :: "><span class="description">$traitementFormulaire</span><pre>$traitementFormulaire</pre></a></li>
+</ul>
+</div>
+<div class="span8">
+<a name="%5CModuleProfil" id="\ModuleProfil"></a><div href="../classes/db_%5CModuleProfil.html" class="element class">
+<p class="short_description">Classe du module "Mon Profil"
+Permet le module de gestion du profil d'un utilisateur</p>
+<div class="details">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>package</th>
+<td><a href="..//packages/db_module.html">module</a></td>
+</tr></table>
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a name="__construct" id="__construct"></a><div class="element clickable method public __construct" data-toggle="collapse" data-target=".__construct .collapse">
+<h2>Le constructeur du module Mon Profil</h2>
+<pre>__construct($unUtilisateur) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$unUtilisateur</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="recupContenu" id="recupContenu"></a><div class="element clickable method public recupContenu" data-toggle="collapse" data-target=".recupContenu .collapse">
+<h2>recupContenu()
+        </h2>
+<pre>recupContenu() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Module::recupContenu()</td>
+</tr></table>
+</div></div>
+</div>
+<a name="ajouteLigne" id="ajouteLigne"></a><div class="element clickable method protected ajouteLigne" data-toggle="collapse" data-target=".ajouteLigne .collapse">
+<h2>Fonction d'ajout de balise dans un bloc</h2>
+<pre>ajouteLigne($html) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Module::ajouteLigne()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$html</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="convertiTexte" id="convertiTexte"></a><div class="element clickable method protected convertiTexte" data-toggle="collapse" data-target=".convertiTexte .collapse">
+<h2>Fonction de conversion texte -&gt; HTML
+Renvoie le texte au format HTML</h2>
+<pre>convertiTexte($texte) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Module::convertiTexte()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$texte</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="fermeBloc" id="fermeBloc"></a><div class="element clickable method protected fermeBloc" data-toggle="collapse" data-target=".fermeBloc .collapse">
+<h2>Fonction de fermeture d'un bloc HTML</h2>
+<pre>fermeBloc($html) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Module::fermeBloc()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$html</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="ouvreBloc" id="ouvreBloc"></a><div class="element clickable method protected ouvreBloc" data-toggle="collapse" data-target=".ouvreBloc .collapse">
+<h2>Fonction d'ouverture d'un bloc HTML</h2>
+<pre>ouvreBloc($HTML) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Module::ouvreBloc()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$HTML</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="afficheFormulaire" id="afficheFormulaire"></a><div class="element clickable method private afficheFormulaire" data-toggle="collapse" data-target=".afficheFormulaire .collapse">
+<h2>Fonction d'affichage du formulaire</h2>
+<pre>afficheFormulaire() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="afficheInfo" id="afficheInfo"></a><div class="element clickable method private afficheInfo" data-toggle="collapse" data-target=".afficheInfo .collapse">
+<h2>Fonction d'affichage des informations non modifiables</h2>
+<pre>afficheInfo() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="afficheNomUtilisateur" id="afficheNomUtilisateur"></a><div class="element clickable method private afficheNomUtilisateur" data-toggle="collapse" data-target=".afficheNomUtilisateur .collapse">
+<h2>Fonction d'affichage du nom complet de l'utilisateur</h2>
+<pre>afficheNomUtilisateur() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="dateAffichageToBase" id="dateAffichageToBase"></a><div class="element clickable method private dateAffichageToBase" data-toggle="collapse" data-target=".dateAffichageToBase .collapse">
+<h2>Fonction de conversion des dates
+Converti les dates affichée en date stockable en base
+jj/mm/aaaa -&gt; AAAA-MM-JJ</h2>
+<pre>dateAffichageToBase($uneDate) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$uneDate</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="dateBaseToAffichage" id="dateBaseToAffichage"></a><div class="element clickable method private dateBaseToAffichage" data-toggle="collapse" data-target=".dateBaseToAffichage .collapse">
+<h2>Fonction de conversion des dates
+Converti les dates stockée en date affichable
+AAAA-MM-JJ -&gt; jj/mm/aaaa</h2>
+<pre>dateBaseToAffichage($uneDate) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$uneDate</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="filtreChaine" id="filtreChaine"></a><div class="element clickable method private filtreChaine" data-toggle="collapse" data-target=".filtreChaine .collapse">
+<h2>Fonction de nettoyage des chaine de caractères
+Prends en paramètre la chaine à filtrer, et la taille max de cette chaine</h2>
+<pre>filtreChaine($uneChaine, $uneTaille) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$uneChaine</h4>
+<code></code>
+</div>
+<div class="subelement argument">
+<h4>$uneTaille</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="indente" id="indente"></a><div class="element clickable method private indente" data-toggle="collapse" data-target=".indente .collapse">
+<h2>Fonction d'indentation du code HTML en fonction du niveau courant
+Renvoie les espaces nécessaires à indenter</h2>
+<pre>indente() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Module::indente()</td>
+</tr></table>
+</div></div>
+</div>
+<a name="traiteFormulaire" id="traiteFormulaire"></a><div class="element clickable method private traiteFormulaire" data-toggle="collapse" data-target=".traiteFormulaire .collapse">
+<h2>Fonction de traitement du formulaire</h2>
+<pre>traiteFormulaire() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="verifDateAffichee" id="verifDateAffichee"></a><div class="element clickable method private verifDateAffichee" data-toggle="collapse" data-target=".verifDateAffichee .collapse">
+<h2>Fonction de vérification d'une date au format d'affichage</h2>
+<pre>verifDateAffichee($uneDate) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$uneDate</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="verifMail" id="verifMail"></a><div class="element clickable method private verifMail" data-toggle="collapse" data-target=".verifMail .collapse">
+<h2>Fonction de vérification d'une adresse mail</h2>
+<pre>verifMail($uneAdresse) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$uneAdresse</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a name="%24contenuHTML" id="$contenuHTML"> </a><div class="element clickable property protected $contenuHTML" data-toggle="collapse" data-target=".$contenuHTML .collapse">
+<h2>$contenuHTML</h2>
+<pre>$contenuHTML </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Module::$$contenuHTML</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24emailOk" id="$emailOk"> </a><div class="element clickable property private $emailOk" data-toggle="collapse" data-target=".$emailOk .collapse">
+<h2>$emailOk</h2>
+<pre>$emailOk </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="%24estModifie" id="$estModifie"> </a><div class="element clickable property private $estModifie" data-toggle="collapse" data-target=".$estModifie .collapse">
+<h2>$estModifie</h2>
+<pre>$estModifie </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="%24modificationOK" id="$modificationOK"> </a><div class="element clickable property private $modificationOK" data-toggle="collapse" data-target=".$modificationOK .collapse">
+<h2>$modificationOK</h2>
+<pre>$modificationOK </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="%24monUtilisateur" id="$monUtilisateur"> </a><div class="element clickable property private $monUtilisateur" data-toggle="collapse" data-target=".$monUtilisateur .collapse">
+<h2>$monUtilisateur</h2>
+<pre>$monUtilisateur </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="%24niveauIndentation" id="$niveauIndentation"> </a><div class="element clickable property private $niveauIndentation" data-toggle="collapse" data-target=".$niveauIndentation .collapse">
+<h2>$niveauIndentation</h2>
+<pre>$niveauIndentation </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\Module::$$niveauIndentation</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24traitementFormulaire" id="$traitementFormulaire"> </a><div class="element clickable property private $traitementFormulaire" data-toggle="collapse" data-target=".$traitementFormulaire .collapse">
+<h2>$traitementFormulaire</h2>
+<pre>$traitementFormulaire </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a1</a> and<br>
+            generated on 2012-04-17T09:49:59+02:00.<br></footer></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+.champ_recherche{
+	min-height:.5em;
+	float:left;
+}
+.champ_recherche label:after { 
+	content: '\a' ; 
+	white-space: pre; 
+}
+
+#buttonAvance {
+	padding: .5em 1em;
+	text-decoration: none;
+}
+
+#titreRecherche{
+	padding: .5em 1em;
+	text-decoration: none;
+	color:#2A5995;
+}
+#rechercheAvancee { 
+	min-height: 5em;
+	display:block;
+	padding: 0.4em;
+	position: relative;
+	overflow:auto;
+}
+#buttonRecherche{
+	margin-top:1.5em;	
+}
+
+#resultat{
+	width:680px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#resultat td{
+	text-align: center;
+}
+
+#resultat th{
+	text-align: center;
+}
+.paginator{
+	text-align: center;
+	display:inline;
+}
+.odd{
+	background-color:#CACAFE;
+}
+
+#paginator{
+	text-align: center;
+}
+
+#rechercheBase{
+	display:block;
+	overflow:auto;
+	margin-bottom:1em;
+}
+

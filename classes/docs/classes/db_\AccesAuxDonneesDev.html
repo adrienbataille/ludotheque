@@ -1,0 +1,306 @@
+<!DOCTYPE html><html xmlns:date="http://exslt.org/dates-and-times" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>Projet Ludotheque » \AccesAuxDonneesDev</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">Projet Ludotheque</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Packages</a></li>
+<li><a href="../packages/db_client.html"><i class="icon-folder-open"></i> client</a></li>
+<li><a href="../packages/db_common.html"><i class="icon-folder-open"></i> common</a></li>
+<li><a href="../packages/db_composant.html"><i class="icon-folder-open"></i> composant</a></li>
+<li><a href="../packages/db_module.html"><i class="icon-folder-open"></i> module</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors</a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers (TODO/FIXME)</a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements</a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods</li>
+<li class="method public "><a href="#__clone" title="__clone :: "><span class="description">__clone()
+        </span><pre>__clone()</pre></a></li>
+<li class="method public "><a href="#__construct" title="__construct :: "><span class="description">__construct()
+        </span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#__wakeup" title="__wakeup :: "><span class="description">__wakeup()
+        </span><pre>__wakeup()</pre></a></li>
+<li class="method public "><a href="#conversionDepuisBase" title="conversionDepuisBase :: Fonction permettant de convertir les données stockées en base vers les données réelles
+notamment en supprimant les caractères d'échappement."><span class="description">Fonction permettant de convertir les données stockées en base vers les données réelles
+notamment en supprimant les caractères d'échappement.</span><pre>conversionDepuisBase()</pre></a></li>
+<li class="method public "><a href="#formatTime" title="formatTime :: Fonction de convertion des secondes en time"><span class="description">Fonction de convertion des secondes en time</span><pre>formatTime()</pre></a></li>
+<li class="method public "><a href="#listeAuteur" title="listeAuteur :: Fonction récupérant tous les auteurs"><span class="description">Fonction récupérant tous les auteurs</span><pre>listeAuteur()</pre></a></li>
+<li class="method public "><a href="#listeDistributeur" title="listeDistributeur :: Fonction récupérant tous les distributeurs"><span class="description">Fonction récupérant tous les distributeurs</span><pre>listeDistributeur()</pre></a></li>
+<li class="method public "><a href="#listeEtat" title="listeEtat :: Fonction récupérant tous les états"><span class="description">Fonction récupérant tous les états</span><pre>listeEtat()</pre></a></li>
+<li class="method public "><a href="#listeIllustrateur" title="listeIllustrateur :: Fonction récupérant tous les illustrateurs"><span class="description">Fonction récupérant tous les illustrateurs</span><pre>listeIllustrateur()</pre></a></li>
+<li class="method public "><a href="#listeLangue" title="listeLangue :: Fonction récupérant toutes les langues"><span class="description">Fonction récupérant toutes les langues</span><pre>listeLangue()</pre></a></li>
+<li class="method public "><a href="#listeLieu" title="listeLieu :: Fonction récupérant tous les lieux"><span class="description">Fonction récupérant tous les lieux</span><pre>listeLieu()</pre></a></li>
+<li class="method public "><a href="#rechercheVersion" title="rechercheVersion :: Fonction de recherche"><span class="description">Fonction de recherche</span><pre>rechercheVersion()</pre></a></li>
+<li class="method public "><a href="#recupAccesDonneesDev" title="recupAccesDonneesDev :: Fonction statique de création d'un accès aux données
+Cette fonction vérifie qu'un accès aux données n'existe pas avant
+Elle renvoi l'accès pré-existant, ou un nouvel accès"><span class="description">Fonction statique de création d'un accès aux données
+Cette fonction vérifie qu'un accès aux données n'existe pas avant
+Elle renvoi l'accès pré-existant, ou un nouvel accès</span><pre>recupAccesDonneesDev()</pre></a></li>
+<li class="method public "><a href="#tagCategorie" title="tagCategorie :: Fonction récupérant les catégories commençant par une chaine de caractère"><span class="description">Fonction récupérant les catégories commençant par une chaine de caractère</span><pre>tagCategorie()</pre></a></li>
+<li class="nav-header private">» Private</li>
+<li class="method private "><a href="#connecteBase" title="connecteBase :: Fonction de connexion à la base de donnée
+Cette fonction initie la connexion à la base de données
+Uniquement si ce n'est pas déjà fait."><span class="description">Fonction de connexion à la base de donnée
+Cette fonction initie la connexion à la base de données
+Uniquement si ce n'est pas déjà fait.</span><pre>connecteBase()</pre></a></li>
+<li class="method private "><a href="#requeteSelect" title="requeteSelect :: Fonction générique de requête type sélection dans la base"><span class="description">Fonction générique de requête type sélection dans la base</span><pre>requeteSelect()</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties</li>
+<li class="nav-header private">» Private</li>
+<li class="property private "><a href="#%24connexionBase" title="$connexionBase :: "><span class="description">$connexionBase</span><pre>$connexionBase</pre></a></li>
+<li class="property private "><a href="#%24estConnecte" title="$estConnecte :: "><span class="description">$estConnecte</span><pre>$estConnecte</pre></a></li>
+<li class="property private "><a href="#%24maBase" title="$maBase :: "><span class="description">$maBase</span><pre>$maBase</pre></a></li>
+</ul>
+</div>
+<div class="span8">
+<a name="%5CAccesAuxDonneesDev" id="\AccesAuxDonneesDev"></a><div href="../classes/db_%5CAccesAuxDonneesDev.html" class="element class">
+<p class="short_description">Classe de gestion de l'accès à la base de donnée</p>
+<div class="details">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>package</th>
+<td><a href="..//packages/db_common.html">common</a></td>
+</tr></table>
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a name="__clone" id="__clone"></a><div class="element clickable method public __clone" data-toggle="collapse" data-target=".__clone .collapse">
+<h2>__clone()
+        </h2>
+<pre>__clone() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="__construct" id="__construct"></a><div class="element clickable method public __construct" data-toggle="collapse" data-target=".__construct .collapse">
+<h2>__construct()
+        </h2>
+<pre>__construct() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="__wakeup" id="__wakeup"></a><div class="element clickable method public __wakeup" data-toggle="collapse" data-target=".__wakeup .collapse">
+<h2>__wakeup()
+        </h2>
+<pre>__wakeup() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="conversionDepuisBase" id="conversionDepuisBase"></a><div class="element clickable method public conversionDepuisBase" data-toggle="collapse" data-target=".conversionDepuisBase .collapse">
+<h2>Fonction permettant de convertir les données stockées en base vers les données réelles
+notamment en supprimant les caractères d'échappement.</h2>
+<pre>conversionDepuisBase(\type $uneVariable) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$uneVariable</h4>
+<code>\type</code>
+</div>
+</div></div>
+</div>
+<a name="formatTime" id="formatTime"></a><div class="element clickable method public formatTime" data-toggle="collapse" data-target=".formatTime .collapse">
+<h2>Fonction de convertion des secondes en time</h2>
+<pre>formatTime(int $secs) : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$secs</h4>
+<code>int</code><p>le temps en seconde</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>string</code>format time HH:MM:SS</div>
+</div></div>
+</div>
+<a name="listeAuteur" id="listeAuteur"></a><div class="element clickable method public listeAuteur" data-toggle="collapse" data-target=".listeAuteur .collapse">
+<h2>Fonction récupérant tous les auteurs</h2>
+<pre>listeAuteur() : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>array</code></div>
+</div></div>
+</div>
+<a name="listeDistributeur" id="listeDistributeur"></a><div class="element clickable method public listeDistributeur" data-toggle="collapse" data-target=".listeDistributeur .collapse">
+<h2>Fonction récupérant tous les distributeurs</h2>
+<pre>listeDistributeur() : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>array</code></div>
+</div></div>
+</div>
+<a name="listeEtat" id="listeEtat"></a><div class="element clickable method public listeEtat" data-toggle="collapse" data-target=".listeEtat .collapse">
+<h2>Fonction récupérant tous les états</h2>
+<pre>listeEtat() : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>array</code></div>
+</div></div>
+</div>
+<a name="listeIllustrateur" id="listeIllustrateur"></a><div class="element clickable method public listeIllustrateur" data-toggle="collapse" data-target=".listeIllustrateur .collapse">
+<h2>Fonction récupérant tous les illustrateurs</h2>
+<pre>listeIllustrateur() : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>array</code></div>
+</div></div>
+</div>
+<a name="listeLangue" id="listeLangue"></a><div class="element clickable method public listeLangue" data-toggle="collapse" data-target=".listeLangue .collapse">
+<h2>Fonction récupérant toutes les langues</h2>
+<pre>listeLangue() : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>array</code></div>
+</div></div>
+</div>
+<a name="listeLieu" id="listeLieu"></a><div class="element clickable method public listeLieu" data-toggle="collapse" data-target=".listeLieu .collapse">
+<h2>Fonction récupérant tous les lieux</h2>
+<pre>listeLieu() : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>array</code></div>
+</div></div>
+</div>
+<a name="rechercheVersion" id="rechercheVersion"></a><div class="element clickable method public rechercheVersion" data-toggle="collapse" data-target=".rechercheVersion .collapse">
+<h2>Fonction de recherche</h2>
+<pre>rechercheVersion(array $critere) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$critere</h4>
+<code>array</code><p>Tableau contenant les critères de recherche. Les paramètres sont indexés par un nom identique à ceux du formulaire.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code>array</code></div>
+</div></div>
+</div>
+<a name="recupAccesDonneesDev" id="recupAccesDonneesDev"></a><div class="element clickable method public recupAccesDonneesDev" data-toggle="collapse" data-target=".recupAccesDonneesDev .collapse">
+<h2>Fonction statique de création d'un accès aux données
+Cette fonction vérifie qu'un accès aux données n'existe pas avant
+Elle renvoi l'accès pré-existant, ou un nouvel accès</h2>
+<pre>recupAccesDonneesDev() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"><p>C'est cette fonction qui doit être utilisée
+chaque fois qu'on veut avoir accès aux données</p></p></div></div>
+</div>
+<a name="tagCategorie" id="tagCategorie"></a><div class="element clickable method public tagCategorie" data-toggle="collapse" data-target=".tagCategorie .collapse">
+<h2>Fonction récupérant les catégories commençant par une chaine de caractère</h2>
+<pre>tagCategorie($chaine) : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$chaine</h4>
+<code></code><p>string</p></div>
+<h3>Returns</h3>
+<div class="subelement response"><code>string</code></div>
+</div></div>
+</div>
+<a name="connecteBase" id="connecteBase"></a><div class="element clickable method private connecteBase" data-toggle="collapse" data-target=".connecteBase .collapse">
+<h2>Fonction de connexion à la base de donnée
+Cette fonction initie la connexion à la base de données
+Uniquement si ce n'est pas déjà fait.</h2>
+<pre>connecteBase() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"><p>On l'utilise donc au début de chaque requête</p></p></div></div>
+</div>
+<a name="requeteSelect" id="requeteSelect"></a><div class="element clickable method private requeteSelect" data-toggle="collapse" data-target=".requeteSelect .collapse">
+<h2>Fonction générique de requête type sélection dans la base</h2>
+<pre>requeteSelect($uneRequeteSQL) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$uneRequeteSQL</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a name="%24connexionBase" id="$connexionBase"> </a><div class="element clickable property private $connexionBase" data-toggle="collapse" data-target=".$connexionBase .collapse">
+<h2>$connexionBase</h2>
+<pre>$connexionBase </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="%24estConnecte" id="$estConnecte"> </a><div class="element clickable property private $estConnecte" data-toggle="collapse" data-target=".$estConnecte .collapse">
+<h2>$estConnecte</h2>
+<pre>$estConnecte </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+<a name="%24maBase" id="$maBase"> </a><div class="element clickable property private $maBase" data-toggle="collapse" data-target=".$maBase .collapse">
+<h2>$maBase</h2>
+<pre>$maBase </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a1</a> and<br>
+            generated on 2012-04-17T09:49:59+02:00.<br></footer></div>
+</div>
+</body>
+</html>
