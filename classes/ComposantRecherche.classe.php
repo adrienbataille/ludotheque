@@ -76,8 +76,8 @@ class ComposantRecherche extends Module
 
 		//Categorie
 		$this->ouvreBloc("<div class='champ_recherche'>");
-		$this->ajouteLigne("<label for=\"categorie\">" . $this->convertiTexte("Catégorie") . "</label>");
-		$this->creationInputText("categorie");
+		$this->ajouteLigne("<label for=\"Categorie\">" . $this->convertiTexte("Catégorie") . "</label>");
+		$this->creationInputText("nomCategorie");
 		$this->fermeBloc("</div>");
 
 		//Nombre de joueur
@@ -159,20 +159,20 @@ class ComposantRecherche extends Module
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"auteur\">" . $this->convertiTexte("Auteur") . "</label>");
 		//$this->creationInputText("auteur");
-		$this->creationSelect($auteur,"auteur");
+		$this->creationInputText("nomAuteur");
 		$this->fermeBloc("</div>");
 
 		//Illustrateur
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"illustrateur\">" . $this->convertiTexte("Illustrateur") . "</label>");
-		$this->creationInputText("illustrateur");
+		$this->creationInputText("nomIllustrateur");
 		//$this->creationSelect($illustrateur,"illustrateur");
 		$this->fermeBloc("</div>");
 
 		//Distributeur
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"distributeur\">" . $this->convertiTexte("Distributeur") . "</label>");
-		$this->creationInputText("distributeur");
+		$this->creationInputText("nomDistributeur");
 		//$this->creationSelect($distributeur,"distributeur");
 		$this->fermeBloc("</div>");
 
@@ -271,10 +271,9 @@ class ComposantRecherche extends Module
 
 	private function ligneResultat($photo,$textealt,$nomJeu,$nomVersion,$idVersion,$nbdisponible,$nbindisponible){
 		$this->ouvreBloc("<tr>");
-		$this->ajouteLigne("<td><img src='" . $photo . "'</td>" );
-		$this->ajouteLigne("<td>" . $nomJeu);
-		$this->ajouteLigne($nomVersion);
-		$this->ajouteLigne("Id" . $idVersion . "</td>");
+		$this->ajouteLigne("<td><a href='" . MODULE_FICHEJEU. "&idVersion=" . $idVersion . "'> <img src='" . $photo . "'></a></td>" );
+		$this->ajouteLigne("<td>");
+		$this->ajouteLigne("<a href='" . MODULE_FICHEJEU. "&idVersion=" . $idVersion . "'>" .  $nomJeu ." - " . $nomVersion . "</a></td>");
 		$this->ajouteLigne("<td>" . $nbdisponible . "</td>");
 		$this->ajouteLigne("<td>" . $nbindisponible . "</td>");
 		$this->ouvreBloc("</tr>");
