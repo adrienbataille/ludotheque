@@ -257,23 +257,24 @@ class ModuleAjoutExemplaires extends Module
 		else
 			$this->ouvreBloc("<select id='" . ID_JEU . "' name='" . ID_JEU . "' disabled='disabled'>");
 		
-		foreach($listeJeu as $idJeu => $jeu)
-		{
-			$name = "";
-			$i = 0;
-			$taille = sizeof($jeu) - 1;
-			foreach($jeu as $nomJeu)
+		if($listeJeu != null)
+			foreach($listeJeu as $idJeu => $jeu)
 			{
-				$name .= $this->convertiTexte($nomJeu[NOM_JEU]);
-				if($i < $taille)
-					$name .= $this->convertiTexte(" - ");
-				$i++;
+				$name = "";
+				$i = 0;
+				$taille = sizeof($jeu) - 1;
+				foreach($jeu as $nomJeu)
+				{
+					$name .= $this->convertiTexte($nomJeu[NOM_JEU]);
+					if($i < $taille)
+						$name .= $this->convertiTexte(" - ");
+					$i++;
+				}
+				if($idJeu == $this->idJeu)
+					$this->ajouteLigne("<option value='" . $idJeu . "' selected='selected'>" . $this->convertiTexte($name) . "</option>");
+				else
+					$this->ajouteLigne("<option value='" . $idJeu . "'>" . $this->convertiTexte($name) . "</option>");
 			}
-			if($idJeu == $this->idJeu)
-				$this->ajouteLigne("<option value='" . $idJeu . "' selected='selected'>" . $this->convertiTexte($name) . "</option>");
-			else
-				$this->ajouteLigne("<option value='" . $idJeu . "'>" . $this->convertiTexte($name) . "</option>");
-		}
 		$this->fermeBloc("</select>");
 		
 		if($this->idJeu != 0)

@@ -149,7 +149,7 @@ class ModuleAjoutJeux extends Module
 		$this->description = $this->filtreChaine($_POST[DESCRIPTION_JEU], TAILLE_CHAMPS_LONG);
 
 		// Nettoyage de l'Auteur
-		$this->auteur = $this->filtreChaine($_POST[AUTEUR], TAILLE_CHAMPS_COURT);
+		$this->auteur = $this->filtreChaine($_POST[NOM_AUTEUR], TAILLE_CHAMPS_COURT);
 
 		if($_POST[NOM_PAYS] != null)
 			// Nettoyage du Pays
@@ -205,11 +205,13 @@ class ModuleAjoutJeux extends Module
 		$this->ouvreBloc("<select id='" . NOM_LANGUE . "' name='" . NOM_LANGUE . "[]' required='required'>");
 		$this->ajouteLigne("<option value='null'></option>");
 		$listeLangue = $this->maBase->recupLangue();
-		foreach($listeLangue as $langue)
-			if($langue[ID_LANGUE] == $this->langue[0])
-				$this->ajouteLigne("<option value='" . $langue[ID_LANGUE] . "' selected='selected'>" . $this->convertiTexte($langue[NOM_LANGUE]) . "</option><");
-			else
-				$this->ajouteLigne("<option value='" . $langue[ID_LANGUE] . "'>" . $this->convertiTexte($langue[NOM_LANGUE]) . "</option>");
+		var_dump($listeLangue);
+		if($listeLangue != null)
+			foreach($listeLangue as $langue)
+				if($langue[ID_LANGUE] == $this->langue[0])
+					$this->ajouteLigne("<option value='" . $langue[ID_LANGUE] . "' selected='selected'>" . $this->convertiTexte($langue[NOM_LANGUE]) . "</option><");
+				else
+					$this->ajouteLigne("<option value='" . $langue[ID_LANGUE] . "'>" . $this->convertiTexte($langue[NOM_LANGUE]) . "</option>");
 		$this->fermeBloc("</select>");
 		if($this->erreurLangue && !strcmp($this->langue[0], "null"))
 			$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte(ERREUR_CHAMP_REQUIS) . "</p>");
@@ -290,8 +292,8 @@ class ModuleAjoutJeux extends Module
 		
 		// Auteur
 		$this->ouvreBloc("<li>");
-		$this->ajouteLigne("<label for='" . AUTEUR . "'>" . $this->convertiTexte("Auteur") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . AUTEUR . "' name='" . AUTEUR . "' value='" . $this->convertiTexte($this->auteur) . "' autocomplete='on' />");
+		$this->ajouteLigne("<label for='" . NOM_AUTEUR . "'>" . $this->convertiTexte("Auteur") . "</label>");
+		$this->ajouteLigne("<input type='text' id='" . NOM_AUTEUR . "' name='" . NOM_AUTEUR . "' value='" . $this->convertiTexte($this->auteur) . "' autocomplete='on' />");
 		$this->fermeBloc("</li>");
 		
 		// Pays
@@ -300,11 +302,12 @@ class ModuleAjoutJeux extends Module
 		$this->ouvreBloc("<select id='" . NOM_PAYS . "' name='" . NOM_PAYS . "' required='required'>");
 		$this->ajouteLigne("<option value='null'></option>");
 		$listePays = $this->maBase->recupPays(null);//print_r($listePays);var_dump($this->idPays);
-		foreach($listePays as $pays)
-			if($pays[ID_PAYS] == $this->idPays)
-				$this->ajouteLigne("<option value='" . $pays[ID_PAYS] . "' selected='selected'>" . $this->convertiTexte($pays[NOM_PAYS]) . "</option><");
-			else
-				$this->ajouteLigne("<option value='" . $pays[ID_PAYS] . "'>" . $this->convertiTexte($pays[NOM_PAYS]) . "</option>");
+		if($listePays != null)
+			foreach($listePays as $pays)
+				if($pays[ID_PAYS] == $this->idPays)
+					$this->ajouteLigne("<option value='" . $pays[ID_PAYS] . "' selected='selected'>" . $this->convertiTexte($pays[NOM_PAYS]) . "</option><");
+				else
+					$this->ajouteLigne("<option value='" . $pays[ID_PAYS] . "'>" . $this->convertiTexte($pays[NOM_PAYS]) . "</option>");
 		$this->fermeBloc("</select>");
 		$this->fermeBloc("</li>");
 		
@@ -372,6 +375,23 @@ class ModuleAjoutJeux extends Module
 					}
 					foreach($listeCateSelect as $categorie)
 						$listeCateId[] = $this->maBase->InsertionTableCategorie($categorie);
+						
+					
+					$listeAuteurSelect = split(",", $this->auteur);
+					$listeAuteurBase = $this->maBase->recupAuteur();
+					$listeAuteurId;
+					foreach($listeAuteurBase as $arrayAuteur => $unAuteur)
+					{
+						//var_dump($unAuteur);print "<br />";var_dump($arrayAuteur);print "@@@@<br/>";
+						if(in_array($unAuteur[NOM_AUTEUR], $listeAuteurSelect))
+						{
+							$listeAuteurId[] = $unAuteur[ID_AUTEUR];
+							unset($listeAuteurSelect[array_search($unAuteur[NOM_AUTEUR], $listeAuteurSelect)]);
+						}
+					}
+					foreach($listeAuteurSelect as $auteur)
+						$listeAuteurId[] = $this->maBase->InsertionTableAuteur($auteur);
+						
 					
 					if($this->idJeu == 0)
 						$this->idJeu = $this->maBase->InsertionTableJeu($this->description, $this->auteur, $this->idPays);
@@ -390,6 +410,11 @@ class ModuleAjoutJeux extends Module
 					$i = 0;
 					for($i = 0; $i < sizeof($listeCateId); $i++)
 						$this->maBase->InsertionTableCategorieJeu($listeCateId[$i], $this->idJeu);
+						
+					$this->maBase->DeleteTableAuteurJeu($this->idJeu);
+					$i = 0;
+					for($i = 0; $i < sizeof($listeAuteurId); $i++)
+						$this->maBase->InsertionTableAuteurJeu($listeAuteurId[$i], $this->idJeu);
 				}
 	
 				if(in_array("null", $this->langue))

@@ -16,6 +16,8 @@ define("BASE_DEV","mdjtufjjpdev");
 define("TABLE_PREFIX_DEV","MDJT_");
 
 // Constantes - Definition des Tables SQL
+define("TABLE_AUTEUR", TABLE_PREFIX_DEV . "AUTEUR");
+define("TABLE_AUTEUR_JEU", TABLE_PREFIX_DEV . "AUTEUR_JEU");
 define("TABLE_CATEGORIE", TABLE_PREFIX_DEV . "CATEGORIE");
 define("TABLE_CATEGORIE_JEU", TABLE_PREFIX_DEV . "CATEGORIE_JEU");
 define("TABLE_DISTRIBUTEUR", TABLE_PREFIX_DEV . "DISTRIBUTEUR");
@@ -43,6 +45,13 @@ define("TABLE_PHOTO_VERSION", TABLE_PREFIX_DEV . "PHOTO_VERSION");
 define("TABLE_RESERVATION", TABLE_PREFIX_DEV . "RESERVATION");
 define("TABLE_SUGGESTION", TABLE_PREFIX_DEV . "SUGGESTION");
 define("TABLE_VERSION", TABLE_PREFIX_DEV . "VERSION");
+
+// Définition des champs de la table TABLE_AUTEUR
+define("ID_AUTEUR", "idAuteur");
+define("NOM_AUTEUR", "nomAuteur");
+
+// Définition des champs de la table TABLE_AUTEUR_JEU
+define("ID_AUTEUR_JEU", "idAuteurJeu");
 
 // Définition des champs de la table TABLE_CATEGORIE
 define("ID_CATEGORIE", "idCategorie");
@@ -708,6 +717,37 @@ class AccesAuxDonneesDev
     }
 
 	/**
+    * Fonction d'insertion d'un auteur
+    * Entrée : le nom de l'auteur
+    * Sortie : true si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableAuteur($unAuteur)
+    {
+
+		// On initie la connexion à la base, si ce n'est déjà fait
+		$this->connecteBase();
+		// Création de la requete
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_AUTEUR . " (" . NOM_AUTEUR . ") VALUES(?) ;");
+		
+		$requete->bindValue(1, $unAuteur, PDO::PARAM_STR);
+		
+		$resultat = $requete->execute();
+
+		// On termine l'utilisation de la requete
+		$requete->closeCursor();
+		
+		// Création de la requete pour récupérer l'id de l'auteur inséré
+		$requete = "SELECT MAX(" . ID_AUTEUR . ") FROM " . TABLE_AUTEUR . " ;";
+		
+		$resultat = $this->requeteSelect($requete);
+		
+		if(count($resultat) == 0)
+			return false;
+		else
+			return $resultat[0][0];
+    }
+
+	/**
     * Fonction d'insertion d'une catégorie à jeu
     * Entrée : l'id de la catégorie que l'on souhaite affecter à un jeu
     * Sortie : true si l'insertion s'est bien passée, sinon false
@@ -794,6 +834,30 @@ class AccesAuxDonneesDev
 		
 		$requete->bindValue(1, $unIllustrateur, PDO::PARAM_STR);
 		$requete->bindValue(2, $uneVersion, PDO::PARAM_STR);
+		
+		$resultat = $requete->execute();
+
+		// On termine l'utilisation de la requete
+		$requete->closeCursor();
+		
+		return $resultat;
+    }
+
+	/**
+    * Fonction d'insertion d'un auteur d'un jeu
+    * Entrée : l'id de l'auteur que l'on souhaite affecter à un jeu
+    * Sortie : true si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableAuteurJeu($unAuteur, $unJeu)
+    {
+
+		// On initie la connexion à la base, si ce n'est déjà fait
+		$this->connecteBase();
+		// Création de la requete
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_AUTEUR_JEU . " (" . ID_AUTEUR . ", " . ID_JEU . ") VALUES(?, ?) ;");
+		
+		$requete->bindValue(1, $unAuteur, PDO::PARAM_INT);
+		$requete->bindValue(2, $unJeu, PDO::PARAM_INT);
 		
 		$resultat = $requete->execute();
 
@@ -986,9 +1050,10 @@ class AccesAuxDonneesDev
 		$laListe = $this->requeteSelect($requete);
 		
 		$resultat;
-		foreach($laListe as $idListe => $nomJeu)
-			$resultat[$nomJeu[ID_JEU]][] = $nomJeu;
-			
+		if($laListe != null)
+			foreach($laListe as $idListe => $nomJeu)
+				$resultat[$nomJeu[ID_JEU]][] = $nomJeu;
+		
 		return $resultat;
 	}
 	
@@ -1130,6 +1195,16 @@ class AccesAuxDonneesDev
 	public function recupLieux()
 	{
 		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_LIEU);
+		return $laListe;
+	}
+	
+	/**
+	* Fonction de récupération de la liste des auteurs
+	* Sortie : le tableau contenant les auteurs
+	*/
+	public function recupAuteur()
+	{
+		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_AUTEUR);
 		return $laListe;
 	}
 	
@@ -1297,6 +1372,32 @@ class AccesAuxDonneesDev
 			
 			// Création de la requete
 			$requete = $this->maBase->prepare("DELETE FROM " . TABLE_NOM_JEU . " WHERE " . ID_JEU . "=?;");
+			$requete->bindValue(1, $unJeu, PDO::PARAM_INT);
+			$resultat = $requete->execute();
+	
+			// On termine l'utilisation de la requete
+			$requete->closeCursor();
+			
+			return $resultat;
+		}
+		else
+			return false;
+	}
+	
+	/**
+	* Fonction de suppression des auteurs d'un jeu
+	* Entrée : id du jeu pour lequel on supprime les auteurs du jeu
+	* Sortie : booleen pour savoir si la requête à bien était effectuée
+	*/
+	public function DeleteTableAuteurJeu($unJeu)
+	{
+		if(intval($unJeu))
+		{
+			// On initie la connexion à la base, si ce n'est déjà fait
+			$this->connecteBase();
+			
+			// Création de la requete
+			$requete = $this->maBase->prepare("DELETE FROM " . TABLE_AUTEUR_JEU . " WHERE " . ID_JEU . "=?;");
 			$requete->bindValue(1, $unJeu, PDO::PARAM_INT);
 			$resultat = $requete->execute();
 	
@@ -1485,7 +1586,16 @@ class AccesAuxDonneesDev
 		return $this->requeteSelect("SELECT " . NOM_ILLUSTRATEUR . " FROM " . TABLE_ILLUSTRATEUR . " WHERE " . NOM_ILLUSTRATEUR . " LIKE '" . $chaine . "%' " );
 	}
 
+	/**
+	 * Fonction récupérant les catégories commençant par une chaine de caractère
+	 * @param string
+	 * @return string
+	 */
 
+	public function tagAuteur($chaine){
+		$chaine=mysql_real_escape_string($chaine);
+		return $this->requeteSelect("SELECT " . NOM_AUTEUR . " FROM " . TABLE_AUTEUR . " WHERE " . NOM_AUTEUR . " LIKE '" . $chaine . "%' " );
+	}
         
         /**
          * Fonction permettant de convertir les données stockées en base vers les données réelles
