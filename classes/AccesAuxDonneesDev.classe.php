@@ -272,6 +272,7 @@ class AccesAuxDonneesDev
                 {
                     // Connexion en mode debug
                     $option[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+                    $option_dev = null;
                     $this->maBase = new PDO("mysql:host=" . SERVEUR_DEV . ";dbname=" . BASE_DEV, LOGIN_DEV, MDP_DEV,$option_dev);
                     // Connexion normale
                     // $this->maBase = new PDO("mysql:host=" . SERVEUR . ";dbname=" . BASE, LOGIN, MDP);
@@ -330,27 +331,22 @@ class AccesAuxDonneesDev
     * Entrée : la description, l'auteur et l'id de pays du jeu
     * Sortie : true si l'insertion s'est bien passée, sinon false
     */
-    public function InsertionTableJeu($uneDescription, $unAuteur, $unPays)
+    public function InsertionTableJeu($uneDescription, $unPays)
     {
 		// On initie la connexion à la base, si ce n'est déjà fait
 		$this->connecteBase();
 		// Création de la requete
-		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_JEUX . " (" . DESCRIPTION_JEU . ", " . AUTEUR . ", " . ID_PAYS . ") VALUES(?, ?, ?) ;");
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_JEUX . " (" . DESCRIPTION_JEU . ", " . ID_PAYS . ") VALUES(?, ?) ;");
 		
 		if(strcmp($uneDescription, "") == 0)
 			$requete->bindValue(1, null, PDO::PARAM_NULL);
 		else
 			$requete->bindValue(1, $uneDescription, PDO::PARAM_STR);
 			
-		if(strcmp($unAuteur, "") == 0)
-			$requete->bindValue(2, null, PDO::PARAM_NULL);
-		else
-			$requete->bindValue(2, $unAuteur, PDO::PARAM_STR);
-			
 		if($unPays != 0)
-			$requete->bindValue(3, $unPays, PDO::PARAM_INT);
+			$requete->bindValue(2, $unPays, PDO::PARAM_INT);
 		else
-			$requete->bindValue(3, null, PDO::PARAM_NULL);
+			$requete->bindValue(2, null, PDO::PARAM_NULL);
 			
 		$resultat = $requete->execute();
 
@@ -358,13 +354,11 @@ class AccesAuxDonneesDev
 		$requete->closeCursor();
 		
 		// Création de la requete pour récupérer l'id du Jeu inséré
-		$requete = $this->maBase->prepare("SELECT ? FROM ? WHERE ?='?' AND ?='?' AND ?='?'");
+		$requete = $this->maBase->prepare("SELECT ? FROM ? WHERE ?='?' AND ?='?'");
 		$requete->bindValue(1, ID_JEU, PDO::PARAM_INT);
 		$requete->bindValue(2, TABLE_JEUX, PDO::PARAM_STR);
 		$requete->bindValue(3, ID_PAYS, PDO::PARAM_STR);
 		$requete->bindValue(4, $unPays, PDO::PARAM_STR);
-		$requete->bindValue(5, AUTEUR, PDO::PARAM_STR);
-		$requete->bindValue(6, $unAuteur, PDO::PARAM_STR);
 		$requete->bindValue(5, DESCRIPTION_JEU, PDO::PARAM_STR);
 		$requete->bindValue(6, $uneDescription, PDO::PARAM_STR);
 		
@@ -1162,6 +1156,19 @@ class AccesAuxDonneesDev
 	
     /**
 	* Fonction de récupération des catégories d'un jeu
+	* Entrée : id du jeu pour lequel on souhaite récupérer les auteurs
+	* Sortie : le tableau contenant les auteurs utilisées pour un jeu
+	*/
+	public function recupAuteurJeu($idJeu)
+	{
+		$requete = "SELECT * FROM " . TABLE_AUTEUR_JEU;
+		$requete .= " WHERE " . ID_JEU . " = '" . $idJeu . "';";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
+    /**
+	* Fonction de récupération des catégories d'un jeu
 	* Entrée : id du jeu pour lequel on souhaite récupérer les catégories
 	* Sortie : le tableau contenant les catégories utilisées pour un jeu
 	*/
@@ -1226,7 +1233,7 @@ class AccesAuxDonneesDev
 	* Entrée : id du nouveau pays
 	* Sortir : booleen pour savoir si la requête à bien était effectuée
 	*/
-	public function UpdateTableJeu($unJeu, $uneDescription, $unAuteur, $unPays)
+	public function UpdateTableJeu($unJeu, $uneDescription, $unPays)
 	{
 		if(intval($unJeu))
 		{
@@ -1235,11 +1242,10 @@ class AccesAuxDonneesDev
 			
 
 			// Création de la requete
-			$requete = $this->maBase->prepare("UPDATE " . TABLE_JEUX . " SET " . DESCRIPTION_JEU . "=?, " . AUTEUR . "=?, " . ID_PAYS . "=? WHERE " . ID_JEU . "=?;");
+			$requete = $this->maBase->prepare("UPDATE " . TABLE_JEUX . " SET " . DESCRIPTION_JEU . "=?, " . ID_PAYS . "=? WHERE " . ID_JEU . "=?;");
 			$requete->bindValue(1, $uneDescription, PDO::PARAM_STR);
-			$requete->bindValue(2, $unAuteur, PDO::PARAM_STR);
-			$requete->bindValue(3, $unPays, PDO::PARAM_INT);
-			$requete->bindValue(4, $unJeu, PDO::PARAM_INT);
+			$requete->bindValue(2, $unPays, PDO::PARAM_INT);
+			$requete->bindValue(3, $unJeu, PDO::PARAM_INT);
 			$resultat = $requete->execute();
 	
 			// On termine l'utilisation de la requete

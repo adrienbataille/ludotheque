@@ -90,6 +90,17 @@ class ModuleAjoutJeux extends Module
 					$nbCate--;
 				}
 				
+				$myAuteursPlays = $this->maBase->recupAuteurJeu($this->idJeu);
+				$nbAute = sizeof($myAuteursPlays) - 1;
+				foreach($myAuteursPlays as $idAutePlayTab => $AuteurPlay)
+				{
+					$myAuteurs = $this->maBase->recupAuteur($AuteurPlay[ID_AUTEUR]);
+					$this->auteur .= $myAuteurs[0][NOM_AUTEUR];
+					if($nbAute)
+						$this->auteur .= ",";
+					$nbAute--;
+				}
+				
 				$this->nbJeu = sizeof($this->nom);
 				
 			}
@@ -205,7 +216,7 @@ class ModuleAjoutJeux extends Module
 		$this->ouvreBloc("<select id='" . NOM_LANGUE . "' name='" . NOM_LANGUE . "[]' required='required'>");
 		$this->ajouteLigne("<option value='null'></option>");
 		$listeLangue = $this->maBase->recupLangue();
-		var_dump($listeLangue);
+		//var_dump($listeLangue);
 		if($listeLangue != null)
 			foreach($listeLangue as $langue)
 				if($langue[ID_LANGUE] == $this->langue[0])
@@ -293,7 +304,7 @@ class ModuleAjoutJeux extends Module
 		// Auteur
 		$this->ouvreBloc("<li>");
 		$this->ajouteLigne("<label for='" . NOM_AUTEUR . "'>" . $this->convertiTexte("Auteur") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_AUTEUR . "' name='" . NOM_AUTEUR . "' value='" . $this->convertiTexte($this->auteur) . "' autocomplete='on' />");
+		$this->ajouteLigne("<input type='text' id='" . NOM_AUTEUR . "' name='" . NOM_AUTEUR . "' value='" . $this->convertiTexte($this->auteur) . "' autocomplete='off' />");
 		$this->fermeBloc("</li>");
 		
 		// Pays
@@ -362,7 +373,7 @@ class ModuleAjoutJeux extends Module
 					$this->pays = $unPays[ID_PAYS];
 					
 					$listeCateSelect = split(",", $this->categorie);
-					$listeCateBase = $this->maBase->recupCategorie();
+					$listeCateBase = $this->maBase->recupCategorie(null);
 					$listeCateId;
 					foreach($listeCateBase as $arrayCat => $uneCategorie)
 					{
@@ -392,12 +403,11 @@ class ModuleAjoutJeux extends Module
 					foreach($listeAuteurSelect as $auteur)
 						$listeAuteurId[] = $this->maBase->InsertionTableAuteur($auteur);
 						
-					
 					if($this->idJeu == 0)
-						$this->idJeu = $this->maBase->InsertionTableJeu($this->description, $this->auteur, $this->idPays);
+						$this->idJeu = $this->maBase->InsertionTableJeu($this->description, $this->idPays);
 					else
 					{
-						if(!$this->maBase->UpdateTableJeu($this->idJeu, $this->description, $this->auteur, $this->idPays))
+						if(!$this->maBase->UpdateTableJeu($this->idJeu, $this->description, $this->idPays))
 							$this->erreurUpdateJeu = true;
 						else
 							$this->maBase->DeleteTableNomJeu($this->idJeu);
@@ -405,7 +415,6 @@ class ModuleAjoutJeux extends Module
 					$i = 0;
 					for($i = 0; $i < sizeof($_POST[NOM_JEU]); $i++)
 						$this->erreurLangue = $this->maBase->InsertionTableNomJeu($this->nom[$i], $this->langue[$i], $this->idJeu);
-					//print "categorie choisie : " . $categorie . "<br />";
 					$this->maBase->DeleteTableCategorieJeu($this->idJeu);
 					$i = 0;
 					for($i = 0; $i < sizeof($listeCateId); $i++)
