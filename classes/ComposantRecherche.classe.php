@@ -101,7 +101,7 @@ class ComposantRecherche extends Module
 		$this->creationCheckBox("j8");
 		$this->ajouteLigne($this->convertiTexte("8"));
 		$this->creationCheckBox("j9");
-		$this->ajouteLigne($this->convertiTexte("8+"));
+		$this->ajouteLigne($this->convertiTexte("9+"));
 		$this->fermeBloc("</div>");
 
 		//Durée
