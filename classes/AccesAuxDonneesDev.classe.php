@@ -42,6 +42,15 @@ define("BASE_DEV","mdjtufjjpdev");
 
 	// Définition des champs de la table TABLE_CATEGORIE_JEU
 	define("ID_CATEGORIE_JEU", "idCategorieJeu");
+	
+	
+	// Définition des champs de la table TABLE_DISTRIBUTEUR
+	define("ID_DISTRIBUTEUR", "idDistributeur");
+	define("NOM_DISTRIBUTEUR", "nomDistributeur");
+
+	// Définition des champs de la table TABLE_EDITEUR
+	define("ID_EDITEUR", "idEditeur");
+	define("NOM_EDITEUR", "nomEditeur");
 
 	// Définition des champs de la table TABLE_EMPRUNT
 	define("ID_EMPRUNT", "idEmprunt");
@@ -56,7 +65,7 @@ define("BASE_DEV","mdjtufjjpdev");
 	// Définition des champs de la table TABLE_EXEMPLAIRE
 	define("ID_EXEMPLAIRE", "idExemplaire");
 	define("DESCRIPTION_EXEMPLAIRE", "descriptionExemplaire");
-	define("PRIX_MDJT", "prixMJDT");
+	define("PRIX_MDJT", "prixMDJT");
 	define("DATE_ACHAT", "dateAchat");
 	define("DATE_FIN_VIE", "dateFinVie");
 	define("ID_LIEU_REEL", "idLieuReel");
@@ -70,6 +79,10 @@ define("BASE_DEV","mdjtufjjpdev");
 
 	// Définition des champs de la table TABLE_FAIRE_PARTIE_KIT
 	define("ID_FAIRE_PARTIE_KIT", "idFairePartieKit");
+	
+	// Définition des champs de la table TABLE_ILLUSTRATEUR
+	define("ID_ILLUSTRATEUR", "idIllustrateur");
+	define("NOM_ILLUSTRATEUR", "nomIllustrateur");
 
 	// Définition des champs de la table TABLE_INVENTAIRE
 	define("ID_INVENTAIRE", "idInventaire");
