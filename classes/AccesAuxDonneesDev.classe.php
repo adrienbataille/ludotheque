@@ -76,7 +76,7 @@ define("NOM_ETAT", "nomEtat");
 define("ID_EXEMPLAIRE", "idExemplaire");
 define("CODE_BARRE", "codeBarre");
 define("DESCRIPTION_EXEMPLAIRE", "descriptionExemplaire");
-define("PRIX_MDJT", "prixMJDT");
+define("PRIX_MDJT", "prixMDJT");
 define("DATE_ACHAT", "dateAchat");
 define("DATE_FIN_VIE", "dateFinVie");
 define("ID_LIEU_REEL", "idLieuReel");
@@ -270,7 +270,7 @@ class AccesAuxDonneesDev
                 {
                     // Connexion en mode debug
                     $option[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-                    $this->maBase = new PDO("mysql:host=" . SERVEUR_DEV . ";dbname=" . BASE_DEV, LOGIN_DEV, MDP_DEV,$option_dev);
+                    $this->maBase = new PDO("mysql:host=" . SERVEUR_DEV . ";dbname=" . BASE_DEV, LOGIN_DEV, MDP_DEV,$option);
                     // Connexion normale
                     // $this->maBase = new PDO("mysql:host=" . SERVEUR . ";dbname=" . BASE, LOGIN, MDP);
                 } 

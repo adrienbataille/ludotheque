@@ -204,6 +204,7 @@ class ComposantRecherche extends Module
 		if($param){
 
 			$resultat=$this->maBase->rechercheVersion($recherche);
+			var_dump($resultat);
 			if(count($resultat)==0){
 				$this->ajouteLigne($this->convertiTexte("Aucun Résultat"));
 			}
@@ -227,7 +228,7 @@ class ComposantRecherche extends Module
 				Paginator\Paginator::$limit  = 20;
 				Paginator\Paginator::$offset = intval($_GET['offset']);
 				Paginator\Paginator::$url    = $_SERVER['REQUEST_URI'];
-
+				
 				$resultat=array_slice($resultat,Paginator\Paginator::$offset,Paginator\Paginator::$offset+Paginator\Paginator::$limit);
 
 				foreach ($resultat as $row) {
