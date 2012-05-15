@@ -38,7 +38,6 @@ class ModuleAjoutExemplaires extends Module
 	// On stocke les erreurs qui pourront arriver
 	private $traitementFormulaire = false;
 	private $erreurPrixMdjt = false;
-	private $erreurDateAchat = false;
 	private $erreurEtat = false;
 	private $erreurLieuReel = false;
 	private $erreurExemplaire = false;
@@ -381,7 +380,7 @@ class ModuleAjoutExemplaires extends Module
 			
 			 // Prix mdjt
 			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . PRIX_MDJT . "'>" . $this->convertiTexte("Prix actuel") . "</label>");
+			$this->ajouteLigne("<label for='" . PRIX_MDJT . "'>" . $this->convertiTexte("Prix actuel *") . "</label>");
 			$this->ajouteLigne("<input type='text' id='" . PRIX_MDJT ."' name='"  . PRIX_MDJT . "' value='" . $this->convertiTexte($this->prixMDJT) . "' required='required' />");
 			if($this->erreurPrixMdjt)
 				$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte("Ce champ doit être remplit") . "</p>");
@@ -390,9 +389,7 @@ class ModuleAjoutExemplaires extends Module
 			// Data achat
 			$this->ouvreBloc("<li>");
 			$this->ajouteLigne("<label for='" . DATE_ACHAT . "'>" . $this->convertiTexte("Date Achat") . "</label>");
-			$this->ajouteLigne("<input type='text' id='" . DATE_ACHAT ."' maxlength='10' name='" . DATE_ACHAT . "' value='" . $this->convertiTexte($this->dateBaseToAffichage($this->dateAchat)) . "'  required='required' />");
-			if($this->erreurDateAchat)
-				$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte("Ce champ doit être remplit") . "</p>");
+			$this->ajouteLigne("<input type='text' id='" . DATE_ACHAT ."' maxlength='10' name='" . DATE_ACHAT . "' value='" . $this->convertiTexte($this->dateBaseToAffichage($this->dateAchat)) . "' />");
 			$this->fermeBloc("</li>");
 			
 					
@@ -500,9 +497,6 @@ class ModuleAjoutExemplaires extends Module
 	
 	private function traiteFormulaire()
 	{
-	//var_dump($_POST);
-	//print "<br />";
-	//var_dump($this);
 		// Y a-t-il effectivement un formulaire à traiter ?
 		if ($_POST["AjouterExemplaire"] || $_POST["AjouterAutreExemplaire"])
 		{
@@ -514,9 +508,6 @@ class ModuleAjoutExemplaires extends Module
 			if($this->prixMDJT == 0)
 				$this->erreurPrixMdjt = true;
 				
-			if(strcmp($this->dateAchat, "") == 0)
-				$this->erreurDateAchat = true;
-				
 			if($this->etatExemplaire == 0)
 				$this->erreurEtat = true;
 				
@@ -526,7 +517,7 @@ class ModuleAjoutExemplaires extends Module
 			if(strcmp($this->codeBarre, "") == 0)
 				$this->erreurCodeBarre = true;
 			
-			if(!$this->erreurPrixMdjt && !$this->erreurDateAchat && !$this->erreurEtat && !$this->erreurLieuReel && !$this->erreurCodeBarre)
+			if(!$this->erreurPrixMdjt && !$this->erreurEtat && !$this->erreurLieuReel && !$this->erreurCodeBarre)
 			{
 				if($this->idExemplaire == 0)
 					$this->idExemplaire = $this->maBase->InsertionTableExemplaire($this->codeBarre, $this->descriptionExemplaire, $this->prixMDJT, $this->dateAchat, $this->dateFinVie, $this->idVersion, $this->etatExemplaire, $this->lieuReel, $this->lieuTempo);

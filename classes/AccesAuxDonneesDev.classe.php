@@ -83,7 +83,7 @@ define("NOM_ETAT", "nomEtat");
 define("ID_EXEMPLAIRE", "idExemplaire");
 define("CODE_BARRE", "codeBarre");
 define("DESCRIPTION_EXEMPLAIRE", "descriptionExemplaire");
-define("PRIX_MDJT", "prixMJDT");
+define("PRIX_MDJT", "prixMDJT");
 define("DATE_ACHAT", "dateAchat");
 define("DATE_FIN_VIE", "dateFinVie");
 define("ID_LIEU_REEL", "idLieuReel");
