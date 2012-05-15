@@ -271,8 +271,7 @@ class AccesAuxDonneesDev
                 try 
                 {
                     // Connexion en mode debug
-                    $option[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-                    $option_dev = null;
+                    $option_dev[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
                     $this->maBase = new PDO("mysql:host=" . SERVEUR_DEV . ";dbname=" . BASE_DEV, LOGIN_DEV, MDP_DEV,$option_dev);
                     // Connexion normale
                     // $this->maBase = new PDO("mysql:host=" . SERVEUR . ";dbname=" . BASE, LOGIN, MDP);
@@ -378,13 +377,13 @@ class AccesAuxDonneesDev
     * Entrée : nom, description, age_min, nb_joueur, nb_joueur recommandés, prix achat, année sortie, illustrateur, distributeur, éditeur
     * Sortie : true si l'insertion s'est bien passée, sinon false
     */
-    public function InsertionTableVersion($nom,$description,$age_min,$nb_joueur_reco,$duree_partie,$prix_achat,$annee_sortie,$idJeu)
+    public function InsertionTableVersion($nom,$description,$age_min,$nb_joueur,$nb_joueur_reco,$duree_partie,$prix_achat,$annee_sortie,$idJeu)
     {
 		// On initie la connexion à la base, si ce n'est déjà fait
 		$this->connecteBase();
 		// Création de la requete
 		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_VERSION . " (" . NOM_VERSION . ", " . DESCRIPTION_VERSION . ", " . AGE_MINIMUM . 
-										", " . NB_JOUEUR_RECOMMANDE ."," . DUREE_PARTIE ."," . PRIX_ACHAT . ",". ANNEE_SORTIE ."," . ID_JEU .") VALUES(?, ?, ?, ?, ?, ?, ?, ?) ;");	
+										", " . NB_JOUEUR ."," . NB_JOUEUR_RECOMMANDE ."," . DUREE_PARTIE ."," . PRIX_ACHAT . ",". ANNEE_SORTIE ."," . ID_JEU .") VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) ;");	
 
 	
 		//nom
@@ -402,32 +401,38 @@ class AccesAuxDonneesDev
 		else
 			$requete->bindValue(3, $age_min, PDO::PARAM_INT);
 		
-		//nombre de joueurs recommandés
-		if(strcmp($nb_joueur_reco, "") == 0)
+		//nombre de joueurs
+		if(strcmp($nb_joueur, "") == 0)
 			$requete->bindValue(4, null, PDO::PARAM_NULL);
 		else
-			$requete->bindValue(4, $nb_joueur_reco, PDO::PARAM_INT);
+			$requete->bindValue(4, $nb_joueur, PDO::PARAM_STR);
+		
+		//nombre de joueurs recommandés
+		if(strcmp($nb_joueur_reco, "") == 0)
+			$requete->bindValue(5, null, PDO::PARAM_NULL);
+		else
+			$requete->bindValue(5, $nb_joueur_reco, PDO::PARAM_INT);
 
 		//durée partie
 		if(strcmp($duree_partie, "") == 0)
-			$requete->bindValue(5, null, PDO::PARAM_NULL);
+			$requete->bindValue(6, null, PDO::PARAM_NULL);
 		else
-			$requete->bindValue(5, $duree_partie, PDO::PARAM_INT);	
+			$requete->bindValue(6, $duree_partie, PDO::PARAM_INT);	
 
 		//prix achat
 		if($prix_achat != 0)
-			$requete->bindValue(6, $prix_achat, PDO::PARAM_INT);
+			$requete->bindValue(7, $prix_achat, PDO::PARAM_INT);
 		else
-			$requete->bindValue(6, "", PDO::PARAM_INT);
+			$requete->bindValue(7, "", PDO::PARAM_INT);
 	
 		//année de sortie
 		if(strcmp($annee_sortie, "") == 0)
-			$requete->bindValue(7, null, PDO::PARAM_NULL);
+			$requete->bindValue(8, null, PDO::PARAM_NULL);
 		else
-			$requete->bindValue(7, $annee_sortie, PDO::PARAM_INT);
+			$requete->bindValue(8, $annee_sortie, PDO::PARAM_INT);
 		
 		//id jeu associé
-		$requete->bindValue(8, $idJeu, PDO::PARAM_INT);
+		$requete->bindValue(9, $idJeu, PDO::PARAM_INT);
 			
 		$resultat = $requete->execute();
 
@@ -1263,7 +1268,7 @@ class AccesAuxDonneesDev
 	* Entrée : nouveau attributs à modifier
 	* Sortir : booleen pour savoir si la requête à bien était effectuée
 	*/
-	public function UpdateTableVersion($idVersion,$nom,$description,$age_min,$nb_joueur_reco,$duree_partie,$prix_achat,$annee_sortie,$idJeu)
+	public function UpdateTableVersion($idVersion,$nom,$description,$age_min,$nb_joueur,$nb_joueur_reco,$duree_partie,$prix_achat,$annee_sortie,$idJeu)
 	{
 		if(intval($idVersion))
 		{
@@ -1273,7 +1278,7 @@ class AccesAuxDonneesDev
 			
 			// Création de la requete
 			$requete = $this->maBase->prepare("UPDATE " . TABLE_VERSION . " SET " . NOM_VERSION . "=?, " . DESCRIPTION_VERSION . "=?, " . AGE_MINIMUM . "=?,
-			" . NB_JOUEUR_RECOMMANDE . "=?, " . DUREE_PARTIE . "=?, " . PRIX_ACHAT . "=?, " . ANNEE_SORTIE . "=?, " . ID_JEU . "=?	WHERE " . ID_VERSION . "=?;");
+			" . NB_JOUEUR . "=?, " . NB_JOUEUR_RECOMMANDE . "=?, " . DUREE_PARTIE . "=?, " . PRIX_ACHAT . "=?, " . ANNEE_SORTIE . "=?, " . ID_JEU . "=?	WHERE " . ID_VERSION . "=?;");
 			
 			$requete->bindValue(1, $nom, PDO::PARAM_STR);
 			
@@ -1290,32 +1295,38 @@ class AccesAuxDonneesDev
 			$requete->bindValue(3, $age_min, PDO::PARAM_INT);
 			
 			//nombre de joueurs recommandés
-			if(strcmp($nb_joueur_reco, "") == 0)
+			if(strcmp($nb_joueur, "") == 0)
 				$requete->bindValue(4, null, PDO::PARAM_NULL);
 			else
-				$requete->bindValue(4, $nb_joueur_reco, PDO::PARAM_INT);
+				$requete->bindValue(4, $nb_joueur, PDO::PARAM_INT);
+			
+			//nombre de joueurs recommandés
+			if(strcmp($nb_joueur_reco, "") == 0)
+				$requete->bindValue(5, null, PDO::PARAM_NULL);
+			else
+				$requete->bindValue(5, $nb_joueur_reco, PDO::PARAM_INT);
 				
 			//durée partie
 			if(strcmp($duree_partie, "") == 0)
-				$requete->bindValue(5, null, PDO::PARAM_NULL);
+				$requete->bindValue(6, null, PDO::PARAM_NULL);
 			else
-				$requete->bindValue(5, $duree_partie, PDO::PARAM_INT);	
+				$requete->bindValue(6, $duree_partie, PDO::PARAM_INT);	
 
 			//prix achat
 			if($prix_achat == 0)
-				$requete->bindValue(6, null, PDO::PARAM_NULL);
+				$requete->bindValue(7, null, PDO::PARAM_NULL);
 			else
-				$requete->bindValue(6, $prix_achat, PDO::PARAM_INT);	
+				$requete->bindValue(7, $prix_achat, PDO::PARAM_INT);	
 
 			//année de sortie
 			if(strcmp($annee_sortie, "") == 0)
-				$requete->bindValue(7, null, PDO::PARAM_NULL);
+				$requete->bindValue(8, null, PDO::PARAM_NULL);
 			else
-				$requete->bindValue(7, $annee_sortie, PDO::PARAM_INT);
+				$requete->bindValue(8, $annee_sortie, PDO::PARAM_INT);
 		
 
-			$requete->bindValue(8, $idJeu, PDO::PARAM_INT);
-			$requete->bindValue(9, $idVersion, PDO::PARAM_INT);
+			$requete->bindValue(9, $idJeu, PDO::PARAM_INT);
+			$requete->bindValue(10, $idVersion, PDO::PARAM_INT);
 			$resultat = $requete->execute();
 	
 			// On termine l'utilisation de la requete

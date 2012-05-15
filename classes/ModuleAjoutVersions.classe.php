@@ -93,6 +93,7 @@ class ModuleAjoutVersions extends Module
 				$this->nomVersion = $myVersion[0][NOM_VERSION];
 				$this->description = $myVersion[0][DESCRIPTION_VERSION];
 				$this->ageMinimum = $myVersion[0][AGE_MINIMUM];
+				$this->nbJoueur[] = split(",", $myVersion[0][NB_JOUEUR]);
 				$this->nbJoueurReco = $myVersion[0][NB_JOUEUR_RECOMMANDE];
 				$this->dureePartie = $myVersion[0][DUREE_PARTIE];
 				$this->prixAchat = $myVersion[0][PRIX_ACHAT];
@@ -104,7 +105,7 @@ class ModuleAjoutVersions extends Module
 					$this->idJeu = $myVersion[0][ID_JEU];
 				elseif($this->idJeu != 0 && $this->idJeu != $myVersion[0][ID_JEU])
 					$this->erreurLoadVersion = true;
-					
+				
 			}
 		}
 			
@@ -166,7 +167,9 @@ class ModuleAjoutVersions extends Module
 		$this->ageMinimum = $this->filtreChaine($_POST[AGE_MINIMUM], TAILLE_CHAMPS_COURT);
 		
 		// Nettoyage de nb joueurs
-		//$this->nb_joueur = $this->filtreChaine($_POST[NB_JOUEUR_V], TAILLE_CHAMPS_COURT);
+		$this->nbJoueur = Array();
+		foreach($_POST[NB_JOUEUR] as  $nbJoueur)
+			$this->nbJoueur[] = $this->filtreChaine($nbJoueur, TAILLE_CHAMPS_COURT);
 		
 		// Nettoyage de nb joueurs reco
 		$this->nbJoueurReco = $this->filtreChaine($_POST[NB_JOUEUR_RECOMMANDE], TAILLE_CHAMPS_COURT);
@@ -309,10 +312,55 @@ class ModuleAjoutVersions extends Module
 		$this->fermeBloc("</li>");
 		
 		// Nombre Joueur
-	  /*  $this->ouvreBloc("<li>");
-		$this->ajouteLigne("<label for='" . NB_JOUEUR_V . "'>" . $this->convertiTexte("Nombre de joueurs") . "</label>");
-		$this->ajouteLigne("<input type='text' maxlength='2' name='"  . NB_JOUEUR_V . "' value='" . $this->nbJoueur . "' />");
-		$this->fermeBloc("</li>");*/
+	    $this->ouvreBloc("<li>");
+		$this->ajouteLigne("<label for='" . NB_JOUEUR . "'>" . $this->convertiTexte("Nombre de joueurs") . "</label>");
+		
+		if(in_array("1", $this->nbJoueur))
+			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='1' checked='checked' />1");
+		else
+			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='1' />1");
+		
+		if(in_array("2", $this->nbJoueur))
+			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='2' checked='checked' />2");
+		else
+			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='2' />2");
+		
+		if(in_array("3", $this->nbJoueur))
+			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='3' checked='checked' />3");
+		else
+			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='3' />3");
+		
+		if(in_array("4", $this->nbJoueur))
+			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='4' checked='checked' />4");
+		else
+			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='4' />4");
+		
+		if(in_array("5", $this->nbJoueur))
+			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='5' checked='checked' />5");
+		else
+			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='5' />5");
+		
+		if(in_array("6", $this->nbJoueur))
+			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='6' checked='checked' />6");
+		else
+			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='6' />6");
+		
+		if(in_array("7", $this->nbJoueur))
+			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='7' checked='checked' />7");
+		else
+			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='7' />7");
+		
+		if(in_array("8", $this->nbJoueur))
+			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='8' checked='checked' />8");
+		else
+			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='8' />8");
+			
+		if(in_array("9", $this->nbJoueur))
+			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='9' checked='checked' />9");
+		else
+			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='9' />9 et plus");
+		
+		$this->fermeBloc("</li>");
 		
 		
 		// Nombre Joueur recommandés
@@ -425,8 +473,6 @@ class ModuleAjoutVersions extends Module
 			if((!floatval($this->prixAchat) || $this->prixAchat < 0) && $this->prixAchat != null)
 				$this->erreurPrixAchat = true;
 			
-			//var_dump($this);
-			
 			$listeIllustrateurSelect = split(",", $this->distributeur);
 			$listeIllustrateurBase = $this->maBase->recupIllustrateur(null);
 			foreach($listeIllustrateurBase as $arrayIll => $unIllustrateur)
@@ -484,9 +530,10 @@ class ModuleAjoutVersions extends Module
 					// Contrôle de l'extension du fichier
 					$extensionsAutorisees = array(".jpeg", ".jpg", ".gif", ".png");
 					
+					$this->chemin = $nomPhoto;
+					
 					if (!(in_array($extension, $extensionsAutorisees)))
 						$this->erreurPhotoFormat = true;
-						//die("Le fichier n'a pas l'extension attendue");
 					
 				}
 				
@@ -494,30 +541,33 @@ class ModuleAjoutVersions extends Module
 				
 					if($_FILES[PHOTO_VERSION]['name'] != null)
 					{
-						if (is_uploaded_file($_FILES[PHOTO_VERSION]['tmp_name'])) {
-							$this->chemin = 'fichier/' . $_FILES[PHOTO_VERSION]['name'];
-							$resultat2 = move_uploaded_file($_FILES[PHOTO_VERSION]['tmp_name'],$this->chemin);
-							//var_dump($resultat2);
-						}
+						if (is_uploaded_file($_FILES[PHOTO_VERSION]['tmp_name']))
+							$this->redimension_image($_FILES[PHOTO_VERSION], 512000, 200, 200, 'fichier/');
+					}
+					
+					$myPlayer = "";
+					$sizePlayer = sizeof($this->nbJoueur);
+					foreach($this->nbJoueur as $nb) {
+						$myPlayer .= $nb;
+						$sizePlayer--;
+						if($sizePlayer > 0)
+							$myPlayer .= ",";
 					}
 					
 					if($this->idVersion == 0/* && $resultat2*/)
 					{
-						$this->idVersion = $this->maBase->InsertionTableVersion($this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->idJeu);													
+						$this->idVersion = $this->maBase->InsertionTableVersion($this->nomVersion, $this->description, $this->ageMinimum, $myPlayer, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->idJeu);													
 						if($this->chemin != null)
 						$this->idPhotoVersion = $this->maBase->InsertionTablePhoto($this->chemin, $this->TexteAlternatif);
 						$this->maBase->InsertionTablePhotoVersion($this->idPhotoVersion,$this->idVersion);
 					}
 					else
-						$this->maBase->UpdateTableVersion($this->idVersion, $this->nomVersion, $this->description, $this->ageMinimum, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->idJeu);
+						$this->maBase->UpdateTableVersion($this->idVersion, $this->nomVersion, $this->description, $this->ageMinimum, $myPlayer, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->idJeu);
 					
 					$this->maBase->DeleteTableEditeurVersion($this->idVersion);
 					$this->maBase->DeleteTableDistributeurVersion($this->idVersion);
 					$this->maBase->DeleteTableIllustrateurVersion($this->idVersion);
 					
-					//print_r($this->idEditeur);
-					foreach($this->idEditeur as $editeur)
-						var_dump($this->maBase->InsertionTableEditeurVersion($this->idVersion, $editeur));
 					foreach($this->idDistributeur as $distributeur)
 						$this->maBase->InsertionTableDistributeurVersion($this->idVersion, $distributeur);
 					foreach($this->idIllustrateur as $illustrateur)
@@ -528,8 +578,8 @@ class ModuleAjoutVersions extends Module
 					else
 					{
 						if($_POST["Ajouter"]) {
-							header("Location: " . MODULE_GESTION_JEUX);
-							exit;
+							//header("Location: " . MODULE_GESTION_JEUX);
+							//exit;
 						} else if($_POST["AjouterExemplaire"]) {
 							header("Location: " . MODULE_AJOUT_EXEMPLAIRES . "&idVersion=" . $this->idVersion);
 							exit;
@@ -541,7 +591,82 @@ class ModuleAjoutVersions extends Module
 				}
 			}
 		}
-	}	
+	}
+	
+	function redimension_image($fichier, $poidsMax, $largeurMax, $hauteurMax, $dossier = "") {
+		$retour = 1;
+		if($fichier['size'] <= $poidsMax) {
+			$retour                = 2;
+			$infosfichier          = pathinfo($fichier['name']);
+			$extension_upload      =  substr($fichier['name'],strrpos($fichier['name'],"."));
+			$extensions_autorisees = array(".jpg", ".jpeg", ".gif", ".png");
+			//$nomImg                = basename($fichier['name']);
+	
+			$nomImg = md5(date("Y-m-d-H-i-s")).basename($fichier['name']);
+	
+	
+	
+	
+			if(in_array($extension_upload, $extensions_autorisees)) {
+				$retour  = 0;
+				$infos   = getimagesize($fichier['tmp_name']);
+				$largeur = $infos[0];
+				$hauteur = $infos[1];
+	
+				if($largeur > $largeurMax || $hauteur > $hauteurMax) {
+					if($extension_upload == ".jpg" || $extension_upload == ".jpeg") {
+						$objImage = imagecreatefromjpeg($fichier['tmp_name']);
+					}
+					elseif($extension_upload == ".gif") {
+						$objImage = imagecreatefromgif($fichier['tmp_name']);
+					}
+					else {
+						$objImage = imagecreatefrompng($fichier['tmp_name']);
+					}
+	
+					if($largeur >= $hauteur && $largeur > $largeurMax) {
+						// REDUCTION PAR LA LARGEUR
+						$nouvelleLargeur = $largeurMax;
+						$reduction       = ( ($largeurMax*100) / $largeur );
+						$nouvelleHauteur = ( ($hauteur*$reduction) / 100 );
+					}
+					else {
+						// REDUCTION PAR LA HAUTEUR
+						$nouvelleHauteur = $hauteurMax;
+						$reduction       = ( ($hauteurMax*100) / $hauteur );
+						$nouvelleLargeur = ( ($largeur*$reduction) / 100 );
+					}
+	
+					$nouvelleImage = imagecreatetruecolor($nouvelleLargeur , $nouvelleHauteur);
+	
+					if($extension_upload == ".png") {
+						// fond transparent (pour les png avec transparence)
+						imagesavealpha($nouvelleImage, true);
+						$trans_color = imagecolorallocatealpha($nouvelleImage, 0, 0, 0, 127);
+						imagefill($nouvelleImage, 0, 0, $trans_color);
+					}
+	
+					imagecopyresampled($nouvelleImage, $objImage, 0, 0, 0, 0, $nouvelleLargeur, $nouvelleHauteur, $largeur, $hauteur);
+					imagedestroy($objImage);
+	
+					if($extension_upload == ".jpg" || $extension_upload == ".jpeg") {
+						imagejpeg($nouvelleImage, $dossier.$nomImg, 100);
+					}
+					elseif($extension_upload == ".gif") {
+						imagegif($nouvelleImage, $dossier.$nomImg);
+					}
+					else {
+						imagepng($nouvelleImage, $dossier.$nomImg, 9);
+	
+					}
+				}
+				else {
+					move_uploaded_file($fichier['tmp_name'], $dossier.$nomImg);
+				}
+			}
+		}
+		return $retour;
+	}
     
 }
 
