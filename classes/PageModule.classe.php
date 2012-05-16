@@ -13,6 +13,7 @@ require_once("classes/ModuleAjoutJeux.classe.php");
 require_once("classes/ModuleAjoutVersions.classe.php");
 require_once("classes/ModuleAjoutExemplaires.classe.php");
 require_once("classes/ModuleRecherche.classe.php");
+require_once("classes/ModuleFicheJeu.classe.php");
 
 // Constantes
 
@@ -121,6 +122,10 @@ class PageModule extends Page
 					// On créé l'objet chargé de faire des recherches. Ceci est une page de test.
 					$this->unModule = new ModuleRecherche();
 					break;
+				case "FicheJeu" :
+                    // On créé l'objet chargé de gerer le module profil
+                    $this->unModule = new ModuleFicheJeu($this->monUtilisateur);
+                    break;
 			}
 		}
 		else
@@ -167,6 +172,7 @@ class PageModule extends Page
 		//$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_JEUX . "\">Ajouter Jeux</a></li>");
 		//$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_VERSIONS . "\">Ajouter Versions</a></li>");
 		//$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_EXEMPLAIRES . "\">Ajouter Exemplaires</a></li>");
+		$this->ajouteLigne("<li><a href=\"" . MODULE_FICHEJEU . "\">FicheJeu</a></li>");
 
 		$this->ajouteLigne("<li><a href=\"\">Utilisateurs</a></li>");
         // Si l'utilisateur à accès au module Groupes
@@ -181,9 +187,10 @@ class PageModule extends Page
                 {
                     // On lui affiche le lien
                     $this->ajouteLigne("<li><a href=\"" . MODULE_GROUPES . "\">Groupes</a></li>");
-                }
+                }		
 		$this->fermeBloc("</ol>");
 		$this->fermeBloc("</nav>");
+		
 	}
 
 

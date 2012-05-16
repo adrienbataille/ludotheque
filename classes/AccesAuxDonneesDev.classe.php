@@ -189,10 +189,12 @@ define("DISPONIBLE","1");
 
  */
 
+
 class AccesAuxDonneesDev
 {
 
 	// Attributs
+
 	// Variable de classe stockant le premier objet créé
 	// Sert à garantir qu'on ne créera qu'un seul objet
 	private static $connexionBase = NULL;
@@ -2021,7 +2023,521 @@ class AccesAuxDonneesDev
 		return $time;
 
 	}
+	
+	
+	// Réquêtes fiche de jeu
+	
+	
+	
+	/**
+	* Fonction de récupération des informations d'un jeu
+	* Entrée : l'id de la version
+	* Sortie : le tableau correspondant à cette version
+	* Si le jeu n'existe pas en base, renvoi false
+	*/
+	public function recupInfoJeu($uneID)
+	{
+		// Protection contre injection SQL
+		if ( intval($uneID) )
+		{			
+			// construction de la requete SQL permettant de recuperer les info de 
+			// la version et le jeu associés à l'idJeu 
+			$requete = 			"SELECT v.".ID_JEU.",".DESCRIPTION_JEU.",".ID_PAYS.","
+											.NOM_VERSION.",".DESCRIPTION_VERSION.",".AGE_MINIMUM.","
+											.NB_JOUEUR_RECOMMANDE.",".DUREE_PARTIE.",".PRIX_ACHAT.","
+											.ANNEE_SORTIE."
+								FROM ".TABLE_JEUX." j , ".TABLE_VERSION." v
+								WHERE ".ID_VERSION." = ".$uneID . "
+								AND v.".ID_JEU." = j.".ID_JEU."
+								";
 
+			// Execution 
+			$monJeu = $this->requeteSelectDev($requete);
+			
+			// Si l'utilisateur n'existe pas dans la base
+			if (count($monJeu) == 0)
+			{
+				return false;
+			}
+			else // L'utilisateur existe dans la base
+			{
+				// On renvoie juste la ligne le concernant
+				// Il ne doit pas exister 2 utilisateurs de même id 
+				// donc le tableau fait toujours 1 ligne
+				return $monJeu[0];
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	
+	/**
+	* Fonction de récupération du nom du jeu
+	* Entrée : l'id du jeu
+	* Sortie : le(s) nom(s) du jeu
+	* Si le jeu n'existe pas en base, renvoi false
+	*/
+	public function recupJeuLangue($uneID)
+	{
+		// Protection contre injection SQL
+		if ( intval($uneID) )
+		{			
+			// construction de la requete SQL permettant de recuperer les langues associées au jeu
+			$requete = 	"SELECT ".NOM_JEU."
+						FROM ".TABLE_NOM_JEU." j 
+						WHERE ".ID_JEU." = ".$uneID . " ";
+
+			// Execution 
+			$monJeuLangue = $this->requeteSelectDev($requete);
+			
+			// Si l'utilisateur n'existe pas dans la base
+			if (count($monJeuLangue) == 0)
+			{
+				return false;
+			}
+			else // L'utilisateur existe dans la base
+			{
+				// On renvoie juste la ligne le concernant
+				// Il ne doit pas exister 2 utilisateurs de même id 
+				// donc le tableau fait toujours 1 ligne
+				return $monJeuLangue;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	/**
+	* Fonction de récupération des auteurs du jeu
+	* Entrée : l'id du jeu
+	* Sortie : le(s) nom(s) des auteurs
+	* Si les auteurs n'existe pas en base, renvoi false
+	*/
+	public function recupAuteurs($uneID)
+	{
+		// Protection contre injection SQL
+		if ( intval($uneID) )
+		{			
+			// construction de la requete SQL permettant de recuperer les langues associées au jeu
+			$requete = 	"SELECT ".NOM_AUTEUR."
+						FROM ".TABLE_AUTEUR_JEU." aj , ".TABLE_AUTEUR." a
+						WHERE ".ID_JEU." = ".$uneID . "
+						AND aj.".ID_AUTEUR." = a.".ID_AUTEUR."";
+
+			// Execution 
+			$monJeuAuteur = $this->requeteSelectDev($requete);
+			
+			// Si l'utilisateur n'existe pas dans la base
+			if (count($monJeuAuteur) == 0)
+			{
+				return false;
+			}
+			else // L'utilisateur existe dans la base
+			{
+				// On renvoie juste la ligne le concernant
+				// Il ne doit pas exister 2 utilisateurs de même id 
+				// donc le tableau fait toujours 1 ligne
+				return $monJeuAuteur;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	/**
+	* Fonction de récupération des catégorie du jeu
+	* Entrée : l'id du jeu
+	* Sortie : le(s) nom(s) des catégorie
+	* Si les catégorie n'existe pas en base, renvoi false
+	*/
+	public function recupCategorieJeuVersion($uneID)
+	{
+		// Protection contre injection SQL
+		if ( intval($uneID) )
+		{
+			$requete = 	"SELECT ".NOM_CATEGORIE."
+						FROM ".TABLE_CATEGORIE_JEU." aj , ".TABLE_CATEGORIE." a
+						WHERE ".ID_JEU." = ".$uneID . "
+						AND aj.".ID_CATEGORIE." = a.".ID_CATEGORIE."";
+
+			// Execution 
+			$monJeuAuteur = $this->requeteSelectDev($requete);
+			
+			// Si l'utilisateur n'existe pas dans la base
+			if (count($monJeuAuteur) == 0)
+			{
+				return false;
+			}
+			else // L'utilisateur existe dans la base
+			{
+				// On renvoie juste la ligne le concernant
+				// Il ne doit pas exister 2 utilisateurs de même id 
+				// donc le tableau fait toujours 1 ligne
+				return $monJeuAuteur;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	/**
+	* Fonction de récupération des illustrateurs du jeu
+	* Entrée : l'id de la version
+	* Sortie : le(s) nom(s) des illustrateurs
+	* Si les illustrateurs n'existent pas en base, renvoi false
+	*/
+	public function recupIllustrateurs($uneID)
+	{
+		// Protection contre injection SQL
+		if ( intval($uneID) )
+		{			
+			// construction de la requete SQL permettant de recuperer les langues associées au jeu
+			$requete = 	"SELECT ".NOM_ILLUSTRATEUR."
+						FROM ".TABLE_ILLUSTRATEUR_VERSION." iv , ".TABLE_ILLUSTRATEUR." i
+						WHERE ".ID_VERSION." = ".$uneID . "
+						AND iv.".ID_ILLUSTRATEUR." = i.".ID_ILLUSTRATEUR."";
+
+			// Execution 
+			$monJeuIllustrateur = $this->requeteSelectDev($requete);
+			
+			// Si l'utilisateur n'existe pas dans la base
+			if (count($monJeuIllustrateur) == 0)
+			{
+				return false;
+			}
+			else // L'utilisateur existe dans la base
+			{
+				// On renvoie juste la ligne le concernant
+				// Il ne doit pas exister 2 utilisateurs de même id 
+				// donc le tableau fait toujours 1 ligne
+				return $monJeuIllustrateur;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	/**
+	* Fonction de récupération des distributeurs du jeu
+	* Entrée : l'id de la version
+	* Sortie : le(s) nom(s) des distributeurs
+	* Si les distributeurs n'existent pas en base, renvoi false
+	*/
+	public function recupDistributeurs($uneID)
+	{
+		// Protection contre injection SQL
+		if ( intval($uneID) )
+		{			
+			// construction de la requete SQL permettant de recuperer les langues associées au jeu
+			$requete = 	"SELECT ".NOM_DISTRIBUTEUR."
+						FROM ".TABLE_DISTRIBUTEUR_VERSION." iv , ".TABLE_DISTRIBUTEUR." i
+						WHERE ".ID_VERSION." = ".$uneID . "
+						AND iv.".ID_DISTRIBUTEUR." = i.".ID_DISTRIBUTEUR."";
+
+			// Execution 
+			$monJeuDistributeur = $this->requeteSelectDev($requete);
+			
+			// Si l'utilisateur n'existe pas dans la base
+			if (count($monJeuDistributeur) == 0)
+			{
+				return false;
+			}
+			else // L'utilisateur existe dans la base
+			{
+				// On renvoie juste la ligne le concernant
+				// Il ne doit pas exister 2 utilisateurs de même id 
+				// donc le tableau fait toujours 1 ligne
+				return $monJeuDistributeur;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	
+	/**
+	* Fonction de récupération des editeurs du jeu
+	* Entrée : l'id de la version
+	* Sortie : le(s) nom(s) des editeurs
+	* Si les editeurs n'existent pas en base, renvoi false
+	*/
+	public function recupEditeurs($uneID)
+	{
+		// Protection contre injection SQL
+		if ( intval($uneID) )
+		{			
+			// construction de la requete SQL permettant de recuperer les langues associées au jeu
+			$requete = 	"SELECT ".NOM_EDITEUR."
+						FROM ".TABLE_EDITEUR_VERSION." iv , ".TABLE_EDITEUR." i
+						WHERE ".ID_VERSION." = ".$uneID . "
+						AND iv.".ID_EDITEUR." = i.".ID_EDITEUR."";
+
+			// Execution 
+			$monJeuEditeur = $this->requeteSelectDev($requete);
+			
+			// Si l'utilisateur n'existe pas dans la base
+			if (count($monJeuEditeur) == 0)
+			{
+				return false;
+			}
+			else // L'utilisateur existe dans la base
+			{
+				// On renvoie juste la ligne le concernant
+				// Il ne doit pas exister 2 utilisateurs de même id 
+				// donc le tableau fait toujours 1 ligne
+				return $monJeuEditeur;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	
+	/**
+	* Fonction de récupération de la photo de la version
+	* Entrée : l'id de la version
+	* Sortie : le chemin de l'image (type "image.xxx")
+	*/
+	public function recupPhotoVersion($uneID)
+	{
+		// Protection contre injection SQL
+		if ( intval($uneID) )
+		{			
+			// construction de la requete SQL permettant de recuperer la photo associée a la version du jeu
+			$requete = 	"SELECT ".NOM_PHOTO."
+						FROM ".TABLE_PHOTO." p ,".TABLE_PHOTO_VERSION." pv, ".TABLE_VERSION." v 
+						WHERE v.".ID_VERSION." = ".$uneID."
+						AND	v.".ID_VERSION."=pv.".ID_VERSION."
+						AND	pv.".ID_PHOTO."=p.".ID_PHOTO."" ;
+
+			// Execution 
+			$maPhotoVersion = $this->requeteSelectDev($requete);
+			
+			// Si l'utilisateur n'existe pas dans la base
+			if (count($maPhotoVersion) == 0)
+			{
+				return false;
+			}
+			else // L'utilisateur existe dans la base
+			{
+				// On renvoie juste la ligne le concernant
+				// Il ne doit pas exister 2 utilisateurs de même id 
+				// donc le tableau fait toujours 1 ligne
+				return $maPhotoVersion;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+        
+    /**
+	* Fonction de mise à jour des informations d'un utilisateur
+	* Entrée : l'id de cet utilisateur et toutes les informations associées
+	* Sortie : true si la mise à jour s'est bien passée, sinon false
+	*/
+	public function miseAJourInfoUtilisateur($uneID,$unTitre,$unNom,$unPrenom,$unEmail,$actif,$uneAdresse,$unCodePostal,$unTelephone,$unPortable,$dateDeNaissance,$uneProfession,$dateAdhesion,$dateCotisation,$exemptCotisation,$commentaires)
+	{
+		// Protection contre injection SQL
+		if ( intval($uneID) )
+		{
+                    // On initie la connexion à la base, si ce n'est déjà fait
+                    $this->connecteBase();
+                    // Création de la requete
+                    $requete = $this->maBase->prepare("UPDATE " .
+				TABLE_UTILISATEURS .
+				" SET " .
+                                TITRE .
+                                "=?," .
+                                NOM .
+                                "=?," .
+                                PRENOM .
+                                "=?," .
+                                EMAIL .
+                                "=?," .
+                                ACTIF .
+                                "=?," .
+                                ADRESSE .
+                                "=?," .
+                                TELEPHONE .
+                                "=?," .
+                                PORTABLE .
+                                "=?," .
+                                DATE_NAISSANCE .
+                                "=?," .
+                                PROFESSION .
+                                "=?," .
+                                DATE_ADHESION .
+                                "=?," .
+                                DATE_COTISATION .
+                                "=?," .
+                                EXEMPT_COTISATION .
+                                "=?," .
+                                COMMENTAIRES .
+                                "=? WHERE " .
+                                ID_UTILISATEUR .
+                                "=?;");
+                    $requete->bindValue(1, $unTitre, PDO::PARAM_STR);
+                    $requete->bindValue(2, $unNom, PDO::PARAM_STR);
+                    $requete->bindValue(3, $unPrenom, PDO::PARAM_STR);
+                    $requete->bindValue(4, $unEmail, PDO::PARAM_STR);
+                    $requete->bindValue(5, $actif, PDO::PARAM_BOOL);
+                    $requete->bindValue(6, $uneAdresse, PDO::PARAM_STR);
+                    $requete->bindValue(7, $unTelephone, PDO::PARAM_STR);
+                    $requete->bindValue(8, $unPortable, PDO::PARAM_STR);
+                    $requete->bindValue(9, $dateDeNaissance, PDO::PARAM_STR);
+                    $requete->bindValue(10, $uneProfession, PDO::PARAM_STR);
+                    $requete->bindValue(11, $dateAdhesion, PDO::PARAM_STR);
+                    $requete->bindValue(12, $dateCotisation, PDO::PARAM_STR);
+                    $requete->bindValue(13, $exemptCotisation, PDO::PARAM_BOOL);
+                    $requete->bindValue(14, $commentaires, PDO::PARAM_STR);
+                    $requete->bindValue(15, $uneID, PDO::PARAM_INT);
+                    $resultat = $requete->execute();
+
+                    // On termine l'utilisation de la requete
+                    $requete->closeCursor();
+		}
+		else
+		{
+			return false;
+		}
+	}
+        
+        
+	/**
+	* Fonction de récupération de la liste des types d'adhérents disponibles
+	* Sortie : le tableau contenant cette liste
+	*/
+	public function recupTypesAdherent()
+	{
+		$laListe = $this->requeteSelect(
+			"SELECT " .
+			TYPE_ADHERENT .
+			" FROM " .
+			TABLE_TYPE_ADHERENT
+			);
+		return $laListe;
+	}
+	
+	/**
+     * Fonction d'affichage du formulaire de modification des groupes d'un utilisateur
+     */
+    public function afficheFormulaireUtilisateur()
+    {
+        // Récupération de l'id et du nom du groupe depuis POST
+        $tableau = explode("ø", $_POST["utilisateur"]);
+        $idUtilisateur = $tableau[0];
+        $prenom = $tableau[1];
+        $nom = $tableau[2];
+        
+        // On affiche le contenu du formulaire	
+        $this->ouvreBloc("<form method='post' action='" .
+		MODULE_GROUPES . "'>");
+        
+        // On affiche la liste des groupes
+        $this->ouvreBloc("<fieldset>");
+        $this->ajouteLigne("<legend> " .
+            $this->convertiTexte("Modifier les groupes de " . $prenom . " " . $nom) .
+            "</legend>");		
+        $this->ouvreBloc("<ol>");
+        // Afficher les groupes
+        
+        // On récupère la liste des groupes de l'utilisateur
+        $listeGroupes = $this->maBase->recupGroupesUtilisateurAvecID($idUtilisateur);
+        
+        // On affiche la liste des groupes
+        foreach ($this->maBase->recupGroupes() as $unGroupe) 
+        {
+            $this->ouvreBloc("<li>");
+            $this->ajouteLigne("<label for='" . $unGroupe[ID_GROUPE] . "'>" .
+			$this->convertiTexte($unGroupe[NOM_GROUPE] ) .
+	  		"</label>");
+            // Si l'utilisateur fait partie de la liste des Utilisateur du groupe
+            if (in_array($unGroupe, $listeGroupes))
+            {
+                // On le coche
+                $this->ajouteLigne("<input type='checkbox' name='" . $unGroupe[ID_GROUPE] . "' checked='checked'/></p>");
+            }
+            else
+            {
+                // On ne le coche pas
+                $this->ajouteLigne("<input type='checkbox' name='" . $unGroupe[ID_GROUPE] . "' /></p>");
+            }	
+            $this->fermeBloc("</li>");
+        }
+        $this->fermeBloc("</ol>");
+        $this->fermeBloc("</fieldset>");
+        $this->ouvreBloc("<fieldset>");
+        $this->ajouteLigne("<input type='hidden' name='idUtilisateur' value='" . $idUtilisateur . "' />");
+        $this->ajouteLigne("<button type='submit' name='modifierUtilisateur'>Modifier les groupes</button>");
+        $this->fermeBloc("</fieldset>");
+        $this->fermeBloc("</form>");   
+    }
+
+		
+		
+	/**
+	* Fonction de récupération des exemplaires
+	* Entrée : l'id de la version
+	* Sortie : le(s) exemplaires(s) du jeu
+	* Si le jeu n'existe pas en base, renvoi false
+	*/
+	public function recupExemplaireJeu($uneID)
+	{
+		// Protection contre injection SQL
+		if ( intval($uneID) )
+		{			
+			// construction de la requete SQL permettant de recuperer les langues associées au jeu
+				
+			$requete = 	"SELECT ".DESCRIPTION_EXEMPLAIRE.",".PRIX_MDJT.",".DATE_ACHAT.",".DATE_FIN_VIE.",".NOM_LIEU."
+						FROM ".TABLE_EXEMPLAIRE." ex, ".TABLE_LIEU." l
+						WHERE ex.".ID_VERSION." = ".$uneID . "
+						AND  ex.".ID_LIEU_REEL." = l.".ID_LIEU."
+						 
+						AND ex.".ID_EXEMPLAIRE." NOT IN ( SELECT ".ID_EXEMPLAIRE."
+															FROM ".TABLE_EMPRUNT."
+															WHERE now() NOT BETWEEN ".DATE_EMPRUNT." AND ".DATE_RETOUR_SOUHAITE." 
+															);
+						";
+			//AND ".DATE_FIN_VIE." = '0000-00-00'			
+			// Execution 
+			$mesExemplaires = $this->requeteSelectDev($requete);
+			
+			// Si l'utilisateur n'existe pas dans la base
+			if (count($mesExemplaires) == 0)
+			{
+				return false;
+			}
+			else // L'utilisateur existe dans la base
+			{
+				// On renvoie juste la ligne le concernant
+				// Il ne doit pas exister 2 utilisateurs de même id 
+				// donc le tableau fait toujours 1 ligne
+				return $mesExemplaires;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 }
 

@@ -221,6 +221,7 @@ class SessionUtilisateur
 	{
 		 return $this->login;
 	}
+	
   
 	/**
 	* Fonction permettant la récupération d'identificateur de session phpbb3

@@ -449,7 +449,7 @@ class ModuleProfil extends Module
 		{
 			// Traitement du formulaire
 			$this->traitementFormulaire = true;			
-			// Nettoyage des variables POST récupérée
+			// Nettoyage des variables POST récupérées
 			// Contre injection de code
 			// mysql_real_escape_string(); Echappement des caractères spéciaux SQL
 			// Nettoyage de Titre

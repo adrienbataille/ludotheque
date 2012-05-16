@@ -124,6 +124,8 @@ class AccesAuxDonnees
 		}
 	}
   
+  
+  
   //
   // Outils à usage interne
   //
@@ -157,7 +159,6 @@ class AccesAuxDonnees
             }
 	}
 	
-        
 	/**
 	* Fonction générique de requête type sélection dans la base
 	*/
@@ -191,6 +192,7 @@ class AccesAuxDonnees
 			return false;
 		}
 	}
+	
 	
 	//
 	// Requêtes accessibles au reste du site

@@ -605,6 +605,148 @@ form#login {
 			}
 
 		/* ***************** */
+		/* Module JEU */
+		/* ***************** */
+		
+		form#formJeu {
+			width: 500px;
+			padding-bottom: 10px;
+		}
+
+		form#formJeu fieldset {
+			border: none;
+			margin-bottom: 10px;
+		}		
+
+		form#formJeu legend {
+			font-size: 16px;
+			font-weight: bold;
+			padding-bottom: 10px;
+		}
+		
+		form#formJeu #photo {
+			padding-left:20px;
+			padding-bottom:15px;
+			float:left;
+			width:42%;
+			position:absolute; 
+		}
+		
+		form#formJeu div2 {
+			line-height: 10px;
+		}
+
+		form#formJeu #info {
+			left:50%;
+			width:50%;
+		}
+		
+		form#formJeu #bloc_cent {
+			border:none;
+			background:none;
+			padding-left:0px;
+			padding-top:0px;
+			padding-bottom:0px;
+		}		
+		
+		form#formJeu img {
+			padding-left:-10px;
+			padding-top:10px;
+		}
+		
+		form#formJeu div {
+			padding-left:170px;
+			padding-right:10px;
+			position:relative;
+			text-indent: 0em;
+			width: 100%;
+			background: #fff;
+			border: solid 1px #555555;
+			-moz-border-radius: 5px;
+			-webkit-border-radius: 5px;
+			line-height: 30px;
+			border-radius: 5px;
+			list-style: none;
+			padding-top: 2px;
+			padding-bottom: 2px;
+			margin-bottom: 2px;
+			clear:both;
+		}
+		/*
+		form#formJeu ol li {
+			padding-left:170px;
+			padding-right:10px;
+			position:relative;
+			text-indent: 0em;
+			width: 100%;
+			background: #fff;
+			border: solid 1px #555555;
+			-moz-border-radius: 5px;
+			-webkit-border-radius: 5px;
+			line-height: 30px;
+			border-radius: 5px;
+			list-style: none;
+			padding-top: 2px;
+			padding-bottom: 2px;
+			margin-bottom: 2px;
+			clear:both;
+		}
+		*/
+
+		form#formJeu label {
+			float: left;
+			font-weight: bold;
+			text-indent:-160px;
+		}
+		
+		form#formJeu input {
+			width: 270px;
+
+		}
+
+		form#formJeu textarea {
+			width: 270px;
+		}
+
+		form#formJeu select {
+			background: #fff;
+			color: #555555;
+		}
+
+		form#formJeu button {
+			
+			background: #00BFFE;
+			border: solid 1px #333333;
+			-moz-border-radius: 20px;
+			-webkit-border-radius: 20px;
+			-khtml-border-radius: 20px;
+			border-radius: 20px;
+			webkit-box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+			-moz-box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+			box-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+			color: #fff;
+			display: block;
+			font: 16px;
+			letter-spacing: 1px;
+			margin: auto;
+			padding: 7px 25px;
+			text-transform: uppercase;
+		}
+	
+			form#formJeu button:hover {
+				background: #fff;
+				color: #00BFFE;
+				cursor: pointer;
+			}
+			
+			form#formJeu button:active {
+				webkit-box-shadow: 0 0;
+				-moz-box-shadow: 0 0;
+				box-shadow: 0;
+			}
+			
+			
+		/* ***************** */
 		/* Module LUDOTHEQUE */
 		/* ***************** */
 
@@ -622,3 +764,6 @@ form#login {
 			background-position: 0px 0px;
 		}
 
+
+		
+		

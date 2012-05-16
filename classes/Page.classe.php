@@ -6,6 +6,7 @@
 // Inclusion des fichiers utiles
 require_once("classes/AccesAuxDonnees.classe.php");
 require_once("classes/AccesAuxDonneesDev.classe.php");
+//require_once("classes/AccesAuxDonneesDevFicheJeu.classe.php");
 require_once("classes/SessionUtilisateur.classe.php");
 require_once("classes/AccesAuxDonneesDev.classe.php");
 
@@ -41,7 +42,6 @@ define("DECONNEXION", RACINE_SITE . "deconnexion.php");
 define ("REDIRECTION_PHPBB", "../module.php"); // Avant : ./v2/module.php
 // Page de PHPBB interceptant le formulaire de connexion
 define ("PAGE_LOGIN_PHPBB", "forum/ucp.php?mode=login"); // Avant : http://mdjt.org/forum/ucp.php?mode=login
-
 // Test à supprimer define ("PAGE_LOGOUT_PHPBB", "http://mdjt.org/forum/ucp.php?mode=logout");
 
 // Constante - nombre d'espace d'indentation
