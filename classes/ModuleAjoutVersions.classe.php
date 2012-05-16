@@ -313,52 +313,61 @@ class ModuleAjoutVersions extends Module
 		
 		// Nombre Joueur
 	    $this->ouvreBloc("<li>");
-		$this->ajouteLigne("<label for='" . NB_JOUEUR . "'>" . $this->convertiTexte("Nombre de joueurs") . "</label>");
+		$this->ajouteLigne("<label for='" . NB_JOUEUR . "'>" . $this->convertiTexte("Nombre de joueurs") . "</label><br />");
 		
-		if(in_array("1", $this->nbJoueur))
-			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='1' checked='checked' />1");
-		else
-			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='1' />1");
+		if($this->nbJoueur != null)
+			if(in_array("1", $this->nbJoueur))
+				$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='1' checked='checked' />1");
+			else
+				$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='1' />1");
 		
-		if(in_array("2", $this->nbJoueur))
-			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='2' checked='checked' />2");
-		else
-			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='2' />2");
-		
-		if(in_array("3", $this->nbJoueur))
-			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='3' checked='checked' />3");
-		else
-			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='3' />3");
-		
-		if(in_array("4", $this->nbJoueur))
-			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='4' checked='checked' />4");
-		else
-			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='4' />4");
-		
-		if(in_array("5", $this->nbJoueur))
-			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='5' checked='checked' />5");
-		else
-			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='5' />5");
-		
-		if(in_array("6", $this->nbJoueur))
-			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='6' checked='checked' />6");
-		else
-			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='6' />6");
-		
-		if(in_array("7", $this->nbJoueur))
-			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='7' checked='checked' />7");
-		else
-			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='7' />7");
-		
-		if(in_array("8", $this->nbJoueur))
-			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='8' checked='checked' />8");
-		else
-			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='8' />8");
+		if($this->nbJoueur != null)
+			if(in_array("2", $this->nbJoueur))
+				$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='2' checked='checked' />2");
+			else
+				$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='2' />2");
 			
-		if(in_array("9", $this->nbJoueur))
-			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='9' checked='checked' />9");
-		else
-			$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='9' />9 et plus");
+		if($this->nbJoueur != null)
+			if(in_array("3", $this->nbJoueur))
+				$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='3' checked='checked' />3");
+			else
+				$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='3' />3");
+
+		if($this->nbJoueur != null)
+			if(in_array("4", $this->nbJoueur))
+				$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='4' checked='checked' />4");
+			else
+				$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='4' />4");
+
+		if($this->nbJoueur != null)
+			if(in_array("5", $this->nbJoueur))
+				$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='5' checked='checked' />5");
+			else
+				$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='5' />5");
+
+		if($this->nbJoueur != null)
+			if(in_array("6", $this->nbJoueur))
+				$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='6' checked='checked' />6");
+			else
+				$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='6' />6");
+
+		if($this->nbJoueur != null)
+			if(in_array("7", $this->nbJoueur))
+				$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='7' checked='checked' />7");
+			else
+				$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='7' />7");
+
+		if($this->nbJoueur != null)
+			if(in_array("8", $this->nbJoueur))
+				$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='8' checked='checked' />8");
+			else
+				$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='8' />8");
+
+		if($this->nbJoueur != null)
+			if(in_array("9", $this->nbJoueur))
+				$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='9' checked='checked' />9");
+			else
+				$this->ajouteLigne("<input type='checkbox' name='"  . NB_JOUEUR . "[]' id='" . NB_JOUEUR . "' value='9' />9 et plus");
 		
 		$this->fermeBloc("</li>");
 		

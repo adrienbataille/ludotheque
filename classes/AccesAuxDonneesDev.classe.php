@@ -2052,7 +2052,7 @@ class AccesAuxDonneesDev
 								";
 
 			// Execution 
-			$monJeu = $this->requeteSelectDev($requete);
+			$monJeu = $this->requeteSelect($requete);
 			
 			// Si l'utilisateur n'existe pas dans la base
 			if (count($monJeu) == 0)
@@ -2091,7 +2091,7 @@ class AccesAuxDonneesDev
 						WHERE ".ID_JEU." = ".$uneID . " ";
 
 			// Execution 
-			$monJeuLangue = $this->requeteSelectDev($requete);
+			$monJeuLangue = $this->requeteSelect($requete);
 			
 			// Si l'utilisateur n'existe pas dans la base
 			if (count($monJeuLangue) == 0)
@@ -2130,7 +2130,7 @@ class AccesAuxDonneesDev
 						AND aj.".ID_AUTEUR." = a.".ID_AUTEUR."";
 
 			// Execution 
-			$monJeuAuteur = $this->requeteSelectDev($requete);
+			$monJeuAuteur = $this->requeteSelect($requete);
 			
 			// Si l'utilisateur n'existe pas dans la base
 			if (count($monJeuAuteur) == 0)
@@ -2168,7 +2168,7 @@ class AccesAuxDonneesDev
 						AND aj.".ID_CATEGORIE." = a.".ID_CATEGORIE."";
 
 			// Execution 
-			$monJeuAuteur = $this->requeteSelectDev($requete);
+			$monJeuAuteur = $this->requeteSelect($requete);
 			
 			// Si l'utilisateur n'existe pas dans la base
 			if (count($monJeuAuteur) == 0)
@@ -2207,7 +2207,7 @@ class AccesAuxDonneesDev
 						AND iv.".ID_ILLUSTRATEUR." = i.".ID_ILLUSTRATEUR."";
 
 			// Execution 
-			$monJeuIllustrateur = $this->requeteSelectDev($requete);
+			$monJeuIllustrateur = $this->requeteSelect($requete);
 			
 			// Si l'utilisateur n'existe pas dans la base
 			if (count($monJeuIllustrateur) == 0)
@@ -2246,7 +2246,7 @@ class AccesAuxDonneesDev
 						AND iv.".ID_DISTRIBUTEUR." = i.".ID_DISTRIBUTEUR."";
 
 			// Execution 
-			$monJeuDistributeur = $this->requeteSelectDev($requete);
+			$monJeuDistributeur = $this->requeteSelect($requete);
 			
 			// Si l'utilisateur n'existe pas dans la base
 			if (count($monJeuDistributeur) == 0)
@@ -2286,7 +2286,7 @@ class AccesAuxDonneesDev
 						AND iv.".ID_EDITEUR." = i.".ID_EDITEUR."";
 
 			// Execution 
-			$monJeuEditeur = $this->requeteSelectDev($requete);
+			$monJeuEditeur = $this->requeteSelect($requete);
 			
 			// Si l'utilisateur n'existe pas dans la base
 			if (count($monJeuEditeur) == 0)
@@ -2326,7 +2326,7 @@ class AccesAuxDonneesDev
 						AND	pv.".ID_PHOTO."=p.".ID_PHOTO."" ;
 
 			// Execution 
-			$maPhotoVersion = $this->requeteSelectDev($requete);
+			$maPhotoVersion = $this->requeteSelect($requete);
 			
 			// Si l'utilisateur n'existe pas dans la base
 			if (count($maPhotoVersion) == 0)
@@ -2518,7 +2518,7 @@ class AccesAuxDonneesDev
 						";
 			//AND ".DATE_FIN_VIE." = '0000-00-00'			
 			// Execution 
-			$mesExemplaires = $this->requeteSelectDev($requete);
+			$mesExemplaires = $this->requeteSelect($requete);
 			
 			// Si l'utilisateur n'existe pas dans la base
 			if (count($mesExemplaires) == 0)

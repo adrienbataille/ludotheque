@@ -45,13 +45,10 @@ class ModuleFicheJeu extends Module
 			header('Location:' . PAGE_INDEX);
 		}
 		//$this->maVersion=1;
-			
-		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
-		$this->maBase = AccesAuxDonneesDevFicheJeu::recupAccesDonneesDev();
 		
 		
 		// On affiche le contenu du module
-		$this->baseDonnees = AccesAuxDonneesDevFicheJeu::recupAccesDonneesDev();
+		$this->baseDonnees = AccesAuxDonneesDev::recupAccesDonneesDev();
 		
 		// En entrée : l'idVersion
 		$this->infosJeu = $this->baseDonnees->recupInfoJeu($this->maVersion);
