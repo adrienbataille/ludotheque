@@ -188,7 +188,7 @@ class PageModule extends Page
 		//$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_JEUX . "\">Ajouter Jeux</a></li>");
 		//$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_VERSIONS . "\">Ajouter Versions</a></li>");
 		//$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_EXEMPLAIRES . "\">Ajouter Exemplaires</a></li>");
-		$this->ajouteLigne("<li><a href=\"" . MODULE_FICHEJEU . "\">FicheJeu</a></li>");
+		//$this->ajouteLigne("<li><a href=\"" . MODULE_FICHEJEU . "\">FicheJeu</a></li>");
 		$this->ajouteLigne("<li><a href=\"" . MODULE_EMPRUNTER . "\">Gestion Emprunt</a></li>");
 		$this->ajouteLigne("<li><a href=\"\">Utilisateurs</a></li>");
         // Si l'utilisateur à accès au module Groupes

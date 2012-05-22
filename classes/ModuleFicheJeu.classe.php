@@ -133,7 +133,7 @@ class ModuleFicheJeu extends Module
 							//Bloc Info Jeu & Info Version
 							$this->ouvreBloc("<div id=".info." >");
 								$this->ajouteLigne("<label>" .$this->convertiTexte("Auteur(s)") ."</label>");
-								$this->afficherTableau($this->monJeuAuteur,NOM_AUTEUR,nom);		
+								$this->afficherTableau($this->monJeuAuteur,NOM_AUTEUR,nom);	
 								$this->ajouteLigne("<label>" .$this->convertiTexte("Catégorie(s)") ."</label>");
 								$this->afficherTableau($this->maCategorie,NOM_CATEGORIE,nomCategorie);	
 								$this->ajouteLigne("<label>" .$this->convertiTexte("Age min.") ."</label>");
@@ -195,7 +195,11 @@ class ModuleFicheJeu extends Module
 				}
 				$iBoucle++;
 			}	
-			else $bool=0;
+			else {
+				$bool=0;
+				if($iBoucle == 0)
+					$this->ajouteLigne("<br/>");
+			}
 		}
 	}
 	
