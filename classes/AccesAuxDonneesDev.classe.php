@@ -168,6 +168,7 @@ define("NB_JOUEUR_RECOMMANDE", "nbJoueurRecommande");
 define("DUREE_PARTIE", "dureePartie");
 define("PRIX_ACHAT", "prixAchat");
 define("ANNEE_SORTIE", "anneeSortie");
+	
 
 
 //Définition des signes
@@ -275,6 +276,7 @@ class AccesAuxDonneesDev
                     // Connexion en mode debug
                     $option_dev[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
                     $this->maBase = new PDO("mysql:host=" . SERVEUR_DEV . ";dbname=" . BASE_DEV, LOGIN_DEV, MDP_DEV,$option_dev);
+
                     // Connexion normale
                     // $this->maBase = new PDO("mysql:host=" . SERVEUR . ";dbname=" . BASE, LOGIN, MDP);
                 } 
@@ -1671,11 +1673,8 @@ class AccesAuxDonneesDev
 	}
 
 	/**
-
 	 * Fonction récupérant tous les illustrateurs
-
 	 * @return array
-
 	 */
 
 
@@ -1898,16 +1897,27 @@ class AccesAuxDonneesDev
 
 		//Par Auteur
 
-		if($critere["auteur"]!=""){
+		if($critere["nomAuteur"]!=""){
+			//sans tag
+			//$critere["auteur"]=mysql_real_escape_string($critere["auteur"]);
+			//$string="AND ( " . TABLE_JEUX. "." . AUTEUR   ." LIKE '%" .$critere["auteur"]."%')";
+			//$query->ajoutWhereLibre($string);
+			$query->jointure(TABLE_AUTEUR,ID_AUTEUR,TABLE_AUTEUR_JEU,ID_AUTEUR);
 
-			$critere["auteur"]=mysql_real_escape_string($critere["auteur"]);
-			$string="AND ( " . TABLE_JEUX. "." . AUTEUR   ." LIKE '%" .$critere["auteur"]."%')";
-			$query->ajoutWhereLibre($string);
+			$query->jointure(TABLE_AUTEUR_JEU,ID_JEU,TABLE_JEUX,ID_JEU);
+
+			$string = explode("," , $critere["nomAuteur"]);
+
+			foreach($string as $value ){
+
+				$query->ajoutAndLike(TABLE_AUTEUR,NOM_AUTEUR,$value);
+
+			}
 		}
 
 		// Par illustrateur
 
-		if($critere["illustrateur"]!=""){
+		if($critere["nomIllustrateur"]!=""){
 			//sans tag
 			//$query->ajoutAnd("=", TABLE_VERSION, ID_ILLUSTRATEUR, $critere["illustrateur"]);
 
@@ -1926,7 +1936,7 @@ class AccesAuxDonneesDev
 
 		//Par distributeur
 
-		if($critere["distributeur"]!=""){
+		if($critere["nomDistributeur"]!=""){
 
 			//$query->ajoutAnd("=", TABLE_VERSION, ID_DISTRIBUTEUR, $critere["distributeur"]);
 
@@ -1957,7 +1967,7 @@ class AccesAuxDonneesDev
 
 
 
-		if($critere["categorie"]!=""){
+		if($critere["nomCategorie"]!=""){
 			$query->jointure(TABLE_CATEGORIE,ID_CATEGORIE,TABLE_CATEGORIE_JEU,ID_CATEGORIE);
 
 			$query->jointure(TABLE_CATEGORIE_JEU,ID_JEU,TABLE_JEUX,ID_JEU);
@@ -1973,6 +1983,7 @@ class AccesAuxDonneesDev
 
 		//ainsi de suite!
 
+		//$query->debug();
 		$result=$this->requeteSelect($query->compile());
 
 		return $result;

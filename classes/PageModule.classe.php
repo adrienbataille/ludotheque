@@ -15,6 +15,10 @@ require_once("classes/ModuleAjoutExemplaires.classe.php");
 require_once("classes/ModuleRecherche.classe.php");
 require_once("classes/ModuleFicheJeu.classe.php");
 
+require_once("classes/ModuleRetour.classe.php");
+require_once("classes/ModuleEmprunt.classe.php");
+require_once("classes/ModuleGestionEmprunt.classe.php");
+
 // Constantes
 
 /**
@@ -126,6 +130,18 @@ class PageModule extends Page
                     // On créé l'objet chargé de gerer le module profil
                     $this->unModule = new ModuleFicheJeu($this->monUtilisateur);
                     break;
+				case "Emprunter" :				
+					$this->unModule = new ModuleEmprunter();
+					break;					
+				case "Retour" :				
+					$this->unModule = new ModuleRetour();
+					break;				
+				case "Emprunt" :				
+					$this->unModule = new ModuleEmprunt();
+					break;				
+				case "GestionEmprunt" :				
+					$this->unModule = new ModuleGestionEmprunt();
+					break;
 			}
 		}
 		else
@@ -173,13 +189,15 @@ class PageModule extends Page
 		//$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_VERSIONS . "\">Ajouter Versions</a></li>");
 		//$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_EXEMPLAIRES . "\">Ajouter Exemplaires</a></li>");
 		$this->ajouteLigne("<li><a href=\"" . MODULE_FICHEJEU . "\">FicheJeu</a></li>");
-
+		$this->ajouteLigne("<li><a href=\"" . MODULE_EMPRUNTER . "\">Gestion Emprunt</a></li>");
 		$this->ajouteLigne("<li><a href=\"\">Utilisateurs</a></li>");
         // Si l'utilisateur à accès au module Groupes
         if ($this->monUtilisateur->accesGroupes())
         {
             // On lui affiche le lien
             $this->ajouteLigne("<li><a href=\"" . MODULE_GROUPES . "\">Groupes</a></li>");
+		
+
         }
 		$this->ajouteLigne("<li><a href=\"" . RACINE_SITE . "\">Retour Accueil</a></li>");
                 // Si l'utilisateur à accès au module Groupes

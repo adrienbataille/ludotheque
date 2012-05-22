@@ -76,14 +76,15 @@ class ComposantRecherche extends Module
 
 		//Categorie
 		$this->ouvreBloc("<div class='champ_recherche'>");
-		$this->ajouteLigne("<label for=\"categorie\">" . $this->convertiTexte("Catégorie") . "</label>");
-		$this->creationInputText("categorie");
+		$this->ajouteLigne("<label for=\"Categorie\">" . $this->convertiTexte("Catégorie") . "</label>");
+		$this->creationInputText("nomCategorie");
 		$this->fermeBloc("</div>");
 
 		//Nombre de joueur
 		$this->ouvreBloc("<div class='champ_recherche'>");
 		$this->ajouteLigne("<label for=\"nombreDeJoueur\">" . $this->convertiTexte("Nombre de joueur") . "</label>");
 		$this->creationCheckBox("j1");
+
 		$this->ajouteLigne($this->convertiTexte("1"));
 		$this->creationCheckBox("j2");
 		$this->ajouteLigne($this->convertiTexte("2"));
@@ -95,13 +96,17 @@ class ComposantRecherche extends Module
 		$this->ajouteLigne($this->convertiTexte("5"));
 		$this->ajouteLigne("<br/>");
 		$this->creationCheckBox("j6");
+
 		$this->ajouteLigne($this->convertiTexte("6"));
 		$this->creationCheckBox("j7");
+
 		$this->ajouteLigne($this->convertiTexte("7"));
 		$this->creationCheckBox("j8");
+
 		$this->ajouteLigne($this->convertiTexte("8"));
 		$this->creationCheckBox("j9");
-		$this->ajouteLigne($this->convertiTexte("8+"));
+
+		$this->ajouteLigne($this->convertiTexte("9+"));
 		$this->fermeBloc("</div>");
 
 		//Durée
@@ -110,12 +115,14 @@ class ComposantRecherche extends Module
 		$this->creationInputText("DureeJeu");
 		$this->ajouteLigne("<br/>");
 		$this->ajouteLigne($this->convertiTexte("Plus ou moins 20 min "));
+
 		$this->creationRadioBox( "dureeSigne", EGAL,true);
 		$this->ajouteLigne("<br/>");
 		$this->ajouteLigne($this->convertiTexte("Supérieur à "));
 		$this->creationRadioBox( "dureeSigne", SUPERIEUR);
 		$this->ajouteLigne("<br/>");
 		$this->ajouteLigne($this->convertiTexte("Inférieur à "));
+
 		$this->creationRadioBox( "dureeSigne", INFERIEUR);
 		$this->fermeBloc("</div>");
 		//Langue
@@ -127,61 +134,103 @@ class ComposantRecherche extends Module
 
 		//Etat
 		$this->ouvreBloc("<div class='champ_recherche'>");
+
 		$this->ajouteLigne("<label for=\"etat\">" . $this->convertiTexte("Etat") . "</label>");
+
 		$this->creationSelect($etat,"idEtatExemplaire");
+
 		$this->fermeBloc("</div>");
 
 		//Lieu
 		$this->ouvreBloc("<div class='champ_recherche'>");
+
 		$this->ajouteLigne("<label for=\"lieu\">" . $this->convertiTexte("Lieu") . "</label>");
+
 		$this->creationSelect($lieu,"idLieu");
+
 		$this->fermeBloc("</div>");
+
 
 
 		//Prix
+
 		$this->ouvreBloc("<div class='champ_recherche'>");
+
 		$this->ajouteLigne("<label for=\"prix\">" . $this->convertiTexte("Valeur MDJT:") . "</label>");
+
 		$this->ajouteLigne( $this->convertiTexte("Min"));
 		$this->creationInputText("prixMin");
 		$this->ajouteLigne("<br/>");
+
 		$this->ajouteLigne($this->convertiTexte("Max") );
+
 		$this->creationInputText("prixMax");
+
 		$this->fermeBloc("</div>");
 		$this->fermeBloc("</div>");
+
 		$this->fermeBloc("</fieldset>");
 
+
+
 		//Recherche avancée
+
 		$this->ouvreBloc("<fieldset>");
+
 		$this->ajouteLigne("<legend><a id=\"buttonAvance\" class=\"ui-state-default ui-corner-all\" >" . $this->convertiTexte("Recherche avancée") . "</a></legend>");
 
+
 		$this->ouvreBloc("<div id=\"rechercheAvancee\" class=\"ui-widget-content ui-corner-all\">");
+
 		//Auteur
+
 		$this->ouvreBloc("<div class='champ_recherche'>");
+
 		$this->ajouteLigne("<label for=\"auteur\">" . $this->convertiTexte("Auteur") . "</label>");
+
 		//$this->creationInputText("auteur");
-		$this->creationSelect($auteur,"auteur");
+		$this->creationInputText("nomAuteur");
+
 		$this->fermeBloc("</div>");
+
+
 
 		//Illustrateur
+
 		$this->ouvreBloc("<div class='champ_recherche'>");
+
 		$this->ajouteLigne("<label for=\"illustrateur\">" . $this->convertiTexte("Illustrateur") . "</label>");
-		$this->creationInputText("illustrateur");
+
+		$this->creationInputText("nomIllustrateur");
 		//$this->creationSelect($illustrateur,"illustrateur");
+
 		$this->fermeBloc("</div>");
 
+
+
 		//Distributeur
+
 		$this->ouvreBloc("<div class='champ_recherche'>");
+
 		$this->ajouteLigne("<label for=\"distributeur\">" . $this->convertiTexte("Distributeur") . "</label>");
-		$this->creationInputText("distributeur");
+
+		$this->creationInputText("nomDistributeur");
 		//$this->creationSelect($distributeur,"distributeur");
+
 		$this->fermeBloc("</div>");
+
 
 
 		//Année
+
 		$this->ouvreBloc("<div class='champ_recherche'>");
+
 		$this->ajouteLigne("<label for=\"annee\">" . $this->convertiTexte("Année") . "</label>");
+
 		$this->creationInputText("annee");
+
 		$this->fermeBloc("</div>");
+
 
 		$this->fermeBloc("</div>");
 		$this->fermeBloc("</fieldset>");
@@ -204,6 +253,7 @@ class ComposantRecherche extends Module
 		if($param){
 
 			$resultat=$this->maBase->rechercheVersion($recherche);
+			//var_dump($resultat);
 			if(count($resultat)==0){
 				$this->ajouteLigne($this->convertiTexte("Aucun Résultat"));
 			}
@@ -226,8 +276,9 @@ class ComposantRecherche extends Module
 				Paginator\Paginator::$total  = count($resultat);
 				Paginator\Paginator::$limit  = 20;
 				Paginator\Paginator::$offset = intval($_GET['offset']);
-				Paginator\Paginator::$url    = $_SERVER['REQUEST_URI'];
 
+				Paginator\Paginator::$url    = $_SERVER['REQUEST_URI'];
+				
 				$resultat=array_slice($resultat,Paginator\Paginator::$offset,Paginator\Paginator::$offset+Paginator\Paginator::$limit);
 
 				foreach ($resultat as $row) {
@@ -236,7 +287,9 @@ class ComposantRecherche extends Module
 						if($idVersion!=-1){
 							$this->ligneResultat($photo, $textealt, $nomJeu, $nomVersion, $idVersion, $nbdisponible, $nbindisponible);
 						}
+
 						$nbindisponible=0;
+
 						$nbdisponible=0;
 						$photo=$this->convertiTexte($row[NOM_PHOTO]);
 						$textealt=$this->convertiTexte($row[TEXT_ALTERNATIF]);
@@ -252,6 +305,7 @@ class ComposantRecherche extends Module
 					}
 				}
 				$this->ligneResultat($photo, $textealt, $nomJeu, $nomVersion, $idVersion, $nbdisponible, $nbindisponible);
+
 				$this->fermeBloc("</table>");
 				$this->fermeBloc("</div>");
 				$this->ajouteLigne("<div id='paginator'>Page</div>");
@@ -271,12 +325,17 @@ class ComposantRecherche extends Module
 
 	private function ligneResultat($photo,$textealt,$nomJeu,$nomVersion,$idVersion,$nbdisponible,$nbindisponible){
 		$this->ouvreBloc("<tr>");
-		$this->ajouteLigne("<td><img src='" . $photo . "'</td>" );
-		$this->ajouteLigne("<td>" . $nomJeu);
-		$this->ajouteLigne($nomVersion);
-		$this->ajouteLigne("Id" . $idVersion . "</td>");
+
+		$this->ajouteLigne("<td><a href='" . MODULE_FICHEJEU. "&idVersion=" . $idVersion . "'> <img src='" . $photo . "'></a></td>" );
+
+		$this->ajouteLigne("<td>");
+
+		$this->ajouteLigne("<a href='" . MODULE_FICHEJEU. "&idVersion=" . $idVersion . "'>" .  $nomJeu ." - " . $nomVersion . "</a></td>");
+
 		$this->ajouteLigne("<td>" . $nbdisponible . "</td>");
+
 		$this->ajouteLigne("<td>" . $nbindisponible . "</td>");
+
 		$this->ouvreBloc("</tr>");
 	}
 
@@ -325,31 +384,53 @@ class ComposantRecherche extends Module
 
 
 	/**
+
 	 *Fonction qui crée des input type checkbox et le prérempli si le paramètre post existe
+
 	 * @param string nom du tableau POST
+
 	 * @param string nom de la ligne du tableau
+
 	 */
 
+
+
 	private function creationCheckBox($name){
+
 		$value=$_GET[$name];
+
 		if($value==NULL||$value==""){
+
 			$this->ajouteLigne("<input type=\"checkbox\" id=\"".$name."\" name=\"".$name."\" />");
+
 		}
+
 		else {
 			$this->getRecherche[$name]=$value;
+
 			$this->ajouteLigne("<input type=\"checkbox\" id=\"".$name."\" name=\"".$name."\" checked=\"yes\" />");
+
 		}
+
 	}
 	/**
+
 	 *Fonction qui crée des input type radiobox et le prérempli si le paramètre post existe
+
 	 * @param string nom du tableau POST
+
 	 * @param string nom de la ligne du tableau
 	 * @param string value de la radiobox
 	 * @param boolean checked par défaut ou non
+
 	 */
 
+
+
 	private function creationRadioBox($name,$value,$checked=false){
+
 		$get=$_GET[$name];
+
 		if($get!=NULL){
 			$this->getRecherche[$name]=$get;
 		}
@@ -357,8 +438,11 @@ class ComposantRecherche extends Module
 			$this->ajouteLigne("<input type=\"radio\" id=\"".$name."\" group=\"" . $name ."\"  name=\"".$name. "\" value=\"" . $value."\" checked/>");
 		}
 		else{
+
 			$this->ajouteLigne("<input type=\"radio\" id=\"".$name."\" group=\"" . $name ."\"  name=\"".$name."\" value=\"" . $value."\" />");
 		}
+
+
 
 	}
 
