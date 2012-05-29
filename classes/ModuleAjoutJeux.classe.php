@@ -12,7 +12,9 @@ require_once("classes/Module.classe.php");
 define("MODULE_AJOUT_JEUX", RACINE_SITE . "module.php?idModule=AjoutJeux");
 
 //Constantes formulaire
-define("VIDE", "");
+define("NOM_JEU_J", NOM_JEU."Jeu");
+define("NOM_CATEGORIE_J", NOM_CATEGORIE."Jeu");
+define("NOM_AUTEUR_J", NOM_AUTEUR."Jeu");
 
 class ModuleAjoutJeux extends Module
 {
@@ -64,21 +66,18 @@ class ModuleAjoutJeux extends Module
 			{
 				$this->idJeu = $myGame[0][ID_JEU];
 				$this->description = $myGame[0][DESCRIPTION_JEU];
-				$this->auteur = $myGame[0][AUTEUR];
+				//$this->auteur = $myGame[0][AUTEUR];
 				$this->idPays = $myGame[0][ID_PAYS];
 				
 				$myNames = $this->maBase->recupNomJeu($this->idJeu);
-				
-				$i = 0;
-				$this->nom = array(0 => "");
-				$this->langue = array(0 => "");
-				foreach($myNames as $name)
+				$myNames = $myNames[$this->idJeu];
+				$this->nom = array();
+				$this->langue = array();
+				foreach($myNames as $name => $names)
 				{
-					$this->nom[$i] = $name[$i][NOM_JEU];
-					$this->langue[$i] = $name[$i][ID_LANGUE];
-					$i++;
+					$this->nom[] = $names[NOM_JEU];
+					$this->langue[] = $names[ID_LANGUE];
 				}
-				
 				$myCategoriesPlays = $this->maBase->recupCategorieJeu($this->idJeu);
 				$nbCate = sizeof($myCategoriesPlays) - 1;
 				foreach($myCategoriesPlays as $idCatePlayTab => $categoriePlay)
@@ -146,8 +145,8 @@ class ModuleAjoutJeux extends Module
 
 		$this->idJeu = $this->filtreChaine($_POST[ID_JEU], TAILLE_CHAMPS_COURT);
 
-		if($_POST[NOM_JEU] != null)
-			foreach($_POST[NOM_JEU] as $nomJeu)
+		if($_POST[NOM_JEU_J] != null)
+			foreach($_POST[NOM_JEU_J] as $nomJeu)
 				// Nettoyage du Nom
 				$this->nom[] = $this->filtreChaine($nomJeu, TAILLE_CHAMPS_COURT);
 
@@ -160,14 +159,14 @@ class ModuleAjoutJeux extends Module
 		$this->description = $this->filtreChaine($_POST[DESCRIPTION_JEU], TAILLE_CHAMPS_LONG);
 
 		// Nettoyage de l'Auteur
-		$this->auteur = $this->filtreChaine($_POST[NOM_AUTEUR], TAILLE_CHAMPS_COURT);
+		$this->auteur = $this->filtreChaine($_POST[NOM_AUTEUR_J], TAILLE_CHAMPS_COURT);
 
 		if($_POST[NOM_PAYS] != null)
 			// Nettoyage du Pays
 			$this->idPays = $this->filtreChaine($_POST[NOM_PAYS], TAILLE_CHAMPS_COURT);
 
 		// Nettoyage de la Catégorie
-		$this->categorie = $this->filtreChaine($_POST[NOM_CATEGORIE], TAILLE_CHAMPS_COURT);
+		$this->categorie = $this->filtreChaine($_POST[NOM_CATEGORIE_J], TAILLE_CHAMPS_COURT);
 	}
     
 	/**
@@ -204,8 +203,8 @@ class ModuleAjoutJeux extends Module
 		
 		// Nom
 		$this->ouvreBloc("<li>");
-		$this->ajouteLigne("<label for='" . NOM_JEU . "'>" . $this->convertiTexte("Nom *") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_JEU . "' name='" . NOM_JEU . "[]' value='" . $this->nom[0] . "' required='required' />");
+		$this->ajouteLigne("<label for='" . NOM_JEU_J . "'>" . $this->convertiTexte("Nom *") . "</label>");
+		$this->ajouteLigne("<input type='text' id='" . NOM_JEU_J . "' name='" . NOM_JEU_J . "[]' value='" . $this->nom[0] . "' required='required' />");
 		if($this->erreurNom && !strcmp($this->nom[0], ""))
 			$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte(ERREUR_CHAMP_REQUIS) . "</p>");
 		$this->fermeBloc("</li>");
@@ -247,8 +246,8 @@ class ModuleAjoutJeux extends Module
 			
 			// Nom
 			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . NOM_JEU . "'>" . $this->convertiTexte("Nom *") . "</label>");
-			$this->ajouteLigne("<input type='text' id='" . NOM_JEU . "' name='" . NOM_JEU . "[]' value='" . $this->nom[$i] . "' required='required' />");
+			$this->ajouteLigne("<label for='" . NOM_JEU_J . "'>" . $this->convertiTexte("Nom *") . "</label>");
+			$this->ajouteLigne("<input type='text' id='" . NOM_JEU_J . "' name='" . NOM_JEU_J . "[]' value='" . $this->nom[$i] . "' required='required' />");
 			if($this->erreurNom && !strcmp($this->nom[$i], ""))
 				$this->ajouteLigne("<p class='erreurForm'>Ce champ doit être remplit</p>");
 			$this->fermeBloc("</li>");
@@ -303,8 +302,8 @@ class ModuleAjoutJeux extends Module
 		
 		// Auteur
 		$this->ouvreBloc("<li>");
-		$this->ajouteLigne("<label for='" . NOM_AUTEUR . "'>" . $this->convertiTexte("Auteur") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_AUTEUR . "' name='" . NOM_AUTEUR . "' value='" . $this->convertiTexte($this->auteur) . "' autocomplete='off' />");
+		$this->ajouteLigne("<label for='" . NOM_AUTEUR_J . "'>" . $this->convertiTexte("Auteur") . "</label>");
+		$this->ajouteLigne("<input type='text' id='" . NOM_AUTEUR_J . "' name='" . NOM_AUTEUR_J . "' value='" . $this->convertiTexte($this->auteur) . "' autocomplete='off' />");
 		$this->fermeBloc("</li>");
 		
 		// Pays
@@ -324,8 +323,8 @@ class ModuleAjoutJeux extends Module
 		
 		// Catégories
 		$this->ouvreBloc("<li>");
-		$this->ajouteLigne("<label for='" . NOM_CATEGORIE . "'>" . $this->convertiTexte("Catégorie") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_CATEGORIE . "' name='" . NOM_CATEGORIE . "' value='" . $this->convertiTexte($this->categorie) . "' />");
+		$this->ajouteLigne("<label for='" . NOM_CATEGORIE_J . "'>" . $this->convertiTexte("Catégorie") . "</label>");
+		$this->ajouteLigne("<input type='text' id='" . NOM_CATEGORIE_J . "' name='" . NOM_CATEGORIE_J . "' value='" . $this->convertiTexte($this->categorie) . "' />");
 		$this->fermeBloc("</li>");
 		
 		$this->fermeBloc("</ol>");
@@ -364,7 +363,7 @@ class ModuleAjoutJeux extends Module
 			$this->traitementFormulaire = true;
 			
 			$this->recuperationInformationsFormulaire();
-			$this->nbJeu = sizeof($_POST[NOM_JEU]);
+			$this->nbJeu = sizeof($_POST[NOM_JEU_J]);
 			
 			if($this->langue != null && $this->nom != null)
 			{
@@ -413,7 +412,7 @@ class ModuleAjoutJeux extends Module
 							$this->maBase->DeleteTableNomJeu($this->idJeu);
 					}
 					$i = 0;
-					for($i = 0; $i < sizeof($_POST[NOM_JEU]); $i++)
+					for($i = 0; $i < sizeof($_POST[NOM_JEU_J]); $i++)
 						$this->erreurLangue = $this->maBase->InsertionTableNomJeu($this->nom[$i], $this->langue[$i], $this->idJeu);
 					$this->maBase->DeleteTableCategorieJeu($this->idJeu);
 					$i = 0;
@@ -450,13 +449,13 @@ class ModuleAjoutJeux extends Module
 		{
 			$this->recuperationInformationsFormulaire();
 
-			$this->nbJeu += sizeof($_POST[NOM_JEU]);
+			$this->nbJeu += sizeof($_POST[NOM_JEU_J]);
 			
 		} elseif($_POST["SupprimerNomJeu"] != null)
 		{
 			$this->recuperationInformationsFormulaire();
 			
-			$this->nbJeu = sizeof($_POST[NOM_JEU]) - 1;
+			$this->nbJeu = sizeof($_POST[NOM_JEU_J]) - 1;
 			
 			for($i = $_POST["SupprimerNomJeu"]; $i < $this->nbJeu; $i++)
 			{

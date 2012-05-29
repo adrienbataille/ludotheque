@@ -14,6 +14,11 @@ define("MODULE_AJOUT_VERSIONS", RACINE_SITE . "module.php?idModule=AjoutVersions
 //Constantes formulaire
 define("NB_JOUEUR_V", "nb_joueur_min");
 
+define("NOM_VERSION_J", NOM_VERSION."Jeu");
+define("NOM_ILLUSTRATEUR_J", NOM_ILLUSTRATEUR."Jeu");
+define("NOM_DISTRIBUTEUR_J", NOM_DISTRIBUTEUR."Jeu");
+define("NOM_EDITEUR_J", NOM_EDITEUR."Jeu");
+
 // Variables du formulaire
 										
 
@@ -47,6 +52,7 @@ class ModuleAjoutVersions extends Module
 	private $distributeur ="";
 	private $editeur = "";
 	private $idJeu = 0;
+	private $nomJeu = "";
 	private $idVersion = 0;
 	private $idEditeur;
 	private $idIllustrateur;
@@ -70,7 +76,6 @@ class ModuleAjoutVersions extends Module
 		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
 		$this->maBase = AccesAuxDonneesDev::recupAccesDonneesDev();
 		
-		
 		if($idDeJeu != null && intval($idDeJeu))
 		{
 			$playId = $this->maBase->recupJeu($idDeJeu);
@@ -78,9 +83,9 @@ class ModuleAjoutVersions extends Module
 				$this->erreurLoadVersion = true;
 			else
 				$this->idJeu = $playId[0][ID_JEU];
+			$nomJeu = $this->maBase->recupNomJeu($this->idJeu);
+			$this->nomJeu = $nomJeu[$this->idJeu][0][NOM_JEU];
 		}
-		elseif ($idDeJeu != null)
-			$this->erreurLoadVersion = true;
 		
 		if($idDeVersion != null && intval($idDeVersion))
 		{
@@ -93,21 +98,46 @@ class ModuleAjoutVersions extends Module
 				$this->nomVersion = $myVersion[0][NOM_VERSION];
 				$this->description = $myVersion[0][DESCRIPTION_VERSION];
 				$this->ageMinimum = $myVersion[0][AGE_MINIMUM];
-				$this->nbJoueur[] = split(",", $myVersion[0][NB_JOUEUR]);
+				$this->nbJoueur = split(",", $myVersion[0][NB_JOUEUR]);
 				$this->nbJoueurReco = $myVersion[0][NB_JOUEUR_RECOMMANDE];
 				$this->dureePartie = $myVersion[0][DUREE_PARTIE];
 				$this->prixAchat = $myVersion[0][PRIX_ACHAT];
 				$this->anneeSortie = $myVersion[0][ANNEE_SORTIE];
-				$this->illustrateur = $myVersion[0][ID_ILLUSTRATEUR];
-				$this->distributeur = $myVersion[0][ID_DISTRIBUTEUR];
-				$this->editeur = $myVersion[0][ID_EDITEUR];
-				if($this->idJeu == 0)
+				$illustr = $this->maBase->recupIllustrateurs($this->idVersion);
+				$a = sizeof($illustr) - 1;
+				foreach($illustr as $myIllustr) {
+					$this->illustrateur .= $myIllustr[NOM_ILLUSTRATEUR];
+					$a--;
+					if($a > 0)
+						$this->illustrateur .= ",";
+				}
+				$distrib = $this->maBase->recupDistributeurs($this->idVersion);
+				$a = sizeof($distrib) - 1;
+				foreach($distrib as $myDistrib) {
+					$this->distributeur .= $myDistrib[NOM_DISTRIBUTEUR];
+					$a--;
+					if($a > 0)
+						$this->distributeur .= ",";
+				}
+				$edit = $this->maBase->recupEditeurs($this->idVersion);
+				$a = sizeof($edit) - 1;
+				foreach($edit as $myEdit) {
+					$this->editeur .= $myEdit[NOM_EDITEUR];
+					$a--;
+					if($a > 0)
+						$this->editeur .= ",";
+				}
+				if($this->idJeu == 0) {
 					$this->idJeu = $myVersion[0][ID_JEU];
+					$nomJeu = $this->maBase->recupNomJeu($this->idJeu);
+					$this->nomJeu = $nomJeu[$this->idJeu][0][NOM_JEU];
+				}
 				elseif($this->idJeu != 0 && $this->idJeu != $myVersion[0][ID_JEU])
 					$this->erreurLoadVersion = true;
-				
 			}
 		}
+		//elseif ($idDeJeu != null)
+			//$this->erreurLoadVersion = true;
 			
 				
 		// On traite le formulaire, le cas échéant
@@ -155,7 +185,7 @@ class ModuleAjoutVersions extends Module
 		$this->idVersion = $this->filtreChaine($_POST[ID_VERSION], TAILLE_CHAMPS_COURT);
 	
 		//Nettoyage du nom de la version
-		$this->nomVersion = $this->filtreChaine($_POST[NOM_VERSION], TAILLE_CHAMPS_COURT);
+		$this->nomVersion = $this->filtreChaine($_POST[NOM_VERSION_J], TAILLE_CHAMPS_COURT);
 		
 		//Nettoyage du texte alternatif de la photo
 		$this->TexteAlternatif = $this->filtreChaine($_POST[TEXTE_ALTERNATIF], TAILLE_CHAMPS_COURT);
@@ -184,17 +214,17 @@ class ModuleAjoutVersions extends Module
 		$this->anneeSortie = $this->filtreChaine($_POST[ANNEE_SORTIE], TAILLE_CHAMPS_COURT);
 		
 		//Nettoyage de illustrateur
-		$this->illustrateur = $this->filtreChaine($_POST[NOM_ILLUSTRATEUR], TAILLE_CHAMPS_COURT);
+		$this->illustrateur = $this->filtreChaine($_POST[NOM_ILLUSTRATEUR_J], TAILLE_CHAMPS_COURT);
 		
 		//Nettoyage du distributeur
-		$this->distributeur = $this->filtreChaine($_POST[NOM_DISTRIBUTEUR], TAILLE_CHAMPS_COURT);
+		$this->distributeur = $this->filtreChaine($_POST[NOM_DISTRIBUTEUR_J], TAILLE_CHAMPS_COURT);
 		
 		//Nettoyage de date fin vie
-		$this->editeur = $this->filtreChaine($_POST[NOM_EDITEUR], TAILLE_CHAMPS_COURT);
+		$this->editeur = $this->filtreChaine($_POST[NOM_EDITEUR_J], TAILLE_CHAMPS_COURT);
 		
 		//id jeu associé
-		$this->idJeu = intval($this->filtreChaine($_POST[ID_JEU], TAILLE_CHAMPS_COURT));
-		
+		$this->idJeu = $this->filtreChaine($_POST[ID_JEU], TAILLE_CHAMPS_COURT);
+		$this->nomJeu = $this->filtreChaine($_POST[NOM_JEU], TAILLE_CHAMPS_COURT);
 			
 	}
 	
@@ -214,39 +244,14 @@ class ModuleAjoutVersions extends Module
 		$this->ouvreBloc("<ol>");
 		$this->ouvreBloc("<li>");	
 		
-		$this->ajouteLigne("<label for='" . ID_JEU . "'>" . $this->convertiTexte("Jeu associé") . "</label>");
-		$listeJeu = $this->maBase->recupNomJeu(null);
-		if($this->idJeu == 0)
-			$this->ouvreBloc("<select id='" . ID_JEU . "' name='" . ID_JEU . "'>");
-		else
-			$this->ouvreBloc("<select id='" . ID_JEU . "' name='" . ID_JEU . "' disabled='disabled'>");
-		if($listeJeu != null)
-			foreach($listeJeu as $idJeu => $jeu)
-			{
-				$name = "";
-				$i = 0;
-				$taille = sizeof($jeu) - 1;
-				foreach($jeu as $nomJeu)
-				{
-					$name .= $this->convertiTexte($nomJeu[NOM_JEU]);
-					if($i < $taille)
-						$name .= $this->convertiTexte(" - ");
-					$i++;
-				}
-				if($idJeu == $this->idJeu)
-					$this->ajouteLigne("<option value='" . $idJeu . "' selected='selected'>" . $this->convertiTexte($name) . "</option>");
-				else
-					$this->ajouteLigne("<option value='" . $idJeu . "'>" . $this->convertiTexte($name) . "</option>");
-			}
-		$this->fermeBloc("</select>");
-		$this->fermeBloc("</li>");
-		
-		if($this->idJeu != 0)
-		{
-			$this->ouvreBloc("<li style='display:none;'>");	
+		$this->ajouteLigne("<label for='" . NOM_JEU . "'>" . $this->convertiTexte("Jeu associé") . "</label>");
+		if($this->idJeu == null || $this->idJeu == 0)
+			$this->ouvreBloc("<input type='text' id='" . NOM_JEU . "' name='" . NOM_JEU . "' />");
+		else {
+			$this->ouvreBloc("<input type='text' id='" . NOM_JEU . "' name='" . NOM_JEU . "' value='" . $this->nomJeu . "' disabled='disabled' />");
 			$this->ajouteLigne("<input type='hidden' id='" . ID_JEU . "' name='" . ID_JEU . "' value='" . $this->idJeu . "' />");
-			$this->fermeBloc("</li>");
 		}
+		$this->fermeBloc("</li>");
 		
 		$this->fermeBloc("</ol>");
 		$this->fermeBloc("</fieldset>");
@@ -259,8 +264,8 @@ class ModuleAjoutVersions extends Module
 	        
         // Nom
         $this->ouvreBloc("<li>");
-        $this->ajouteLigne("<label for='" . NOM_VERSION . "'>" . $this->convertiTexte("Nom de la version *") . "</label>");
-        $this->ajouteLigne("<input type='text' id='". NOM_VERSION . "' name='" . NOM_VERSION . "' value='" . $this->convertiTexte($this->nomVersion) . "' required='required'  />");
+        $this->ajouteLigne("<label for='" . NOM_VERSION_J . "'>" . $this->convertiTexte("Nom de la version *") . "</label>");
+        $this->ajouteLigne("<input type='text' id='". NOM_VERSION_J . "' name='" . NOM_VERSION_J . "' value='" . $this->convertiTexte($this->nomVersion) . "' required='required'  />");
 		if($this->erreurNom)
 			$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte(ERREUR_CHAMP_REQUIS) . "</p>");
 		$this->fermeBloc("</li>");
@@ -418,44 +423,23 @@ class ModuleAjoutVersions extends Module
 		//Illustrateur
 		$listeIllustrateur = $this->maBase->recupIllustrateur(null);
 		$this->ouvreBloc("<li>");
-		$this->ajouteLigne("<label for='" . NOM_ILLUSTRATEUR . "'>" . $this->convertiTexte("Illustrateur") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_ILLUSTRATEUR . "' name='"  . NOM_ILLUSTRATEUR . "' value='" . $this->convertiTexte($this->illustrateur) . "' list='listeIllustrateur' autocomplete='off'  />");
-		
-		$this->ouvreBloc("<datalist id='listeIllustrateur'>");
-		if($listeIllustrateur != null)
-			foreach($listeIllustrateur as $illustrateur)
-				$this->ajouteLigne("<option id='illustrateur_" . $illustrateur[ID_ILLUSTRATEUR] . "' label='" . $illustrateur[NOM_ILLUSTRATEUR] . "' value=\"" . $this->convertiTexte($illustrateur[NOM_ILLUSTRATEUR]) . "\">");
-		$this->fermeBloc("</datalist>");
-		
+		$this->ajouteLigne("<label for='" . NOM_ILLUSTRATEUR_J . "'>" . $this->convertiTexte("Illustrateur") . "</label>");
+		$this->ajouteLigne("<input type='text' id='" . NOM_ILLUSTRATEUR_J . "' name='"  . NOM_ILLUSTRATEUR_J . "' value='" . $this->convertiTexte($this->illustrateur) . "' autocomplete='off'  />");
 		$this->fermeBloc("</li>");
 		
 		
 		//Distributeur
 		$listeDistributeur = $this->maBase->recupDistributeur(null);
 		$this->ouvreBloc("<li>");
-		$this->ajouteLigne("<label for='" . NOM_DISTRIBUTEUR . "'>" . $this->convertiTexte("Distributeur") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_DISTRIBUTEUR ."' name='"  . NOM_DISTRIBUTEUR . "' value='" . $this->convertiTexte($this->distributeur) . "' list='listeDistributeur' autocomplete='off' />");
-		
-		$this->ouvreBloc("<datalist id='listeDistributeur'>");
-		if($listeDistributeur != null)
-			foreach($listeDistributeur as $distributeur)
-				$this->ajouteLigne("<option id='distributeur_" . $distributeur[ID_DISTRIBUTEUR] . "' label='" . $distributeur[NOM_DISTRIBUTEUR] . "' value=\"" . $this->convertiTexte($distributeur[NOM_DISTRIBUTEUR]) . "\">");
-		$this->fermeBloc("</datalist>");
-		
+		$this->ajouteLigne("<label for='" . NOM_DISTRIBUTEUR_J . "'>" . $this->convertiTexte("Distributeur") . "</label>");
+		$this->ajouteLigne("<input type='text' id='" . NOM_DISTRIBUTEUR_J ."' name='"  . NOM_DISTRIBUTEUR_J . "' value='" . $this->convertiTexte($this->distributeur) . "' list='listeDistributeur' autocomplete='off' />");
 		$this->fermeBloc("</li>");
 		
 		//Editeur
 		$listeEditeur = $this->maBase->recupEditeur(null);
 		$this->ouvreBloc("<li>");
-		$this->ajouteLigne("<label for='" . NOM_EDITEUR . "'>" . $this->convertiTexte("Editeur") . "</label>");
-		$this->ajouteLigne("<input type='text' id='" . NOM_EDITEUR . "' name='"  . NOM_EDITEUR . "' value='" . $this->convertiTexte($this->editeur) . "' list='listeEditeur' autocomplete='off' />");
-		
-		$this->ouvreBloc("<datalist id='listeEditeur'>");
-		if($listeEditeur != null)
-			foreach($listeEditeur as $editeur)
-				$this->ajouteLigne("<option id='editeur_" . $editeur[ID_EDITEUR] . "' label='" . $editeur[NOM_EDITEUR] . "' value=\"" . $this->convertiTexte($editeur[NOM_EDITEUR]) . "\">");
-		$this->fermeBloc("</datalist>");
-		
+		$this->ajouteLigne("<label for='" . NOM_EDITEUR_J . "'>" . $this->convertiTexte("Editeur") . "</label>");
+		$this->ajouteLigne("<input type='text' id='" . NOM_EDITEUR_J . "' name='"  . NOM_EDITEUR_J . "' value='" . $this->convertiTexte($this->editeur) . "' list='listeEditeur' autocomplete='off' />");
 		$this->fermeBloc("</li>");
 		
 		$this->fermeBloc("</ol>");
@@ -493,6 +477,8 @@ class ModuleAjoutVersions extends Module
 			$this->traitementFormulaire = true;	
 
 			$this->recuperationInformationsFormulaire();
+			
+			//$this->idJeu = $this->maBase->recupIdJeu($this->nomJeu);
 			
 			if(strcmp($this->nomVersion, "") == 0 || $this->nomVersion == null)
 				$this->erreurNom = true;
@@ -540,7 +526,7 @@ class ModuleAjoutVersions extends Module
 			}
 			foreach($listeEditeurSelect as $editeur)
 				$this->idEditeur[] = $this->maBase->InsertionTableEditeur($editeur);
-		
+
 			if(!$this->erreurNom && !$this->erreurPrixAchat)
 			{
 						
@@ -580,10 +566,9 @@ class ModuleAjoutVersions extends Module
 						if($sizePlayer > 0)
 							$myPlayer .= ",";
 					}
-					
 					if($this->idVersion == 0/* && $resultat2*/)
 					{
-						$this->idVersion = $this->maBase->InsertionTableVersion($this->nomVersion, $this->description, $this->ageMinimum, $myPlayer, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->idJeu);													
+						$this->idVersion = $this->maBase->InsertionTableVersion($this->nomVersion, $this->description, $this->ageMinimum, $myPlayer, $this->nbJoueurReco, $this->dureePartie, $this->prixAchat, $this->anneeSortie, $this->idJeu);
 						if($this->chemin != null)
 						$this->idPhotoVersion = $this->maBase->InsertionTablePhoto($this->chemin, $this->TexteAlternatif);
 						$this->maBase->InsertionTablePhotoVersion($this->idPhotoVersion,$this->idVersion);
@@ -605,8 +590,8 @@ class ModuleAjoutVersions extends Module
 					else
 					{
 						if($_POST["Ajouter"]) {
-							//header("Location: " . MODULE_GESTION_JEUX);
-							//exit;
+							header("Location: " . MODULE_GESTION_JEUX);
+							exit;
 						} else if($_POST["AjouterExemplaire"]) {
 							header("Location: " . MODULE_AJOUT_EXEMPLAIRES . "&idVersion=" . $this->idVersion);
 							exit;

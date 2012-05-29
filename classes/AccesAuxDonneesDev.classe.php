@@ -1061,6 +1061,18 @@ class AccesAuxDonneesDev
 	}
 	
     /**
+	* Fonction de récupération l'id d'un jeu à partir du nom d'un jeu
+	* Entrée : nom du jeu pour lequel on souhaite récupérer l'id
+	* Sortie : l'id du jeu
+	*/
+	public function recupIdJeu($nomJeu)
+	{
+		$requete = "SELECT " . ID_JEU . " FROM " . TABLE_NOM_JEU . " WHERE " . NOM_JEU . "='" . $nomJeu . "'";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe[0][ID_JEU];
+	}
+	
+    /**
 	* Fonction de récupération du nom d'une version d'un jeu
 	* Entrée : id du jeu pour lequel on souhaite récupérer le nom de la version
 	* Sortie : le tableau contenant le nom
@@ -1073,6 +1085,33 @@ class AccesAuxDonneesDev
 		$requete .= "ORDER BY " . NOM_VERSION . ";";
 		$laListe = $this->requeteSelect($requete);
 		return $laListe;
+	}
+	
+    /**
+	* Fonction de récupération du nom d'une version d'un jeu
+	* Entrée : id du jeu pour lequel on souhaite récupérer le nom de la version
+	* Sortie : le tableau contenant le nom
+	*/
+	public function recupNameVersion($idJeu)
+	{
+		$requete = "SELECT * FROM " . TABLE_VERSION;
+		if($idJeu != null)
+			$requete .= " WHERE " . ID_VERSION . "='" . $idJeu . "'";
+		$requete .= "ORDER BY " . NOM_VERSION . ";";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
+    /**
+	* Fonction de récupération d'id d'une version d'un jeu
+	* Entrée : nom de la version du jeu pour lequel on souhaite récupérer l'id
+	* Sortie : l'id de la version
+	*/
+	public function recupIdVersion($nomVersion)
+	{
+		$requete = "SELECT " . ID_VERSION . " FROM " . TABLE_VERSION . " WHERE " . NOM_VERSION . "='" . $nomVersion . "'";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe[0][ID_VERSION];
 	}
 	
     /**
@@ -1218,9 +1257,12 @@ class AccesAuxDonneesDev
 	* Fonction de récupération de la liste des auteurs
 	* Sortie : le tableau contenant les auteurs
 	*/
-	public function recupAuteur()
+	public function recupAuteur($id)
 	{
-		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_AUTEUR);
+		$requete = "SELECT * FROM " . TABLE_AUTEUR;
+		if($id != null)
+			$requete .= " WHERE " . ID_AUTEUR . " = '" . $id . "'";
+		$laListe = $this->requeteSelect($requete);
 		return $laListe;
 	}
 	
@@ -1569,9 +1611,31 @@ class AccesAuxDonneesDev
 	 * @return string
 	 */
 
+	public function tagNomJeu($chaine){
+		$chaine=mysql_real_escape_string($chaine);
+		return $this->requeteSelect("SELECT DISTINCT " . NOM_JEU . " FROM " . TABLE_NOM_JEU . " WHERE " . NOM_JEU . " LIKE '" . $chaine . "%' " );
+	}
+
+	/**
+	 * Fonction récupérant les catégories commençant par une chaine de caractère
+	 * @param string
+	 * @return string
+	 */
+
+	public function tagNomVersion($chaine, $idJeu){
+		$chaine=mysql_real_escape_string($chaine);
+		return $this->requeteSelect("SELECT DISTINCT " . NOM_VERSION . " FROM " . TABLE_VERSION . " WHERE " . NOM_VERSION . " LIKE '" . $chaine . "%' AND " . ID_JEU . " =  '" . $idJeu . "'");
+	}
+
+	/**
+	 * Fonction récupérant les catégories commençant par une chaine de caractère
+	 * @param string
+	 * @return string
+	 */
+
 	public function tagCategorie($chaine){
 		$chaine=mysql_real_escape_string($chaine);
-		return $this->requeteSelect("SELECT " . NOM_CATEGORIE . " FROM " . TABLE_CATEGORIE . " WHERE " . NOM_CATEGORIE . " LIKE '" . $chaine . "%' " );
+		return $this->requeteSelect("SELECT DISTINCT " . NOM_CATEGORIE . " FROM " . TABLE_CATEGORIE . " WHERE " . NOM_CATEGORIE . " LIKE '" . $chaine . "%' " );
 	}
 
 	/**
@@ -1582,7 +1646,7 @@ class AccesAuxDonneesDev
 
 	public function tagEditeur($chaine){
 		$chaine=mysql_real_escape_string($chaine);
-		return $this->requeteSelect("SELECT " . NOM_EDITEUR . " FROM " . TABLE_EDITEUR . " WHERE " . NOM_EDITEUR . " LIKE '" . $chaine . "%' " );
+		return $this->requeteSelect("SELECT DISTINCT " . NOM_EDITEUR . " FROM " . TABLE_EDITEUR . " WHERE " . NOM_EDITEUR . " LIKE '" . $chaine . "%' " );
 	}
 
 	/**
@@ -1593,7 +1657,7 @@ class AccesAuxDonneesDev
 
 	public function tagDistributeur($chaine){
 		$chaine=mysql_real_escape_string($chaine);
-		return $this->requeteSelect("SELECT " . NOM_DISTRIBUTEUR . " FROM " . TABLE_DISTRIBUTEUR . " WHERE " . NOM_DISTRIBUTEUR . " LIKE '" . $chaine . "%' " );
+		return $this->requeteSelect("SELECT DISTINCT " . NOM_DISTRIBUTEUR . " FROM " . TABLE_DISTRIBUTEUR . " WHERE " . NOM_DISTRIBUTEUR . " LIKE '" . $chaine . "%' " );
 	}
 
 	/**
@@ -1604,7 +1668,7 @@ class AccesAuxDonneesDev
 
 	public function tagIllustrateur($chaine){
 		$chaine=mysql_real_escape_string($chaine);
-		return $this->requeteSelect("SELECT " . NOM_ILLUSTRATEUR . " FROM " . TABLE_ILLUSTRATEUR . " WHERE " . NOM_ILLUSTRATEUR . " LIKE '" . $chaine . "%' " );
+		return $this->requeteSelect("SELECT DISTINCT " . NOM_ILLUSTRATEUR . " FROM " . TABLE_ILLUSTRATEUR . " WHERE " . NOM_ILLUSTRATEUR . " LIKE '" . $chaine . "%' " );
 	}
 
 	/**
@@ -1615,7 +1679,7 @@ class AccesAuxDonneesDev
 
 	public function tagAuteur($chaine){
 		$chaine=mysql_real_escape_string($chaine);
-		return $this->requeteSelect("SELECT " . NOM_AUTEUR . " FROM " . TABLE_AUTEUR . " WHERE " . NOM_AUTEUR . " LIKE '" . $chaine . "%' " );
+		return $this->requeteSelect("SELECT DISTINCT " . NOM_AUTEUR . " FROM " . TABLE_AUTEUR . " WHERE " . NOM_AUTEUR . " LIKE '" . $chaine . "%' " );
 	}
         
         /**

@@ -28,6 +28,7 @@
 
     $.widget('ui.tagit', {
         options: {
+			
             itemName          : 'item',
             fieldName         : 'tags',
             availableTags     : [],
@@ -35,6 +36,9 @@
             removeConfirmation: false,
             caseSensitive     : true,
             autoFocusFirst	  : false,
+			// Limit the number of tag possible to add. 0 for infinite.
+			limitTag		  : 0,
+			
 
             // When enabled, quotes are not neccesary
             // for inputting multi-word tags.
@@ -88,12 +92,13 @@
 
             // Whether to remove the selected tag and all the tags that were added after it when deleting a tag.
             pruneTags: false,
-
+			
+			
             // Event callbacks.
             onTagAdded  : null,
             onTagRemoved: null,
             onTagClicked: null,
-
+			nbTag: 0,
             onAutocompleteSelected: null
         },
 
@@ -230,7 +235,8 @@
                     ) {
                         event.preventDefault();
                         that.createTag(that._cleanedInput());
-
+						
+						
                         // The autocomplete doesn't close automatically when TAB is pressed.
                         // So let's ensure that it closes.
                         that._tagInput.autocomplete('close');
@@ -256,7 +262,7 @@
                         event.preventDefault();
                     	if(jQuery.inArray(that._cleanedInput(),that.options.availableTags)!==-1){
                         that.createTag(that._cleanedInput());
-
+						
                         // The autocomplete doesn't close automatically when TAB is pressed.
                         // So let's ensure that it closes.
                         that._tagInput.autocomplete('close');
@@ -308,7 +314,9 @@
                 this._tagInput.autocomplete({
                     source: this.options.tagSource,
                     autoFocus: this.options.autoFocusFirst,
-                    select: function(event, ui) {
+                    select: function(event, ui) { 
+					
+						
                         // Delete the last tag if we autocomplete something despite the input being empty
                         // This happens because the input's blur event causes the tag to be created when
                         // the user clicks an autocomplete item.
@@ -319,6 +327,7 @@
                             that.removeTag(that._lastTag(), false);
                         }
                         var tag = that.createTag(ui.item.value);
+
                         // Preventing the tag input to be updated with the chosen value.
                         that._trigger('onAutocompleteSelected', event, {
                             item: ui.item,
@@ -411,13 +420,16 @@
 
         createTag: function(value, additionalClass) {
             var that = this;
+
             // Automatically trims the value of leading and trailing whitespace.
             value = $.trim(value);
 
-            if (!this._isNew(value) || value === '') {
+            if (!this._isNew(value) || value === '' ) {
                 return false;
             }
-
+			if(that.options.limitTag!=0&&that.options.nbTag>=that.options.limitTag){
+				return false;
+			}
             var label = $(this.options.onTagClicked ? '<a class="tagit-label"></a>' : '<span class="tagit-label"></span>').text(value);
 
             // Create tag.
@@ -425,7 +437,8 @@
                 .addClass('tagit-choice ui-widget-content ui-state-default ui-corner-all')
                 .addClass(additionalClass)
                 .append(label);
-
+				this.options.nbTag++;
+				
             // Button for removing the tag.
             var removeTagIcon = $('<span></span>')
                 .addClass('ui-icon ui-icon-close');
@@ -435,6 +448,7 @@
                 .click(function(e) {
                     // Removes a tag when the little 'x' is clicked.
                     that.removeTag(tag);
+					that.options.nbTag--;
                 });
             tag.append(removeTag);
 
@@ -465,8 +479,10 @@
 
             if (this.options.pruneTags && !removeOnly) {
                 that.pruneTag(tag)
-            }
-
+					}
+			if(that.options.nbTag>0){
+				that.options.nbTag--;
+			}
             animate = animate || this.options.animate;
 
             tag = $(tag);
