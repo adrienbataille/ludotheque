@@ -15,6 +15,13 @@ define("MDP_DEV","ludo");
 define("BASE_DEV","mdjtufjjpdev");
 define("TABLE_PREFIX_DEV","MDJT_");
 
+
+define("SERVEUR_FORUM","127.0.0.1");
+define("LOGIN_FORUM","ludotheque");
+define("MDP_FORUM","ludo");
+define("BASE_FORUM","mdjtufjjpforum");
+define("TABLE_PREFIX_FORUM","PHPBB_");
+
 // Constantes - Definition des Tables SQL
 define("TABLE_AUTEUR", TABLE_PREFIX_DEV . "AUTEUR");
 define("TABLE_AUTEUR_JEU", TABLE_PREFIX_DEV . "AUTEUR_JEU");
@@ -25,7 +32,9 @@ define("TABLE_DISTRIBUTEUR_VERSION", TABLE_PREFIX_DEV . "DISTRIBUTEUR_VERSION");
 define("TABLE_EDITEUR", TABLE_PREFIX_DEV . "EDITEUR");
 define("TABLE_EDITEUR_VERSION", TABLE_PREFIX_DEV . "EDITEUR_VERSION");
 define("TABLE_EMPRUNT", TABLE_PREFIX_DEV . "EMPRUNT");
-define("TABLE_ETAT_EXEMPLAIRE", TABLE_PREFIX_DEV . "ETAT_EXEMPLAIRE");
+define("TABLE_ETAT_EMPRUNT", TABLE_PREFIX_DEV . "ETAT_EMPRUNT");
+define("TABLE_ETAT_PHYSIQUE", TABLE_PREFIX_DEV . "ETAT_PHYSIQUE");
+define("TABLE_ETAT_EXEMPLAIRE", TABLE_PREFIX_DEV . "ETAT_PHYSIQUE"); // La table état exemplaire a été modifié en état physique mais on a gardé l'ancienne variable pour éviter tout problème avec les composants déjà créé
 define("TABLE_EXEMPLAIRE", TABLE_PREFIX_DEV . "EXEMPLAIRE");
 define("TABLE_EXTENSION", TABLE_PREFIX_DEV . "EXTENSION");
 define("TABLE_FAIRE_PARTIE_KIT", TABLE_PREFIX_DEV . "FAIRE_PARTIE_KIT");
@@ -45,6 +54,8 @@ define("TABLE_PHOTO_VERSION", TABLE_PREFIX_DEV . "PHOTO_VERSION");
 define("TABLE_RESERVATION", TABLE_PREFIX_DEV . "RESERVATION");
 define("TABLE_SUGGESTION", TABLE_PREFIX_DEV . "SUGGESTION");
 define("TABLE_VERSION", TABLE_PREFIX_DEV . "VERSION");
+
+define("TABLE_USERS", TABLE_PREFIX_FORUM . "USERS");
 
 // Définition des champs de la table TABLE_AUTEUR
 define("ID_AUTEUR", "idAuteur");
@@ -75,9 +86,16 @@ define("DATE_EMPRUNT", "dateEmprunt");
 define("DATE_RETOUR_SOUHAITE", "dateRetourSouhaite");
 define("DATE_RETOUR_REEL", "dateRetourReel");
 
-// Définition des champs de la table TABLE_ETAT_EXEMPLAIRE
-define("ID_ETAT_EXEMPLAIRE", "idEtatExemplaire");
+// Définition des champs de la table TABLE_ETAT_EMPRUNT
+define("ID_ETAT_EMPRUNT", "idEtatEmprunt");
 define("NOM_ETAT", "nomEtat");
+
+// Définition des champs de la table TABLE_ETAT_PHYSIQUE
+define("ID_ETAT_PHYSIQUE", "idEtatPhysique");
+
+ // La table état exemplaire a été modifié en état physique mais on a gardé l'ancienne variable pour éviter tout problème avec les composants déjà créé
+// Définition des champs de la table TABLE_ETAT_EXEMPLAIRE
+define("ID_ETAT_EXEMPLAIRE", "idEtatPhysique");
 
 // Définition des champs de la table TABLE_EXEMPLAIRE
 define("ID_EXEMPLAIRE", "idExemplaire");
@@ -289,6 +307,43 @@ class AccesAuxDonneesDev
                 $this->estConnecte = TRUE;
             }
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+        * Fonction de connexion à la base de donnée du forum
+        * Cette fonction initie la connexion à la base de données
+        * Uniquement si ce n'est pas déjà fait.
+        * On l'utilise donc au début de chaque requête
+        */
+        private function connecteBaseForum()
+        {
+            // On initie la connexion uniquement si elle n'est pas déjà faite
+            if ($this->estConnecteForum == FALSE)
+            {
+                try 
+                {
+                    // Connexion en mode debug
+                    $option[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+                    $this->maBase = new PDO("mysql:host=" . SERVEUR_FORUM . ";dbname=" . BASE_FORUM, LOGIN_FORUM, MDP_FORUM,$option_dev);
+                    // Connexion normale
+                    // $this->maBase = new PDO("mysql:host=" . SERVEUR . ";dbname=" . BASE, LOGIN, MDP);
+                } 
+                catch (PDOException $e)
+                {
+                        // Accès à la base impossible
+                        print "Connexion a la base de donnee impossible à la base de forum<br/>";
+                        die();
+                }
+                $this->estConnecteForum = TRUE;
+            }
+	}
+	
 	
         
 	/**
@@ -1198,6 +1253,18 @@ class AccesAuxDonneesDev
 		$requete = "SELECT * FROM " . TABLE_EXEMPLAIRE;
 		if($idExemplaire != null)
 			$requete .= " WHERE " . ID_EXEMPLAIRE . " = '" . $idExemplaire . "';";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe;
+	}
+	
+    /**
+	* Fonction de récupération de la liste des exemplaire ou d'un exemplaire en particulier si on lui passe en paramètre l'id d'un pays
+	* Entrée : id de l'exemplaire pour lequel on veut récupérer des informations (paramètre optionnel)
+	* Sortie : le tableau contenant les exemplaires
+	*/
+	public function recupExemplaireCB($cbExemplaire)
+	{
+		$requete = "SELECT * FROM " . TABLE_EXEMPLAIRE . " WHERE " . CODE_BARRE . " = '" . $cbExemplaire . "';";
 		$laListe = $this->requeteSelect($requete);
 		return $laListe;
 	}
@@ -2613,6 +2680,126 @@ class AccesAuxDonneesDev
 			return false;
 		}
 	}
+	
+	/**
+    * Fonction de mise à jour de la date de rendu d'un exemplaire emprunté
+    * Entrée : id de l'exemplaire et date de retour réel
+    * Sortie : true si la mise à jour s'est bien passée, sinon false
+    */
+	public function updateDateRetourReelEmprunt($idExemplaire, $dateRetour) {
+		if(intval($idExemplaire))
+		{
+			// On initie la connexion à la base, si ce n'est déjà fait
+			$this->connecteBase();
+			
+			// Création de la requete
+			$requete = $this->maBase->prepare("UPDATE " . TABLE_EMPRUNT . " SET " . DATE_RETOUR_REEL . "=? WHERE " . ID_EXEMPLAIRE . "=?;");
+			$requete->bindValue(1, $dateRetour, PDO::PARAM_STR);
+			$requete->bindValue(2, $idExemplaire, PDO::PARAM_INT);
+			$resultat = $requete->execute();
+			
+			// On termine l'utilisation de la requete
+			$requete->closeCursor();
+			
+			return $resultat;
+		}
+		else
+			return false;
+	
+	}
+    
+    /**
+    * Fonction de vérification d'emprunt
+    * Entrée : id de l'exemplaire à vérifier
+    * Sortie : true si le jeu est bien emprunté, sinon false
+    */
+    public function verifTableEmprunt($idExemplaire)
+    {
+        // Protection contre injection SQL
+        if (intval($idExemplaire))
+        {
+			$requete = "SELECT * FROM " . TABLE_EMPRUNT . " WHERE " . ID_EXEMPLAIRE . "='" . $idExemplaire . "' AND " . DATE_RETOUR_REEL . " is null;";
+			$resultat = $this->requeteSelect($requete);
+			
+			//var_dump($resultat);
+			if(count($resultat) == 0)
+				return false;
+			else
+				return $resultat[0];
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+	
+	/**
+    * Fonction de mise à jour de la date de rendu d'un exemplaire emprunté
+    * Entrée : id de l'exemplaire, commentaire sur l'état de l'exemplaire et état de l'exemplaire
+    * Sortie : true si la mise à jour s'est bien passée, sinon false
+    */
+	public function updateInventaire($idExemplaire, $commentaire, $etat) {
+		if(intval($idExemplaire))
+		{
+			// On initie la connexion à la base, si ce n'est déjà fait
+			$this->connecteBase();
+			
+			// Création de la requete
+			$requete = $this->maBase->prepare("UPDATE " . TABLE_EXEMPLAIRE . " SET " . DESCRIPTION_EXEMPLAIRE . "=?, " . ID_ETAT_EXEMPLAIRE . "=? WHERE " . ID_EXEMPLAIRE . "=?;");
+			$requete->bindValue(1, $commentaire, PDO::PARAM_STR);
+			$requete->bindValue(2, $etat, PDO::PARAM_INT);
+			$requete->bindValue(3, $idExemplaire, PDO::PARAM_INT);
+			$resultat = $requete->execute();
+			
+			// On termine l'utilisation de la requete
+			$requete->closeCursor();
+			
+			return $resultat;
+		}
+		else
+			return false;
+	
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	* Fonction pour récuperer les jeux non rendus avec leur emprunteurs
+	* Entrée : 
+	* Sortie : les jeux non rendus et les emprunteurs!
+	*/
+	public function selectJeuxNonRendus()
+	{
+		// On initie les connexions aux bases, si ce n'est déjà fait
+		$this->connecteBase();
+		$this->connecteBaseForum();
+		
+		// construction de la requete SQL 
+			$requete = 	"SELECT now() as DATE_ACTUELLE, u.".USERNAME.",".NOM_VERSION.", ".NOM_JEU.",e.".ID_EXEMPLAIRE.",".ID_UTILISATEUR.",".DATE_RETOUR_SOUHAITE." ,".USER_EMAIL." ,".ID_EMPRUNT."
+							FROM ".BASE_DEV.".".TABLE_NOM_JEU." ne,".BASE_DEV.".".TABLE_EMPRUNT." e,".BASE_DEV.".".TABLE_JEUX." j,".BASE_DEV.".".TABLE_VERSION." v, ".BASE_DEV.".".TABLE_EXEMPLAIRE." ex,
+								".BASE_FORUM.".".TABLE_USERS." u
+									WHERE NOW() > ".DATE_RETOUR_SOUHAITE."
+										AND e.".DATE_RETOUR_REEL." IS NULL
+										AND e.".DATE_RETOUR_SOUHAITE." != 0000-00-00 
+										AND e.".ID_EXEMPLAIRE."= ex.".ID_EXEMPLAIRE."
+										AND ex.".ID_VERSION."= v.".ID_VERSION."
+										AND j.".ID_JEU."= v.".ID_JEU."
+										AND e.".ID_UTILISATEUR."= u.".USER_ID."
+									GROUP BY ".ID_EMPRUNT."
+									ORDER BY ".DATE_RETOUR_SOUHAITE."";
+									
+
+			// Execution 
+			$resultat = $this->requeteSelect($requete);
+		// On termine l'utilisation de la requete
+		return $resultat;
+	
+	}
+    
 
 }
 

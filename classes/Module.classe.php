@@ -12,6 +12,8 @@ define("ERREUR_CHAMP_REQUIS", "Ce champ doit être rempli");
 define("ERREUR_PIRATAGE", "Attention, tentative de piratage !!");
 define("ERREUR_PHOTO_FORMAT", "Le format n'est pas valide !");
 define("ERREUR_PHOTO_TAILLE", "Le poids de la photo est trop important !");
+define("ERREUR_INFO_INCORRECT", "L'information saisie est incorrecte !");
+define("ERREUR_RETOUR_EMPRUNT", "Cet exemplaire n'a pas été emprunté, retour impossible !");
 
 class Module
 {

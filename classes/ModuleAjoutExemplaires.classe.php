@@ -11,6 +11,13 @@ require_once("classes/Module.classe.php");
 //Constantes
 define("MODULE_AJOUT_EXEMPLAIRES", RACINE_SITE . "module.php?idModule=AjoutExemplaires");
 
+/**
+ * Module Ajout Exemplaire
+ * @author Adrien Bataille
+ * @version 0.1
+ * @package module
+ */
+
 
 
 /* REMARQUES :
@@ -441,7 +448,7 @@ class ModuleAjoutExemplaires extends Module
 			
 			// Cinquième fieldset : Langues régles du jeu
 			$this->ouvreBloc("<fieldset>");	
-			$this->ajouteLigne("<legend>" . $this->convertiTexte("Régles du jeu") . "</legend>");
+			$this->ajouteLigne("<legend>" . $this->convertiTexte("Règles du jeu") . "</legend>");
 			$this->ouvreBloc("<ol>");
 			
 			// Langues des régles du jeu

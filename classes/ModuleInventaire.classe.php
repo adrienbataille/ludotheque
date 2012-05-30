@@ -8,17 +8,17 @@ require_once("classes/Module.classe.php");
 
 
 //Constantes
-define("MODULE_RETOUR", RACINE_SITE . "module.php?idModule=Retour");
+define("MODULE_INVENTAIRE", RACINE_SITE . "module.php?idModule=Inventaire");
 
 /**
- * Module Retour
+ * Module Inventaire
  * @author Adrien Bataille
  * @version 0.1
  * @package module
  */
 
 
-class ModuleRetour extends Module
+class ModuleInventaire extends Module
 {
 	/**
 	 * @var AccesAuxDonneesDev Connexion BDD
@@ -27,46 +27,35 @@ class ModuleRetour extends Module
 	
 	private $idExemplaire = 0;
 	private $codeBarre = "";
-	private $idLieuRetour;
 	private $commentaire = "";
-	private $dateRetour;
 	private $etat;
 	private $erreurCodeBarre = false;
-	private $erreurEmprunt = false;
+	private $inventaire = false;
 
 	/**
 	 * Constructeur. Il ouvre une connexion à la BDD et affiche le formulaire
 	 */
-	public function __construct()
+	public function __construct($exemCodeBarre)
 	{
 		// On utilise le constructeur de la classe mère
 		parent::__construct();
 		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
 		//TODO  euh faudra changer la fonction de construction qui suit quand on merge!!
 		$this->maBase = AccesAuxDonneesDev::recupAccesDonneesDev();
+		
+		$myEx = $this->maBase->recupExemplaire($exemCodeBarre);
+		if(!empty($exemCodeBarre)) {
+			$this->inventaire = true;
+			$this->codeBarre = $myEx[0][CODE_BARRE];
+			$this->idExemplaire = $myEx[0][ID_EXEMPLAIRE];
+			$this->commentaire = $myEx[0][DESCRIPTION_EXEMPLAIRE];
+			$this->etat = $myEx[0][ID_ETAT_EXEMPLAIRE];
+		}
+			
 		// On traite le formulaire, le cas échéant
 		$this->traiteFormulaire();
 		$this->afficheFormulaire();		
 
-	}
-	
-	
-	/**
-	 * Fonction récupérant les informations des jeux dans la requête POST
-	 */
-	private function recuperationInformationsFormulaire()
-	{
-		/*
-		// Nettoyage du nom du jeu
-		$this->nomJeu = $this->filtreChaine($_POST[NOM_JEU], TAILLE_CHAMPS_COURT);
-		// Nettoyage du l'id du jeu
-		$this->idJeu = $this->filtreChaine($_POST[ID_JEU], TAILLE_CHAMPS_COURT);
-		
-		// Nettoyage du nom de la version du jeu
-		$this->nomVersion = $this->filtreChaine($_POST[NOM_VERSION], TAILLE_CHAMPS_COURT);
-		// Nettoyage de l'id de la version du jeu
-		$this->idVersion = $this->filtreChaine($_POST[ID_VERSION], TAILLE_CHAMPS_COURT);
-		*/
 	}
 	
 	/**
@@ -74,8 +63,8 @@ class ModuleRetour extends Module
 	 */
 	private function afficheFormulaire()
 	{
-		$this->ouvreBloc("<form method='post' id='formProfil' action='".MODULE_RETOUR."'>");
-		$this->ajouteLigne("<legend>" . $this->convertiTexte("Retour") . "</legend>");
+		$this->ouvreBloc("<form method='post' id='formProfil' action='".MODULE_INVENTAIRE."'>");
+		$this->ajouteLigne("<legend>" . $this->convertiTexte("Inventaire") . "</legend>");
 		$this->ouvreBloc("<fieldset>");	
 		$this->ouvreBloc("<ol>");
 		
@@ -95,25 +84,14 @@ class ModuleRetour extends Module
 		
 		if(strcmp($this->codeBarre, "") != 0) {
 			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='lieu_de_retour'>" . $this->convertiTexte("Lieu de retour") . "</label>");
-			$lieu = $this->maBase->listeLieu();
-			$this->creationSelect($lieu, "idLieu", $this->idLieuRetour, false);		
-			$this->fermeBloc("</li>");
-			
-			$this->ouvreBloc("<li>");
-			$this->ajouteLigne("<label for='" . DATE_RETOUR_REEL . "'>" . $this->convertiTexte("Date de retour") . "</label>");
-			$this->ajouteLigne("<input type='text' id='" . DATE_RETOUR_REEL . "' value='".date('d-m-Y')."' name='" . DATE_RETOUR_REEL . "' />");
-			$this->fermeBloc("</li>");
-			
-			$this->ouvreBloc("<li>");
 			$this->ajouteLigne("<label for='etat'>" . $this->convertiTexte("Etat") . "</label>");
 			$etat = $this->maBase->listeEtat();
-			$this->creationSelect($etat, ID_ETAT_EXEMPLAIRE, $this->etat, true);
+			$this->creationSelect($etat, ID_ETAT_EXEMPLAIRE, $this->etat, false);
 			$this->fermeBloc("</li>");
 			
 			$this->ouvreBloc("<li>");
 			$this->ajouteLigne("<label for='" . DESCRIPTION_EXEMPLAIRE . "'>" . $this->convertiTexte("Commentaire") . "</label>");
-			$this->ajouteLigne("<textarea id='" . DESCRIPTION_EXEMPLAIRE . "' name='" . DESCRIPTION_EXEMPLAIRE . "' disabled='disabled'>" . $this->commentaire . "</textarea>");
+			$this->ajouteLigne("<textarea id='" . DESCRIPTION_EXEMPLAIRE . "' name='" . DESCRIPTION_EXEMPLAIRE . "'>" . $this->commentaire . "</textarea>");
 			$this->fermeBloc("</li>");
 		}
 		$this->fermeBloc("</ol>");
@@ -126,13 +104,8 @@ class ModuleRetour extends Module
 			$this->fermeBloc("</fieldset>");
 		} else {
 			$this->ouvreBloc("<fieldset>");	
-			$this->ajouteLigne("<input type='hidden' name='validerRetour' value='true' />");
-			$this->ajouteLigne("<button type='submit' name='ValiderRetour' value='true'>" . $this->convertiTexte("État correct") . "</button>");	
-			$this->fermeBloc("</fieldset>");
-			
-			$this->ouvreBloc("<fieldset>");	
-			$this->ajouteLigne("<input type='hidden' name='validerPbRetour' value='true' />");
-			$this->ajouteLigne("<button type='submit' name='ValiderPbRetour' value='true'>" . $this->convertiTexte("Problème état") . "</button>");	
+			$this->ajouteLigne("<input type='hidden' name='validerInventaire' value='true' />");
+			$this->ajouteLigne("<button type='submit' name='ValiderInventaire' value='true'>" . $this->convertiTexte("Valider inventaire") . "</button>");	
 			$this->fermeBloc("</fieldset>");
 		}
 		
@@ -143,46 +116,30 @@ class ModuleRetour extends Module
 	* Traitement formulaire
 	*/
 	
-	private function traiteFormulaire()
-	{
-		$this->codeBarre = $this->filtreChaine($_POST[CODE_BARRE], TAILLE_CHAMPS_COURT);
+	private function traiteFormulaire() {
+		if(!$this->inventaire)
+			$this->codeBarre = $this->filtreChaine($_POST[CODE_BARRE], TAILLE_CHAMPS_COURT);
 		
 		// Y a-t-il effectivement un formulaire à traiter ?
-		if ($_POST["ValiderCodeBarre"])
-		{
+		if ($_POST["ValiderCodeBarre"]) {
 			$myEx = $this->maBase->recupExemplaireCB($this->codeBarre);
 			$this->idExemplaire = $myEx[0][ID_EXEMPLAIRE];
 			if(!empty($myEx)) {
-				$myEmprunt = $this->maBase->verifTableEmprunt($this->idExemplaire);
-				if(!empty($myEmprunt)) {
-					$this->commentaire = $myEx[0][DESCRIPTION_EXEMPLAIRE];
-					$this->etat = $myEx[0][ID_ETAT_EXEMPLAIRE];
-					if($myEx[0][ID_LIEU_TEMPO] != null || $myEx[0][ID_LIEU_TEMPO] != 0 )
-						$this->idLieuRetour = $myEx[0][ID_LIEU_TEMPO];
-					else
-						$this->idLieuRetour = $myEx[0][ID_LIEU_REEL];
-				} else {
-					$this->codeBarre = "";
-					$this->erreurEmprunt = true;
-				}
+				$this->commentaire = $myEx[0][DESCRIPTION_EXEMPLAIRE];
+				$this->etat = $myEx[0][ID_ETAT_EXEMPLAIRE];
 			} else {
 				$this->codeBarre = "";
 				$this->erreurCodeBarre = true;
 			}
-		} else {
+		} elseif ($_POST["ValiderInventaire"]) {
 			$this->idExemplaire = $this->filtreChaine($_POST[ID_EXEMPLAIRE], TAILLE_CHAMPS_COURT);
-			$this->idLieuRetour = $this->filtreChaine("idLieu", TAILLE_CHAMPS_COURT);
-			$this->dateRetour = $this->dateAffichageToBase($_POST[DATE_RETOUR_REEL]);
+			$this->commentaire = $this->filtreChaine($_POST[DESCRIPTION_EXEMPLAIRE], TAILLE_CHAMPS_COURT);
+			$this->etat = $this->filtreChaine($_POST[ID_ETAT_EXEMPLAIRE], TAILLE_CHAMPS_COURT);
 			
-			$this->maBase->updateDateRetourReelEmprunt($this->idExemplaire, $this->dateRetour);
+			$this->maBase->updateInventaire($this->idExemplaire, $this->commentaire, $this->etat);
 		
-			if ($_POST["ValiderRetour"]) {
-				header("Location: " . MODULE_EMPRUNTER . "&rendu=true&idExemplaire=".$this->idExemplaire);
-				exit;
-			} elseif ($_POST["ValiderPbRetour"]) {
-				header("Location: " . MODULE_INVENTAIRE . "&idExemplaire=".$this->idExemplaire);
-				exit;
-			}
+			header("Location: " . MODULE_EMPRUNTER . "&inventaire=true&idExemplaire=".$this->idExemplaire);
+			exit;
 		}
 	}
 	

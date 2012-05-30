@@ -11,7 +11,7 @@ require_once("classes/Module.classe.php");
 define("MODULE_EMPRUNTER", RACINE_SITE . "module.php?idModule=Emprunter");
 
 /**
- * Module Emprunt
+ * Module GestionEmprunt
  * @author Romain Laï-King
  * @version 0.1
  * @package module
@@ -44,21 +44,27 @@ class ModuleEmprunter extends Module
 	{
 		$this->ouvreBloc("<div id='module_emprunter'>");
 		
+		$this->ouvreBloc("<form method='post' action='" . MODULE_EMPRUNT. "' id='formProfil'>");        
+		$this->ouvreBloc("<fieldset>");
+		$this->ajouteLigne("<input type='hidden' name='emprunter' value='true' />");
+		$this->ajouteLigne("<button type='submit' name='emprunter' value='true'>" . $this->convertiTexte("Emprunt") . "</button>");
+		$this->fermeBloc("</fieldset>");		
+		$this->fermeBloc("</form>");
 			
 		$this->ouvreBloc("<form method='post' action='" . MODULE_RETOUR . "' id='formProfil'>");        
 		$this->ouvreBloc("<fieldset>");
 		$this->ajouteLigne("<input type='hidden' name='emprunter' value='true' />");
 		$this->ajouteLigne("<button type='submit' name='emprunter' value='true'>" . $this->convertiTexte("Retour") . "</button>");
 		$this->fermeBloc("</fieldset>");		
-		$this->fermeBloc("</form>");
-    	
-        $this->ouvreBloc("<form method='post' action='" . MODULE_EMPRUNT. "' id='formProfil'>");        
+		$this->fermeBloc("</form>");  
+			
+		$this->ouvreBloc("<form method='post' action='" . MODULE_INVENTAIRE . "' id='formProfil'>");        
 		$this->ouvreBloc("<fieldset>");
-		$this->ajouteLigne("<input type='hidden' name='emprunter' value='true' />");
-		$this->ajouteLigne("<button type='submit' name='emprunter' value='true'>" . $this->convertiTexte("Emprunt") . "</button>");
+		$this->ajouteLigne("<input type='hidden' name='inventaire' value='true' />");
+		$this->ajouteLigne("<button type='submit' name='inventaire' value='true'>" . $this->convertiTexte("Inventaire") . "</button>");
 		$this->fermeBloc("</fieldset>");		
-		$this->fermeBloc("</form>");
-    	
+		$this->fermeBloc("</form>");   	
+           	
         /*
 		$this->ouvreBloc("<form method='post' action='" . MODULE_GESTION_EMPRUNT. "' id='formProfil'>");        
 		$this->ouvreBloc("<fieldset>");

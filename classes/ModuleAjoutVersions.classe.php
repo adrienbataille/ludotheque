@@ -11,6 +11,13 @@ require_once("classes/Module.classe.php");
 //Constantes
 define("MODULE_AJOUT_VERSIONS", RACINE_SITE . "module.php?idModule=AjoutVersions");
 
+/**
+ * Module Ajout Version
+ * @author Adrien Bataille
+ * @version 0.1
+ * @package module
+ */
+
 //Constantes formulaire
 define("NB_JOUEUR_V", "nb_joueur_min");
 
@@ -240,7 +247,7 @@ class ModuleAjoutVersions extends Module
 
 		// First fieldset : Nom de la versions
 		$this->ouvreBloc("<fieldset>");
-		$this->ajouteLigne("<legend>" . $this->convertiTexte("Jeu associé à la version") . "</legend>");				
+		$this->ajouteLigne("<legend>" . $this->convertiTexte("Jeu associé à la version *") . "</legend>");				
 		$this->ouvreBloc("<ol>");
 		$this->ouvreBloc("<li>");	
 		

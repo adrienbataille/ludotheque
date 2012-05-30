@@ -84,3 +84,27 @@ li.item {
 
 #menu_gestion_jeux{
 }
+
+tr {
+	text-align:center;
+}
+
+td {
+	width:10%;
+}
+
+tr td.retard1 {
+	color:#FF0000;
+}
+
+tr td.retard2 {
+	color:#FFBB00;
+}
+
+tr td.retard3 {
+	color:#0000FF;
+}
+
+tr td.retard4 {
+	color:#00DDBB;
+}

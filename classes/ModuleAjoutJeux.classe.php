@@ -11,6 +11,13 @@ require_once("classes/Module.classe.php");
 //Constantes
 define("MODULE_AJOUT_JEUX", RACINE_SITE . "module.php?idModule=AjoutJeux");
 
+/**
+ * Module Ajout Jeux
+ * @author Adrien Bataille
+ * @version 0.1
+ * @package module
+ */
+
 //Constantes formulaire
 define("NOM_JEU_J", NOM_JEU."Jeu");
 define("NOM_CATEGORIE_J", NOM_CATEGORIE."Jeu");
@@ -286,7 +293,7 @@ class ModuleAjoutJeux extends Module
 		
 		// Second fieldset : Information sur le jeux
 		$this->ouvreBloc("<fieldset>");
-		$this->ajouteLigne("<legend>Information sur le jeux</legend>");
+		$this->ajouteLigne("<legend>Informations sur le jeu</legend>");
 		$this->ouvreBloc("<ol>");
 		
 		// Identifiant du jeu

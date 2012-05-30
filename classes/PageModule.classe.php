@@ -18,6 +18,7 @@ require_once("classes/ModuleFicheJeu.classe.php");
 require_once("classes/ModuleRetour.classe.php");
 require_once("classes/ModuleEmprunt.classe.php");
 require_once("classes/ModuleGestionEmprunt.classe.php");
+require_once("classes/ModuleInventaire.classe.php");
 
 // Constantes
 
@@ -141,6 +142,9 @@ class PageModule extends Page
 					break;				
 				case "GestionEmprunt" :				
 					$this->unModule = new ModuleGestionEmprunt();
+					break;			
+				case "Inventaire" :				
+					$this->unModule = new ModuleInventaire($_GET["idExemplaire"]);
 					break;
 			}
 		}
