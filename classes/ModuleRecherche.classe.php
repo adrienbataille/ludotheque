@@ -39,7 +39,6 @@ class ModuleRecherche extends Module
 	 */
 	private function affiche()
 	{
-		$this->ajouteLigne("Module fictif de test pour le Composant Recherche");
 	}
 }
 

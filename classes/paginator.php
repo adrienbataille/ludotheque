@@ -59,19 +59,25 @@ class Paginator
 		}
 
 		$from_page = max($current_page - 3, 0);
-		$to_page   = min($current_page + 3, $all_pages);
+		$to_page   = min($current_page + 3, $all_pages-1);
 
 		for($i = $from_page; $i < $to_page; $i++)
 		{
 			$string .= '<li ' . ($current_page == $i ? 'class="current"' : '') . '>' . self::link($i + 1, $i * self::$limit) . '</li>';
 		}
+		
 
 		if(($current_page + 1) !== $all_pages)
 		{
+			$string .="<li>...</li>";
+			$string .= '<li>' . self::link(round(self::$total/self::$limit)+1, round(self::$total/self::$limit)*self::$limit ) . '</li>';
 			$string .= '<li>' . self::link("Suivante", ($current_page + 1) * self::$limit) . '</li>';
-		}
+		}		
 
+		//self::$url=preg_replace("/\&offset=[0-9]*/","",self::$url);
+		//$string .='<li><a href="' . self::$url . '?offset=' . round(self::$total/self::$limit)*self::$limit . '"> Derni&egrave;re </a>';
 		$string .= '</ul></nav>';
+		//$string .= self::$total . " " .self::$offset . " " . self::$url . " " . self::$limit;
 
 		return $string;
 	}

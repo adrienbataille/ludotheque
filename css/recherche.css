@@ -36,6 +36,7 @@
 
 #resultat td{
 	text-align: center;
+	vertical-align:middle;
 }
 
 #resultat th{
@@ -49,8 +50,13 @@
 	background-color:#CACAFE;
 }
 
-#paginator{
+.paginator{
 	text-align: center;
+	
+}
+
+.paginator li {
+	display:inline-block;
 }
 
 #rechercheBase{
@@ -59,3 +65,6 @@
 	margin-bottom:1em;
 }
 
+.photoRecherche{
+width:100px;
+}

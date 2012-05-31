@@ -1873,7 +1873,7 @@ class AccesAuxDonneesDev
 		$query->jointure(TABLE_ETAT_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE);
 		$query->jointure(TABLE_NOM_JEU,ID_JEU,TABLE_JEUX,ID_JEU);
 
-		$query->setExtra("GROUP BY ". TABLE_VERSION . "." . ID_VERSION . "," . TABLE_EXEMPLAIRE .".". ID_ETAT_EXEMPLAIRE );
+		$query->setExtra("GROUP BY ". TABLE_VERSION . "." . ID_VERSION . "," . TABLE_EXEMPLAIRE .".". ID_ETAT_EXEMPLAIRE . " ORDER BY " . TABLE_NOM_JEU . "." . NOM_JEU );
 
 		// Création dynamique de la requète maintenant
 
@@ -1906,8 +1906,6 @@ class AccesAuxDonneesDev
 
 		// Par Durée
 		if(is_numeric($critere["DureeJeu"])){
-			$critere["DureeJeu"]=$critere["DureeJeu"]*60;
-			$critere["DureeJeu"]=$this->formatTime($critere["DureeJeu"]);
 			if($critere["dureeSigne"]==SUPERIEUR){
 				$query->ajoutAnd(">",TABLE_VERSION, DUREE_PARTIE, $critere["DureeJeu"]);
 			}

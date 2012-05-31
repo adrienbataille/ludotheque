@@ -112,28 +112,31 @@ class ModuleAjoutVersions extends Module
 				$this->anneeSortie = $myVersion[0][ANNEE_SORTIE];
 				$illustr = $this->maBase->recupIllustrateurs($this->idVersion);
 				$a = sizeof($illustr) - 1;
-				foreach($illustr as $myIllustr) {
-					$this->illustrateur .= $myIllustr[NOM_ILLUSTRATEUR];
-					$a--;
-					if($a > 0)
-						$this->illustrateur .= ",";
-				}
+				if(!empty($illustr))
+					foreach($illustr as $myIllustr) {
+						$this->illustrateur .= $myIllustr[NOM_ILLUSTRATEUR];
+						$a--;
+						if($a > 0)
+							$this->illustrateur .= ",";
+					}
 				$distrib = $this->maBase->recupDistributeurs($this->idVersion);
 				$a = sizeof($distrib) - 1;
-				foreach($distrib as $myDistrib) {
-					$this->distributeur .= $myDistrib[NOM_DISTRIBUTEUR];
-					$a--;
-					if($a > 0)
-						$this->distributeur .= ",";
-				}
+				if(!empty($distrib))
+					foreach($distrib as $myDistrib) {
+						$this->distributeur .= $myDistrib[NOM_DISTRIBUTEUR];
+						$a--;
+						if($a > 0)
+							$this->distributeur .= ",";
+					}
 				$edit = $this->maBase->recupEditeurs($this->idVersion);
 				$a = sizeof($edit) - 1;
-				foreach($edit as $myEdit) {
-					$this->editeur .= $myEdit[NOM_EDITEUR];
-					$a--;
-					if($a > 0)
-						$this->editeur .= ",";
-				}
+				if(!empty($edit))
+					foreach($edit as $myEdit) {
+						$this->editeur .= $myEdit[NOM_EDITEUR];
+						$a--;
+						if($a > 0)
+							$this->editeur .= ",";
+					}
 				if($this->idJeu == 0) {
 					$this->idJeu = $myVersion[0][ID_JEU];
 					$nomJeu = $this->maBase->recupNomJeu($this->idJeu);

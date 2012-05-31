@@ -279,8 +279,8 @@ class ComposantRecherche extends Module
 
 				Paginator\Paginator::$url    = $_SERVER['REQUEST_URI'];
 				
-				$resultat=array_slice($resultat,Paginator\Paginator::$offset,Paginator\Paginator::$offset+Paginator\Paginator::$limit);
-
+				$resultat=array_slice($resultat,Paginator\Paginator::$offset,Paginator\Paginator::$limit);
+				
 				foreach ($resultat as $row) {
 					//On affiche une fois par version, et on compte le nombre d'exemplaire dispo et non dispo
 					if($idVersion!=$row[ID_VERSION]){
@@ -308,7 +308,6 @@ class ComposantRecherche extends Module
 
 				$this->fermeBloc("</table>");
 				$this->fermeBloc("</div>");
-				$this->ajouteLigne("<div id='paginator'>Page</div>");
 				$this->ajouteLigne(Paginator\Paginator::links());
 			}
 		}
@@ -326,7 +325,7 @@ class ComposantRecherche extends Module
 	private function ligneResultat($photo,$textealt,$nomJeu,$nomVersion,$idVersion,$nbdisponible,$nbindisponible){
 		$this->ouvreBloc("<tr>");
 
-		$this->ajouteLigne("<td><a href='" . MODULE_FICHEJEU. "&idVersion=" . $idVersion . "'> <img src='" . $photo . "'></a></td>" );
+		$this->ajouteLigne("<td><a href='" . MODULE_FICHEJEU. "&idVersion=" . $idVersion . "'> <img class='photoRecherche' src='" . $photo . "'></a></td>" );
 
 		$this->ajouteLigne("<td>");
 

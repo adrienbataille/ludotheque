@@ -395,7 +395,7 @@ class ModuleAjoutJeux extends Module
 						
 					
 					$listeAuteurSelect = split(",", $this->auteur);
-					$listeAuteurBase = $this->maBase->recupAuteur();
+					$listeAuteurBase = $this->maBase->recupAuteur(null);
 					$listeAuteurId;
 					foreach($listeAuteurBase as $arrayAuteur => $unAuteur)
 					{
