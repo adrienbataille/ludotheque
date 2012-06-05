@@ -31,14 +31,16 @@ class ModuleInventaire extends Module
 	private $etat;
 	private $erreurCodeBarre = false;
 	private $inventaire = false;
+	private $monUtilisateur = null;
 
 	/**
 	 * Constructeur. Il ouvre une connexion à la BDD et affiche le formulaire
 	 */
-	public function __construct($exemCodeBarre)
+	public function __construct($user, $exemCodeBarre)
 	{
 		// On utilise le constructeur de la classe mère
 		parent::__construct();
+		$this->monUtilisateur = $user;
 		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
 		//TODO  euh faudra changer la fonction de construction qui suit quand on merge!!
 		$this->maBase = AccesAuxDonneesDev::recupAccesDonneesDev();
@@ -93,6 +95,11 @@ class ModuleInventaire extends Module
 			$this->ajouteLigne("<label for='" . DESCRIPTION_EXEMPLAIRE . "'>" . $this->convertiTexte("Commentaire") . "</label>");
 			$this->ajouteLigne("<textarea id='" . DESCRIPTION_EXEMPLAIRE . "' name='" . DESCRIPTION_EXEMPLAIRE . "'>" . $this->commentaire . "</textarea>");
 			$this->fermeBloc("</li>");
+			
+			$this->ouvreBloc("<li style='display: none;'>");
+			$this->ajouteLigne("<label for='" . ID_UTILISATEUR . "'>" . $this->convertiTexte("Id Utilisateur") . "</label>");
+			$this->ajouteLigne("<input type='text' id='" . ID_UTILISATEUR . "' name='" . ID_UTILISATEUR . "' value='" . $this->monUtilisateur->RecupId() . "' />");
+			$this->fermeBloc("</li>");
 		}
 		$this->fermeBloc("</ol>");
 		$this->fermeBloc("</fieldset>");
@@ -135,8 +142,11 @@ class ModuleInventaire extends Module
 			$this->idExemplaire = $this->filtreChaine($_POST[ID_EXEMPLAIRE], TAILLE_CHAMPS_COURT);
 			$this->commentaire = $this->filtreChaine($_POST[DESCRIPTION_EXEMPLAIRE], TAILLE_CHAMPS_COURT);
 			$this->etat = $this->filtreChaine($_POST[ID_ETAT_EXEMPLAIRE], TAILLE_CHAMPS_COURT);
+			$user = intval($this->filtreChaine($_POST[ID_UTILISATEUR], TAILLE_CHAMPS_COURT));
 			
 			$this->maBase->updateInventaire($this->idExemplaire, $this->commentaire, $this->etat);
+			
+			$this->maBase->InsertionTableInventaire(date("Y-m-d"), $this->commantaire, $user, $this->idExemplaire);
 		
 			header("Location: " . MODULE_EMPRUNTER . "&inventaire=true&idExemplaire=".$this->idExemplaire);
 			exit;

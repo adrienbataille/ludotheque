@@ -12,7 +12,7 @@ define("MODULE_EMPRUNT", RACINE_SITE . "module.php?idModule=Emprunt");
 
 /**
  * Module Emprunt
- * @author Romain Laï-King
+ * @author Ziyang KE, Rania DAOUDI
  * @version 0.1
  * @package module
  */
@@ -21,9 +21,10 @@ define("MODULE_EMPRUNT", RACINE_SITE . "module.php?idModule=Emprunt");
 class ModuleEmprunt extends Module
 {
 	/**
-	 * @var AccesAuxDonneesDev Connexion BDD
+	 * @var AccesAuxDonneesDoc Connexion BDD
 	 */
-	private $maBase = NULL;
+	private $maBaseDoc = NULL;
+	private $maBaseDev = NULL;
 
 	/**
 	 * Constructeur. Il ouvre une connexion à la BDD et affiche le formulaire
@@ -33,8 +34,11 @@ class ModuleEmprunt extends Module
 		// On utilise le constructeur de la classe mère
 		parent::__construct();
 		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
-		$this->maBase = AccesAuxDonneesDev::recupAccesDonneesDev();
+		$this->maBaseDoc = AccesAuxDonnees::recupAccesDonnees();		
+		$this->maBaseDev = AccesAuxDonneesDev::recupAccesDonneesDev();
+		
 		$this->afficheFormulaire();		
+		$this->traitementFormulaire();
 
 	}
 	/**
@@ -63,25 +67,78 @@ class ModuleEmprunt extends Module
 		$this->fermeBloc("</li>");
 		
 		$this->ouvreBloc("<li>");
-		$this->ajouteLigne("<label for=\"code_barre\">" . $this->convertiTexte("Code barre") . "</label>");
-		$this->ajouteLigne("<input type=\"text\" id=\"code_barre\" name=\"code_barre\" />");
+		$this->ajouteLigne("<label for=\"codeBarre\">" . $this->convertiTexte("Code barre") . "</label>");
+		$this->ajouteLigne("<input type=\"text\" id=\"codeBarre\" name=\"codeBarre\" />");
 		$this->fermeBloc("</li>");
 		//$this-creationInputText();
 		
 		$this->ouvreBloc("<li>");
-		$this->ajouteLigne("<label for=\"date_d'emprunt\">" . $this->convertiTexte("Date d'emprunt") . "</label>");
-		$this->ajouteLigne("<input type=\"text\" id=\"date_d'emprunt\" value=\"".date('d-m-Y')."\" name=\"date_d'emprunt\" />");		
+		$this->ajouteLigne("<label for=\"dateEmprunt\">" . $this->convertiTexte("Date d'emprunt") . "</label>");
+		$this->ajouteLigne("<input type=\"text\" id=\"dateEmprunt\" value=\"".date('d-m-Y')."\" name=\"dateEmprunt\" />");		
 		$this->fermeBloc("</li>");
 		
 		$this->ouvreBloc("<ol>");
-		$this->ajouteLigne("<button type='submit' name='valider' value='true'>" . $this->convertiTexte("Valider") . "</button>");
 
 		$this->fermeBloc("</fieldset>");
+		
+		
+		$this->ouvreBloc("<fieldset>");
+		$this->ajouteLigne("<input type='hidden' name='validerEmprunt' value='true' />");
+		$this->ajouteLigne("<button type='submit' name='ValiderEmprunt' value='true'>Valider l'emprunt</button>");
+		$this->fermeBloc("</fieldset>");
+		
 		$this->fermeBloc("</form>");
 	}
-
-
+	
+	/**/
+	private function traitementFormulaire(){		
+		
+		if($_POST[ValiderEmprunt]) {
+			//Obtenir les données remplies par la méthode POST
+			$idUtilisateur=$_POST['idUtilisateur'];
+			$codeBarre=$_POST['codeBarre'];
+			$dateEmprunt=$_POST['dateEmprunt'];	
+			
+			//print_r("code".$codeBarre."<br />");
+			
+			//La fonction testUtilisateur retourne 
+			$peutEmprunter = $this->maBaseDoc->testUtilisateur($idUtilisateur);
+			//print_r("peutEmprunter".$peutEmprunter."<br />");
+			$aCotiser = $this->maBaseDoc->testDateCotisation($idUtilisateur,$dateEmprunt);
+			//print_r("coti".$aCotiser."<br />");
+			$codeBarreVerifie =$this->maBaseDev->testCodeBarre($codeBarre);
+			//print_r("codeVer".$codeBarreVerifie."<br />");
+			$empruntable=$this->maBaseDev->testEtatJeu($codeBarre);
+			//var_dump($empruntable);
+			//print_r("empruntable".$empruntable."<br />");
+			if($empruntable && $peutEmprunter && $aCotiser && $codeBarreVerifie){
+				$this->maBaseDev->insertionEmprunt($idUtilisateur,$codeBarre,$dateEmprunt);
+				//print_r("OK!");
+				header("Location: " . MODULE_EMPRUNTER);
+				exit;
+			}
+			//if($empruntable)
+			//MA NOUVELLE DATE = $this->dateAffichageToBase(MA VARIABLE DATE)
+		}
+	}
+	
+	/**
+	* Fonction de conversion des dates
+	* Converti les dates affichée en date stockable en base
+	* jj/mm/aaaa -> AAAA-MM-JJ
+	*/
+	private function dateAffichageToBase($uneDate)
+	{
+		$jour = substr($uneDate,0,2);
+		$mois = substr($uneDate,3,2);
+		$annee = substr($uneDate,6,4);
+		$date = $annee . "-" . $mois . "-" . $jour;
+		
+		if($uneDate == null)
+			return "";
+		else
+			return $date;
+	}
 }
-
 
 ?>

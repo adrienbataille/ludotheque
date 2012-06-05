@@ -208,8 +208,9 @@ class ModuleAjoutVersions extends Module
 		
 		// Nettoyage de nb joueurs
 		$this->nbJoueur = Array();
-		foreach($_POST[NB_JOUEUR] as  $nbJoueur)
-			$this->nbJoueur[] = $this->filtreChaine($nbJoueur, TAILLE_CHAMPS_COURT);
+		if(!empty($_POST[NB_JOUEUR]))
+			foreach($_POST[NB_JOUEUR] as  $nbJoueur)
+				$this->nbJoueur[] = $this->filtreChaine($nbJoueur, TAILLE_CHAMPS_COURT);
 		
 		// Nettoyage de nb joueurs reco
 		$this->nbJoueurReco = $this->filtreChaine($_POST[NB_JOUEUR_RECOMMANDE], TAILLE_CHAMPS_COURT);
@@ -488,7 +489,8 @@ class ModuleAjoutVersions extends Module
 
 			$this->recuperationInformationsFormulaire();
 			
-			//$this->idJeu = $this->maBase->recupIdJeu($this->nomJeu);
+			if(!$this->idJeu || $this->idJeu == null)
+				$this->idJeu = $this->maBase->recupIdJeu($this->nomJeu);
 			
 			if(strcmp($this->nomVersion, "") == 0 || $this->nomVersion == null)
 				$this->erreurNom = true;
@@ -546,7 +548,7 @@ class ModuleAjoutVersions extends Module
 					if (($_FILES[PHOTO_VERSION]['size'] == 0 && $_FILES[PHOTO_VERSION]['name'] != null) || $_FILES[PHOTO_VERSION]['size'] > 512000)
 						$this->erreurPhotoTaille = true;
 					
-					$nomPhoto = md5(date("Y-m-d-H-i-s")).$_FILES[PHOTO_VERSION]['name'];
+					$nomPhoto = DOSSIER_PHOTO . md5(date("Y-m-d-H-i-s")).$_FILES[PHOTO_VERSION]['name'];
 					// recupération de l'extension du fichier
 					// autrement dit tout ce qu'il y a après le dernier point (inclus)
 					$extension = substr($nomPhoto,strrpos($nomPhoto,"."));
@@ -594,6 +596,8 @@ class ModuleAjoutVersions extends Module
 						$this->maBase->InsertionTableDistributeurVersion($this->idVersion, $distributeur);
 					foreach($this->idIllustrateur as $illustrateur)
 						$this->maBase->InsertionTableIllustrateurVersion($this->idVersion, $illustrateur);
+					foreach($this->idEditeur as $editeur)
+						$this->maBase->InsertionTableEditeurVersion($this->idVersion, $editeur);
 	
 					if($this->idVersion == null || !$this->idVersion)
 						$this->erreurVersion = true;

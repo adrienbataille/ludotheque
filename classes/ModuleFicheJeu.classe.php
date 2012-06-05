@@ -57,7 +57,7 @@ class ModuleFicheJeu extends Module
 		$this->maVersionEditeur = $this->baseDonnees->recupEditeurs($this->maVersion);
 		$this->mesExemplaires = $this->baseDonnees->recupExemplaireJeu($this->maVersion);
 		$this->maPhotoVersion = $this->baseDonnees->recupPhotoVersion($this->maVersion);
-		$this->maCategorie = $this->baseDonnees->recupCategorieJeuVersion($this->maVersion);
+		$this->maCategorie = $this->baseDonnees->recupCategorieJeuVersion($this->baseDonnees->recupIdJeuVersion($this->maVersion));
 		
 		// On recupere l'id du jeu dans la version
 		$this->monJeu = $this->recupIdJeu();
@@ -65,7 +65,7 @@ class ModuleFicheJeu extends Module
 		// En entrée : l'idJeu
 		$this->monJeuLangue = $this->baseDonnees->recupJeuLangue($this->monJeu);
 		$this->monJeuAuteur = $this->baseDonnees->recupAuteurs($this->monJeu);
-		
+		//var_dump($this->monJeuAuteur);
 		// On affiche les informations
 		$this->afficheInfoJeu();
 		
@@ -101,8 +101,9 @@ class ModuleFicheJeu extends Module
 	*/
 	private function afficherModifier()
 	{
-		$this->ajouteLigne(/*<a href>..........*/"<button>".$this->convertiTexte("Modifier!")."</button>");
+		$this->ajouteLigne("<a href=".MODULE_AJOUT_VERSIONS."&idVersion=".$this->maVersion.">"."<button>".$this->convertiTexte("Modifier!")."</button></a>");
 	}
+	//.$this->convertiTexte($this->recupColonnes($tableau,$iBoucle,$nomColonne)).
 	
 	
 	/**
@@ -118,16 +119,17 @@ class ModuleFicheJeu extends Module
 						//Bloc Nom du Jeu & Nom de Version
 						$this->ouvreBloc("<div>");
 							$this->ajouteLigne("<label>" .$this->convertiTexte("Nom du jeu") ."</label>");
-							$this->afficherTableau($this->monJeuLangue,NOM_JEU,null);
+							$this->afficherTableau($this->monJeuLangue,NOM_JEU,nom);
 							$this->ajouteLigne("<label>" .$this->convertiTexte("Nom de la version") ."</label>");
-							$this->ajouteLigne($this->convertiTexte($this->recupNomVersion())."<br/>");
+							$this->ajouteLigne($this->convertiTexte($this->recupNomVersion()));
 						$this->fermeBloc("</div>");
 						
 						// Block central qui contient le block photo et le block info
 						$this->ouvreBloc("<div id=".bloc_cent." >");
 							//Bloc de la Photo associée à la Version
 							$this->ouvreBloc("<div id=".photo."  >");		
-								$this->ajouteLigne("<img src=images/photo/".$this->convertiTexte($this->recupPhotoVersion()).">");
+								$this->ajouteLigne("<img src=".$this->convertiTexte($this->recupPhotoVersion()).">");
+								//var_dump($this->convertiTexte($this->recupPhotoVersion()));
 							$this->fermeBloc("</div>");
 							
 							//Bloc Info Jeu & Info Version
@@ -135,13 +137,13 @@ class ModuleFicheJeu extends Module
 								$this->ajouteLigne("<label>" .$this->convertiTexte("Auteur(s)") ."</label>");
 								$this->afficherTableau($this->monJeuAuteur,NOM_AUTEUR,nom);	
 								$this->ajouteLigne("<label>" .$this->convertiTexte("Catégorie(s)") ."</label>");
-								$this->afficherTableau($this->maCategorie,NOM_CATEGORIE,nomCategorie);	
+								$this->afficherTableau($this->maCategorie,NOM_CATEGORIE,nomCategorie);
 								$this->ajouteLigne("<label>" .$this->convertiTexte("Age min.") ."</label>");
 								$this->ajouteLigne($this->convertiTexte($this->recupAgeMinimum())." ans"."<br/>");
 								$this->ajouteLigne("<label>" .$this->convertiTexte("Joueurs recommandés") ."</label>");
 								$this->ajouteLigne($this->convertiTexte($this->recupNbJoueurRecommande())." joueurs"."<br/>");
 								$this->ajouteLigne("<label>" .$this->convertiTexte("Durée moyenne") ."</label>");
-								$this->ajouteLigne($this->convertiTexte($this->recupDureePartie())."<br/>");
+								$this->ajouteLigne($this->convertiTexte($this->recupDureePartie())." min"."<br/>");
 								$this->ajouteLigne("<label>" .$this->convertiTexte("Prix d'achat") ."</label>");
 								$this->ajouteLigne($this->convertiTexte($this->recupPrixAchat())." euros"."<br/>");
 								$this->ajouteLigne("<label>" .$this->convertiTexte("Année de sortie") ."</label>");

@@ -19,6 +19,7 @@ require_once("classes/ModuleRetour.classe.php");
 require_once("classes/ModuleEmprunt.classe.php");
 require_once("classes/ModuleGestionEmprunt.classe.php");
 require_once("classes/ModuleInventaire.classe.php");
+require_once("classes/ModuleGestionInventaire.classe.php");
 
 // Constantes
 
@@ -135,7 +136,7 @@ class PageModule extends Page
 					$this->unModule = new ModuleEmprunter();
 					break;					
 				case "Retour" :				
-					$this->unModule = new ModuleRetour();
+					$this->unModule = new ModuleRetour($this->monUtilisateur);
 					break;				
 				case "Emprunt" :				
 					$this->unModule = new ModuleEmprunt();
@@ -144,7 +145,10 @@ class PageModule extends Page
 					$this->unModule = new ModuleGestionEmprunt();
 					break;			
 				case "Inventaire" :				
-					$this->unModule = new ModuleInventaire($_GET["idExemplaire"]);
+					$this->unModule = new ModuleInventaire($this->monUtilisateur, $_GET["idExemplaire"]);
+					break;
+				case "GestionInventaire" :				
+					$this->unModule = new ModuleGextionInventaire();
 					break;
 			}
 		}
@@ -194,6 +198,7 @@ class PageModule extends Page
 		//$this->ajouteLigne("<li><a href=\"" . MODULE_AJOUT_EXEMPLAIRES . "\">Ajouter Exemplaires</a></li>");
 		//$this->ajouteLigne("<li><a href=\"" . MODULE_FICHEJEU . "\">FicheJeu</a></li>");
 		$this->ajouteLigne("<li><a href=\"" . MODULE_EMPRUNTER . "\">Gestion Emprunt</a></li>");
+		$this->ajouteLigne("<li><a href=\"" . MODULE_GESTION_INVENTAIRE . "\">Gestion Inventaire</a></li>");
 		$this->ajouteLigne("<li><a href=\"\">Utilisateurs</a></li>");
         // Si l'utilisateur à accès au module Groupes
         if ($this->monUtilisateur->accesGroupes())

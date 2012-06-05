@@ -33,14 +33,18 @@ class ModuleRetour extends Module
 	private $etat;
 	private $erreurCodeBarre = false;
 	private $erreurEmprunt = false;
+	private $monUtilisateur = null;
 
 	/**
 	 * Constructeur. Il ouvre une connexion à la BDD et affiche le formulaire
 	 */
-	public function __construct()
+	public function __construct($user)
 	{
 		// On utilise le constructeur de la classe mère
 		parent::__construct();
+		
+		$this->monUtilisateur = $user;
+		
 		// On a besoin d'un accès à la base - On utilise la fonction statique prévue
 		//TODO  euh faudra changer la fonction de construction qui suit quand on merge!!
 		$this->maBase = AccesAuxDonneesDev::recupAccesDonneesDev();
@@ -115,6 +119,11 @@ class ModuleRetour extends Module
 			$this->ajouteLigne("<label for='" . DESCRIPTION_EXEMPLAIRE . "'>" . $this->convertiTexte("Commentaire") . "</label>");
 			$this->ajouteLigne("<textarea id='" . DESCRIPTION_EXEMPLAIRE . "' name='" . DESCRIPTION_EXEMPLAIRE . "' disabled='disabled'>" . $this->commentaire . "</textarea>");
 			$this->fermeBloc("</li>");
+			
+			$this->ouvreBloc("<li style='display: none;'>");
+			$this->ajouteLigne("<label for='" . ID_UTILISATEUR . "'>" . $this->convertiTexte("Id Utilisateur") . "</label>");
+			$this->ajouteLigne("<input type='text' id='" . ID_UTILISATEUR . "' name='" . ID_UTILISATEUR . "' value='" . $this->monUtilisateur->RecupId() . "' />");
+			$this->fermeBloc("</li>");
 		}
 		$this->fermeBloc("</ol>");
 		$this->fermeBloc("</fieldset>");
@@ -157,7 +166,7 @@ class ModuleRetour extends Module
 				if(!empty($myEmprunt)) {
 					$this->commentaire = $myEx[0][DESCRIPTION_EXEMPLAIRE];
 					$this->etat = $myEx[0][ID_ETAT_EXEMPLAIRE];
-					if($myEx[0][ID_LIEU_TEMPO] != null || $myEx[0][ID_LIEU_TEMPO] != 0 )
+					if($myEx[0][ID_LIEU_TEMPO] != null && $myEx[0][ID_LIEU_TEMPO] != 0 )
 						$this->idLieuRetour = $myEx[0][ID_LIEU_TEMPO];
 					else
 						$this->idLieuRetour = $myEx[0][ID_LIEU_REEL];
@@ -170,13 +179,15 @@ class ModuleRetour extends Module
 				$this->erreurCodeBarre = true;
 			}
 		} else {
-			$this->idExemplaire = $this->filtreChaine($_POST[ID_EXEMPLAIRE], TAILLE_CHAMPS_COURT);
+			$this->idExemplaire = intval($this->filtreChaine($_POST[ID_EXEMPLAIRE], TAILLE_CHAMPS_COURT));
 			$this->idLieuRetour = $this->filtreChaine("idLieu", TAILLE_CHAMPS_COURT);
 			$this->dateRetour = $this->dateAffichageToBase($_POST[DATE_RETOUR_REEL]);
+			$user = intval($this->filtreChaine($_POST[ID_UTILISATEUR], TAILLE_CHAMPS_COURT));
 			
 			$this->maBase->updateDateRetourReelEmprunt($this->idExemplaire, $this->dateRetour);
 		
 			if ($_POST["ValiderRetour"]) {
+				$this->maBase->InsertionTableInventaire($this->dateRetour, $this->commantaire, $user, $this->idExemplaire);
 				header("Location: " . MODULE_EMPRUNTER . "&rendu=true&idExemplaire=".$this->idExemplaire);
 				exit;
 			} elseif ($_POST["ValiderPbRetour"]) {

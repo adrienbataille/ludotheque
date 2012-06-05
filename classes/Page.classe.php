@@ -18,6 +18,8 @@ define("CSS_MDJT_DEV", "css/mdjt_dev.css");
 define("CSS_RESET", "css/reset.css");
 define("CSS_RECHERCHE","css/recherche.css");
 
+define("DOSSIER_PHOTO", "fichier/");
+
 define("JS_MDJT_DEV", "js/mdjt_dev.js");
 define("JS_MDJT_JQUERY","js/jquery-1.7.2.min.js");
 define("JS_MDJT_TAGIT","js/tag-it.js");

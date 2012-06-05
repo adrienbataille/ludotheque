@@ -57,14 +57,15 @@ class ModuleEmprunter extends Module
 		$this->ajouteLigne("<button type='submit' name='emprunter' value='true'>" . $this->convertiTexte("Retour") . "</button>");
 		$this->fermeBloc("</fieldset>");		
 		$this->fermeBloc("</form>");  
-			
+		
+		/*
 		$this->ouvreBloc("<form method='post' action='" . MODULE_INVENTAIRE . "' id='formProfil'>");        
 		$this->ouvreBloc("<fieldset>");
 		$this->ajouteLigne("<input type='hidden' name='inventaire' value='true' />");
 		$this->ajouteLigne("<button type='submit' name='inventaire' value='true'>" . $this->convertiTexte("Inventaire") . "</button>");
 		$this->fermeBloc("</fieldset>");		
 		$this->fermeBloc("</form>");   	
-           	
+    	*/
         /*
 		$this->ouvreBloc("<form method='post' action='" . MODULE_GESTION_EMPRUNT. "' id='formProfil'>");        
 		$this->ouvreBloc("<fieldset>");

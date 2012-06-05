@@ -35,6 +35,7 @@ define("DATE_ADHESION", "dateAdhesion");
 define("DATE_COTISATION", "dateCotisation");
 define("EXEMPT_COTISATION", "exemptCotisation");
 define("COMMENTAIRES", "commentaires");
+define("BLOQUE","bloque");
 // Définition des tailles des champs
 define("TAILLE_CHAMPS_TELEPHONE",20);
 define("TAILLE_CHAMPS_COURT",50);
@@ -53,10 +54,15 @@ define("TYPE_ADHERENT", "typeAdherent");
 define("ID_GROUPE", "idGroupe");
 define("NOM_GROUPE", "nomGroupe");
 
+
 /**
+
  * Classe de gestion de l'accès à la base de donnée
+
  * @package client
+
  */
+
 
 
 
@@ -124,8 +130,6 @@ class AccesAuxDonnees
 		}
 	}
   
-  
-  
   //
   // Outils à usage interne
   //
@@ -159,6 +163,7 @@ class AccesAuxDonnees
             }
 	}
 	
+        
 	/**
 	* Fonction générique de requête type sélection dans la base
 	*/
@@ -192,7 +197,6 @@ class AccesAuxDonnees
 			return false;
 		}
 	}
-	
 	
 	//
 	// Requêtes accessibles au reste du site
@@ -519,8 +523,59 @@ class AccesAuxDonnees
         public function conversionDepuisBase($uneVariable)
         {
             return stripslashes($uneVariable);
-        }
+        }	
+		
+		
+		//*************************************************************************************************************************************************************
+
+		/*Cette fonction est pour tester si l'utilisateur est existant et bloqué ou pas.
+		  Si l'utilisateur n'existe pas, elle retourne false;
+		  Si l'utilisateur est bloqué, elle retourne aussi false;
+		  Sinon elle retourne true.*/
+		public function testUtilisateur($idUtilisateur)
+		{
+			$idUtilisateur=mysql_real_escape_string($idUtilisateur);			
+			$requete = "SELECT * FROM " . TABLE_UTILISATEURS. " WHERE " . ID_UTILISATEUR . " = " . $idUtilisateur  ;			
+			$resultat = $this->requeteSelect($requete);
+			//print_r("id:".$resultat[0][idUtilisateur]."<br />");
+			//print_r("bloque:".$resultat[0][bloque]."<br />");
+			//var_dump($resultat[0]);
+			if(empty($resultat[0][idUtilisateur]))
+			{
+				//print_r("Cet utilisateur n'existe pas");
+				return false;
+			}
+			if($resultat[0][BLOQUE]==0)	//Si bloque est égal 0; l'utilisateur est bloqué.
+			{
+				//print_r( "Vous êtes bloqué");
+				return false;
+			}
+			
+			else return true;
+		}
+		
+		/*Cette fonction est pour tester si l'utilisateur a payé sa cotisation à l'heure.
+		  Si l'utilisateur n'a pas payé, elle retourne false;
+		  Sinon elle retourne true.*/
+		public function testDateCotisation($idUtilisateur,$dateEmprunt)
+		{
+			$date= new DateTime($dateEmprunt);
+			$date->sub(new DateInterval('P1Y'));	//moins un an
+		   //$date->format('Y-m-d');
+			$requete = "SELECT * FROM " . TABLE_UTILISATEURS. " WHERE " . ID_UTILISATEUR . " = " . $idUtilisateur . " AND " . DATE_COTISATION. " > '" .$date->format('Y-m-d') ."'" ;
+			//print_r($requete);
+			$resultat = $this->requeteSelect($requete);
+			
+			if(empty($resultat))
+			{
+			print_r("La date de côtisation est dépassée");
+			return false;
+			}
+			else return true;
+	     
+		}
 
 }
+
 
 ?>

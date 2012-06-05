@@ -297,7 +297,7 @@ class ComposantRecherche extends Module
 						$nomVersion=$this->convertiTexte($row[NOM_VERSION]);
 						$idVersion=$row[ID_VERSION];
 					}
-					if($row[ID_ETAT_EXEMPLAIRE]==DISPONIBLE){
+					if($row[ID_ETAT_EMPRUNT]==DISPONIBLE){
 						$nbdisponible+=$row["nbExemplaire"];
 					}
 					else{

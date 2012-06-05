@@ -253,7 +253,7 @@ class ModuleAjoutExemplaires extends Module
 	}
 	
     public function afficheFormulaire()
-    {
+    {//var_dump($this);
 		if($this->erreurExemplaire)
 			$this->ajouteLigne("<p class='erreurForm'>" . $this->convertiTexte("Une erreur est survenue lors de l'ajout de votre exemplaire, veuillez réessayer ou contacter l'administrateur") . "</p>");
 
@@ -267,7 +267,11 @@ class ModuleAjoutExemplaires extends Module
 		
 		// Jeu de l'exemplaire
 		$this->ouvreBloc("<li>");	
-		
+		if(($this->nomJeu == false || $this->nomJeu == null) && ($this->idJeu != 0 && $this->idJeu != null && $this->idJeu != false)) {
+			$namePlay = $this->maBase->recupNomJeu($this->idjeu);
+			$this->nomJeu = $namePlay[$this->idJeu][0][NOM_JEU];
+		}
+			
 		$this->ajouteLigne("<label for='" . NOM_JEU . "'>" . $this->convertiTexte("Jeu associé *") . "</label>");
 		if($this->idJeu == 0)
 			$this->ouvreBloc("<input id='" . NOM_JEU . "' name='" . NOM_JEU . "' />");

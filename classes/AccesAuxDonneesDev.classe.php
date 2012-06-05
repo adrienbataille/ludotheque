@@ -1128,6 +1128,18 @@ class AccesAuxDonneesDev
 	}
 	
     /**
+	* Fonction de récupération l'id d'un jeu à partir du nom d'un jeu
+	* Entrée : nom du jeu pour lequel on souhaite récupérer l'id
+	* Sortie : l'id du jeu
+	*/
+	public function recupIdJeuVersion($idVersion)
+	{
+		$requete = "SELECT " . ID_JEU . " FROM " . TABLE_VERSION . " WHERE " . ID_VERSION . "='" . $idVersion . "'";
+		$laListe = $this->requeteSelect($requete);
+		return $laListe[0][ID_JEU];
+	}
+	
+    /**
 	* Fonction de récupération du nom d'une version d'un jeu
 	* Entrée : id du jeu pour lequel on souhaite récupérer le nom de la version
 	* Sortie : le tableau contenant le nom
@@ -1317,6 +1329,19 @@ class AccesAuxDonneesDev
 	public function recupLieux()
 	{
 		$laListe = $this->requeteSelect("SELECT * FROM " . TABLE_LIEU);
+		return $laListe;
+	}
+	
+	/**
+	* Fonction de récupération de l'état physique d'un jeu
+	* Sortie : le tableau contenant les états
+	*/
+	public function recupEtatPhysique($id)
+	{
+		$requete = "SELECT * FROM " . TABLE_ETAT_PHYSIQUE;
+		if($id != null)
+			$requete .= " WHERE " . ID_ETAT_PHYSIQUE . " = " . $id;
+		$laListe = $this->requeteSelect($requete);
 		return $laListe;
 	}
 	
@@ -1856,7 +1881,7 @@ class AccesAuxDonneesDev
 				TABLE_VERSION . "." . ID_VERSION .", ".
 				TABLE_VERSION . "." . NOM_VERSION .", ".
 				TABLE_NOM_JEU . "." . NOM_JEU . ", " .
-				TABLE_EXEMPLAIRE . "." .  ID_ETAT_EXEMPLAIRE .
+				TABLE_EXEMPLAIRE . "." .  ID_ETAT_EMPRUNT.
 				" , COUNT(" . TABLE_EXEMPLAIRE . "." . ID_EXEMPLAIRE . ") AS nbExemplaire");
 
 		//pour le moment je garde les X de Jeu tant qu'on a pas la nouvelle BDD corrigé
@@ -1870,7 +1895,7 @@ class AccesAuxDonneesDev
 		$query->jointureLeft(TABLE_PHOTO_VERSION,ID_PHOTO,TABLE_PHOTO,ID_PHOTO);
 
 		$query->jointureLeft(TABLE_EXEMPLAIRE,ID_VERSION,TABLE_VERSION,ID_VERSION);
-		$query->jointure(TABLE_ETAT_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE);
+		//$query->jointure(TABLE_ETAT_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE, TABLE_EXEMPLAIRE, ID_ETAT_EXEMPLAIRE);
 		$query->jointure(TABLE_NOM_JEU,ID_JEU,TABLE_JEUX,ID_JEU);
 
 		$query->setExtra("GROUP BY ". TABLE_VERSION . "." . ID_VERSION . "," . TABLE_EXEMPLAIRE .".". ID_ETAT_EXEMPLAIRE . " ORDER BY " . TABLE_NOM_JEU . "." . NOM_JEU );
@@ -2101,7 +2126,7 @@ class AccesAuxDonneesDev
 
 			$query->jointure(TABLE_CATEGORIE_JEU,ID_JEU,TABLE_JEUX,ID_JEU);
 
-			$string = explode("," , $critere["categorie"]);
+			$string = explode("," , $critere["nomCategorie"]);
 
 			foreach($string as $value ){
 
@@ -2691,8 +2716,14 @@ class AccesAuxDonneesDev
 			$this->connecteBase();
 			
 			// Création de la requete
-			$requete = $this->maBase->prepare("UPDATE " . TABLE_EMPRUNT . " SET " . DATE_RETOUR_REEL . "=? WHERE " . ID_EXEMPLAIRE . "=?;");
+			$requete = $this->maBase->prepare("UPDATE " . TABLE_EMPRUNT . " SET " . DATE_RETOUR_REEL . "=? WHERE " . ID_EXEMPLAIRE . "=? AND " . DATE_RETOUR_REEL . " IS NULL;");
 			$requete->bindValue(1, $dateRetour, PDO::PARAM_STR);
+			$requete->bindValue(2, $idExemplaire, PDO::PARAM_INT);
+			$resultat = $requete->execute();
+			
+			// Création de la requete
+			$requete = $this->maBase->prepare("UPDATE " . TABLE_EXEMPLAIRE . " SET " . ID_ETAT_EMPRUNT . "=? WHERE " . ID_EXEMPLAIRE . "=?;");
+			$requete->bindValue(1, 1, PDO::PARAM_INT);
 			$requete->bindValue(2, $idExemplaire, PDO::PARAM_INT);
 			$resultat = $requete->execute();
 			
@@ -2760,9 +2791,59 @@ class AccesAuxDonneesDev
 	
 	}
 	
+	/**
+	* Fonction pour récuperer les jeux non inventorier depuis un an
+	* Entrée : 
+	* Sortie : les jeux non inventorier
+	*/
+	public function recupListeInventaireNonFait()
+	{
+		// construction de la requete SQL 
+		$requete = "SELECT " . ID_EXEMPLAIRE . ", MAX(" . DATE_INVENTAIRE . ") FROM " . TABLE_INVENTAIRE . " GROUP BY " . ID_EXEMPLAIRE . " ORDER BY " . DATE_INVENTAIRE . " DESC";
+
+		// Execution 
+		$resultat = $this->requeteSelect($requete);
+		
+		$res = Array();
+		$date = strval(intval(date("Y")) - 1) . date("-m-d");
+		//var_dump($date);
+		foreach($resultat as $result)
+			if(strcmp($result[1], $date) < 0)
+				$res[] = $result;
+		// On termine l'utilisation de la requete
+		return $res;
+	}
 	
 	
 	
+
+	/**
+    * Fonction d'insertion d'un inventaire d'un jeu
+    * Entrée : l'id de l'auteur que l'on souhaite affecter à un jeu
+    * Sortie : true si l'insertion s'est bien passée, sinon false
+    */
+    public function InsertionTableInventaire($date, $commentaire, $user, $exemplaire)
+    {
+
+		// On initie la connexion à la base, si ce n'est déjà fait
+		$this->connecteBase();
+		// Création de la requete
+		//var_dump($date);
+		//var_dump($commentaire);
+		//var_dump($user);
+		//var_dump($exemplaire);
+		$requete = $this->maBase->prepare("INSERT INTO " . TABLE_INVENTAIRE . " (" . DATE_INVENTAIRE . ", " . COMMENTAIRE_INVENTAIRE . ", " . ID_UTILISATEUR . ", " . ID_EXEMPLAIRE . ") VALUES(?, ?, ?, ?) ;");
+		$requete->bindValue(1, $date, PDO::PARAM_STR);
+		$requete->bindValue(2, $commentaire, PDO::PARAM_STR);
+		$requete->bindValue(3, $user, PDO::PARAM_INT);
+		$requete->bindValue(4, $exemplaire, PDO::PARAM_INT);
+		$resultat = $requete->execute();
+
+		// On termine l'utilisation de la requete
+		$requete->closeCursor();
+		
+		return $resultat;
+    }
 	
 	
 	/**
@@ -2798,6 +2879,87 @@ class AccesAuxDonneesDev
 	
 	}
     
+    
+    
+    /*Cette fonction est pour tester si le code barre existe ou pas.
+	  Si il n'existe pas, elle retourne false;
+	  Sinon elle retourne true.*/
+	public function testCodeBarre($codeBarre)
+	{
+		$req = "SELECT * FROM " . TABLE_EXEMPLAIRE. " WHERE " . CODE_BARRE . " = '" .  $codeBarre  . "'" ;
+		//print_r($req);
+		$res = $this->requeteSelect($req);
+		if(empty($res))
+		{
+			print_r( "Ce jeu n'existe pas");
+			return false;
+		}
+		else return true;
+	}
+	/*Cette fonction est pour tester si l'exemplaire est empruntable ou pas.
+	  Si il n'est pas empruntable, elle retourne false;
+	  Sinon elle retourne true.*/
+	public function testEtatJeu($codeBarre)
+	{
+		$reqIdEtat = "SELECT idEtatEmprunt FROM " . TABLE_EXEMPLAIRE. " WHERE " . CODE_BARRE . " = '" . $codeBarre ."'" ;
+		$resultat = $this->requeteSelect($reqIdEtat);
+		//print_r("Etat".$resultat[0][idEtatEmprunt]."<br />");
+		switch($resultat[0][idEtatEmprunt])
+		{
+			case 1:
+				//print_r("Etat du Jeu : Disponible");
+				//print_r("Ce jeu peut être emprunté");
+				return true;
+				break;
+			case 2: 
+				//print_r("Etat du Jeu : Reservé");
+				//print_r("Ce jeu ne peut pas être emprunté");
+				return false;
+				break;
+			default:
+			return false;
+			//print_r( "Ce jeu ne peut pas être emprunté");
+		}
+	}
+	
+	/*Cette fonction est pour insérer les informations dans la table d'emprunt
+	  et modifier l'etat du jeu(idEtatEmprunt) dans la table de exemplaire.
+	*/
+	public function insertionEmprunt($idUtilisateur,$codeBarre,$dateEmprunt)
+	{
+		$reqExemplaire = "SELECT " . ID_EXEMPLAIRE . "	FROM  " . TABLE_EXEMPLAIRE. " WHERE " . CODE_BARRE . " = '" . $codeBarre ."'" ;
+		$resultat=$this->requeteSelect($reqExemplaire);
+		$idExemplaire=$resultat[0][ID_EXEMPLAIRE];
+		print_r("idExemplaire:".$idExemplaire);
+		
+		$date = new DateTime($dateEmprunt);
+		$dateEmprunt = $date->format('Y-m-d');
+		
+		$date->add(new DateInterval('P15D'));	
+		$dateRetourSouhaite = $date->format('Y-m-d');
+		
+		//print_r ($date->format('Y-m-d')."\n");
+		
+		$reqInsert = $this->maBase->prepare("INSERT INTO " . TABLE_EMPRUNT . " (" . DATE_EMPRUNT . ", ". DATE_RETOUR_SOUHAITE . ", ". ID_UTILISATEUR . ", ". ID_EXEMPLAIRE . ") VALUES(?,?,?,?) ;");
+			$reqInsert->bindValue(1, $dateEmprunt, PDO::PARAM_STR);
+			$reqInsert->bindValue(2, $dateRetourSouhaite, PDO::PARAM_STR);
+			$reqInsert->bindValue(3, $idUtilisateur, PDO::PARAM_INT);
+			$reqInsert->bindValue(4, $idExemplaire, PDO::PARAM_STR);		
+			//Il manque date retour souhaitée 		
+			$resultat = $reqInsert->execute();
+			//print_r($$resultat);
+		
+		/*$req = "SELECT ID_ETAT_EMPRUNT FROM " . TABLE_EXEMPLAIRE. " WHERE " . CODE_BARRE . " = '". $codeBarre ."' ;
+		//print_r($req);
+		$ID_ETAT_EMPRUNT = $this->requeteSelect($req);*/
+		$idEtatEmprunt = 3;
+		$reqModifier = $this->maBase->prepare("UPDATE " . TABLE_EXEMPLAIRE . " SET " . ID_ETAT_EMPRUNT . "=? WHERE " . CODE_BARRE . " = '" . $codeBarre ."'");
+				$reqModifier->bindValue(1, $idEtatEmprunt, PDO::PARAM_INT);
+				
+				$resultat = $reqModifier->execute();
+				//print_r($$resultat);
+		
+	}	
 
 }
 
